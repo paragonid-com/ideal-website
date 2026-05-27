@@ -64,7 +64,8 @@ const address = {
             class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-gold focus:outline-none"
           />
         </label>
-        <label class="block">
+        {/* Email и Phone — full-width в Figma (узлы 1:1793, 1:1794: линии w=914) */}
+        <label class="block md:col-span-2">
           <span class="font-sans text-[18px] text-gold">Email (Required)</span>
           <input
             type="email"
@@ -73,7 +74,7 @@ const address = {
             class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-gold focus:outline-none"
           />
         </label>
-        <label class="block">
+        <label class="block md:col-span-2">
           <span class="font-sans text-[18px] text-gold">Phone (Required)</span>
           <input
             type="tel"

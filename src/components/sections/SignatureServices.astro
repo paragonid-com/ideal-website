@@ -75,7 +75,14 @@ const services = [
               class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
               loading="lazy"
             />
-            {/* Затемнение снизу для читаемости текста */}
+            {/* Затемнение сверху и снизу для читаемости текста (DISCOVER + название).
+                Без overlay сверху подпись "DISCOVER" сливается со светлыми фото
+                (например, карточка Medical Weight Loss). */}
+            <div
+              class="absolute inset-x-0 top-0 h-1/3"
+              style="background: linear-gradient(to bottom, rgba(0,0,0,0.45), transparent);"
+              aria-hidden="true"
+            ></div>
             <div
               class="absolute inset-x-0 bottom-0 h-1/2"
               style="background: linear-gradient(to top, rgba(0,0,0,0.55), transparent);"
