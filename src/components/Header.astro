@@ -73,24 +73,27 @@ const activeGroupLabel = mainNav.find(isGroupActive)?.label;
   <button
     id="menu-toggle"
     type="button"
-    class="block text-gold-bright transition-opacity hover:opacity-70 [filter:drop-shadow(0_0_3px_rgba(0,0,0,0.35))]"
+    class="block rounded-full bg-black/35 p-3 text-white backdrop-blur-sm transition-colors hover:bg-black/50 [filter:drop-shadow(0_2px_4px_rgba(0,0,0,0.3))]"
     aria-label="Open menu"
     aria-controls="overlay-menu"
     aria-expanded="false"
   >
-    {/* Burger из 4 линий — нестандартный (3 — обычный), взято 1:1 из Figma узел 1:144 */}
+    {/* Burger из 4 линий — нестандартный (3 — обычный), взято 1:1 из Figma узел 1:144.
+        Цвет в оригинале золотой, но на cream-DNA hero главной он становится
+        невидим. Чтобы гарантировать контраст на любом фоне (cream/white/dark),
+        burger белый, помещён в полупрозрачную тёмную круглую подложку. */}
     <svg
-      width="42"
-      height="50"
+      width="32"
+      height="38"
       viewBox="0 0 64.4344 124.434"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       aria-hidden="true"
     >
-      <path d="M0 52.2172H64.4344" stroke="currentColor" stroke-width="2" />
-      <path d="M0 32.2172H64.4344" stroke="currentColor" stroke-width="2" />
-      <path d="M0 72.2172H64.4344" stroke="currentColor" stroke-width="2" />
-      <path d="M0 92.2172H64.4344" stroke="currentColor" stroke-width="2" />
+      <path d="M0 52.2172H64.4344" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+      <path d="M0 32.2172H64.4344" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+      <path d="M0 72.2172H64.4344" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
+      <path d="M0 92.2172H64.4344" stroke="currentColor" stroke-width="6" stroke-linecap="round" />
     </svg>
   </button>
 </header>
@@ -102,10 +105,12 @@ const activeGroupLabel = mainNav.find(isGroupActive)?.label;
   aria-hidden="true"
 >
   {/* Фон-градиент — на основе того, что виден на скриншотах menu-1..4.
-     Без отдельного фото — чистый CSS градиент в кремово-золотых тонах. */}
+     Без отдельного фото — чистый CSS градиент в кремово-золотых тонах.
+     Сделан мягче исходного, чтобы gold-текст не растворялся
+     в правой тёмной части (раньше доходило до #b5946a, теперь #c9b187). */}
   <div
     class="pointer-events-none absolute inset-0"
-    style="background: radial-gradient(ellipse 60% 80% at 25% 40%, #f0eadc 0%, #d4c3a3 60%, #b5946a 100%);"
+    style="background: radial-gradient(ellipse 70% 90% at 20% 35%, #f0eadc 0%, #ddc8a0 70%, #c9b187 100%);"
     aria-hidden="true"
   ></div>
 
@@ -145,7 +150,7 @@ const activeGroupLabel = mainNav.find(isGroupActive)?.label;
                 <li class="group/item" data-nav-group={group.label}>
                   <button
                     type="button"
-                    class="inline-flex items-center gap-4 font-heading text-[64px] uppercase leading-tight text-gold transition-opacity hover:opacity-70"
+                    class="inline-flex items-center gap-4 font-heading text-[64px] uppercase leading-tight text-gold transition-opacity hover:opacity-70 [text-shadow:0_1px_0_rgba(255,255,255,0.4)]"
                     data-nav-target={group.label}
                     data-nav-active={isActive ? 'true' : undefined}
                     aria-current={isActive ? 'true' : undefined}
@@ -247,6 +252,13 @@ const activeGroupLabel = mainNav.find(isGroupActive)?.label;
 
   function closeMenu() {
     if (!overlay || !toggle) return;
+    // Перед сменой aria-hidden на true — снять фокус с любого элемента
+    // внутри overlay, иначе браузер ругается (aria-hidden на предке фокуса).
+    // Возвращаем фокус на toggle-кнопку, она как раз сейчас становится видимой.
+    if (overlay.contains(document.activeElement) && document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+    toggle.focus();
     overlay.classList.add('hidden');
     overlay.classList.remove('flex');
     overlay.setAttribute('aria-hidden', 'true');

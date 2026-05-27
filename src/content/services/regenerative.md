@@ -4,11 +4,11 @@ seoDescription: "Regenerative Medicine services in Aventura, Florida. Content co
 
 heroTitle: "Regenerative Medicine"
 heroLead: "Lorem ipsum lead text — content for this service page is pending from the client."
-heroImage: "/assets/images/services/weight-loss/hero.jpg"
+heroImage: "/assets/images/services/weight-loss/hero.webp"
 heroImageAlt: "Placeholder hero image"
 
 whatIsTitle: "What is Regenerative Medicine?"
-whatIsImage: "/assets/images/services/weight-loss/what-is.jpg"
+whatIsImage: "/assets/images/services/weight-loss/what-is.webp"
 whatIsImageAlt: "Placeholder image"
 whatIsBody: |
   Placeholder text. Content for this section will be provided by the client.
@@ -30,7 +30,7 @@ benefits:
     iconAlt: ""
 
 whoForTitle: "Who is Regenerative Medicine For?"
-whoForImage: "/assets/images/services/weight-loss/who-is-for.jpg"
+whoForImage: "/assets/images/services/weight-loss/who-is-for.webp"
 whoForImageAlt: "Placeholder image"
 whoForLead: "Placeholder lead text."
 whoForBullets:

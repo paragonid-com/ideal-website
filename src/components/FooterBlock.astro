@@ -27,8 +27,6 @@ const address = {
 const quickLinks = [
   { label: 'Terms', href: '/terms' },
   { label: 'Privacy', href: '/privacy' },
-  { label: 'Cherry Financing', href: '#', todo: 'cherry-financing-url' },
-  { label: 'Care Credit Financing', href: '#', todo: 'care-credit-url' },
 ];
 
 const year = new Date().getFullYear();
@@ -54,10 +52,14 @@ const isFull = variant === 'full';
           height="62"
           class="h-auto w-[194px]"
         />
+        {/* Placeholder для соцсетей — `data-todo="social-icon"`.
+            Чисто декоративный, нет интерактивности, нет смысла для AT.
+            aria-hidden="true" корректно скрывает от screen readers
+            (в отличие от aria-label на div, который запрещён WAI-ARIA). */}
         <div
           class="mt-12 h-[90px] w-[90px] rounded-full bg-gold/20"
           data-todo="social-icon"
-          aria-label="Social media link placeholder"
+          aria-hidden="true"
         ></div>
       </div>
     )}
@@ -80,7 +82,7 @@ const isFull = variant === 'full';
       <ul class="mt-6 flex flex-col gap-2 font-sans text-[21px] text-gold">
         {quickLinks.map((link) => (
           <li>
-            <a href={link.href} data-todo={link.todo} class="hover:underline">
+            <a href={link.href} class="hover:underline">
               {link.label}
             </a>
           </li>

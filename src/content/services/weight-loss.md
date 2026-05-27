@@ -11,13 +11,13 @@ heroLead: >-
   is a popular option for achieving sustainable health goals. As the demand
   for personalized weight loss solutions continues to rise, medical weight
   loss treatments continue to grow in popularity.
-heroImage: "/assets/images/services/weight-loss/hero.jpg"
+heroImage: "/assets/images/services/weight-loss/hero.webp"
 heroImageAlt: "Cropped slim female torso illustrating healthy body composition"
 
 whatIsTitle: |
   What is Medical
   Weight Loss?
-whatIsImage: "/assets/images/services/weight-loss/what-is.jpg"
+whatIsImage: "/assets/images/services/weight-loss/what-is.webp"
 whatIsImageAlt: "Close-up of a person self-administering a weight loss injection"
 whatIsBody: |
   Medical weight loss entails a variety of medically administered interventions to help you lose weight. The primary goal of any weight loss plan is to achieve healthy weight reduction. Additionally, improving your nutrition and exercise routines, you can optimize physical, mental, and emotional wellness to lead a more balanced lifestyle.
@@ -82,7 +82,7 @@ benefits:
 whoForTitle: |
   Who is Medical
   Weight Loss For?
-whoForImage: "/assets/images/services/weight-loss/who-is-for.jpg"
+whoForImage: "/assets/images/services/weight-loss/who-is-for.webp"
 whoForImageAlt: "Person consulting with medical professional about weight loss program"
 whoForLead: |
   Medical weight loss is best for those who are serious about losing weight and getting healthy. It may be right for you if you struggle with losing weight.

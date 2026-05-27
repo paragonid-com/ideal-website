@@ -1,58 +1,108 @@
 ---
 /**
  * Our Signature Services — заголовок + ряд из 5 карточек услуг.
- * Каждая карточка — большая фотография на всю плитку с подписью внизу
- * (название категории) и микро-CTA "Discover" сверху.
  *
- * Источник: узлы 1:149 (заголовок), 1:155 (подзаголовок),
- *           1:71/186/531/192/189 (названия карточек),
- *           1:352, 1:351, 1:350, 1:353, 1:536 (изображения карточек)
+ * Source в Figma:
+ *   - Заголовок секции: 1:149 (h2), 1:155 (lead), 1:230 (орнамент справа)
+ *   - Карточки: 1:248, 1:351, 1:536, 1:353, 1:350 (291×436 фоновые)
+ *   - Заголовки услуг: 1:71, 1:186, 1:531, 1:192, 1:189 — 2 строки, h=58
+ *   - DISCOVER: 1:534 (293×48 золотой Rect) + 1:535 (текст)
+ *   - Предметные оверлеи:
+ *     - Hormone Group 380 (1:354): 288×243 at offset (3.5, 94) in card (291×436)
+ *       → top: 21.5%, left: 1.2%, width: 99%, height: 55.7%
+ *     - Peptide Group 310 (1:537): 245×402 at offset (26.6, 7.3)
+ *       → top: 1.7%, left: 9.1%, width: 84%, height: 92.2%
+ *     - IV Therapy Group 402 (1:482): 448×322 at offset (-22, 68)
+ *       → top: 15.6%, left: -7.5%, width: 153%, height: 73.8%
+ *       (выходит за края карточки, обрезается overflow-hidden)
  *
- * ВАЖНО: 3 из 5 изображений в Figma — золотая текстура-плейсхолдер
- * (Hormone, Peptide, IV Therapy). Финальные фото от заказчика ещё не пришли.
+ * Удаление белого фона у overlay-картинок — через flood-fill из углов +
+ * Gaussian feathering для сглаживания краёв (см. scripts/remove-bg.py).
  */
 import Container from '../Container.astro';
 
-const services = [
+interface Service {
+  titleLines: [string, string];
+  href: string;
+  image: string;
+  overlay?: {
+    src: string;
+    alt: string;
+    /** Точные процентные координаты относительно карточки 291×436 из Figma */
+    top: string;
+    left: string;
+    width: string;
+    height: string;
+  };
+}
+
+const services: Service[] = [
   {
-    title: 'Medical Weight Loss',
+    titleLines: ['Medical', 'Weight Loss'],
     href: '/services/weight-loss',
-    image: '/assets/images/service-weight-loss.png',
-    imageStatus: 'real',
+    image: '/assets/images/service-weight-loss.webp',
   },
   {
-    title: 'Hormone Optimization',
+    titleLines: ['Hormone', 'Optimization'],
     href: '/services/hormone',
-    image: '/assets/images/service-hormone.png',
-    imageStatus: 'placeholder',
+    image: '/assets/images/service-hormone.webp',
+    overlay: {
+      src: '/assets/images/service-hormone-overlay.webp',
+      alt: 'Estrogen Cream and Testosterone vials',
+      top: '21.5%',
+      left: '1.2%',
+      width: '99%',
+      height: '55.7%',
+    },
   },
   {
-    title: 'Peptide Therapy',
+    titleLines: ['Peptide', 'Therapy'],
     href: '/services/peptide',
-    image: '/assets/images/service-peptide.png',
-    imageStatus: 'placeholder',
+    image: '/assets/images/service-peptide.webp',
+    overlay: {
+      src: '/assets/images/service-peptide-overlay.webp',
+      alt: 'Peptide therapy injector pens',
+      top: '1.7%',
+      left: '9.1%',
+      width: '84%',
+      height: '92.2%',
+    },
   },
   {
-    title: 'Sexual Health',
+    titleLines: ['Sexual', 'Health'],
     href: '/services/sexualhealth',
-    image: '/assets/images/service-sexual-health.png',
-    imageStatus: 'real',
+    image: '/assets/images/service-sexual-health.webp',
   },
   {
-    title: 'IV Therapy',
+    titleLines: ['IV', 'Therapy'],
     href: '/services/ivtherapy',
-    image: '/assets/images/service-iv-therapy.png',
-    imageStatus: 'placeholder',
+    image: '/assets/images/service-iv-therapy.webp',
+    overlay: {
+      src: '/assets/images/service-iv-therapy-overlay.webp',
+      alt: 'NAD+ and Radiant AF IV bags',
+      top: '15.6%',
+      left: '-7.5%',
+      width: '115%',
+      height: '73.8%',
+    },
   },
 ];
 ---
 
-<section class="w-full bg-white py-24" data-section="signature-services">
+<section class="w-full bg-cream py-24" data-section="signature-services">
   <Container>
-    <div class="text-center">
-      <h2 class="font-heading text-h1 uppercase text-gold">
+    <div class="relative text-center">
+      <h2 class="font-heading text-h1 uppercase text-gold inline-block">
         Our Signature Services
       </h2>
+      <img
+        src="/assets/images/ornament.png"
+        alt=""
+        width="33"
+        height="39"
+        class="absolute right-0 top-0 hidden h-[39px] w-[33px] md:inline-block"
+        aria-hidden="true"
+      />
       <p class="mx-auto mt-8 max-w-[821px] font-sans text-body-lg leading-relaxed text-gold">
         Explore our range of specialized treatments designed to enhance
         your well-being. Each service at Ideal Medical and Wellness is
@@ -61,41 +111,37 @@ const services = [
       </p>
     </div>
 
-    <ul class="mt-16 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+    <ul class="mt-16 grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-3 lg:grid-cols-5">
       {services.map((s) => (
-        <li>
-          <a
-            href={s.href}
-            class="group relative block aspect-[292/436] overflow-hidden bg-gold/10"
-            data-image-status={s.imageStatus}
-          >
-            <img
-              src={s.image}
-              alt=""
-              class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              loading="lazy"
-            />
-            {/* Затемнение сверху и снизу для читаемости текста (DISCOVER + название).
-                Без overlay сверху подпись "DISCOVER" сливается со светлыми фото
-                (например, карточка Medical Weight Loss). */}
-            <div
-              class="absolute inset-x-0 top-0 h-1/3"
-              style="background: linear-gradient(to bottom, rgba(0,0,0,0.45), transparent);"
-              aria-hidden="true"
-            ></div>
-            <div
-              class="absolute inset-x-0 bottom-0 h-1/2"
-              style="background: linear-gradient(to top, rgba(0,0,0,0.55), transparent);"
-              aria-hidden="true"
-            ></div>
-            {/* Микро-CTA "Discover" сверху-слева */}
-            <span class="absolute left-4 top-4 font-sans text-[14px] uppercase tracking-wider text-cream">
-              Discover
-            </span>
-            {/* Название услуги внизу */}
-            <span class="absolute bottom-4 left-4 right-4 font-heading text-[24px] uppercase leading-tight text-cream">
-              {s.title}
-            </span>
+        <li class="flex flex-col">
+          <a href={s.href} class="group flex h-full flex-col">
+            <h3 class="mb-4 h-[68px] font-heading text-[24px] uppercase leading-[34px] text-gold tracking-wide">
+              {s.titleLines[0]}<br />{s.titleLines[1]}
+            </h3>
+
+            <div class="relative overflow-hidden aspect-[291/436] bg-gold/10">
+              <img
+                src={s.image}
+                alt=""
+                class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+              {s.overlay && (
+                <img
+                  src={s.overlay.src}
+                  alt={s.overlay.alt}
+                  class="absolute object-contain pointer-events-none"
+                  style={`top: ${s.overlay.top}; left: ${s.overlay.left}; width: ${s.overlay.width}; height: ${s.overlay.height};`}
+                  loading="lazy"
+                />
+              )}
+            </div>
+
+            <div class="flex h-[48px] w-full items-center bg-gold pl-4 transition-opacity group-hover:opacity-80">
+              <span class="font-sans text-[14px] uppercase tracking-[0.15em] text-cream">
+                Discover
+              </span>
+            </div>
           </a>
         </li>
       ))}

@@ -28,7 +28,9 @@ const brands = [
     >
       {brands.map((brand) => (
         brand.isText ? (
-          <span class="font-heading text-[40px] font-bold text-[#444]">
+          /* NAD+ и TESTOSTERONE — sans-serif в макете, не Marcellus.
+             Используется font-sans (Manrope), без bold, обычный вес. */
+          <span class="font-sans text-[36px] tracking-wide text-[#333]">
             {brand.name}
           </span>
         ) : (

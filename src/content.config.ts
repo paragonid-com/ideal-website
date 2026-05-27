@@ -29,7 +29,7 @@ const services = defineCollection({
       heroTitle: z.string(),
       /** Подзаголовок-параграф под H1 в Hero */
       heroLead: z.string(),
-      /** Путь к hero-фото в /public/ (например, /assets/images/services/weight-loss/hero.jpg) */
+      /** Путь к hero-фото в /public/ (например, /assets/images/services/weight-loss/hero.webp) */
       heroImage: z.string(),
       /** Alt для hero image */
       heroImageAlt: z.string(),
