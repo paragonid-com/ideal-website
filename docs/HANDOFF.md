@@ -21,6 +21,7 @@
 | Шаблон страниц услуг | ✅ Создан + Weight Loss наполнена |
 | 10 draft-заглушек услуг | ✅ Созданы (`draft: true`, ждут контент) |
 | Страницы About / Contact / Blog | ✅ Созданы (контент About есть; Blog — placeholder) |
+| TrustBadges (Google ★ + BusinessRate) | ✅ Вынесены в `components/TrustBadges.astro`, подключены на 4 страницах |
 | Адаптив (mobile) | ⬜ Ждём макетов от дизайнеров |
 | Интеграции (форма, бронирование, newsletter) | ⬜ Не начаты |
 | Деплой на Cloudflare Pages | ⬜ Не начат |
@@ -145,7 +146,9 @@ src/
     - `emsella` — "What to expect / Book your session" + before/after
 24. **Sexual Health страница** — есть, но не в основном меню (`/services/sexualhealth` помечена как orphan в `data/navigation.ts`). Добавить в Wellness Services?
 25. **Emsculpt дубликат в Wellness+Aesthetic** — оба пункта меню ведут на `/services/emsculpt`. Sub-nav сейчас подсвечивает Wellness (первый match). Если хочется иначе — добавить `data.preferredSection`
-26. **TrustBadges** (Google ★ + BusinessRate) — есть в Figma на главной, About, Contact, Blog. У меня сейчас только на главной. Вынести в переиспользуемый компонент
+26. ~~**TrustBadges** (Google ★ + BusinessRate) — есть в Figma на главной, About, Contact, Blog. У меня сейчас только на главной. Вынести в переиспользуемый компонент~~ **Решено в сессии 2:** `src/components/TrustBadges.astro` подключён на главной (внутри Testimonials, `standalone={false}`) и на About / Contact / Blog (`standalone={true}`, белый фон + py-16).
+
+26а. **Прозрачность badge-PNG** (новое, обнаружено в сессии 2): `badge-google-5star.png` сохранён в RGB-режиме с непрозрачным белым фоном, `badge-best-of-2025.png` — RGBA, но alpha=255. На белом фоне About/Contact/Blog незаметно, но **на cream-фоне Testimonials главной badges выглядят как white "stickers"** на бежевом — это видимо было и до сессии. Решения: (a) перегнать PNG через PIL, замазав чистый белый в alpha=0; (b) попросить клиента дать badges с прозрачным фоном; (c) принять как есть (возможно, это осознанный дизайн).
 
 ### 🔵 Интеграции (помечены `data-todo` в коде)
 

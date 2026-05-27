@@ -13,6 +13,7 @@
  * понадобится прокрутка → проще всего подключить Swiper.js одной строкой.
  */
 import Container from '../Container.astro';
+import TrustBadges from '../TrustBadges.astro';
 
 const testimonials = [
   {
@@ -66,23 +67,8 @@ const testimonials = [
         <span class="h-[3px] w-[70px] bg-gold/40"></span>
       </div>
 
-      <div class="mt-8 flex items-center justify-center gap-8">
-        <img
-          src="/assets/images/badge-google-5star.png"
-          alt="5-star rated on Google"
-          width="225"
-          height="225"
-          class="h-[120px] w-auto object-contain"
-          loading="lazy"
-        />
-        <img
-          src="/assets/images/badge-best-of-2025.png"
-          alt="Best of 2025 — BusinessRate"
-          width="164"
-          height="142"
-          class="h-[120px] w-auto object-contain"
-          loading="lazy"
-        />
+      <div class="mt-8">
+        <TrustBadges standalone={false} />
       </div>
     </div>
   </Container>

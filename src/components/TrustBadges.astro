@@ -1,0 +1,89 @@
+---
+/**
+ * TrustBadges — секция с двумя бейджами доверия:
+ *   - Google 5-star rating
+ *   - Best of 2025 (BusinessRate)
+ *
+ * Источник в Figma:
+ *   - badge Google: узел 1:6894 (About), 1:250 (Home)
+ *   - badge BusinessRate: узел 1:6893 (About), 1:249 (Home)
+ *
+ * Используется на 4 страницах: главная, About, Contact, Blog.
+ *
+ * На главной — внутри Testimonials, без обёртки <section> и без
+ *   паддингов (там badges сидят под dots-индикаторами карусели на cream-фоне).
+ *   Передать standalone={false}.
+ *
+ * На About / Contact / Blog — как отдельная секция между основным
+ *   контентом и NewIn2026, на белом фоне. Это дефолт (standalone={true}).
+ *
+ * ⚠️ HANDOFF open questions #13, #14:
+ *   - Реальный ли это рейтинг 5★ на Google Maps?
+ *   - Настоящая ли награда "Best of 2025 BusinessRate" и есть ли
+ *     разрешение её использовать?
+ *   Пока показываем как в Figma; помечено data-todo для финального ревью.
+ */
+import Container from './Container.astro';
+
+interface Props {
+  /** Если true — рендерим обёртку <section> с фоном и паддингами.
+   *  Если false — только сам блок с badges (для встраивания, напр. в Testimonials). */
+  standalone?: boolean;
+}
+
+const { standalone = true } = Astro.props;
+---
+
+{standalone ? (
+  <section
+    class="w-full bg-white py-16"
+    data-section="trust-badges"
+    aria-label="Awards and ratings"
+  >
+    <Container>
+      <div
+        class="flex items-center justify-center gap-8"
+        data-todo="trust-badges-verify-with-client"
+      >
+        <img
+          src="/assets/images/badge-google-5star.png"
+          alt="5-star rated on Google"
+          width="225"
+          height="225"
+          class="h-[120px] w-auto object-contain"
+          loading="lazy"
+        />
+        <img
+          src="/assets/images/badge-best-of-2025.png"
+          alt="Best of 2025 — BusinessRate"
+          width="164"
+          height="142"
+          class="h-[120px] w-auto object-contain"
+          loading="lazy"
+        />
+      </div>
+    </Container>
+  </section>
+) : (
+  <div
+    class="flex items-center justify-center gap-8"
+    data-todo="trust-badges-verify-with-client"
+  >
+    <img
+      src="/assets/images/badge-google-5star.png"
+      alt="5-star rated on Google"
+      width="225"
+      height="225"
+      class="h-[120px] w-auto object-contain"
+      loading="lazy"
+    />
+    <img
+      src="/assets/images/badge-best-of-2025.png"
+      alt="Best of 2025 — BusinessRate"
+      width="164"
+      height="142"
+      class="h-[120px] w-auto object-contain"
+      loading="lazy"
+    />
+  </div>
+)}
