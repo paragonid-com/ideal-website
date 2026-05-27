@@ -224,8 +224,15 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
 
         {/* Подменю справа от пунктов. Открыто по умолчанию для defaultOpenLabel
             (= активный раздел текущей страницы, либо первый раздел как fallback
-            для главной). При hover/click на другом разделе — переключается. */}
-        <div class="flex-1 border-l border-gold/40 pl-12">
+            для главной). При hover/click на другом разделе — переключается.
+
+            min-h-[489px] — высота вертикальной линии-разделителя из Figma
+            (узел 1:3785, Line 1 = 1×489). Совпадает с высотой подменю
+            Wellness Services (9 items × 42px line-height + 8 × gap-2). Без этого
+            при переключении с 9-пунктового Wellness на 2-3-пунктовые Aesthetic/
+            About контейнер сжимается, линия укорачивается, и нижний футер
+            "прыгает" вверх на 30+px. */}
+        <div class="flex-1 border-l border-gold/40 pl-12 min-h-[489px]">
           {mainNav.map((group: NavGroup) => {
             const isDefaultOpen = group.label === defaultOpenLabel;
             return (
