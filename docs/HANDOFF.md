@@ -15,11 +15,12 @@
 |---|---|
 | Главная страница (`/`) | ✅ **Полностью сверстана + прошла визуальное ревью vs Figma** |
 | Header / Footer / общие компоненты | ✅ Готовы |
+| Sub-навигация (current page indicator) | ✅ Реализована — auto-open раздела + орнамент + `aria-current` |
 | Дизайн-токены (цвета, шрифты) | ✅ Извлечены и в `tailwind.config.mjs` |
 | Документация (карта меню, инвентарь фото) | ✅ В `/docs` |
 | Шаблон страниц услуг | ✅ Создан + Weight Loss наполнена |
 | 10 draft-заглушек услуг | ✅ Созданы (`draft: true`, ждут контент) |
-| Страницы About/Contact/Blog | ⬜ Не начаты |
+| Страницы About / Contact / Blog | ✅ Созданы (контент About есть; Blog — placeholder) |
 | Адаптив (mobile) | ⬜ Ждём макетов от дизайнеров |
 | Интеграции (форма, бронирование, newsletter) | ⬜ Не начаты |
 | Деплой на Cloudflare Pages | ⬜ Не начат |
@@ -263,6 +264,68 @@ emsella, emsculpt, ivtherapy, emface, sexualhealth
 
 ⚠️ Все изображения Weight Loss взяты из Figma (узлы 1:1489, 1:1549, 1:1615-1:1619, 1:1647)
 и являются **istockphoto stock-фотографиями** — лицензии требуют проверки клиентом.
+
+---
+
+## Sub-навигация (current page indicator)
+
+В overlay-меню реализована подсветка текущей страницы:
+
+1. **На сервере** определяется активный раздел через `Astro.url.pathname`
+   (см. `src/components/Header.astro` — функция `isGroupActive`).
+2. **Орнамент-цветочек** (узел Figma `1:1983` → `/public/assets/images/ornament.png`)
+   показывается рядом с заголовком активного раздела.
+3. **Текущий пункт** в подменю помечен `aria-current="page"` + `font-semibold`.
+4. **При открытии меню** автоматически раскрывается активный раздел.
+5. **При hover** на другой раздел — орнамент и панель переключаются;
+   `mouseleave` с навигации возвращает к active state.
+
+Emsculpt дублируется в Wellness + Aesthetic. Сейчас при заходе на
+`/services/emsculpt` активным становится **Wellness Services**
+(первый match по порядку в `mainNav`). Если клиент хочет иначе —
+можно добавить поле `data.preferredSection` во frontmatter.
+
+---
+
+## About / Contact / Blog
+
+Все три страницы реализованы как простые маршруты:
+- `src/pages/about.astro` — узел Figma `1:7077`
+- `src/pages/contact.astro` — узел `1:7682`
+- `src/pages/blog.astro` — узел `1:6840`
+
+Компоненты разнесены по папкам:
+- `src/components/about/{AboutHero, AboutIntro}.astro`
+- `src/components/contact/ContactHero.astro`
+- `src/components/blog/{BlogHero, BlogGrid, BlogPostCard}.astro`
+
+### Замечания по контенту
+
+**About**: контент полностью наполнен из Figma — большой H1
+"If you're ready to unlock your full potential..." + 3 параграфа body.
+⚠️ Фото Hero — `christin-hume-0MoF-Fe0w0A-unsplash` (Unsplash) с
+видимым **лого doTERRA** на бутылочке. Серьёзный юридический риск:
+использовать чужой brand на странице медклиники. **Заменить обязательно.**
+
+**Contact**: 4-полевая форма (Name/Email/Phone/Message). В Figma на
+этой же странице **ещё раз** показан блок "Start Your Wellness
+Transformation" с 5-полевой формой — реализовано как в макете, но
+помечено `data-todo="duplicate-section-confirm-with-client"`. Скорее
+всего, ошибка дизайнера; нужно уточнить у клиента, стоит ли дубль.
+
+**Blog**: 4 одинаковые placeholder-карточки ("Is Peptide Therapy Safe?
+Your Complete Guide"). В Figma все 4 карточки идентичны — реальных
+постов клиент не предоставил. Отдельные страницы `/blog/[slug]` пока
+не создавал. Когда придут реальные посты — добавим Content Collection
+'posts' (по аналогии с 'services') и динамический маршрут.
+
+### Trust Badges — не реализованы
+
+На макетах About / Contact / Blog есть блок с Google ★★★★★ + BusinessRate
+badge между основным контентом и NewIn2026. У меня этот блок пока есть
+только на главной (внутри Testimonials). Имеет смысл вынести в
+отдельный переиспользуемый компонент `TrustBadges.astro` и подключить
+на все 4 страницы. Не сделал в этой сессии — приоритет был на структуру.
 
 ---
 

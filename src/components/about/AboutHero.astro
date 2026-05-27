@@ -1,0 +1,59 @@
+---
+/**
+ * AboutHero — Hero страницы About.
+ *
+ * Структура (узлы Figma 1:6848-1:6876):
+ *  - Полноширинное тёмное фото (christin-hume-0MoF-Fe0w0A-unsplash), h=814
+ *  - Текст слева:
+ *      * H1 "ABOUT US" (x=145 y=203)
+ *      * Орнамент-цветочек (узел 1:6869, x=145 y=322 size=43x50)
+ *      * BOOK NOW кнопка (x=145 y=424)
+ *
+ * Цвет текста — золотой (на тёмном фото читается).
+ *
+ * ⚠️ Фото из Unsplash (christin-hume), на бутылочке видно лого doTERRA —
+ *    нужна проверка лицензии и риска использования чужого бренда.
+ */
+import { bookingCta } from '../../data/navigation.ts';
+---
+
+<section
+  class="relative h-[814px] w-full overflow-hidden bg-black"
+  data-section="about-hero"
+>
+  <img
+    src="/assets/images/about/hero.jpg"
+    alt="Person dispensing essential oil drops onto their palm"
+    class="absolute inset-0 h-full w-full object-cover object-right"
+    loading="eager"
+    decoding="async"
+    data-todo="image-license-check"
+  />
+
+  <div class="relative z-10 mx-auto h-full max-w-design px-[7.55%]">
+    <div class="flex h-full flex-col justify-start pt-[203px]">
+      <h1 class="font-heading text-h1 uppercase text-gold leading-tight">
+        ABOUT US
+      </h1>
+
+      {/* Орнамент-цветочек (узел Figma 1:6869) — декоративный элемент.
+          Тот же ассет что в overlay-menu для индикатора активного раздела. */}
+      <img
+        src="/assets/images/ornament.png"
+        alt=""
+        width="43"
+        height="50"
+        class="mt-4 h-[50px] w-[43px]"
+        aria-hidden="true"
+      />
+
+      <a
+        href={bookingCta.href}
+        data-todo="booking-system"
+        class="btn-gold mt-12 self-start min-w-[195px]"
+      >
+        BOOK NOW
+      </a>
+    </div>
+  </div>
+</section>

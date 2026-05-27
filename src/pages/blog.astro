@@ -1,0 +1,29 @@
+---
+/**
+ * /blog — Blog index страница.
+ *
+ * Структура (узел Figma 1:6840):
+ *   BlogHero      — фото девушки + "IDEAL MEDICAL BLOG" + BOOK NOW
+ *   BlogGrid      — сетка 2x2 placeholder-карточек
+ *   NewIn2026 + StartYourTransformation — переиспользование с главной
+ *
+ * Не создаём отдельные /blog/[slug] — клиент не предоставил постов,
+ * Figma показывает только placeholder. Когда придут реальные посты —
+ * добавим Content Collection 'posts' и динамический маршрут.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import BlogHero from '../components/blog/BlogHero.astro';
+import BlogGrid from '../components/blog/BlogGrid.astro';
+import NewIn2026 from '../components/sections/NewIn2026.astro';
+import StartYourTransformation from '../components/sections/StartYourTransformation.astro';
+---
+
+<BaseLayout
+  title="Blog | Ideal Medical & Wellness"
+  description="Articles and guides on medical wellness, weight loss, peptide therapy, and more from Ideal Medical & Wellness in Aventura, Florida."
+>
+  <BlogHero />
+  <BlogGrid />
+  <NewIn2026 />
+  <StartYourTransformation />
+</BaseLayout>

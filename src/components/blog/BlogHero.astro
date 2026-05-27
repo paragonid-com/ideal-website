@@ -1,0 +1,57 @@
+---
+/**
+ * BlogHero — Hero страницы Blog.
+ *
+ * Структура (узлы Figma 1:6544-1:6839):
+ *  - Полноширинное фото (istockphoto-1312587753, h=814)
+ *  - Текст слева:
+ *      * H1 "IDEAL MEDICAL / BLOG" (узлы 1:6837-1:6839, 2 строки)
+ *      * Орнамент-цветочек (узел 1:6836)
+ *      * BOOK NOW кнопка (узел 1:6805)
+ *
+ * Фото — светлое (девушка с телефоном), композиция слева — пустое место для текста.
+ *
+ * ⚠️ Фото istockphoto, нужна проверка лицензии (open question).
+ */
+import { bookingCta } from '../../data/navigation.ts';
+---
+
+<section
+  class="relative h-[814px] w-full overflow-hidden bg-cream"
+  data-section="blog-hero"
+>
+  <img
+    src="/assets/images/blog/hero.png"
+    alt="Woman relaxing with a phone"
+    class="absolute inset-0 h-full w-full object-cover object-right"
+    loading="eager"
+    decoding="async"
+    data-todo="image-license-check"
+  />
+
+  <div class="relative z-10 mx-auto h-full max-w-design px-[7.55%]">
+    <div class="flex h-full flex-col justify-start pt-[204px]">
+      <h1 class="font-heading text-h1 uppercase text-gold leading-tight">
+        Ideal Medical<br />
+        Blog
+      </h1>
+
+      <img
+        src="/assets/images/ornament.png"
+        alt=""
+        width="43"
+        height="50"
+        class="mt-4 h-[50px] w-[43px]"
+        aria-hidden="true"
+      />
+
+      <a
+        href={bookingCta.href}
+        data-todo="booking-system"
+        class="btn-gold mt-12 self-start min-w-[195px]"
+      >
+        BOOK NOW
+      </a>
+    </div>
+  </div>
+</section>

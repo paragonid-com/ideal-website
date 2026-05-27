@@ -25,6 +25,35 @@
 
 import { mainNav, bookingCta, type NavGroup } from '../data/navigation.ts';
 import FooterBlock from './FooterBlock.astro';
+
+// Определяем, какой раздел и пункт меню соответствуют текущей странице.
+// Используется для sub-навигации:
+//   - При открытии меню автоматически раскрывается секция, содержащая
+//     текущую страницу.
+//   - Возле заголовка раздела показывается орнамент-индикатор.
+//   - Текущий пункт в подменю помечается как "current"
+//     (визуально жирнее + aria-current="page").
+//
+// Нормализуем pathname: убираем trailing slash, чтобы '/services/weight-loss'
+// и '/services/weight-loss/' считались одной страницей.
+const rawPath = Astro.url.pathname;
+const currentPath = rawPath.length > 1 && rawPath.endsWith('/')
+  ? rawPath.slice(0, -1)
+  : rawPath;
+
+function isItemCurrent(href: string): boolean {
+  const normalized = href.length > 1 && href.endsWith('/') ? href.slice(0, -1) : href;
+  return normalized === currentPath;
+}
+
+function isGroupActive(group: NavGroup): boolean {
+  // Раздел активен, если содержит пункт-current,
+  // ИЛИ если сам раздел является ссылкой на текущую страницу.
+  if (group.href && isItemCurrent(group.href)) return true;
+  return Boolean(group.items?.some((item) => isItemCurrent(item.href)));
+}
+
+const activeGroupLabel = mainNav.find(isGroupActive)?.label;
 ---
 
 {/* === TOP BAR (на каждой странице) === */}
@@ -110,49 +139,76 @@ import FooterBlock from './FooterBlock.astro';
         {/* Основные пункты */}
         <nav class="flex flex-col gap-1" aria-label="Main navigation">
           <ul class="flex flex-col gap-1">
-            {mainNav.map((group: NavGroup) => (
-              <li class="group/item" data-nav-group={group.label}>
-                <button
-                  type="button"
-                  class="font-heading text-[64px] uppercase leading-tight text-gold transition-opacity hover:opacity-70"
-                  data-nav-target={group.label}
-                >
-                  {group.label}
-                </button>
-              </li>
-            ))}
+            {mainNav.map((group: NavGroup) => {
+              const isActive = group.label === activeGroupLabel;
+              return (
+                <li class="group/item" data-nav-group={group.label}>
+                  <button
+                    type="button"
+                    class="inline-flex items-center gap-4 font-heading text-[64px] uppercase leading-tight text-gold transition-opacity hover:opacity-70"
+                    data-nav-target={group.label}
+                    data-nav-active={isActive ? 'true' : undefined}
+                    aria-current={isActive ? 'true' : undefined}
+                  >
+                    <span>{group.label}</span>
+                    {/* Орнамент-индикатор активного раздела (узел Figma 1:1983).
+                        В макете показан только при наведении/раскрытии;
+                        здесь — постоянно для текущей секции (sub-навигация).
+                        JS ниже добавит/уберёт его при hover на других секциях. */}
+                    <img
+                      src="/assets/images/ornament.png"
+                      alt=""
+                      width="33"
+                      height="39"
+                      class={`h-[39px] w-[33px] flex-shrink-0 ${isActive ? 'opacity-100' : 'opacity-0'}`}
+                      data-nav-ornament={group.label}
+                      aria-hidden="true"
+                    />
+                  </button>
+                </li>
+              );
+            })}
           </ul>
 
-          {/* CTA BOOK APPOINTMENT */}
+          {/* CTA BOOK APPOINTMENT. min-w чтобы соответствовать ширине в Figma
+              (282px по узлу 1:2010), но позволить расти если нужно. */}
           <a
             href={bookingCta.href}
             data-todo="booking-system"
-            class="btn-gold mt-12 w-[250px]"
+            class="btn-gold mt-12 self-start min-w-[282px] whitespace-nowrap"
           >
             {bookingCta.label}
           </a>
         </nav>
 
-        {/* Подменю справа от пунктов. По умолчанию пустое.
-            JS-обработчик ниже подменяет items в зависимости от hover'а на основной пункт. */}
+        {/* Подменю справа от пунктов. Видно только для активного раздела
+            на текущей странице, либо при hover на другом разделе. */}
         <div class="flex-1 border-l border-gold/40 pl-12">
-          {mainNav.map((group: NavGroup) => (
-            <ul
-              class="hidden flex-col gap-2"
-              data-nav-panel={group.label}
-            >
-              {group.items?.map((item) => (
-                <li>
-                  <a
-                    href={item.href}
-                    class="font-sans text-[28px] text-gold transition-opacity hover:opacity-70"
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          ))}
+          {mainNav.map((group: NavGroup) => {
+            const isActive = group.label === activeGroupLabel;
+            return (
+              <ul
+                class={`flex-col gap-2 ${isActive ? 'flex' : 'hidden'}`}
+                data-nav-panel={group.label}
+              >
+                {group.items?.map((item) => {
+                  const current = isItemCurrent(item.href);
+                  return (
+                    <li>
+                      <a
+                        href={item.href}
+                        class={`font-sans text-[28px] transition-opacity hover:opacity-70
+                                ${current ? 'text-gold font-semibold' : 'text-gold'}`}
+                        aria-current={current ? 'page' : undefined}
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  );
+                })}
+              </ul>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -170,6 +226,14 @@ import FooterBlock from './FooterBlock.astro';
   const close = document.getElementById('menu-close');
   const overlay = document.getElementById('overlay-menu');
 
+  // Какой раздел активен по умолчанию (вычислен на сервере и проставлен
+  // через data-nav-active="true"). Используется как fallback при закрытии
+  // hover/focus, чтобы меню вернулось к "current page" состоянию.
+  function getActiveSection(): string | undefined {
+    const activeBtn = document.querySelector<HTMLElement>('[data-nav-target][data-nav-active="true"]');
+    return activeBtn?.dataset.navTarget;
+  }
+
   function openMenu() {
     if (!overlay || !toggle) return;
     overlay.classList.remove('hidden');
@@ -177,6 +241,8 @@ import FooterBlock from './FooterBlock.astro';
     overlay.setAttribute('aria-hidden', 'false');
     toggle.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
+    // При открытии — показываем активный раздел (если есть).
+    showPanel(getActiveSection());
   }
 
   function closeMenu() {
@@ -186,11 +252,9 @@ import FooterBlock from './FooterBlock.astro';
     overlay.setAttribute('aria-hidden', 'true');
     toggle.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
-    // Заодно прячем все панели подменю
-    document.querySelectorAll<HTMLElement>('[data-nav-panel]').forEach((p) => {
-      p.classList.remove('flex');
-      p.classList.add('hidden');
-    });
+    // Возвращаемся к активному состоянию (а не прячем всё) —
+    // чтобы при следующем открытии видеть актуальный sub-nav.
+    showPanel(getActiveSection());
   }
 
   toggle?.addEventListener('click', openMenu);
@@ -204,17 +268,28 @@ import FooterBlock from './FooterBlock.astro';
   });
 
   // Hover/focus по главному пункту → показать соответствующий подменю-список
+  // + показать орнамент рядом с этим пунктом.
   document.querySelectorAll<HTMLElement>('[data-nav-target]').forEach((btn) => {
     btn.addEventListener('mouseenter', () => showPanel(btn.dataset.navTarget));
     btn.addEventListener('focus', () => showPanel(btn.dataset.navTarget));
   });
 
+  // При уходе курсора с навигации — возвращаемся к active state.
+  const navList = document.querySelector<HTMLElement>('nav[aria-label="Main navigation"]');
+  navList?.addEventListener('mouseleave', () => showPanel(getActiveSection()));
+
   function showPanel(name?: string) {
-    if (!name) return;
+    // Панели
     document.querySelectorAll<HTMLElement>('[data-nav-panel]').forEach((p) => {
-      const match = p.dataset.navPanel === name;
+      const match = !!name && p.dataset.navPanel === name;
       p.classList.toggle('flex', match);
       p.classList.toggle('hidden', !match);
+    });
+    // Орнаменты — показываем только для активного раздела
+    document.querySelectorAll<HTMLElement>('[data-nav-ornament]').forEach((o) => {
+      const match = !!name && o.dataset.navOrnament === name;
+      o.classList.toggle('opacity-100', match);
+      o.classList.toggle('opacity-0', !match);
     });
   }
 </script>

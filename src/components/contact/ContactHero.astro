@@ -1,0 +1,96 @@
+---
+/**
+ * ContactHero — первая секция страницы Contact.
+ *
+ * Структура (узлы Figma 1:7469-1:7490):
+ *  - Светлый cream фон (Rectangle 5: 0,0 / 1920×1093)
+ *  - Слева: заголовок "START YOUR WELLNESS TRANSFORMATION" (3 строки) + орнамент
+ *  - Справа: форма с 4 полями (Name / Email / Phone / Message)
+ *    + кнопка SUBMIT
+ *
+ * Поля все full-width (узлы 1:7484-1:7487, линии w=914), как Email/Phone
+ * на главной форме.
+ *
+ * ⚠️ Дубль: ниже на странице (см. /pages/contact.astro) ещё одна форма
+ *    "Start Your Wellness Transformation" — это уже стандартный 5-полевой
+ *    StartYourTransformation с главной. Дублирование заголовков — open
+ *    question для клиента.
+ */
+---
+
+<section
+  class="w-full bg-cream"
+  data-section="contact-form"
+>
+  <div class="mx-auto max-w-design grid grid-cols-2 items-start gap-16 px-[7.55%] pt-[204px] pb-24 min-h-[1093px]">
+    {/* Левая колонка — заголовок (3 строки) + орнамент */}
+    <div>
+      <h1 class="font-heading text-h1 uppercase text-gold leading-tight">
+        Start Your<br />
+        Wellness<br />
+        Transformation
+      </h1>
+      <img
+        src="/assets/images/ornament.png"
+        alt=""
+        width="43"
+        height="50"
+        class="mt-8 h-[50px] w-[43px]"
+        aria-hidden="true"
+      />
+    </div>
+
+    {/* Правая колонка — форма */}
+    <form
+      action="#"
+      method="post"
+      data-todo="form-submission"
+      class="flex flex-col gap-12"
+    >
+      <label class="block">
+        <span class="font-sans text-[18px] text-gold">Name (Required)</span>
+        <input
+          type="text"
+          name="name"
+          required
+          class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-gold focus:outline-none"
+        />
+      </label>
+      <label class="block">
+        <span class="font-sans text-[18px] text-gold">Email (Required)</span>
+        <input
+          type="email"
+          name="email"
+          required
+          class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-gold focus:outline-none"
+        />
+      </label>
+      <label class="block">
+        <span class="font-sans text-[18px] text-gold">Phone (Required)</span>
+        <input
+          type="tel"
+          name="phone"
+          required
+          class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-gold focus:outline-none"
+        />
+      </label>
+      {/* Message — textarea с большой высотой (узел 1:7487 линия y=792 — это
+          нижняя граница большого пустого поля для сообщения) */}
+      <label class="block">
+        <span class="font-sans text-[18px] text-gold">Message</span>
+        <textarea
+          name="message"
+          rows="6"
+          class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-gold focus:outline-none resize-none"
+        ></textarea>
+      </label>
+
+      <button
+        type="submit"
+        class="btn-gold self-start min-w-[195px]"
+      >
+        SUBMIT
+      </button>
+    </form>
+  </div>
+</section>

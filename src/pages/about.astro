@@ -1,0 +1,36 @@
+---
+/**
+ * /about — статичная страница About.
+ *
+ * Структура (узел Figma 1:7077):
+ *   AboutHero        — тёмное фото + "ABOUT US" + BOOK NOW
+ *   AboutIntro       — большой центрированный H1 + 3-параграфный body
+ *   NewIn2026        — переиспользован с главной
+ *   StartYourTransformation — переиспользован с главной
+ *
+ * Note: ReadyToStart-блок и Footer добавляются автоматически через BaseLayout
+ * (Footer всегда; "Ready to Start" — встроен в StartYourTransformation
+ *  как продолжение секции).
+ *
+ * ⚠️ Sub-навигация: страница входит в "About Us" раздел меню.
+ *    /about — не перечислена в data/navigation.ts как пункт меню
+ *    (под "About Us" сейчас Blog и Contact). Но раздел "About Us" будет
+ *    подсвечен при открытии меню — это даёт false-positive sub-nav.
+ *    Решение: добавить /about первым пунктом в "About Us" в navigation.ts.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import AboutHero from '../components/about/AboutHero.astro';
+import AboutIntro from '../components/about/AboutIntro.astro';
+import NewIn2026 from '../components/sections/NewIn2026.astro';
+import StartYourTransformation from '../components/sections/StartYourTransformation.astro';
+---
+
+<BaseLayout
+  title="About Us | Ideal Medical & Wellness"
+  description="Learn about Ideal Medical & Wellness — a premier medical spa and wellness center in Aventura, Florida, dedicated to personalized concierge healthcare."
+>
+  <AboutHero />
+  <AboutIntro />
+  <NewIn2026 />
+  <StartYourTransformation />
+</BaseLayout>

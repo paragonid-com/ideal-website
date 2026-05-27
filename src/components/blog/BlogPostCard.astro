@@ -1,0 +1,50 @@
+---
+/**
+ * BlogPostCard — одна карточка в сетке Blog.
+ *
+ * Структура (узлы Figma для одной карточки, например 1:6797 + 1:6594 + 1:6550 + 1:6574):
+ *  - Фото 771×299 (горизонтальное, пейзажное)
+ *  - Заголовок (2 строки uppercase font-heading)
+ *  - Описание (4 строки font-sans)
+ *  - Кнопка "READ MORE" (216×45, gold)
+ */
+
+interface Props {
+  title: string;
+  description: string;
+  image: string;
+  imageAlt: string;
+  href: string;
+}
+
+const { title, description, image, imageAlt, href } = Astro.props;
+---
+
+<article class="flex flex-col">
+  <a href={href} class="block group" data-todo="blog-post-link">
+    <div class="relative w-full aspect-[771/299] overflow-hidden">
+      <img
+        src={image}
+        alt={imageAlt}
+        loading="lazy"
+        class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+      />
+    </div>
+  </a>
+
+  <h2 class="mt-6 font-heading text-[40px] uppercase text-gold leading-tight">
+    {title}
+  </h2>
+
+  <p class="mt-4 max-w-[642px] font-sans text-body-lg text-gold leading-relaxed">
+    {description}
+  </p>
+
+  <a
+    href={href}
+    data-todo="blog-post-link"
+    class="btn-gold mt-6 self-start min-w-[216px]"
+  >
+    READ MORE
+  </a>
+</article>

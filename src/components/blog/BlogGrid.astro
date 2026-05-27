@@ -1,0 +1,43 @@
+---
+/**
+ * BlogGrid — сетка постов 2×2 на странице Blog.
+ *
+ * В Figma (узлы 1:6594, 1:6597, 1:6600, 1:6603) все 4 карточки имеют
+ * ИДЕНТИЧНЫЙ placeholder-контент ("IS PEPTIDE THERAPY SAFE? YOUR COMPLETE
+ * GUIDE"). Это указывает, что **реальных постов клиент не предоставил** —
+ * макет показывает только структуру.
+ *
+ * Реализую соответственно: 4 placeholder-карточки с тем же контентом
+ * + data-todo на странице. Когда придут реальные посты — заменим
+ * на Content Collection с типом `posts` (как services).
+ */
+import BlogPostCard from './BlogPostCard.astro';
+
+// Placeholder контент. Все 4 карточки одинаковые — точно как в Figma.
+const placeholderPost = {
+  title: 'Is Peptide Therapy Safe? Your Complete Guide',
+  description:
+    'Peptide therapy is gaining attention as a transformative treatment that influences bodily functions for results you can see and feel. Peptides, naturally occurring in the body, are short chains of amino acids that serve as…',
+  image: '/assets/images/blog/post-placeholder.png',
+  imageAlt: 'Honey drizzling from a dipper — placeholder image',
+  href: '#',
+};
+
+const posts = Array(4).fill(placeholderPost);
+---
+
+<section
+  class="w-full bg-cream py-24"
+  data-section="blog-grid"
+  data-todo="blog-content-from-client"
+>
+  <div class="mx-auto max-w-design px-[7.55%]">
+    <ul class="grid grid-cols-1 gap-16 lg:grid-cols-2">
+      {posts.map((post) => (
+        <li>
+          <BlogPostCard {...post} />
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
