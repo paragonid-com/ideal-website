@@ -1,0 +1,94 @@
+---
+/**
+ * ServiceBeforeAfter — галерея до/после.
+ *
+ * Используется на странице emsculpt (узел Figma 1:5559 Image 90 — placeholder
+ * 1598×654). На макете виден один кадр с двумя фото бок-о-бок
+ * (BEFORE | AFTER EMSCULPT!) и caption под ним
+ * "X months after the last treatment, courtesy of Suzanne Kilmer, M.D."
+ *
+ * Стрелки (узлы 1:5505 Path 18, 1:5506 Path 19) намекают на возможность
+ * листать несколько кейсов — но в данных только один. На случай, если придёт
+ * несколько кейсов, делаем простой стэк по вертикали (без слайдера, чтобы
+ * не тянуть JS-зависимость; если клиент попросит — добавим потом).
+ *
+ * Контент-модель:
+ *   {
+ *     title?: "",   // на текущей странице emsculpt — нет заголовка над галереей
+ *     items: [
+ *       {
+ *         beforeImage: "/assets/.../before-1.webp",
+ *         afterImage: "/assets/.../after-1.webp",
+ *         caption: "3 months after the last treatment...",
+ *         alt: "Patient 1 abdomen before and after Emsculpt Neo"
+ *       },
+ *       ...
+ *     ]
+ *   }
+ */
+
+interface BeforeAfterItem {
+  beforeImage: string;
+  afterImage: string;
+  caption?: string;
+  alt: string;
+}
+
+interface Props {
+  title?: string;
+  items: BeforeAfterItem[];
+}
+
+const { title, items } = Astro.props;
+---
+
+<section
+  class="w-full bg-cream py-16"
+  data-section="service-before-after"
+>
+  <div class="mx-auto max-w-design px-[7.55%]">
+    {title && (
+      <h2 class="font-heading text-h1 uppercase text-gold leading-tight text-center mb-12">
+        {title}
+      </h2>
+    )}
+
+    <div class="space-y-12">
+      {items.map((item) => (
+        <figure>
+          <div class="grid grid-cols-2 gap-1 max-w-[1598px] mx-auto bg-white">
+            {/* BEFORE */}
+            <div class="relative aspect-[4/3]">
+              <img
+                src={item.beforeImage}
+                alt={`Before — ${item.alt}`}
+                class="block h-full w-full object-cover"
+                loading="lazy"
+              />
+              <span class="absolute top-4 left-4 font-sans text-[18px] uppercase tracking-wider text-gold bg-cream/80 px-3 py-1 rounded">
+                Before
+              </span>
+            </div>
+            {/* AFTER */}
+            <div class="relative aspect-[4/3]">
+              <img
+                src={item.afterImage}
+                alt={`After — ${item.alt}`}
+                class="block h-full w-full object-cover"
+                loading="lazy"
+              />
+              <span class="absolute top-4 left-4 font-sans text-[18px] uppercase tracking-wider text-gold bg-cream/80 px-3 py-1 rounded">
+                After
+              </span>
+            </div>
+          </div>
+          {item.caption && (
+            <figcaption class="mt-4 text-center font-sans text-[16px] text-gold leading-relaxed">
+              {item.caption}
+            </figcaption>
+          )}
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>

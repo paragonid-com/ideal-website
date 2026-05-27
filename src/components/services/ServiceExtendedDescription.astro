@@ -1,0 +1,40 @@
+---
+/**
+ * ServiceExtendedDescription — большой текстовый блок описания услуги без фото.
+ *
+ * Используется на странице emsculpt (узлы Figma 1:5451, 1:5454):
+ *  - Заголовок по центру, 2 строки ("EMSCULPT NEOTM / MORE FOR LESS IN BODY SHAPING")
+ *  - Большой многоабзацный текст под ним, ширина ~1120px, выравнен по центру.
+ *
+ * Фон cream.
+ */
+
+interface Props {
+  title: string;
+  body: string;
+}
+
+const { title, body } = Astro.props;
+const titleLines = title.split('\n');
+const paragraphs = body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+---
+
+<section
+  class="w-full bg-cream py-24"
+  data-section="service-extended-description"
+>
+  <div class="mx-auto max-w-design px-[7.55%] text-center">
+    <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
+      {titleLines.map((line, i) => (
+        <>
+          {line}
+          {i < titleLines.length - 1 && <br />}
+        </>
+      ))}
+    </h2>
+
+    <div class="mx-auto mt-12 max-w-[1120px] space-y-6 font-sans text-body-lg text-gold leading-relaxed text-center">
+      {paragraphs.map((p) => <p>{p}</p>)}
+    </div>
+  </div>
+</section>

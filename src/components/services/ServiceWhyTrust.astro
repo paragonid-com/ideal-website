@@ -1,0 +1,62 @@
+---
+/**
+ * ServiceWhyTrust — текст слева + фото команды справа.
+ *
+ * Используется на странице hormone (узлы Figma 1:3262, 1:3290, 1:3372):
+ *  - Слева: заголовок "WHY TRUST IDEAL MEDICAL AND WELLNESS?" (3 строки)
+ *           + многоабзацный body (660px ширина)
+ *  - Справа: фото команды (960×791, узел 1:3380 rs=w_1200,h_1200)
+ *
+ * Фон cream. Очень похоже структурно на ServiceWhoFor (текст+фото), но:
+ *  - нет буллет-списка
+ *  - другой заголовок
+ *  - body может быть многоабзацным
+ *
+ * Намеренно сделан отдельным компонентом, чтобы не плодить optional-поля
+ * в ServiceWhoFor (там bullets уже обязательны для Weight Loss).
+ */
+
+interface Props {
+  title: string;
+  body: string;
+  image: string;
+  imageAlt: string;
+}
+
+const { title, body, image, imageAlt } = Astro.props;
+const titleLines = title.split('\n');
+const paragraphs = body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+---
+
+<section
+  class="w-full bg-cream"
+  data-section="service-why-trust"
+>
+  <div class="mx-auto max-w-design grid grid-cols-1 lg:grid-cols-2 items-center min-h-[800px]">
+    {/* Левая колонка — заголовок + body */}
+    <div class="px-[7.55%] py-24">
+      <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
+        {titleLines.map((line, i) => (
+          <>
+            {line}
+            {i < titleLines.length - 1 && <br />}
+          </>
+        ))}
+      </h2>
+
+      <div class="mt-12 max-w-[660px] space-y-6 font-sans text-body-lg text-gold leading-relaxed">
+        {paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+
+    {/* Правая колонка — фото */}
+    <div class="relative h-full min-h-[600px]">
+      <img
+        src={image}
+        alt={imageAlt}
+        class="block h-full w-full object-cover"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>

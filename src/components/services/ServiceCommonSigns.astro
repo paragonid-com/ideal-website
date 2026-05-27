@@ -1,0 +1,75 @@
+---
+/**
+ * ServiceCommonSigns — 2x3 (или 1x4..2x4) сетка признаков / симптомов.
+ *
+ * Используется на странице hormone (узлы Figma 1:3236, 1:3305, 1:3316, 1:3345):
+ *  - Центрированный заголовок ("COMMON SIGNS OF HORMONAL IMBALANCE & DECLINE")
+ *  - Центрированный интро-параграф (3-4 строки)
+ *  - Сетка: 2 колонки × N/2 рядов, каждый элемент = заголовок (uppercase, gold) + body (gold)
+ *
+ * Фон gold (узел 1:3234 GOLD BACK на cream фоне), но текст у нас остаётся
+ * gold-bright на cream/gold переходе. По Figma — это участок с золотым
+ * градиентом, как у ServiceBenefits.
+ *
+ * Контент-модель:
+ *   {
+ *     title: "Common Signs of Hormonal\nImbalance & Decline",
+ *     intro: "Certain technical symptoms indicate that...",
+ *     items: [
+ *       { title: "Metabolic Adaptation:", body: "Struggling with..." },
+ *       ...
+ *     ]
+ *   }
+ */
+
+interface SignItem {
+  title: string;
+  body: string;
+}
+
+interface Props {
+  title: string;
+  intro: string;
+  items: SignItem[];
+}
+
+const { title, intro, items } = Astro.props;
+const titleLines = title.split('\n');
+---
+
+<section
+  class="relative w-full py-24 overflow-hidden"
+  data-section="service-common-signs"
+  style="background: radial-gradient(ellipse at center, #faf8eb 0%, #d2bea3 70%, #b89a76 100%);"
+>
+  <div class="mx-auto max-w-design px-[7.55%]">
+    <div class="text-center">
+      <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
+        {titleLines.map((line, i) => (
+          <>
+            {line}
+            {i < titleLines.length - 1 && <br />}
+          </>
+        ))}
+      </h2>
+
+      <p class="mx-auto mt-8 max-w-[830px] font-sans text-body-lg text-gold leading-relaxed">
+        {intro}
+      </p>
+    </div>
+
+    {/* 2 колонки на десктопе, 1 на мобильных. Между элементами — большие
+       вертикальные отступы (gap-y-12) и горизонтальные (gap-x-16),
+       чтобы соответствовать макету Figma. */}
+    <ul class="mt-20 grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-12 max-w-[1760px] mx-auto">
+      {items.map((item) => (
+        <li class="font-sans text-body-lg text-gold leading-relaxed">
+          <h3 class="font-sans font-semibold uppercase tracking-wide">
+            {item.title}
+          </h3>
+          <p class="mt-2">{item.body}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

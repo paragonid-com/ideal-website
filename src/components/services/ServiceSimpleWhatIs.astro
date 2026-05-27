@@ -1,0 +1,53 @@
+---
+/**
+ * ServiceSimpleWhatIs — компактный вариант "What is X?" БЕЗ фото.
+ *
+ * Используется на странице emsculpt (узлы Figma 1:5512, 1:5533 для emsculpt):
+ *  - Заголовок справа от центра (на странице emsculpt — заголовок "EMSCULPT NEOTM"
+ *    и body-параграф под ним; фон cream)
+ *
+ * Композиционно: 2-колоночный grid, заголовок слева, текст справа.
+ * Отличие от ServiceWhatIs — НЕТ фото слева; вместо фото используется пустое
+ * пространство (на emsculpt-странице слева находится hero-фото из предыдущей
+ * секции, заходящее в эту через нижнюю границу — но это решается на уровне
+ * шаблона страницы расположением секций).
+ *
+ * Структура контента:
+ *   {
+ *     title: "EMSCULPT NEOTM",      // короткий заголовок, h2
+ *     body: "Emsculpt Neo is..."     // 1-2 абзаца
+ *   }
+ */
+
+interface Props {
+  title: string;
+  body: string;
+}
+
+const { title, body } = Astro.props;
+const titleLines = title.split('\n');
+const paragraphs = body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+---
+
+<section
+  class="w-full bg-cream py-24"
+  data-section="service-simple-what-is"
+>
+  <div class="mx-auto max-w-design px-[7.55%] grid grid-cols-12 gap-8 items-start">
+    {/* Заголовок занимает ~5 из 12 колонок (примерно как у Weight Loss whatIs) */}
+    <div class="col-span-12 lg:col-span-5 lg:col-start-7">
+      <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
+        {titleLines.map((line, i) => (
+          <>
+            {line}
+            {i < titleLines.length - 1 && <br />}
+          </>
+        ))}
+      </h2>
+
+      <div class="mt-10 space-y-6 font-sans text-body-lg text-gold leading-relaxed">
+        {paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+  </div>
+</section>

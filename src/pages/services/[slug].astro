@@ -5,18 +5,38 @@
  * Читает Content Collection 'services' и рендерит общий шаблон.
  * Страницы с draft: true исключаются из getStaticPaths (не генерируются в build).
  *
- * Структура страницы (по образцу Weight Loss, узел Figma 1:1919):
+ * Гибридная архитектура (сессия 4): один шаблон умеет рендерить страницы
+ * разной структуры (Weight Loss / hormone / emsculpt / ...) через условный
+ * рендер опциональных секций. Какие секции у страницы есть — определяется
+ * наличием соответствующего поля во frontmatter.
+ *
+ * Эталонный порядок секций по образцу Weight Loss:
  *   ServiceHero
- *   ServiceCTABand        ← BOOK APPOINTMENT после Hero
- *   ServiceWhatIs
- *   ServiceCTABand        ← BOOK APPOINTMENT после WhatIs
- *   ServiceBenefits
- *   ServiceCTABand        ← BOOK APPOINTMENT после Benefits
- *   ServiceWhoFor
- *   ServiceResults
- *   ServiceFAQ
- *   NewIn2026             (переиспользованный с главной)
- *   StartYourTransformation (переиспользованный с главной)
+ *   ServiceCTABand
+ *   ServiceWhatIs           (если whatIsBody)
+ *   ServiceSimpleWhatIs     (если simpleWhatIs)         — emsculpt
+ *   ServiceCTABand          (если был whatIs или simpleWhatIs)
+ *   ServiceBenefits         (если benefits)             — Weight Loss
+ *   ServiceCommonSigns      (если commonSigns)          — hormone
+ *   ServiceCategoriesGrid   (первая, если categoriesGrids[0]) — emsculpt "What is For"
+ *   ServiceVideoEmbed       (если videoEmbed)           — emsculpt
+ *   ServiceCTABand          (если был любой central block)
+ *   ServiceExtendedDescription (если extendedDescription) — emsculpt "MORE FOR LESS"
+ *   ServiceWhoFor           (если whoForBullets)        — Weight Loss
+ *   ServiceRoadmap          (если roadmap)              — hormone
+ *   ServiceCategoriesGrid   (вторая, если categoriesGrids[1]) — emsculpt "Customize"
+ *   ServiceBeforeAfter      (если beforeAfter)          — emsculpt
+ *   ServiceResults          (если resultsBody)          — Weight Loss
+ *   ServiceWhyTrust         (если whyTrust)             — hormone
+ *   ServiceGoldBanner       (если goldBanner)           — hormone
+ *   ServiceExperience       (если experience)           — hormone
+ *   ServiceFAQ              (если faq)
+ *   NewIn2026               (всегда)
+ *   StartYourTransformation (всегда)
+ *
+ * Каждая страница берёт от этого порядка только те секции, что у неё
+ * заполнены — поэтому Weight Loss выглядит как раньше, а hormone/emsculpt
+ * получают свой набор без изменения шаблона.
  */
 
 import { getCollection } from 'astro:content';
@@ -24,8 +44,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import ServiceHero from '../../components/services/ServiceHero.astro';
 import ServiceCTABand from '../../components/services/ServiceCTABand.astro';
 import ServiceWhatIs from '../../components/services/ServiceWhatIs.astro';
+import ServiceSimpleWhatIs from '../../components/services/ServiceSimpleWhatIs.astro';
+import ServiceExtendedDescription from '../../components/services/ServiceExtendedDescription.astro';
 import ServiceBenefits from '../../components/services/ServiceBenefits.astro';
+import ServiceCommonSigns from '../../components/services/ServiceCommonSigns.astro';
+import ServiceTextWithPhoto from '../../components/services/ServiceTextWithPhoto.astro';
+import ServiceCategoriesGrid from '../../components/services/ServiceCategoriesGrid.astro';
+import ServiceVideoEmbed from '../../components/services/ServiceVideoEmbed.astro';
+import ServiceBeforeAfter from '../../components/services/ServiceBeforeAfter.astro';
 import ServiceWhoFor from '../../components/services/ServiceWhoFor.astro';
+import ServiceRoadmap from '../../components/services/ServiceRoadmap.astro';
+import ServiceWhyTrust from '../../components/services/ServiceWhyTrust.astro';
+import ServiceGoldBanner from '../../components/services/ServiceGoldBanner.astro';
+import ServiceExperience from '../../components/services/ServiceExperience.astro';
 import ServiceResults from '../../components/services/ServiceResults.astro';
 import ServiceFAQ from '../../components/services/ServiceFAQ.astro';
 import NewIn2026 from '../../components/sections/NewIn2026.astro';
@@ -41,6 +72,18 @@ export async function getStaticPaths() {
 
 const { service } = Astro.props;
 const { data } = service;
+
+// Удобные локальные ссылки на массив categoriesGrids (если есть)
+const firstCategoriesGrid = data.categoriesGrids?.[0];
+const secondCategoriesGrid = data.categoriesGrids?.[1];
+
+// Группируем textWithPhotoBlocks по позиции для удобного рендера
+const blocksBeforeCommonSigns = (data.textWithPhotoBlocks ?? []).filter(
+  (b) => b.position === 'before-common-signs'
+);
+const blocksAfterRoadmap = (data.textWithPhotoBlocks ?? []).filter(
+  (b) => b.position === 'after-roadmap'
+);
 ---
 
 <BaseLayout title={data.seoTitle} description={data.seoDescription}>
@@ -53,37 +96,176 @@ const { data } = service;
 
   <ServiceCTABand />
 
-  <ServiceWhatIs
-    title={data.whatIsTitle}
-    image={data.whatIsImage}
-    imageAlt={data.whatIsImageAlt}
-    body={data.whatIsBody}
-  />
+  {/* Long-form "What is X?" (Weight Loss формат: фото + многоабзацный текст) */}
+  {data.whatIsTitle && data.whatIsImage && data.whatIsBody && (
+    <>
+      <ServiceWhatIs
+        title={data.whatIsTitle}
+        image={data.whatIsImage}
+        imageAlt={data.whatIsImageAlt || ''}
+        body={data.whatIsBody}
+      />
+      <ServiceCTABand />
+    </>
+  )}
 
-  <ServiceCTABand />
+  {/* Короткий "What is X?" без фото (emsculpt) */}
+  {data.simpleWhatIs && (
+    <>
+      <ServiceSimpleWhatIs
+        title={data.simpleWhatIs.title}
+        body={data.simpleWhatIs.body}
+      />
+      <ServiceCTABand />
+    </>
+  )}
 
-  <ServiceBenefits
-    title={data.benefitsTitle}
-    intro={data.benefitsIntro}
-    benefits={data.benefits}
-  />
+  {/* Text+Photo блоки перед Common Signs (hormone "Reclaiming Yourself") */}
+  {blocksBeforeCommonSigns.map((block) => (
+    <ServiceTextWithPhoto
+      title={block.title}
+      body={block.body}
+      image={block.image}
+      imageAlt={block.imageAlt}
+      imageSide={block.imageSide}
+    />
+  ))}
 
-  <ServiceCTABand />
+  {/* Сетка преимуществ (Weight Loss) */}
+  {data.benefitsTitle && data.benefitsIntro && data.benefits && (
+    <>
+      <ServiceBenefits
+        title={data.benefitsTitle}
+        intro={data.benefitsIntro}
+        benefits={data.benefits}
+      />
+      <ServiceCTABand />
+    </>
+  )}
 
-  <ServiceWhoFor
-    title={data.whoForTitle}
-    image={data.whoForImage}
-    imageAlt={data.whoForImageAlt}
-    lead={data.whoForLead}
-    bullets={data.whoForBullets}
-  />
+  {/* Common Signs grid (hormone) */}
+  {data.commonSigns && (
+    <>
+      <ServiceCommonSigns
+        title={data.commonSigns.title}
+        intro={data.commonSigns.intro}
+        items={data.commonSigns.items}
+      />
+      <ServiceCTABand />
+    </>
+  )}
 
-  <ServiceResults
-    title={data.resultsTitle}
-    body={data.resultsBody}
-  />
+  {/* Первая Categories Grid (emsculpt "What is For") */}
+  {firstCategoriesGrid && (
+    <ServiceCategoriesGrid
+      title={firstCategoriesGrid.title}
+      background={firstCategoriesGrid.background}
+      items={firstCategoriesGrid.items}
+    />
+  )}
 
-  <ServiceFAQ faq={data.faq} />
+  {/* Video embed (emsculpt) */}
+  {data.videoEmbed && (
+    <ServiceVideoEmbed
+      url={data.videoEmbed.url}
+      posterImage={data.videoEmbed.posterImage}
+      posterAlt={data.videoEmbed.posterAlt}
+    />
+  )}
+
+  {/* Extended description (emsculpt "MORE FOR LESS IN BODY SHAPING") */}
+  {data.extendedDescription && (
+    <>
+      <ServiceExtendedDescription
+        title={data.extendedDescription.title}
+        body={data.extendedDescription.body}
+      />
+      <ServiceCTABand />
+    </>
+  )}
+
+  {/* Who is For (Weight Loss) */}
+  {data.whoForTitle && data.whoForImage && data.whoForLead && data.whoForBullets && (
+    <ServiceWhoFor
+      title={data.whoForTitle}
+      image={data.whoForImage}
+      imageAlt={data.whoForImageAlt || ''}
+      lead={data.whoForLead}
+      bullets={data.whoForBullets}
+    />
+  )}
+
+  {/* Roadmap (hormone) */}
+  {data.roadmap && (
+    <ServiceRoadmap
+      title={data.roadmap.title}
+      intro={data.roadmap.intro}
+      items={data.roadmap.items}
+    />
+  )}
+
+  {/* Text+Photo блоки после Roadmap (если в будущем понадобятся) */}
+  {blocksAfterRoadmap.map((block) => (
+    <ServiceTextWithPhoto
+      title={block.title}
+      body={block.body}
+      image={block.image}
+      imageAlt={block.imageAlt}
+      imageSide={block.imageSide}
+    />
+  ))}
+
+  {/* Вторая Categories Grid (emsculpt "Customize Your Treatment") */}
+  {secondCategoriesGrid && (
+    <ServiceCategoriesGrid
+      title={secondCategoriesGrid.title}
+      background={secondCategoriesGrid.background}
+      items={secondCategoriesGrid.items}
+    />
+  )}
+
+  {/* Before / After (emsculpt) */}
+  {data.beforeAfter && (
+    <ServiceBeforeAfter
+      title={data.beforeAfter.title}
+      items={data.beforeAfter.items}
+    />
+  )}
+
+  {/* The Results (Weight Loss) */}
+  {data.resultsBody && (
+    <ServiceResults
+      title={data.resultsTitle || 'THE RESULTS'}
+      body={data.resultsBody}
+    />
+  )}
+
+  {/* Why Trust (hormone) */}
+  {data.whyTrust && (
+    <ServiceWhyTrust
+      title={data.whyTrust.title}
+      body={data.whyTrust.body}
+      image={data.whyTrust.image}
+      imageAlt={data.whyTrust.imageAlt}
+    />
+  )}
+
+  {/* Gold pull-quote banner (hormone) */}
+  {data.goldBanner && <ServiceGoldBanner text={data.goldBanner} />}
+
+  {/* Experience (hormone — DNA фото + текст + телефон + CTA) */}
+  {data.experience && (
+    <ServiceExperience
+      title={data.experience.title}
+      body={data.experience.body}
+      image={data.experience.image}
+      imageAlt={data.experience.imageAlt}
+      phone={data.experience.phone}
+    />
+  )}
+
+  {/* FAQ */}
+  {data.faq && data.faq.length > 0 && <ServiceFAQ faq={data.faq} />}
 
   <NewIn2026 />
   <StartYourTransformation />

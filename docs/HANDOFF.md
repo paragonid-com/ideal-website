@@ -1,4 +1,4 @@
-# HANDOFF — состояние проекта на конец сессии 3
+# HANDOFF — состояние проекта на конец сессии 4
 
 Этот документ — точка входа для **следующей сессии работы с Claude**.
 Прочитав его, новая сессия сможет продолжить работу без необходимости
@@ -20,14 +20,16 @@
 | Sub-навигация (current page indicator) | ✅ Реализована — auto-open раздела + орнамент + `aria-current` |
 | Дизайн-токены (цвета, шрифты) | ✅ Извлечены и в `tailwind.config.mjs` |
 | Документация (карта меню, инвентарь фото) | ✅ В `/docs` |
-| Шаблон страниц услуг | ✅ Создан + Weight Loss наполнена |
-| 10 draft-заглушек услуг | ✅ Созданы (`draft: true`, ждут контент). 5 из них требуют свои кастомные шаблоны — см. ниже |
+| Шаблон страниц услуг | ✅ Гибридный шаблон с условным рендером (сессия 4): поддерживает Weight Loss / hormone / emsculpt структуры без отдельных файлов |
+| 10 draft-заглушек услуг | 🟡 Hormone и Emsculpt сняты с draft в сессии 4. Остальные 8 (regenerative, bloodwork, exomind, peptide, emsella, ivtherapy, emface, sexualhealth) — всё ещё `draft: true` |
+| Hormone (`/services/hormone`) | ✅ **Наполнена контентом из Figma (сессия 4)**: hero + whatIs + reclaiming + commonSigns + roadmap + whyTrust + goldBanner + experience. Тексты FAQ ждут от клиента. |
+| Emsculpt Neo (`/services/emsculpt`) | ✅ **Наполнена контентом из Figma (сессия 4)**: hero + simpleWhatIs + 2× categoriesGrid + videoEmbed (placeholder) + extendedDescription + beforeAfter. Тексты FAQ ждут от клиента. |
 | Страницы About / Contact / Blog | ✅ Созданы (контент About есть; Blog — placeholder) |
 | WebP-ассеты в подпапках (about/, blog/, services/weight-loss/) | ✅ Восстановлены в сессии 3 — были потеряны в коммите 215ea55 при WebP-миграции |
 | TrustBadges (Google ★ + BusinessRate) | ✅ Вынесены в `components/TrustBadges.astro`, подключены на 4 страницах |
 | Адаптив (mobile) | ⬜ Ждём макетов от дизайнеров |
 | Интеграции (форма, бронирование, newsletter) | ⬜ Не начаты |
-| Деплой на Cloudflare Pages | 🟡 Конфиг готов (`.nvmrc`, `_headers`, `output: 'static'`, README с шагами). Ждёт нажатия "Save and Deploy" в дашборде Cloudflare клиентом |
+| Деплой на Cloudflare Pages | ✅ Сайт деплоится (актуализирую блокер в сессии 4 — раньше был помечен 🟡 как "ждёт нажатия Save and Deploy") |
 | Lighthouse-аудит | ✅ Performance 95+, A11y 96, BP/SEO 100 на всех страницах. PNG → WebP массовая миграция (37MB → 2MB) |
 | Инвентарь `data-todo` | ✅ Собран в `docs/TODO-INVENTORY.md` — всё, что ждёт клиента |
 
@@ -117,6 +119,183 @@ PNG/JPG из подпапок `about/`, `blog/`, `services/weight-loss/`, но
 
 ⚠️ Image license issues остались как были (doTERRA на About, istockphoto
 watermarks на Blog/Weight Loss) — см. блокеры #1-9 ниже.
+
+---
+
+## Сессия 4 — что доделано (27.05.26)
+
+Основной приоритет, который висел с сессии 3 — наполнение 5 specialty-страниц
+услуг (`hormone`, `emsculpt`, `exomind`, `emface`, `emsella`), которые
+не подходят под стандартный шаблон Weight Loss. В сессии 4 закрыты **две из
+пяти** (`hormone` и `emsculpt`) с одновременным рефакторингом архитектуры
+шаблона.
+
+### Архитектурное решение — гибридный шаблон
+
+Из двух вариантов, обсуждавшихся в HANDOFF сессии 3:
+- "общий `[slug].astro` с условными секциями" против
+- "отдельные `.astro` файлы под каждый specialty-slug"
+
+выбран **гибрид по варианту 1**, точнее формулировке из секции "Что делать в
+следующей сессии":
+
+> «общие секции (Hero/CTABand/FAQ) переиспользовать, специфичные секции —
+> отдельные компоненты под папкой `src/components/services/`»
+
+Концепция:
+
+1. **Schema (`src/content.config.ts`)** — все поля кроме `seo*`, `hero*` и
+   `category` стали `optional`. Добавлены опциональные блоки для специфики
+   каждой страницы (см. ниже).
+2. **`[slug].astro`** — один общий шаблон, рендерящий каждую секцию **условно**
+   через `{data.foo && <ServiceFoo ... />}` в фиксированном порядке.
+3. **Контент-файлы (`*.md`)** определяют структуру страницы тем, **какие
+   поля заполнены**. Weight Loss заполняет whatIs/benefits/whoFor/results;
+   hormone заполняет whatIs/textWithPhoto/commonSigns/roadmap/whyTrust/
+   goldBanner/experience; emsculpt — simpleWhatIs/categoriesGrids/videoEmbed/
+   extendedDescription/beforeAfter. Никакого дублирования шаблона.
+
+### Новые компоненты (10 шт. в `src/components/services/`)
+
+| Компонент | Где используется |
+|---|---|
+| `ServiceSimpleWhatIs` | emsculpt — короткий "What is X?" без фото |
+| `ServiceExtendedDescription` | emsculpt — "MORE FOR LESS IN BODY SHAPING" |
+| `ServiceCommonSigns` | hormone — 2×N сетка симптомов на gold-фоне |
+| `ServiceCategoriesGrid` | emsculpt — 3-колонная сетка фото+title+(body). Используется **дважды** на странице (What Is For + Customize Your Treatment) |
+| `ServiceVideoEmbed` | emsculpt — YouTube embed с placeholder-режимом, если URL пуст |
+| `ServiceBeforeAfter` | emsculpt — галерея до/после в одну строку (без слайдера-JS) |
+| `ServiceRoadmap` | hormone — 2-колоночный список шагов roadmap |
+| `ServiceWhyTrust` | hormone — текст слева + фото команды справа |
+| `ServiceGoldBanner` | hormone — full-width pull-quote на gold-фоне |
+| `ServiceExperience` | hormone — фото слева + текст/телефон/CTA справа |
+| `ServiceTextWithPhoto` | универсальный "текст + фото", используется на hormone для "Reclaiming Yourself". Поддерживает `imageSide`, рендерится по `position` в массиве `textWithPhotoBlocks` |
+
+### Расширение schema (`src/content.config.ts`)
+
+Все эти поля во frontmatter — `optional`:
+- `whatIs*` (старые поля Weight Loss-формата)
+- `simpleWhatIs: { title, body }`
+- `extendedDescription: { title, body }`
+- `benefits*` (старые)
+- `whoFor*` (старые)
+- `commonSigns: { title, intro, items: [{ title, body }] }`
+- `categoriesGrids: [{ title?, background, items: [{ title, body?, image, imageAlt }] }]` — массив, потому что emsculpt использует **дважды**
+- `videoEmbed: { url?, posterImage?, posterAlt }`
+- `beforeAfter: { title?, items: [{ beforeImage, afterImage, caption?, alt }] }`
+- `roadmap: { title, intro, items: [{ title, body }] }`
+- `whyTrust: { title, body, image, imageAlt }`
+- `goldBanner: string` (с поддержкой `\n` для переноса)
+- `experience: { title, body, image, imageAlt, phone? }`
+- `textWithPhotoBlocks: [{ title, body, image, imageAlt, imageSide, position }]` — `position` определяет где в шаблоне разместить блок (`before-common-signs` или `after-roadmap`)
+- `results*` (старые)
+- `faq` (теперь optional)
+
+### Порядок секций в `[slug].astro`
+
+Шаблон рендерит секции в фиксированном порядке (только те, что заполнены):
+
+```
+ServiceHero
+ServiceCTABand
+ServiceWhatIs              (если whatIsBody)
+ServiceSimpleWhatIs        (если simpleWhatIs)
+ServiceTextWithPhoto×N     (position='before-common-signs')
+ServiceBenefits            (если benefits)
+ServiceCommonSigns         (если commonSigns)
+ServiceCategoriesGrid #1   (если categoriesGrids[0])
+ServiceVideoEmbed          (если videoEmbed)
+ServiceExtendedDescription (если extendedDescription)
+ServiceWhoFor              (если whoForBullets)
+ServiceRoadmap             (если roadmap)
+ServiceTextWithPhoto×N     (position='after-roadmap')
+ServiceCategoriesGrid #2   (если categoriesGrids[1])
+ServiceBeforeAfter         (если beforeAfter)
+ServiceResults             (если resultsBody)
+ServiceWhyTrust            (если whyTrust)
+ServiceGoldBanner          (если goldBanner)
+ServiceExperience          (если experience)
+ServiceFAQ                 (если faq)
+NewIn2026                  (всегда)
+StartYourTransformation    (всегда)
+```
+
+CTA-bands вставлены только между крупными контент-блоками (после Hero,
+WhatIs, Benefits, CommonSigns). После Roadmap / Before-After / Experience —
+**не вставляются**, как в эталоне Figma.
+
+### Контент-файлы
+
+**`hormone.md`** — все тексты вытащены из Figma (узел `1:3708` через
+`Figma:get_design_context`):
+- Hero "AVENTURA BIOIDENTICAL HORMONE REPLACEMENT THERAPY"
+- WhatIs (5-строчный заголовок "Understanding... Healthy Aging in Aventura, FL"
+  + 2 абзаца body)
+- Reclaiming Yourself (textWithPhotoBlocks position='before-common-signs')
+- Common Signs (7 items: Metabolic Adaptation, Physical Deconditioning,
+  Cognitive Burnout, Androgen Decline, Endocrine Fatigue, Micronutrient Gaps,
+  Vasomotor Instability — все с реальными текстами из Figma)
+- Roadmap (5 шагов: Discovery, Safeguard, Science, Result, Delivery)
+- Why Trust (2 абзаца body)
+- Gold Banner ("We don't just want to treat you...")
+- Experience (текст + телефон 305.650.1884 + BOOK APPOINTMENT)
+- FAQ — placeholder "Lorem Ipsum" вопросы из Figma (тексты ждут от клиента)
+
+**`emsculpt.md`** — узел Figma `1:5795`:
+- Hero "GET THE BODY YOU WANT EMSCULPT NEO™"
+- SimpleWhatIs ("EMSCULPT NEO™" + 1 абзац)
+- Categories Grid #1 "WHAT EMSCULPT NEO™ IS FOR" (3 категории: BODY SCULPTING /
+  FUNCTIONAL WELLNESS / CORE TO FLOOR, без body-текстов как в Figma)
+- VideoEmbed (URL пустой — placeholder "Video coming soon" на 16:9 блоке)
+- ExtendedDescription "MORE FOR LESS IN BODY SHAPING" (3 абзаца)
+- Categories Grid #2 "CUSTOMIZE YOUR TREATMENT" (3 аппликатора: LARGE / EDGE /
+  SMALL, с body-описаниями)
+- BeforeAfter (1 кейс с caption "3 months after the last treatment...")
+- FAQ — placeholder "Lorem ipsum..." вопросы из Figma
+
+### Placeholder-ассеты
+
+Реальных фото от клиента нет, использованы заглушки (копии из weight-loss):
+
+**`public/assets/images/services/hormone/`** (5 файлов): `hero.webp`,
+`what-is.webp`, `reclaiming-yourself.webp`, `why-trust-team.webp`,
+`experience-dna.webp`.
+
+**`public/assets/images/services/emsculpt/`** (9 файлов): `hero.webp`,
+`category-{body-sculpting,functional-wellness,core-to-floor}.webp`,
+`applicator-{large,edge,small}.webp`, `before-1.webp`, `after-1.webp`.
+
+Все 14 файлов помечены в `TODO-INVENTORY.md` как ожидающие реальных фото
+от клиента (см. блокеры #9, #38).
+
+### Визуальное ревью
+
+Снят полный набор скриншотов через Playwright (1920×1080 viewport), сравнён
+с эталонами Figma `get_screenshot`. Поправлены два бага:
+- `text-h2` (несуществующий tailwind-класс) → конкретные `text-[38px]` /
+  `text-[40px]` в `ServiceGoldBanner` и `ServiceExperience`
+- Порядок секций hormone: сначала ставил Common Signs до Reclaiming,
+  переставил Reclaiming перед Common Signs (как в Figma)
+
+Все 7 страниц (home, about, blog, contact, weight-loss, **hormone**,
+**emsculpt**) собираются и рендерятся корректно. Build проходит без
+warnings/errors.
+
+### Что осталось от 5 specialty-страниц
+
+Из 5 specialty-страниц, отмеченных приоритетом в HANDOFF сессии 3:
+- ✅ `hormone` — сделана
+- ✅ `emsculpt` — сделана
+- ⬜ `exomind` — `draft: true`, ждёт сессии 5
+- ⬜ `emface` — `draft: true`, ждёт сессии 5
+- ⬜ `emsella` — `draft: true`, ждёт сессии 5
+
+Архитектура (гибрид с условными секциями) спроектирована так, что для
+оставшихся 3 страниц **новых компонентов скорее всего не понадобится** —
+их структура должна покрываться существующими блоками (Hero, SimpleWhatIs,
+TextWithPhoto, CategoriesGrid, BeforeAfter, FAQ). Если придётся —
+добавятся ещё 1-2 компонента (например, под фото-сетку лица 3×2 для
+emface), но фундаментально шаблон готов.
 
 ---
 
@@ -309,50 +488,56 @@ grep -rn 'data-todo' src/
 
 ---
 
-## Что делать в следующей сессии (сессия 4+)
+## Что делать в следующей сессии (сессия 5+)
 
-### Главный приоритет — 5 specialty-страниц услуг с кастомной структурой
+### Главный приоритет — 3 оставшиеся specialty-страницы
 
-Сейчас в `draft: true` лежат: **hormone, emsculpt, exomind, emface, emsella**.
-Они **не генерируются** в `astro build` (поэтому 5 страниц вместо 16).
-В меню есть пункты, ведущие на эти URL — они 404'ят. Это самая
-заметная "дыра" в проекте.
+После сессии 4 в `draft: true` остались: **exomind, emface, emsella**.
+Архитектура шаблона теперь гибридная и доказана на hormone+emsculpt
+(см. секцию "Сессия 4 — что доделано"). Для оставшихся трёх:
 
-Стандартный шаблон `[slug].astro` им НЕ подходит (см. секцию "Шаблон
-страниц услуг" → "Решения по 3 вопросам, поднятым в сессии"). Что нужно:
-
-1. Снять Figma-узлы каждой из 5 страниц через `Figma:get_screenshot`
-   и/или `Figma:get_design_context`. Понять структуру каждой.
-2. Архитектурное решение: либо расширить общий `[slug].astro` шаблон
-   с условными секциями (флаги в frontmatter), либо сделать
-   отдельные `.astro` файлы под каждую страницу. Рекомендую гибрид:
-   общие секции (Hero/CTABand/FAQ) переиспользовать, специфичные
-   секции — отдельные компоненты под папкой `src/components/services/`.
-3. Спроектировать новые компоненты по специфике каждой страницы:
-   - **hormone** — `ServiceCommonSigns.astro` (2-колонный список)
-   - **emsculpt** — `ServiceVideoEmbed.astro` (YouTube embed) +
-     `ServiceBeforeAfter.astro` (галерея) + `ServiceCategoriesGrid.astro` (3 категории сверху)
-   - **exomind** — `ServiceTMSDevice.astro` (кастомные секции с устройством)
-   - **emface** — `ServiceFaceMap.astro` (фото-сетка лица 3×2)
-   - **emsella** — `ServiceWhatToExpect.astro` + `ServiceBookYourSession.astro` + ServiceBeforeAfter (переиспользовать)
-4. Перевести `draft: false`, заполнить контент из Figma в markdown.
+1. Снять Figma-узлы через `Figma:get_design_context`:
+   - `/exomind` → nodeId `1:3218`
+   - `/emface` → nodeId `1:6536`
+   - `/emsella` → nodeId `1:5436`
+2. Сверить структуру каждой с существующими компонентами в
+   `src/components/services/`. Скорее всего понадобятся **только новые
+   компоненты для специфичных блоков** (не вся страница):
+   - **emface** — фото-сетка лица 3×2 (eyes/nose/forehead/jawline/submental/
+     face). Возможно реализуется через `ServiceCategoriesGrid` с 6 items
+     и `lg:grid-cols-3` + 2 ряда — стоит сначала проверить, прежде чем
+     писать новый компонент `ServiceFaceMap`.
+   - **emsella** — "What to expect" + "Book your session" + before/after.
+     Beforeafter уже есть. "What to expect" и "Book your session" могут
+     быть `ServiceCategoriesGrid` без фото или `ServiceTextWithPhoto`.
+   - **exomind** — кастомные секции с устройством TMS. Скорее всего
+     нужен один новый компонент `ServiceTMSDevice` (или `ServiceDeviceShowcase`).
+3. Расширить schema **только если** существующих полей не хватит.
+4. Заполнить контент из Figma в markdown, снять `draft: false`.
 5. ⚠️ Trademark ассеты (EMFACE/EMSCULPT/EMSELLA/EXOMIND — BTL trademarks)
    требуют авторизации от BTL Industries. Это **блокер запуска**
    этих страниц, но не блокер вёрстки — можно собрать макетно.
 
-Время: оценочно 1-2 полноценные сессии под все 5 страниц.
+Оценочно — одна полная сессия на все три.
 
-### Альтернативы если specialty-страницы пока не приоритет
+### Альтернативы
 
-- **Cloudflare Pages первый deploy** — конфиг готов (`.nvmrc`, `_headers`,
-  `astro.config.mjs site placeholder`). Нужно: залогиниться в Cloudflare
-  dashboard под `paragonid-com`, привязать репо, нажать Save and Deploy.
-  После первого деплоя — подставить выданный `*.pages.dev` URL в
-  `astro.config.mjs → site` и закоммитить.
+- **Реальные фото для hormone + emsculpt** — сейчас 14 placeholder-webp
+  (копии weight-loss). Когда клиент пришлёт реальные ассеты — просто
+  заменить файлы в `public/assets/images/services/hormone/` и
+  `services/emsculpt/` (имена сохранены семантически: `hero.webp`,
+  `category-body-sculpting.webp` и т.д.).
+- **FAQ-тексты** для hormone и emsculpt — сейчас Lorem ipsum как в Figma,
+  ждут от клиента.
+- **YouTube URL для emsculpt** — `videoEmbed.url` пустой, placeholder
+  "Video coming soon". Заменить когда клиент пришлёт ссылку.
 - **A11y color-contrast (#37)**: gold #8d7431 на cream #eae4d2 = 3.54:1
   при норме AA 4.5:1. Затемнить gold до #7a6428 в `tailwind.config.mjs`
   и проверить визуально на всех страницах.
-- **Адаптив главной** — когда придут мобильные макеты.
+- **Адаптив главной + services** — когда придут мобильные макеты.
+  Сейчас все новые компоненты уже используют `grid-cols-1 lg:grid-cols-2`
+  и `flex-wrap`, базовое мобильное поведение работает, но без точной
+  выверки vs дизайн.
 - **Реальные blog-посты** — когда придут от клиента: добавить
   Content Collection 'posts' + динамический маршрут `/blog/[slug]`.
 - **Интеграции** — booking system, form submission, newsletter ESP
@@ -544,9 +729,15 @@ e5c67bf fix(home): correct signature card images — Figma-faithful sizing
 c1797a2 fix(header): hover-preserving zone covers headings + submenu
 d82c29b fix(header): freeze submenu container height to Figma line length
 ef8ed39 fix(assets): restore missing webp images in subfolders
+26d9ae5 docs(handoff): update for session 3
 ```
 
-(плюс коммит с этим обновлением HANDOFF после сессии 3)
+**Сессия 4** — гибридная архитектура шаблона + страницы hormone и emsculpt:
+```
+TBD feat(services): hybrid template + hormone & emsculpt pages
+```
+(один общий коммит — расширение schema + 10 новых компонентов + обновлённый
+`[slug].astro` + наполненные `hormone.md`/`emsculpt.md` + 14 placeholder-webp).
 
 ---
 
@@ -599,35 +790,42 @@ Playwright + headless Chromium и сравнивался с `Figma:get_screensho
 >
 > Путь к проекту локально: /Users/yuris/Documents/Claude-Projects/ideal-website (macOS). Все bash-команды для меня — с этим путём.
 >
-> Состояние проекта описано в `docs/HANDOFF.md` — прочитай его перед тем как что-то делать. Особенно: TL;DR-таблицу + секцию **"Сессия 3 — что доделано"** в начале + **"Открытые вопросы и блокеры"** в конце.
+> Состояние проекта описано в `docs/HANDOFF.md` — прочитай его перед тем как что-то делать. Особенно: TL;DR-таблицу + секцию **"Сессия 4 — что доделано"** в начале (там описана гибридная архитектура шаблона услуг и какие компоненты появились) + **"Открытые вопросы и блокеры"** в конце.
 >
-> Что готово после сессии 3: главная (визуальное ревью пройдено + все 5 карточек Signature Services правильно отрендерены), шаблон страниц услуг + Weight Loss с реальным контентом, About / Contact / Blog со всеми работающими картинками, sub-навигация с подсветкой текущей страницы, overlay-меню с hover/click/touch поведением (sticky-section, hover-zone, фиксированная высота линии). Билд проходит, 5 страниц генерируются.
+> Что готово после сессии 4: главная (визуальное ревью пройдено), шаблон страниц услуг с **гибридной архитектурой** — один `[slug].astro` с условным рендером 18+ типов секций, по фактическому наполнению frontmatter определяющий структуру страницы. На этом шаблоне работают Weight Loss / **hormone** / **emsculpt** (3 разные структуры, без дублирования). About / Contact / Blog работают. Билд проходит, **7 страниц** генерируются. Сайт уже деплоится в Cloudflare Pages.
 >
-> Самый приоритетный следующий шаг — **5 specialty-страниц услуг с кастомной структурой** (hormone, emsculpt, exomind, emface, emsella). Они сейчас в `draft: true` и не генерируются, поэтому 5 пунктов меню ведут в 404. Структуры в Figma НЕ совпадают со стандартным шаблоном (см. секцию "Шаблон страниц услуг" → "Решения по 3 вопросам" в HANDOFF):
->   - hormone — 2-колонные списки "Common Signs" вместо Benefits-сетки
->   - emsculpt — YouTube-видео + before/after + 3 категории
->   - exomind — кастомные секции с устройством TMS
->   - emface — фото-сетка лица 3×2 (eyes/nose/forehead/jawline/submental/face)
->   - emsella — "What to expect" / "Book your session" + before/after
+> Самый приоритетный следующий шаг — **3 оставшиеся specialty-страницы услуг** (exomind, emface, emsella). Они сейчас в `draft: true` и не генерируются, поэтому 3 пункта меню ведут в 404. Архитектура шаблона уже доказана на hormone+emsculpt, скорее всего понадобится 0-2 новых компонента максимум:
+>   - exomind — кастомные секции с устройством TMS (1 новый компонент)
+>   - emface — фото-сетка лица 3×2 (возможно покрывается ServiceCategoriesGrid с 6 items)
+>   - emsella — "What to expect" / "Book your session" + before/after (before/after уже есть)
 >
-> Альтернативные дорожки если по 5 specialty не готовы:
+> Альтернативные дорожки если по 3 specialty не готовы:
 >
 > **Без клиента:**
-> - Cloudflare Pages: первый deploy (конфиг готов, нужно нажать Save and Deploy в Cloudflare dashboard от лица paragonid-com и подставить `*.pages.dev` URL в `astro.config.mjs → site`)
 > - A11y color-contrast (HANDOFF #37): gold #8d7431 на cream #eae4d2 = 3.54:1, надо 4.5:1
 > - Чистка `data-todo` и `.gitignore` (untracked-мусор у юзера: pnpm-lock.yaml, fix-bundle/, *.report.html)
 >
 > **Требует клиента:**
+> - Реальные фото для hormone и emsculpt (сейчас 14 placeholder-webp — копии weight-loss). Имена файлов в `public/assets/images/services/{hormone,emsculpt}/` уже семантические — просто заменить файлы.
+> - FAQ-тексты для hormone и emsculpt (Lorem ipsum как в Figma)
+> - YouTube URL для emsculpt (`videoEmbed.url` пустой)
 > - Реальные blog-посты + Content Collection 'posts' + `/blog/[slug]`
-> - Замена stock-фото (doTERRA, istockphoto watermarks, BTL trademarks)
+> - Замена stock-фото на главной (doTERRA, istockphoto watermarks, BTL trademarks)
 > - Booking / Form / Newsletter интеграции
 > - 5 FAQ-ответов для Weight Loss
 >
 > **Ждёт макетов:**
 > - Мобильная адаптация
 >
-> Figma file: jmzQqLFWpZXSII6xTkgCgu (Figma MCP должен быть подключён, если нет — подскажу как).
+> Figma file: jmzQqLFWpZXSII6xTkgCgu (Figma MCP должен быть подключён, если нет — подскажу как). nodeId страниц: hormone=1:3708, emsculpt=1:5795, exomind=1:3218, emface=1:6536, emsella=1:5436, weight-loss=1:1919.
 >
-> ⚠️ **Важная ловушка с ассетами** (баг из сессии 2, починен в сессии 3): когда добавляешь фото в подпапки `public/assets/images/<subdir>/` через `optimize-images.py` — убедись, что в коммит попадает И удаление оригинала PNG/JPG И добавление WebP-копии. В сессии 2 из-за упавшего `git am` на бинарных патчах WebP-копии в подпапки не добавились, оригиналы удалились, и 3 страницы (about/blog/services-weight-loss) показывали broken images до конца сессии 3. Проверяй после коммита: `find public/assets/images -name "*.webp"` должен покрывать ВСЕ референсы из кода `grep -rE '/assets/images/.*\.webp' src/`.
+> ⚠️ **Важная ловушка с ассетами** (баг из сессии 2, починен в сессии 3): когда добавляешь фото в подпапки `public/assets/images/<subdir>/` через `optimize-images.py` — убедись, что в коммит попадает И удаление оригинала PNG/JPG И добавление WebP-копии. Проверяй после коммита: `find public/assets/images -name "*.webp"` должен покрывать ВСЕ референсы из кода `grep -rE '/assets/images/.*\.webp' src/`.
+>
+> 💡 **Гибридный шаблон — как добавлять новую specialty-страницу:**
+> 1. Снять структуру через `Figma:get_design_context` для nodeId страницы.
+> 2. Сверить, какие из существующих компонентов в `src/components/services/` подходят (Hero, SimpleWhatIs, WhatIs, Benefits, CommonSigns, TextWithPhoto, CategoriesGrid, VideoEmbed, ExtendedDescription, WhoFor, Roadmap, BeforeAfter, Results, WhyTrust, GoldBanner, Experience, FAQ).
+> 3. Если все секции страницы покрываются — только заполнить .md, снять `draft: false`.
+> 4. Если нет — добавить компонент в `src/components/services/`, поле в schema (`src/content.config.ts`), и условный рендер в `src/pages/services/[slug].astro`.
+> 5. Порядок секций в `[slug].astro` фиксированный — каждая secciya отрисуется только если соответствующее поле во frontmatter заполнено.
 >
 > Спроси меня, по какой дорожке двигаемся, прежде чем начинать работу.

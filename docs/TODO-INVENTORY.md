@@ -39,7 +39,27 @@ placeholder в соответствующем файле, удалить или 
 | `blog-content-from-client` | `BlogGrid.astro` | Реальные блог-посты: тексты + фото + slugs для URL. Минимум 4 шт, чтобы заполнить сетку. |
 | `blog-post-link` | `BlogPostCard.astro` | URL для карточек блога — сейчас `#`. Будут готовы после получения постов. |
 | `faq-answer-from-client` (динамически) | `ServiceFAQ.astro` для Weight Loss | 5 ответов на FAQ — см. HANDOFF #15: How Much Does Medical Weight Loss Cost? Why is it important... Once I lose... How can I choose... What side effects... |
+| `faq-answer-from-client` | `hormone.md` faq | 5 вопросов+ответов FAQ для hormone (в Figma Lorem Ipsum, реальный текст не предоставлен). |
+| `faq-answer-from-client` | `emsculpt.md` faq | 5 вопросов+ответов FAQ для emsculpt (в Figma Lorem Ipsum, реальный текст не предоставлен). |
+| `video-from-client` | `ServiceVideoEmbed.astro` (emsculpt) | YouTube URL для видео на emsculpt-странице. Положить в `emsculpt.md` → `videoEmbed.url`. |
 | `replace-lorem-ipsum-disclaimer` | `StartYourTransformation.astro` | Текст финального дисклеймера под формой подписки (сейчас Lorem Ipsum) |
+
+### Фото для страниц услуг (placeholders, заменить когда придут реальные)
+
+После сессии 4 в `public/assets/images/services/hormone/` и `emsculpt/` лежат 14
+файлов-копий из weight-loss. Имена семантические — просто заменить файлы.
+
+| Папка | Файлы | Что должно быть |
+|---|---|---|
+| `services/hormone/` | `hero.webp` | Hero-фото 1920×814: пациент, BHRT-вибрант (в Figma — istockphoto-2183708457). |
+| `services/hormone/` | `what-is.webp` | Фото для "What is BHRT?" — пузырьки/пеллеты (Figma — julia-koblitz-...). |
+| `services/hormone/` | `reclaiming-yourself.webp` | Мужчина в кабинете врача (Figma — узел 1:3380 rs=w_1200). |
+| `services/hormone/` | `why-trust-team.webp` | Команда клиники Ideal Medical (Figma — узел 1:3389). |
+| `services/hormone/` | `experience-dna.webp` | Тёмное фото DNA-нити (Figma — anirudh-YQYacLW8o2U-unsplash). |
+| `services/emsculpt/` | `hero.webp` | Hero-фото с устройством Emsculpt на торсе (Figma — Emsculpt_Neo_PIC_Male-Model_4653_EN100, BTL marketing asset). |
+| `services/emsculpt/` | `category-{body-sculpting,functional-wellness,core-to-floor}.webp` | 3 фото для "WHAT EMSCULPT NEO IS FOR" — BTL marketing assets. |
+| `services/emsculpt/` | `applicator-{large,edge,small}.webp` | 3 фото аппликаторов — BTL marketing assets. |
+| `services/emsculpt/` | `before-1.webp`, `after-1.webp` | Реальные до/после-кадры (Figma — placeholder Image 90). |
 
 ---
 

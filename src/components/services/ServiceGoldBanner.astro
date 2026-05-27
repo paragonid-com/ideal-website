@@ -1,0 +1,37 @@
+---
+/**
+ * ServiceGoldBanner — full-width баннер с pull-quote на gold-фоне.
+ *
+ * Используется на странице hormone (узлы Figma 1:3245 Rectangle 102 + 1:3467 text):
+ *  - Фон gold (1920×294)
+ *  - Центрированный текст на 2 строки, font-heading
+ *    "We don't just want to treat you; we want to be your
+ *     long-term partner in this regenerative journey."
+ *  - Высота фона ~294px, текст занимает ~142px из этого с padding y по 76px.
+ *
+ * Контент-модель: просто строка (поддерживает \n для переноса).
+ */
+
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+const lines = text.split('\n');
+---
+
+<section
+  class="w-full bg-gold py-20"
+  data-section="service-gold-banner"
+>
+  <div class="mx-auto max-w-design px-[7.55%] text-center">
+    <p class="font-heading text-[38px] md:text-[44px] text-cream leading-snug">
+      {lines.map((line, i) => (
+        <>
+          {line}
+          {i < lines.length - 1 && <br />}
+        </>
+      ))}
+    </p>
+  </div>
+</section>

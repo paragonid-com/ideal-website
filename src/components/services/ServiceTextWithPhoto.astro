@@ -1,0 +1,75 @@
+---
+/**
+ * ServiceTextWithPhoto — универсальная "текст + фото" секция.
+ *
+ * Без буллетов, без CTA, без специфики. Просто:
+ *   - Заголовок (3-4 строки)
+ *   - Многоабзацный body
+ *   - Фото
+ *
+ * Используется для блоков, которые структурно похожи на ServiceWhoFor /
+ * ServiceWhyTrust, но не подходят ни под один из них:
+ *
+ *   - hormone: "RECLAIMING YOURSELF: A NEW STANDARD FOR YOUR HEALTH"
+ *     (узлы Figma 1:3257, 1:3283, 1:3370 — фото справа)
+ *
+ * Поддерживает `imageSide: 'left' | 'right'` для гибкости.
+ *
+ * Отличие от ServiceWhyTrust: тот компонент тоже использует hormone (для
+ * "Why Trust Ideal Medical and Wellness"), но ради переиспользования
+ * хочется один универсальный компонент. Оставляю оба пока — WhyTrust для
+ * семантической ясности, TextWithPhoto для прочих случаев.
+ *
+ * (В будущем можно объединить: TextWithPhoto заменит WhyTrust, передав
+ * нужные параметры. Пока два компонента ради читаемости [slug].astro.)
+ */
+
+interface Props {
+  title: string;
+  body: string;
+  image: string;
+  imageAlt: string;
+  /** Где фото — слева или справа. Default 'right'. */
+  imageSide?: 'left' | 'right';
+}
+
+const { title, body, image, imageAlt, imageSide = 'right' } = Astro.props;
+const titleLines = title.split('\n');
+const paragraphs = body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+
+const textOrderClass = imageSide === 'left' ? 'lg:order-2' : 'lg:order-1';
+const imageOrderClass = imageSide === 'left' ? 'lg:order-1' : 'lg:order-2';
+---
+
+<section
+  class="w-full bg-cream"
+  data-section="service-text-with-photo"
+>
+  <div class="mx-auto max-w-design grid grid-cols-1 lg:grid-cols-2 items-center min-h-[800px]">
+    {/* Текст */}
+    <div class={`px-[7.55%] py-24 ${textOrderClass}`}>
+      <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
+        {titleLines.map((line, i) => (
+          <>
+            {line}
+            {i < titleLines.length - 1 && <br />}
+          </>
+        ))}
+      </h2>
+
+      <div class="mt-12 max-w-[660px] space-y-6 font-sans text-body-lg text-gold leading-relaxed">
+        {paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+
+    {/* Фото */}
+    <div class={`relative h-full min-h-[600px] ${imageOrderClass}`}>
+      <img
+        src={image}
+        alt={imageAlt}
+        class="block h-full w-full object-cover"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>

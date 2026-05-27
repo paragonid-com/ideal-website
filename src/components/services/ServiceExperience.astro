@@ -1,0 +1,91 @@
+---
+/**
+ * ServiceExperience — фото слева + текст / телефон / CTA справа.
+ *
+ * Используется на странице hormone (узлы Figma 1:3381, 1:3479-1:3492, 1:3483, 1:3476):
+ *  - Слева: тёмное фото с DNA-визуалом (960×791, узел 1:3389)
+ *  - Справа: заголовок "EXPERIENCE THE FUTURE OF WELLNESS" (3 строки)
+ *           + многоабзацный текст
+ *           + телефонный номер (большой font-heading)
+ *           + CTA-кнопка BOOK APPOINTMENT
+ *
+ * Фон cream. Между Why Trust и Experience на странице hormone — gold banner.
+ *
+ * Контент-модель:
+ *   {
+ *     title: "Experience\nthe Future\nof Wellness",
+ *     body: "It would be our honor to welcome you...",
+ *     image: "/assets/.../dna-strand.webp",
+ *     imageAlt: "DNA strand visualization",
+ *     phone: "305.650.1884"  // опционально
+ *   }
+ */
+
+import { bookingCta } from '../../data/navigation';
+
+interface Props {
+  title: string;
+  body: string;
+  image: string;
+  imageAlt: string;
+  phone?: string;
+}
+
+const { title, body, image, imageAlt, phone } = Astro.props;
+const titleLines = title.split('\n');
+const paragraphs = body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+
+// Если телефон отображается как "305.650.1884" — для tel:-ссылки нужен
+// формат +13056501884. Берём цифры из строки.
+const telHref = phone ? `tel:+1${phone.replace(/\D/g, '')}` : undefined;
+---
+
+<section
+  class="w-full bg-cream"
+  data-section="service-experience"
+>
+  <div class="mx-auto max-w-design grid grid-cols-1 lg:grid-cols-2 items-stretch min-h-[800px]">
+    {/* Левая колонка — фото на тёмном фоне */}
+    <div class="relative h-full min-h-[600px] bg-[#1a1410]">
+      <img
+        src={image}
+        alt={imageAlt}
+        class="block h-full w-full object-cover"
+        loading="lazy"
+      />
+    </div>
+
+    {/* Правая колонка — текст, телефон, CTA */}
+    <div class="px-[7.55%] py-24 flex flex-col justify-center">
+      <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
+        {titleLines.map((line, i) => (
+          <>
+            {line}
+            {i < titleLines.length - 1 && <br />}
+          </>
+        ))}
+      </h2>
+
+      <div class="mt-10 max-w-[644px] space-y-6 font-sans text-body-lg text-gold leading-relaxed">
+        {paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+
+      {phone && (
+        <a
+          href={telHref}
+          class="mt-8 inline-block font-heading text-[40px] text-gold hover:text-gold-bright transition-colors"
+        >
+          {phone}
+        </a>
+      )}
+
+      <a
+        href={bookingCta.href}
+        data-todo="booking-system"
+        class="mt-8 inline-flex items-center justify-center bg-gold text-cream font-sans uppercase tracking-wider px-12 py-4 max-w-[488px] hover:bg-gold-bright transition-colors"
+      >
+        {bookingCta.label}
+      </a>
+    </div>
+  </div>
+</section>

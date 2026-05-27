@@ -1,0 +1,88 @@
+---
+/**
+ * ServiceVideoEmbed — YouTube-видео или фото-плейсхолдер.
+ *
+ * Используется на странице emsculpt (узел Figma 1:5511 Image 83).
+ * В Figma на этом месте плейсхолдер-фото (1920×844), реального видео нет —
+ * клиент даст YouTube URL позже.
+ *
+ * Логика:
+ *   - Если url задан → встраиваем `<iframe>` с YouTube embed (lazy-loaded)
+ *     с aspect-ratio 16:9.
+ *   - Если url не задан → показываем posterImage (или placeholder) + кнопку
+ *     "Video coming soon", data-todo='video-from-client'.
+ *
+ * Чтобы не загружать YouTube iframe пока пользователь не смотрит, можно
+ * использовать loading="lazy" на iframe и параметр rel=0 в URL.
+ *
+ * Утилита: вытаскиваем video ID из любых вариантов URL и собираем
+ * embed-URL вручную.
+ */
+
+interface Props {
+  url?: string;
+  posterImage?: string;
+  posterAlt?: string;
+}
+
+const { url, posterImage, posterAlt = 'Video preview' } = Astro.props;
+
+/** Извлекаем YouTube video ID из URL. Поддерживает все основные форматы:
+ *  - https://www.youtube.com/watch?v=XXXX
+ *  - https://youtu.be/XXXX
+ *  - https://www.youtube.com/embed/XXXX
+ *  - просто XXXX (11-символьный ID)
+ */
+function extractYouTubeId(input: string): string | null {
+  if (/^[\w-]{11}$/.test(input)) return input;
+  const patterns = [
+    /youtube\.com\/watch\?v=([\w-]{11})/,
+    /youtu\.be\/([\w-]{11})/,
+    /youtube\.com\/embed\/([\w-]{11})/,
+  ];
+  for (const pattern of patterns) {
+    const match = input.match(pattern);
+    if (match) return match[1];
+  }
+  return null;
+}
+
+const videoId = url ? extractYouTubeId(url) : null;
+const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}?rel=0` : null;
+---
+
+<section
+  class="w-full bg-cream py-12"
+  data-section="service-video-embed"
+>
+  <div class="mx-auto max-w-design px-[7.55%]">
+    <div
+      class="relative aspect-video w-full overflow-hidden rounded-md bg-gold/30"
+      data-todo={!url ? 'video-from-client' : undefined}
+    >
+      {embedUrl ? (
+        <iframe
+          src={embedUrl}
+          title={posterAlt}
+          class="absolute inset-0 h-full w-full"
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowfullscreen
+        ></iframe>
+      ) : posterImage ? (
+        <img
+          src={posterImage}
+          alt={posterAlt}
+          class="absolute inset-0 h-full w-full object-cover"
+          loading="lazy"
+        />
+      ) : (
+        <div class="absolute inset-0 flex items-center justify-center">
+          <p class="font-sans text-body-lg text-gold">
+            Video coming soon
+          </p>
+        </div>
+      )}
+    </div>
+  </div>
+</section>

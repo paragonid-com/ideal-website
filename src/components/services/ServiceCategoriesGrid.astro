@@ -1,0 +1,101 @@
+---
+/**
+ * ServiceCategoriesGrid — 3-колонная сетка фото+заголовок+опционально-текст.
+ *
+ * Используется на странице emsculpt дважды (узлы Figma):
+ *   1) "WHAT EMSCULPT NEO IS FOR" (1:5542) — на gold-фоне (gold backdrop 1:5484),
+ *      3 категории: BODY SCULPTING / FUNCTIONAL WELLNESS / CORE TO FLOOR.
+ *      Фото-плашки сверху (узлы 1:5553, 1:5555, 1:5557), под каждой —
+ *      только заголовок (без body — по дизайну Figma).
+ *
+ *   2) "CUSTOMIZE YOUR TREATMENT" (1:5543) — на gold-фоне (gold backdrop 1:5489),
+ *      3 категории: LARGE APPLICATOR / EDGE APPLICATOR / SMALL APPLICATOR.
+ *      Фото + заголовок + body-текст под каждым (узлы 1:5544, 1:5547, 1:5550).
+ *
+ * Контент-модель:
+ *   {
+ *     title?: "WHAT EMSCULPT NEO IS FOR",  // опционально
+ *     background: "cream" | "gold",         // default "cream"
+ *     items: [
+ *       {
+ *         title: "BODY SCULPTING",
+ *         body?: "Targets large body areas...",  // опционально
+ *         image: "/assets/.../body-sculpting.webp",
+ *         imageAlt: "Body sculpting"
+ *       },
+ *       ...
+ *     ]
+ *   }
+ *
+ * Минимум 2, максимум 4 элементов в сетке (на десктопе grid-cols-{N}).
+ */
+
+interface CategoryItem {
+  title: string;
+  body?: string;
+  image: string;
+  imageAlt: string;
+}
+
+interface Props {
+  title?: string;
+  background?: 'cream' | 'gold';
+  items: CategoryItem[];
+}
+
+const { title, background = 'cream', items } = Astro.props;
+
+const bgStyle =
+  background === 'gold'
+    ? 'background: radial-gradient(ellipse at center, #faf8eb 0%, #d2bea3 70%, #b89a76 100%);'
+    : 'background-color: #eae4d2;';
+
+const colsClass =
+  items.length === 2 ? 'lg:grid-cols-2'
+  : items.length === 4 ? 'lg:grid-cols-4'
+  : 'lg:grid-cols-3';
+---
+
+<section
+  class="w-full py-24"
+  data-section="service-categories-grid"
+  style={bgStyle}
+>
+  <div class="mx-auto max-w-design px-[7.55%]">
+    {title && (
+      <h2 class="font-heading text-h1 uppercase text-gold leading-tight text-center">
+        {title}
+      </h2>
+    )}
+
+    <ul
+      class:list={[
+        'grid grid-cols-1 gap-8 mx-auto max-w-[1600px]',
+        colsClass,
+        title ? 'mt-16' : '',
+      ]}
+    >
+      {items.map((item) => (
+        <li class="flex flex-col">
+          {/* Фото 16:8 примерно (409×216 в Figma) — относительные пропорции */}
+          <div class="aspect-[409/216] w-full overflow-hidden rounded-md">
+            <img
+              src={item.image}
+              alt={item.imageAlt}
+              class="block h-full w-full object-cover"
+              loading="lazy"
+            />
+          </div>
+          <h3 class="mt-6 font-heading text-[32px] uppercase text-gold leading-tight">
+            {item.title}
+          </h3>
+          {item.body && (
+            <p class="mt-3 font-sans text-body-lg text-gold leading-relaxed">
+              {item.body}
+            </p>
+          )}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
