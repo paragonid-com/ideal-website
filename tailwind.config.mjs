@@ -15,10 +15,13 @@ export default {
         },
       },
       fontFamily: {
-        // Заголовки — Optima (нет в Google Fonts, надо подсветить заказчику)
-        // На вебе обычно используют Cormorant Garamond / Marcellus как близкий замен
-        heading: ['Optima', 'Cormorant Garamond', 'Georgia', 'serif'],
-        // Body / UI — Manrope (есть в Google Fonts, бесплатный)
+        // Заголовки — Marcellus (Google Fonts, бесплатный).
+        // Оригинал в Figma — Optima (коммерческий Linotype). Заменён по решению
+        // заказчика на бесплатный аналог. Marcellus — гуманистический serif
+        // с минимальными засечками, близок по характеру к Optima.
+        // Если позднее заказчик купит лицензию Optima — заменим первое значение.
+        heading: ['Marcellus', 'Optima', 'Georgia', 'serif'],
+        // Body / UI — Manrope (Google Fonts, бесплатный)
         sans: ['Manrope', 'system-ui', 'sans-serif'],
       },
       fontSize: {

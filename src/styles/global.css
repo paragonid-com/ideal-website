@@ -1,15 +1,11 @@
 /* Global tokens & base styles for IDEAL Medical & Wellness */
 
-/* Шрифт Manrope из Google Fonts (бесплатный, есть все начертания) */
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap');
-
-/* ВНИМАНИЕ: Optima — коммерческий шрифт (Linotype), нет в Google Fonts.
-   Варианты:
-   1. Купить лицензию на веб у Linotype/MyFonts и подключить self-hosted
-   2. Заменить на бесплатный близкий по характеру (Cormorant Garamond / Marcellus / Cardo)
-   3. Использовать системный fallback (на macOS Optima есть встроенный)
-   Пока тут используется system fallback из tailwind.config.mjs — на macOS будет
-   отображаться корректно, на Windows/Linux подменится на serif. Это вопрос к заказчику. */
+/* Шрифты из Google Fonts (бесплатные):
+   - Marcellus  — заголовки (замена коммерческой Optima по решению заказчика)
+   - Manrope    — body / UI
+   Если позднее заказчик купит лицензию Optima — добавим self-hosted @font-face
+   и обновим font-family в tailwind.config.mjs (первое значение). */
+@import url('https://fonts.googleapis.com/css2?family=Marcellus&family=Manrope:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
