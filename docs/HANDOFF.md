@@ -90,36 +90,78 @@ src/
 
 ---
 
-## Открытые вопросы к клиенту
+## Открытые вопросы и блокеры
 
-### Стоковые фото и лицензии (см. `docs/stock-photo-inventory.md`)
+Сгруппированы по типу владельца действия. **🔴 = блокер запуска**, **🟠 = серьёзный риск**, **🟡 = желательно решить**, **🔵 = на будущее**.
 
-1. **Hero фото** (DNA Unsplash+) — финальное или плейсхолдер? Если финальное, нужна лицензия Unsplash+
-2. **4 из 5 карточек Signature Services** — золотая текстура-плейсхолдер вместо реальных фото препаратов. Когда придут финальные?
-3. **EMFACE фото** — взято со стороннего сайта (Binsina Skin Laser Clinic в Дубае). Заменить обязательно
-4. **EMSCULPT/EXOMIND/EMSELLA фото** — BTL marketing assets. Есть ли авторизованное партнёрство с BTL?
-5. **Ozempic® и Mounjaro® логотипы** — есть письменное разрешение от Novo Nordisk и Eli Lilly?
-6. **Google badge** — реальный ли рейтинг 5★ на Google Maps?
-7. **"Best of 2025 BusinessRate"** — настоящая ли награда?
+### 🔴 Лицензии изображений и trademark (нельзя запускать без решения)
 
-### Контент
+**Stock-фото без лицензий:**
+1. **Hero главной** (DNA Unsplash+) — на фото виден водяной знак `Unsplash+`. Платная подписка или замена
+2. **About Hero** (`christin-hume-...-unsplash`) — на бутылочке хорошо виден **лого `doTERRA`** (бренд эфирных масел). Юридический риск: чужой brand на странице медицинской клиники. **Заменить обязательно.**
+3. **Blog Hero** (istockphoto-1312587753)
+4. **Blog post-placeholder** (istockphoto-2194380106)
+5. **Weight Loss Hero/WhatIs/WhoFor** — все 3 из iStock (istockphoto-2096243056, -2206913658, Image 42)
+6. **5 иконок Benefits Weight Loss** (Image 44, 45, 48, 49, 51 из Figma) — источник не идентифицирован
+7. **EMFACE фото** в Figma — взято с сайта `Binsina-Skin-Laser-Clinic` (другая клиника). Чужой контент, заменить обязательно
+8. **EMSCULPT / EXOMIND / EMSELLA фото + new2026-brain.png** — BTL marketing assets. Нужно подтверждение партнёрства с BTL Industries
+9. **3 placeholder-карточки Signature Services** (Hormone / Peptide / IV Therapy) — золотая текстура. Когда придут реальные фото?
 
-8. Должность Laudin P. — в Figma "Owner & TBD title". Какая финальная?
-9. Финальный текст disclaimer под формой подписки (вместо Lorem Ipsum)
-10. Замена опечаток (см. выше) — фиксить или оставить?
+**Trademark разрешения:**
+10. **Ozempic®** логотип — письменное разрешение Novo Nordisk
+11. **Mounjaro®** логотип — письменное разрешение Eli Lilly
+12. **EMFACE / EMSCULPT / EMSELLA / EXOMIND** — все BTL trademarks, нужна авторизация
 
-### Интеграции (все помечены `data-todo` в коде)
+**Trust badges (легитимность данных):**
+13. **Google 5★ badge** на главной — реальный ли рейтинг на Google Maps?
+14. **"Best of 2025 BusinessRate"** badge — настоящая ли награда, есть ли разрешение использовать?
 
-11. `booking-system` — какая система записи (Calendly / NexHealth / Mindbody)?
-12. `form-submission-endpoint` — куда отправляется форма со страницы Home?
-13. `newsletter-integration` — какой ESP (Mailchimp / Klaviyo / ConvertKit)?
-14. `cherry-financing-url` и `care-credit-url` — реальные ссылки на партнёров
-15. `social-icon` — какие соцсети, какие ссылки?
+### 🟠 Контент от клиента (можно запускать с placeholder, но в идеале — решить)
 
-### Технические
+15. **5 FAQ-ответов на Weight Loss** — в Figma не прописаны, у меня placeholder "— ответ будет добавлен клиентом —". Вопросы:
+    - How Much Does Medical Weight Loss Cost?
+    - Why is it important that my medical weight loss program be tailored for me?
+    - Once I lose the weight, how can I keep it off?
+    - How can I choose between the different medical weight loss options?
+    - What side effects can I experience with medical weight loss?
+16. **Контент для 10 draft-страниц услуг** (regenerative, bloodwork, exomind, hormone, peptide, emsella, emsculpt, ivtherapy, emface, sexualhealth) — все сейчас в `draft: true`, не генерируются в build
+17. **Реальные blog-посты** — у меня 4 одинаковые placeholder-карточки. Нужны: тексты, фото, slugs
+18. **Должность Laudin P.** — в Figma "Owner & TBD title"
+19. **Финальный disclaimer** под формой подписки (сейчас Lorem Ipsum)
+20. **Дубль на странице Contact** — в Figma 2 раза подряд "START YOUR WELLNESS TRANSFORMATION" (ContactHero + StartYourTransformation). Похоже на ошибку дизайна. Оставить дубль или убрать?
+21. **Опечатки** из макета — фиксить или оставить?
+    - `MENTALL WELLNESS` (двойная L)
+    - `BOOK APPOIMENT` (без второй n)
+    - `teel` вместо `feel` в отзыве Emily R.
+22. **Layout Benefits Weight Loss** — в Figma 2 сверху + 3 снизу, у меня 3 + 2 (упрощённая сетка). Достаточно ли близко?
 
-16. Адаптив — overlay-меню или иной паттерн на мобиле? Ждём дизайн-макеты
-17. Шрифт Optima — покупать ли лицензию для веба?
+### 🟡 Структурные решения
+
+23. **5 страниц услуг со специфичной структурой** требуют отдельных шаблонов (текущий шаблон им не подходит):
+    - `hormone` — "Common Signs" в 2 колонки списков вместо Benefits-карточек
+    - `emsculpt` — YouTube-видео + before/after + 3 категории сверху
+    - `exomind` — кастомные секции с устройством
+    - `emface` — фото-сетка лица 3×2 (eyes/nose/forehead/jawline/submental/face)
+    - `emsella` — "What to expect / Book your session" + before/after
+24. **Sexual Health страница** — есть, но не в основном меню (`/services/sexualhealth` помечена как orphan в `data/navigation.ts`). Добавить в Wellness Services?
+25. **Emsculpt дубликат в Wellness+Aesthetic** — оба пункта меню ведут на `/services/emsculpt`. Sub-nav сейчас подсвечивает Wellness (первый match). Если хочется иначе — добавить `data.preferredSection`
+26. **TrustBadges** (Google ★ + BusinessRate) — есть в Figma на главной, About, Contact, Blog. У меня сейчас только на главной. Вынести в переиспользуемый компонент
+
+### 🔵 Интеграции (помечены `data-todo` в коде)
+
+27. **`booking-system`** — Calendly / NexHealth / Mindbody / что-то ещё? Все кнопки BOOK APPOINTMENT сейчас ведут на `#`
+28. **`form-submission`** — куда отправлять данные с формы главной и Contact?
+29. **`newsletter-integration`** — Mailchimp / Klaviyo / ConvertKit?
+30. **`cherry-financing-url`** и **`care-credit-url`** — реальные ссылки партнёров
+31. **`social-icon`** — какие соцсети, какие URL? (placeholder-круг в футере)
+32. **`blog-post-link`** — куда ведут карточки блога? Сейчас `#`
+
+### 🔵 Технические
+
+33. **Адаптив (mobile)** — ждём макетов от дизайнеров. Текущая вёрстка работает только на ~1920px
+34. **Optima шрифт** — покупать ли веб-лицензию или остаёмся на Marcellus?
+35. **Cloudflare Pages** — настроить preview environment + первый deploy
+36. **Lighthouse аудит** — цель 95+, сейчас не замерял
 
 ---
 
@@ -390,6 +432,27 @@ Playwright + headless Chromium и сравнивался с `Figma:get_screensho
 >
 > Репозиторий: https://github.com/paragonid-com/ideal-website
 >
-> Состояние проекта и все принятые решения описаны в `docs/HANDOFF.md`. Прочитай его перед тем как что-то делать. Главная страница уже полностью сверстана и прошла визуальное ревью vs Figma, следующий шаг — шаблон страниц услуг (11 страниц с общей структурой).
+> Состояние проекта и все принятые решения описаны в `docs/HANDOFF.md` — прочитай его перед тем как что-то делать. Особенно внимательно: TL;DR-таблицу в начале + секцию **"Открытые вопросы и блокеры"** в конце.
+>
+> Что готово на десктопе: главная (визуальное ревью пройдено), шаблон страниц услуг + Weight Loss с реальным контентом, About / Contact / Blog, sub-навигация с подсветкой текущей страницы. Билд проходит, 5 страниц генерируются.
+>
+> Что осталось — выбор стратегии:
+>
+> **Дорожка А (можно делать сейчас, без клиента):**
+> - Вынести TrustBadges (Google ★ + BusinessRate) в переиспользуемый компонент и подключить на About / Contact / Blog
+> - Cloudflare Pages: настроить preview environment + первый deploy
+> - Lighthouse-аудит и оптимизация (цель 95+)
+> - Чистка `data-todo` и инвентаризация ассетов
+>
+> **Дорожка Б (требует ввода от клиента):**
+> - 5 specialty-страниц услуг с кастомной структурой (hormone, emsculpt, exomind, emface, emsella) — макеты в Figma есть, секции под них надо проектировать с нуля
+> - Реальные blog-посты + Content Collection 'posts' + `/blog/[slug]`
+> - Замена всех stock-фото на лицензированные / собственные
+> - Подключение booking system, form submission, newsletter ESP
+>
+> **Дорожка В (ждёт макетов от дизайнера):**
+> - Мобильная адаптация (нужны mobile-макеты)
 >
 > Figma file: jmzQqLFWpZXSII6xTkgCgu (Figma MCP должен быть подключён, если нет — подскажу как).
+>
+> Спроси меня, по какой дорожке двигаемся, прежде чем начинать работу.
