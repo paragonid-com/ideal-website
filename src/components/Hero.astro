@@ -1,0 +1,57 @@
+---
+/**
+ * Hero — главная секция домашней страницы.
+ *
+ * Источник в Figma:
+ *   file: jmzQqLFWpZXSII6xTkgCgu
+ *   nodeId: 1:3 (HOME)
+ *
+ * Извлечённые токены:
+ *   - H1   : Optima Regular, 62px, #8d7431 (узел 1:76)
+ *   - Body : Manrope Regular, 21px, #8d7431 (узел 1:104)
+ *   - Btn  : Manrope Regular, 22px, #eae4d2 на #8d7431, 195×45 (узлы 1:207–1:209)
+ *   - BG   : фото DNA (узел 1:65), 2193×1379, обрезано до 1920×1079
+ *
+ * Координаты в Figma (контейнер 1920×1079):
+ *   H1     x=145, y=208,  width=645
+ *   Body   x=145, y=375,  width=493
+ *   Button x=145, y=595,  width=195, height=45
+ *
+ * Это даёт левый отступ ≈ 145 / 1920 = 7.55%
+ */
+---
+
+<section class="relative h-[1079px] w-full overflow-hidden bg-white">
+  {/* Фон. Использую <img>, а не background-image, чтобы можно было
+      добавить srcset/sizes под адаптив без перевёрстки CSS. */}
+  <img
+    src="/assets/images/hero-dna.png"
+    alt=""
+    class="absolute inset-0 h-full w-full object-cover"
+    width="2193"
+    height="1379"
+    loading="eager"
+    decoding="async"
+  />
+
+  {/* Контент. Не лезу в position:absolute, использую обычный flow внутри
+      контейнера. Левый отступ 7.55% = paddings-left: ~145px при ширине 1920px. */}
+  <div class="relative z-10 mx-auto h-full max-w-design px-[7.55%]">
+    <div class="flex h-full flex-col justify-start pt-[208px]">
+      <h1 class="font-heading text-h1 uppercase text-gold">
+        Live Better, Longer,<br />
+        and Happier.
+      </h1>
+
+      <p class="mt-[27px] max-w-[493px] font-sans text-body-lg text-gold">
+        Unlock your best self with Ideal Medical &amp; Wellness.
+        Experience tailored wellness solutions that fit your life
+        and elevate your health.
+      </p>
+
+      <a href="#book" class="btn-gold mt-[135px] w-[195px] h-[45px]">
+        BOOK NOW
+      </a>
+    </div>
+  </div>
+</section>

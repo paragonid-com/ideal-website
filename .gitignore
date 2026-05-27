@@ -1,0 +1,29 @@
+# build output
+dist/
+.output/
+
+# dependencies
+node_modules/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# jetbrains setting folder
+.idea/
+
+# Astro cache
+.astro/
+
+# Reference screenshots from Figma (keep — small enough, useful for review)
+# Если станет много — перенести в LFS или внешнее хранилище
+# public/assets/figma-refs/
