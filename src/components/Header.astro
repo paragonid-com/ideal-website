@@ -167,9 +167,13 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
       </button>
     </div>
 
-    {/* Центр overlay: основные пункты + подменю + CTA */}
+    {/* Центр overlay: основные пункты + подменю + CTA.
+        Маркер data-nav-hover-zone — это горячая зона для hover: пока мышь
+        внутри этого контейнера (на заголовках ИЛИ внутри подменю, ИЛИ в
+        пустом пространстве между ними), временный hover-preview сохраняется.
+        Выход за пределы возвращает к sticky состоянию. */}
     <div class="flex flex-1 items-start px-[7.55%] pt-[120px]">
-      <div class="flex w-full max-w-content gap-12">
+      <div class="flex w-full max-w-content gap-12" data-nav-hover-zone>
         {/* Основные пункты */}
         <nav class="flex flex-col gap-1" aria-label="Main navigation">
           <ul class="flex flex-col gap-1">
@@ -326,11 +330,16 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
     });
   });
 
-  // При уходе курсора с навигации — возвращаемся к sticky выбору.
+  // При уходе курсора из hover-zone (= общий контейнер заголовков + подменю)
+  // возвращаемся к sticky выбору. Слушаем именно общий контейнер, а не <nav>,
+  // потому что юзер часто двигает мышь от заголовка к пунктам подменю,
+  // пересекая визуально пустое пространство (вертикальную линию + padding).
+  // Если слушать <nav>, mouseleave срабатывает в этой пустой зоне и сбрасывает
+  // подменю до того, как мышь успеет дойти до пунктов.
   // На touch-устройствах mouseleave обычно не срабатывает — sticky уже обновлён
   // в click handler выше, и подменю остаётся в выбранном состоянии.
-  const navList = document.querySelector<HTMLElement>('nav[aria-label="Main navigation"]');
-  navList?.addEventListener('mouseleave', () => showPanel(stickySection));
+  const hoverZone = document.querySelector<HTMLElement>('[data-nav-hover-zone]');
+  hoverZone?.addEventListener('mouseleave', () => showPanel(stickySection));
 
   function showPanel(name?: string) {
     // Панели
