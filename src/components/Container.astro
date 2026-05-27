@@ -1,0 +1,22 @@
+---
+/**
+ * Container — обёртка контента с внутренними отступами под дизайн.
+ *
+ * В Figma левый край контента стоит на x=145 при ширине дизайна 1920,
+ * что даёт 7.55% padding слева и справа. Используется повсеместно
+ * (Hero, Header, секции, Footer).
+ */
+
+interface Props {
+  /** Дополнительные классы для внешнего div */
+  class?: string;
+  /** Тег обёртки. По умолчанию div. */
+  as?: 'div' | 'section' | 'article' | 'header' | 'footer';
+}
+
+const { class: className = '', as: Tag = 'div' } = Astro.props;
+---
+
+<Tag class={`mx-auto w-full max-w-design px-[7.55%] ${className}`}>
+  <slot />
+</Tag>

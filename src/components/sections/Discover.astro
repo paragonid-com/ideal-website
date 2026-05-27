@@ -1,0 +1,46 @@
+---
+/**
+ * Discover Personalized Excellence — двухколоночный блок.
+ * Слева — фото команды клиники у ресепшн (реальное фото, не стоковое).
+ * Справа — заголовок + параграф.
+ *
+ * Источник: узлы 1:60 (фото), 1:79 (заголовок), 1:108 (текст)
+ */
+---
+
+<section
+  class="relative w-full"
+  data-section="discover"
+  style="background: linear-gradient(to bottom, #eae4d2 0%, #d4c3a3 100%);"
+>
+  <div class="mx-auto grid w-full max-w-design grid-cols-2 items-center">
+    {/* Левая колонка — фото на всю высоту, без padding'а */}
+    <div class="relative">
+      <img
+        src="/assets/images/team-reception.png"
+        alt="The IDEAL Medical and Wellness team at our Aventura reception"
+        width="1027"
+        height="684"
+        class="block h-full w-full object-cover"
+        loading="lazy"
+      />
+    </div>
+
+    {/* Правая колонка — текст с внутренним padding'ом */}
+    <div class="px-[7.55%] py-24">
+      <h2 class="font-heading text-h1 uppercase leading-tight text-gold">
+        Discover<br />
+        Personalized<br />
+        Excellence<br />
+        in Wellness
+      </h2>
+
+      <p class="mt-12 max-w-[523px] font-sans text-body-lg leading-relaxed text-gold">
+        At Ideal Medical and Wellness, we deliver personalized
+        healthcare through a concierge service tailored to your
+        needs. We focus on results you feel and measure. Every plan
+        is built around your goals, your schedule, and your standards.
+      </p>
+    </div>
+  </div>
+</section>

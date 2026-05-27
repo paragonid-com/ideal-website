@@ -1,9 +1,26 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
+import Tagline from '../components/sections/Tagline.astro';
+import Discover from '../components/sections/Discover.astro';
+import BrandStrip from '../components/sections/BrandStrip.astro';
+import SignatureServices from '../components/sections/SignatureServices.astro';
+import WhoWeAre from '../components/sections/WhoWeAre.astro';
+import AdvancedTreatments from '../components/sections/AdvancedTreatments.astro';
+import Testimonials from '../components/sections/Testimonials.astro';
+import NewIn2026 from '../components/sections/NewIn2026.astro';
+import StartYourTransformation from '../components/sections/StartYourTransformation.astro';
 ---
 
 <BaseLayout title="Ideal Medical & Wellness — Aventura, FL">
   <Hero />
-  {/* Остальные 10 секций будут добавлены поэтапно после утверждения POC. */}
+  <Tagline />
+  <Discover />
+  <BrandStrip />
+  <SignatureServices />
+  <WhoWeAre />
+  <AdvancedTreatments />
+  <Testimonials />
+  <NewIn2026 />
+  <StartYourTransformation />
 </BaseLayout>

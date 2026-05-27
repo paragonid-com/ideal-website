@@ -1,0 +1,49 @@
+---
+/**
+ * NewIn2026 — узкая тёмная полоса-анонс новой услуги.
+ *
+ * Источник: узлы 1:311 (tag "NEW IN 2026"), 1:254 (Strengthen Your Mind),
+ *           1:13 (Image 110 — dark BG), 1:1776 (мозг brain image)
+ *
+ * Структура: справа фон с золотистой текстурой + изображение мозга поверх,
+ * слева текст. Узкая высота (~250-300px).
+ */
+import Container from '../Container.astro';
+---
+
+<section
+  class="relative w-full overflow-hidden bg-[#101a3a]"
+  data-section="new-in-2026"
+>
+  {/* Фоновое изображение (тёмно-синий с золотом) — справа */}
+  <img
+    src="/assets/images/new2026-bg.png"
+    alt=""
+    class="pointer-events-none absolute inset-y-0 right-0 h-full w-[60%] object-cover opacity-90"
+    aria-hidden="true"
+  />
+  {/* Полупрозрачное изображение мозга-головы поверх — правый край */}
+  <img
+    src="/assets/images/new2026-brain.png"
+    alt=""
+    class="pointer-events-none absolute right-[5%] top-1/2 h-[80%] w-auto -translate-y-1/2 object-contain opacity-60"
+    aria-hidden="true"
+  />
+
+  <Container class="relative z-10 py-12">
+    <div class="flex flex-col items-start gap-4 md:flex-row md:items-center md:gap-12">
+      <p class="font-heading text-[40px] uppercase tracking-wider text-cream">
+        New in 2026
+      </p>
+      <h2
+        class="font-heading text-[48px] font-bold uppercase text-cream"
+        data-trademark="btl"
+      >
+        EXOMIND
+      </h2>
+      <p class="font-sans text-[28px] italic text-cream">
+        Strengthen Your Mind
+      </p>
+    </div>
+  </Container>
+</section>

@@ -1,0 +1,220 @@
+---
+/**
+ * Header — единый компонент для всех страниц сайта.
+ *
+ * Состоит из двух частей:
+ *   1. Top bar — лого слева + иконка-burger справа.
+ *      Лежит поверх контента страницы (absolute, не fixed),
+ *      так как на Hero контент сам отрисовывает фон под шапкой.
+ *   2. Overlay-меню — full-screen, открывается по клику burger.
+ *      Внутри: лого, X-кнопка закрытия, 3 раскрывающихся раздела,
+ *      CTA-кнопка BOOK APPOINTMENT, нижний блок Address/Quick Links/Subscribe.
+ *
+ * Источник в Figma:
+ *   menu-1 (1:1963), menu-2 (1:2012), menu-3 (1:3813), menu-4 (1:3757)
+ *   лого    — узел 1:268 (Group 321)
+ *   burger  — узел 1:144 (Group 6)
+ *
+ * Поведение на мобильном — пока используется тот же overlay
+ * (по решению заказчика, см. ответ от 26.05.26). После прихода мобильных
+ * макетов от дизайнеров — будем адаптировать.
+ *
+ * Открыть/закрыть overlay — клик по #menu-toggle / #menu-close.
+ * Раскрытие подменю по hover — чистый CSS (group-hover).
+ */
+
+import { mainNav, bookingCta, type NavGroup } from '../data/navigation.ts';
+import FooterBlock from './FooterBlock.astro';
+---
+
+{/* === TOP BAR (на каждой странице) === */}
+<header
+  class="absolute inset-x-0 top-0 z-40 mx-auto flex max-w-design items-center justify-between px-[7.55%] pt-8"
+>
+  <a href="/" class="block" aria-label="IDEAL Medical and Wellness — home">
+    <img
+      src="/assets/images/logo-ideal.svg"
+      alt="IDEAL Medical and Wellness"
+      width="194"
+      height="62"
+      class="h-auto w-[194px]"
+    />
+  </a>
+
+  <button
+    id="menu-toggle"
+    type="button"
+    class="block text-gold-bright transition-opacity hover:opacity-70"
+    aria-label="Open menu"
+    aria-controls="overlay-menu"
+    aria-expanded="false"
+  >
+    {/* Burger из 4 линий — нестандартный (3 — обычный), взято 1:1 из Figma узел 1:144 */}
+    <svg
+      width="42"
+      height="50"
+      viewBox="0 0 64.4344 124.434"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+    >
+      <path d="M0 52.2172H64.4344" stroke="currentColor" stroke-width="2" />
+      <path d="M0 32.2172H64.4344" stroke="currentColor" stroke-width="2" />
+      <path d="M0 72.2172H64.4344" stroke="currentColor" stroke-width="2" />
+      <path d="M0 92.2172H64.4344" stroke="currentColor" stroke-width="2" />
+    </svg>
+  </button>
+</header>
+
+{/* === OVERLAY MENU === */}
+<div
+  id="overlay-menu"
+  class="fixed inset-0 z-50 hidden flex-col overflow-y-auto bg-cream"
+  aria-hidden="true"
+>
+  {/* Фон-градиент — на основе того, что виден на скриншотах menu-1..4.
+     Без отдельного фото — чистый CSS градиент в кремово-золотых тонах. */}
+  <div
+    class="pointer-events-none absolute inset-0"
+    style="background: radial-gradient(ellipse 60% 80% at 25% 40%, #f0eadc 0%, #d4c3a3 60%, #b5946a 100%);"
+    aria-hidden="true"
+  ></div>
+
+  <div class="relative z-10 flex min-h-full flex-col">
+    {/* Верх overlay: лого + крестик */}
+    <div class="flex items-start justify-between px-[7.55%] pt-8">
+      <a href="/" class="block" aria-label="IDEAL Medical and Wellness — home">
+        <img
+          src="/assets/images/logo-ideal.svg"
+          alt="IDEAL Medical and Wellness"
+          width="194"
+          height="62"
+          class="h-auto w-[194px]"
+        />
+      </a>
+      <button
+        id="menu-close"
+        type="button"
+        class="block text-gold-bright transition-opacity hover:opacity-70"
+        aria-label="Close menu"
+      >
+        <svg width="42" height="42" viewBox="0 0 42 42" fill="none" aria-hidden="true">
+          <path d="M2 2 L40 40 M40 2 L2 40" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </button>
+    </div>
+
+    {/* Центр overlay: основные пункты + подменю + CTA */}
+    <div class="flex flex-1 items-start px-[7.55%] pt-[120px]">
+      <div class="flex w-full max-w-content gap-12">
+        {/* Основные пункты */}
+        <nav class="flex flex-col gap-1" aria-label="Main navigation">
+          <ul class="flex flex-col gap-1">
+            {mainNav.map((group: NavGroup) => (
+              <li class="group/item" data-nav-group={group.label}>
+                <button
+                  type="button"
+                  class="font-heading text-[64px] uppercase leading-tight text-gold transition-opacity hover:opacity-70"
+                  data-nav-target={group.label}
+                >
+                  {group.label}
+                </button>
+              </li>
+            ))}
+          </ul>
+
+          {/* CTA BOOK APPOINTMENT */}
+          <a
+            href={bookingCta.href}
+            data-todo="booking-system"
+            class="btn-gold mt-12 w-[250px]"
+          >
+            {bookingCta.label}
+          </a>
+        </nav>
+
+        {/* Подменю справа от пунктов. По умолчанию пустое.
+            JS-обработчик ниже подменяет items в зависимости от hover'а на основной пункт. */}
+        <div class="flex-1 border-l border-gold/40 pl-12">
+          {mainNav.map((group: NavGroup) => (
+            <ul
+              class="hidden flex-col gap-2"
+              data-nav-panel={group.label}
+            >
+              {group.items?.map((item) => (
+                <li>
+                  <a
+                    href={item.href}
+                    class="font-sans text-[28px] text-gold transition-opacity hover:opacity-70"
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    {/* Низ overlay: компактный футер */}
+    <div class="px-[7.55%] pb-12 pt-16">
+      <FooterBlock variant="compact" />
+    </div>
+  </div>
+</div>
+
+<script>
+  // Управление overlay-меню — minimal vanilla JS, без зависимостей.
+  const toggle = document.getElementById('menu-toggle');
+  const close = document.getElementById('menu-close');
+  const overlay = document.getElementById('overlay-menu');
+
+  function openMenu() {
+    if (!overlay || !toggle) return;
+    overlay.classList.remove('hidden');
+    overlay.classList.add('flex');
+    overlay.setAttribute('aria-hidden', 'false');
+    toggle.setAttribute('aria-expanded', 'true');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    if (!overlay || !toggle) return;
+    overlay.classList.add('hidden');
+    overlay.classList.remove('flex');
+    overlay.setAttribute('aria-hidden', 'true');
+    toggle.setAttribute('aria-expanded', 'false');
+    document.body.style.overflow = '';
+    // Заодно прячем все панели подменю
+    document.querySelectorAll<HTMLElement>('[data-nav-panel]').forEach((p) => {
+      p.classList.remove('flex');
+      p.classList.add('hidden');
+    });
+  }
+
+  toggle?.addEventListener('click', openMenu);
+  close?.addEventListener('click', closeMenu);
+
+  // Esc — закрыть
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && overlay?.getAttribute('aria-hidden') === 'false') {
+      closeMenu();
+    }
+  });
+
+  // Hover/focus по главному пункту → показать соответствующий подменю-список
+  document.querySelectorAll<HTMLElement>('[data-nav-target]').forEach((btn) => {
+    btn.addEventListener('mouseenter', () => showPanel(btn.dataset.navTarget));
+    btn.addEventListener('focus', () => showPanel(btn.dataset.navTarget));
+  });
+
+  function showPanel(name?: string) {
+    if (!name) return;
+    document.querySelectorAll<HTMLElement>('[data-nav-panel]').forEach((p) => {
+      const match = p.dataset.navPanel === name;
+      p.classList.toggle('flex', match);
+      p.classList.toggle('hidden', !match);
+    });
+  }
+</script>

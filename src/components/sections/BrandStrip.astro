@@ -1,0 +1,46 @@
+---
+/**
+ * BrandStrip — горизонтальный ряд логотипов / названий препаратов, которые
+ * клиника предлагает. Расположен между Discover и Signature Services.
+ *
+ * Источник: узлы 1:210-1:217 (изображения), 1:179 (текст TESTOSTERONE)
+ *
+ * ⚠️ ВНИМАНИЕ (юридический вопрос): Ozempic® и Mounjaro® — зарегистрированные
+ * товарные знаки фарм-компаний. Использование требует юридической проверки.
+ * См. docs/stock-photo-inventory.md → "Trademark concerns".
+ */
+import Container from '../Container.astro';
+
+const brands = [
+  { name: 'Tesamorelin', src: '/assets/images/brand-tesamorelin.png' },
+  { name: 'Ozempic',     src: '/assets/images/brand-ozempic.png',  trademark: true },
+  { name: 'NAD+',        src: null, isText: true },
+  { name: 'TESTOSTERONE', src: null, isText: true },
+  { name: 'Mounjaro',    src: '/assets/images/brand-mounjaro.png', trademark: true },
+];
+---
+
+<section class="w-full bg-cream pb-16" data-section="brand-strip">
+  <Container>
+    <div
+      class="flex flex-wrap items-center justify-between gap-x-12 gap-y-8"
+      data-todo="trademark-review"
+    >
+      {brands.map((brand) => (
+        brand.isText ? (
+          <span class="font-heading text-[40px] font-bold text-[#444]">
+            {brand.name}
+          </span>
+        ) : (
+          <img
+            src={brand.src}
+            alt={brand.name}
+            class="h-[60px] w-auto object-contain"
+            loading="lazy"
+            data-trademark={brand.trademark ? 'yes' : undefined}
+          />
+        )
+      ))}
+    </div>
+  </Container>
+</section>

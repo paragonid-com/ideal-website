@@ -1,0 +1,70 @@
+---
+/**
+ * WhoWeAre — секция с тремя портретами команды клиники.
+ *
+ * Источник: узлы 1:103 (заголовок WHO WE ARE), 1:135 (длинный параграф),
+ *           1:248/48/49 (три портрета), 1:180-1:185 (имена и должности)
+ *
+ * ⚠️ В Figma должность одного из членов команды отмечена как "TBD title".
+ * Помечено как data-todo="team-title-laudin".
+ */
+import Container from '../Container.astro';
+
+const team = [
+  {
+    name: 'Dr. Ksenia P.',
+    title: 'Owner & Director of Operations',
+    photo: '/assets/images/team-ksenia.png',
+  },
+  {
+    name: 'Kenneth P.',
+    title: 'Owner & Wellness Expert',
+    photo: '/assets/images/team-kenneth.png',
+  },
+  {
+    name: 'Laudin P.',
+    title: 'Owner & TBD title', // TODO from client
+    photo: '/assets/images/team-laudin.png',
+    todo: 'team-title-laudin',
+  },
+];
+
+const aboutText = `Ideal Medical & Wellness is a premier medical spa and wellness center in Aventura, Florida, dedicated to providing advanced aesthetic and regenerative treatments. Our expert team specializes in a comprehensive suite of services, including medical-grade device treatments, personalized weight loss programs, peptide therapy, IV therapy and so much more. Conveniently located in Aventura, we combine clinical expertise with a luxurious boutique experience. Whether you are seeking transformative anti-aging skin treatments or holistic wellness solutions, our facility serves as the ultimate destination for those looking to enhance their natural beauty and optimize their long-term health.`;
+---
+
+<section
+  class="w-full py-24"
+  data-section="who-we-are"
+  style="background: linear-gradient(to bottom, #d4c3a3 0%, #eae4d2 100%);"
+>
+  <Container>
+    <h2 class="font-heading text-h1 uppercase text-gold">Who We Are</h2>
+    <p class="mt-8 max-w-[902px] font-sans text-body-lg leading-relaxed text-gold">
+      {aboutText}
+    </p>
+
+    <ul class="mt-16 grid grid-cols-1 gap-12 md:grid-cols-3">
+      {team.map((member) => (
+        <li>
+          <div class="aspect-[400/600] overflow-hidden bg-gold/10">
+            <img
+              src={member.photo}
+              alt={`Portrait of ${member.name}`}
+              class="h-full w-full object-cover"
+              loading="lazy"
+            />
+          </div>
+          <h3 class="mt-6 font-heading text-[32px] uppercase text-gold">
+            {member.name}
+          </h3>
+          <p
+            class="mt-1 font-sans text-[18px] uppercase tracking-wider text-gold"
+            data-todo={member.todo}
+          >
+            {member.title}
+          </p>
+        </li>
+      ))}
+    </ul>
+  </Container>
+</section>

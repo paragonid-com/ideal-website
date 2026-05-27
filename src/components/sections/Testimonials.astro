@@ -1,0 +1,90 @@
+---
+/**
+ * Testimonials — секция с отзывами клиентов в виде карусели.
+ *
+ * Источник: узлы 1:154 (заголовок), 1:159 (отзыв 1 Emily R.),
+ *           1:167 (отзыв 2 Marian S.), 1:101/102 (декоративные кавычки),
+ *           1:249 (badge Best of 2025), 1:250 (Google 5-star)
+ *
+ * ⚠️ В отзыве Emily R. опечатка "teel" вместо "feel" — оставлено как в макете
+ * для верности дизайну, помечено для финального ревью.
+ *
+ * Карусель сейчас статичная (2 отзыва видны одновременно). Если в будущем
+ * понадобится прокрутка → проще всего подключить Swiper.js одной строкой.
+ */
+import Container from '../Container.astro';
+
+const testimonials = [
+  {
+    quote:
+      'Ideal Medical and Wellness completely transformed how I approach my health. Their personalized care has helped me regain energy, clarity, and balance. I now teel more in control of my wellness journey than ever before. The team really takes the time to understand your unique needs and tailors treatments that fit your life. I couldn\u2019t be happier with the results!',
+    author: 'Emily R.',
+    todo: 'typo-teel-vs-feel',
+  },
+  {
+    quote:
+      'I recently visited Ideal Medical and Wellness Center and had an outstanding experience. The staff was incredibly professional and attentive, making sure all my needs were met. The facility itself is modern, clean, and well-equipped with the latest medical technology. I was particularly impressed by the thoroughness of the doctors and the personalized care I received. They took the time to explain everything in detail and made me feel comfortable throughout my visit. I highly recommend this center to anyone looking for top-notch medical and wellness services.',
+    author: 'Marian S.',
+  },
+];
+---
+
+<section
+  class="w-full py-24"
+  data-section="testimonials"
+  style="background: linear-gradient(to bottom, #eae4d2 0%, #d4c3a3 100%);"
+>
+  <Container>
+    <h2 class="text-center font-heading text-h1 uppercase text-gold">
+      What Our Clients Say
+    </h2>
+
+    <div class="mt-16 grid grid-cols-1 gap-12 md:grid-cols-2">
+      {testimonials.map((t) => (
+        <figure class="flex flex-col items-center text-center">
+          <span class="font-heading text-[80px] leading-none text-gold" aria-hidden="true">
+            &ldquo;&rdquo;
+          </span>
+          <blockquote
+            class="mt-4 max-w-[610px] font-sans text-[18px] leading-relaxed text-gold"
+            data-todo={t.todo}
+          >
+            {t.quote}
+          </blockquote>
+          <figcaption class="mt-6 font-sans text-[18px] uppercase tracking-wider text-gold">
+            {t.author}
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+
+    {/* Точки-индикаторы карусели + бейджи доверия */}
+    <div class="mt-16 flex flex-col items-center gap-8">
+      <div class="flex gap-2" aria-hidden="true">
+        <span class="h-[3px] w-[70px] bg-gold"></span>
+        <span class="h-[3px] w-[70px] bg-gold/40"></span>
+        <span class="h-[3px] w-[70px] bg-gold/40"></span>
+        <span class="h-[3px] w-[70px] bg-gold/40"></span>
+      </div>
+
+      <div class="mt-8 flex items-center justify-center gap-8">
+        <img
+          src="/assets/images/badge-google-5star.png"
+          alt="5-star rated on Google"
+          width="225"
+          height="225"
+          class="h-[120px] w-auto object-contain"
+          loading="lazy"
+        />
+        <img
+          src="/assets/images/badge-best-of-2025.png"
+          alt="Best of 2025 — BusinessRate"
+          width="164"
+          height="142"
+          class="h-[120px] w-auto object-contain"
+          loading="lazy"
+        />
+      </div>
+    </div>
+  </Container>
+</section>

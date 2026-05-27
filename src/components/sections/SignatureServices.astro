@@ -1,0 +1,97 @@
+---
+/**
+ * Our Signature Services — заголовок + ряд из 5 карточек услуг.
+ * Каждая карточка — большая фотография на всю плитку с подписью внизу
+ * (название категории) и микро-CTA "Discover" сверху.
+ *
+ * Источник: узлы 1:149 (заголовок), 1:155 (подзаголовок),
+ *           1:71/186/531/192/189 (названия карточек),
+ *           1:352, 1:351, 1:350, 1:353, 1:536 (изображения карточек)
+ *
+ * ВАЖНО: 3 из 5 изображений в Figma — золотая текстура-плейсхолдер
+ * (Hormone, Peptide, IV Therapy). Финальные фото от заказчика ещё не пришли.
+ */
+import Container from '../Container.astro';
+
+const services = [
+  {
+    title: 'Medical Weight Loss',
+    href: '/services/weight-loss',
+    image: '/assets/images/service-weight-loss.png',
+    imageStatus: 'real',
+  },
+  {
+    title: 'Hormone Optimization',
+    href: '/services/hormone',
+    image: '/assets/images/service-hormone.png',
+    imageStatus: 'placeholder',
+  },
+  {
+    title: 'Peptide Therapy',
+    href: '/services/peptide',
+    image: '/assets/images/service-peptide.png',
+    imageStatus: 'placeholder',
+  },
+  {
+    title: 'Sexual Health',
+    href: '/services/sexualhealth',
+    image: '/assets/images/service-sexual-health.png',
+    imageStatus: 'real',
+  },
+  {
+    title: 'IV Therapy',
+    href: '/services/ivtherapy',
+    image: '/assets/images/service-iv-therapy.png',
+    imageStatus: 'placeholder',
+  },
+];
+---
+
+<section class="w-full bg-white py-24" data-section="signature-services">
+  <Container>
+    <div class="text-center">
+      <h2 class="font-heading text-h1 uppercase text-gold">
+        Our Signature Services
+      </h2>
+      <p class="mx-auto mt-8 max-w-[821px] font-sans text-body-lg leading-relaxed text-gold">
+        Explore our range of specialized treatments designed to enhance
+        your well-being. Each service at Ideal Medical and Wellness is
+        tailored to meet the unique needs of our clients, ensuring
+        optimal results and satisfaction.
+      </p>
+    </div>
+
+    <ul class="mt-16 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-5">
+      {services.map((s) => (
+        <li>
+          <a
+            href={s.href}
+            class="group relative block aspect-[292/436] overflow-hidden bg-gold/10"
+            data-image-status={s.imageStatus}
+          >
+            <img
+              src={s.image}
+              alt=""
+              class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+              loading="lazy"
+            />
+            {/* Затемнение снизу для читаемости текста */}
+            <div
+              class="absolute inset-x-0 bottom-0 h-1/2"
+              style="background: linear-gradient(to top, rgba(0,0,0,0.55), transparent);"
+              aria-hidden="true"
+            ></div>
+            {/* Микро-CTA "Discover" сверху-слева */}
+            <span class="absolute left-4 top-4 font-sans text-[14px] uppercase tracking-wider text-cream">
+              Discover
+            </span>
+            {/* Название услуги внизу */}
+            <span class="absolute bottom-4 left-4 right-4 font-heading text-[24px] uppercase leading-tight text-cream">
+              {s.title}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </Container>
+</section>

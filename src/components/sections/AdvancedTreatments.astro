@@ -1,0 +1,101 @@
+---
+/**
+ * AdvancedTreatments — секция с 4 карточками BTL-аппаратов.
+ *
+ * Источник: узлы 1:150 (заголовок), 1:94 (eyebrow), 1:85/88/91/95 (категории),
+ *           1:84/98/99/100 (бренды), 1:114/119/125/130 (описания)
+ *
+ * ⚠️ В Figma:
+ * - опечатка "MENTALL WELLNESS" (двойная L) — оставлено как в макете
+ * - все 4 фото — BTL marketing assets, нужно подтверждение партнёрства с BTL
+ * - "Discover" eyebrow на каждой карточке — без ссылки, оставлен пока статичным
+ */
+import Container from '../Container.astro';
+
+const treatments = [
+  {
+    category: 'Facial Rejuvenation',
+    brand: 'EMFACE',
+    description:
+      'Needle free facial treatment to lift, tone, and smooth skin by strengthening facial muscles and improving skin quality.',
+    photo: '/assets/images/treatment-emface.png',
+    href: '/services/emface',
+  },
+  {
+    category: 'Body Sculpting',
+    brand: 'EMSCULPT NEO',
+    description:
+      'High intensity muscle stimulation with radio frequency to build muscle and reduce fat in targeted areas without surgery or downtime.',
+    photo: '/assets/images/treatment-emsculpt.png',
+    href: '/services/emsculpt',
+  },
+  {
+    // ⚠️ Опечатка "MENTALL" из Figma сохранена для верности макету.
+    // Помечено для финального ревью — см. docs/site-issues.md
+    category: 'Mentall Wellness',
+    brand: 'EXOMIND',
+    description:
+      'Advanced neuromodulation therapy to improve mood focus, stress resilience, and emotional balance.',
+    photo: '/assets/images/treatment-exomind.png',
+    href: '/services/exomind',
+    todo: 'typo-mentall',
+  },
+  {
+    category: 'Sexual Health',
+    brand: 'EMSELLA',
+    description:
+      'Non invasive pelvic floor strengthening to improve bladder control, core stability, and intimate wellness.',
+    photo: '/assets/images/treatment-emsella.png',
+    href: '/services/sexualhealth',
+  },
+];
+---
+
+<section class="w-full bg-cream py-24" data-section="advanced-treatments">
+  <Container>
+    <div class="text-center">
+      <p class="font-sans text-[18px] uppercase tracking-wider text-gold">
+        Now offered at Ideal Medical
+      </p>
+      <h2 class="mt-4 font-heading text-h1 uppercase leading-tight text-gold">
+        Advanced<br />Non &ndash; Invasive Treatments
+      </h2>
+    </div>
+
+    <ul class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+      {treatments.map((t) => (
+        <li>
+          <a
+            href={t.href}
+            class="group block"
+            data-trademark="btl"
+          >
+            <p class="font-sans text-[14px] uppercase tracking-wider text-gold">
+              {t.category}
+            </p>
+            <div class="mt-4 aspect-[400/600] overflow-hidden bg-gold/10">
+              <img
+                src={t.photo}
+                alt={`${t.brand} — ${t.category}`}
+                class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
+              />
+            </div>
+            <span class="mt-2 inline-block bg-gold px-3 py-1 font-sans text-[12px] uppercase tracking-wider text-cream">
+              Discover
+            </span>
+            <h3
+              class="mt-4 font-heading text-[28px] uppercase text-gold"
+              data-todo={t.todo}
+            >
+              {t.brand}
+            </h3>
+            <p class="mt-2 font-sans text-[16px] leading-relaxed text-gold">
+              {t.description}
+            </p>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </Container>
+</section>
