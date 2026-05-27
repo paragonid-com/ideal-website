@@ -1,0 +1,19 @@
+# Security headers для Cloudflare Pages.
+# Файл подхватывается автоматически в build output `dist/_headers`
+# (Astro копирует всё из public/ как есть).
+#
+# Документация: https://developers.cloudflare.com/pages/configuration/headers/
+
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+# Кэширование статических ассетов на 1 год (Astro версионирует имена файлов через хеши)
+/_astro/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/assets/*
+  Cache-Control: public, max-age=2592000

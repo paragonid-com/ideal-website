@@ -24,7 +24,7 @@
 | TrustBadges (Google ★ + BusinessRate) | ✅ Вынесены в `components/TrustBadges.astro`, подключены на 4 страницах |
 | Адаптив (mobile) | ⬜ Ждём макетов от дизайнеров |
 | Интеграции (форма, бронирование, newsletter) | ⬜ Не начаты |
-| Деплой на Cloudflare Pages | ⬜ Не начат |
+| Деплой на Cloudflare Pages | 🟡 Конфиг готов (`.nvmrc`, `_headers`, `output: 'static'`, README с шагами). Ждёт нажатия "Save and Deploy" в дашборде Cloudflare клиентом |
 
 ---
 
@@ -163,7 +163,13 @@ src/
 
 33. **Адаптив (mobile)** — ждём макетов от дизайнеров. Текущая вёрстка работает только на ~1920px
 34. **Optima шрифт** — покупать ли веб-лицензию или остаёмся на Marcellus?
-35. **Cloudflare Pages** — настроить preview environment + первый deploy
+35. ~~**Cloudflare Pages** — настроить preview environment + первый deploy~~ **Подготовлено в сессии 2:**
+    - `astro.config.mjs` явно зафиксирован `output: 'static'` + placeholder `site` URL
+    - `.nvmrc` пиннит Node 22 (Cloudflare читает автоматически)
+    - `public/_headers` — security headers + cache rules для `_astro/*` и `assets/*`
+    - `README.md` секция Deploy — пошаговая инструкция для дашборда (включая важное предупреждение про тихую подмену Pages → Workers, актуально на конец 2025)
+    - Preview deployments включаются автоматически по PR
+    - **Действие, требующее владельца GitHub-аккаунта `paragonid-com`:** залогиниться в Cloudflare dashboard, привязать репо, нажать **Save and Deploy**. После первого деплоя — подставить выданный `*.pages.dev` URL в `astro.config.mjs → site` и закоммитить.
 36. **Lighthouse аудит** — цель 95+, сейчас не замерял
 
 ---

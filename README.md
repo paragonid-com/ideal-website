@@ -70,6 +70,65 @@ Figma file: `jmzQqLFWpZXSII6xTkgCgu`
 - **Шрифты:** Marcellus (heading), Manrope (UI)
 - **Размеры:** H1 62px, body 21px, button 22px
 
+## Деплой на Cloudflare Pages
+
+Сайт настроен под Cloudflare Pages (static deploy через GitHub-интеграцию).
+Wrangler-CLI и `@astrojs/cloudflare` adapter **не используются** — это чисто
+статический сайт.
+
+### Первый деплой — пошагово
+
+1. Залогиниться в [Cloudflare dashboard](https://dash.cloudflare.com/).
+2. Открыть **Workers & Pages** → **Create application** → вкладка **Pages**
+   → **Import an existing Git repository**.
+3. Авторизовать Cloudflare в GitHub-аккаунте `paragonid-com`, выбрать
+   репозиторий `ideal-website`.
+4. В разделе **Set up builds and deployments** указать:
+
+   | Поле | Значение |
+   |---|---|
+   | Production branch | `main` |
+   | Framework preset | `Astro` |
+   | Build command | `npm run build` |
+   | Build output directory | `dist` |
+   | Root directory | `/` |
+
+5. **Save and Deploy.** Через 1-2 минуты появится URL вида
+   `<project-name>.pages.dev`.
+
+### После первого деплоя
+
+1. Полученный `*.pages.dev` URL **подставить в `astro.config.mjs`** —
+   поле `site`. Сейчас там placeholder `https://ideal-website.pages.dev`,
+   реальное имя может отличаться (зависит от Project name в дашборде).
+2. Коммит → Cloudflare автоматически пересоберёт и редеплойнет.
+3. Preview deployments включаются автоматически: каждый PR / push в
+   non-main ветку получит свой `*.pages.dev` URL для ревью клиентом.
+
+### Кастомный домен
+
+Когда клиент выдаст домен (предположительно `idealmedwellness.com`):
+
+1. В дашборде проекта → **Custom domains** → **Set up a custom domain**.
+2. Cloudflare сам предложит DNS-записи (если домен в Cloudflare DNS — настроит автоматически).
+3. **Снова обновить `site` в `astro.config.mjs`** на `https://idealmedwellness.com`.
+
+### ⚠️ Подводный камень — Pages vs Workers
+
+С 2025 года Cloudflare активно мигрирует Pages в унифицированную
+Workers-платформу. При создании проекта дашборд может тихо подсунуть
+Workers-маршрут вместо Pages. Признак: после деплоя URL вида
+`*.workers.dev` вместо `*.pages.dev`.
+
+Защита: в `astro.config.mjs` явно зафиксирован `output: 'static'`.
+Если попали на Workers — пересоздать проект, выбрав именно вкладку **Pages**
+(не **Workers**) в Step 3 выше.
+
+### Node-версия
+
+Зафиксирована в `.nvmrc` — Cloudflare читает его автоматически.
+Сейчас Node 22.
+
 ## Что НЕ забыть
 
 Все места, требующие решения от клиента, помечены атрибутом `data-todo` в коде.
