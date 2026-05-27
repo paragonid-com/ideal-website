@@ -333,9 +333,13 @@ src/
 ## Принятые решения (НЕ переспрашивать!)
 
 ### Дизайн
-- **Шрифт заголовков:** Marcellus (Google Fonts), как замена коммерческой Optima.
-  Если клиент купит лицензию Optima — поменять первое значение в `tailwind.config.mjs → fontFamily.heading`
-- **Шрифт body:** Manrope (Google Fonts)
+- **Шрифт заголовков:** Optima (self-hosted, 5 начертаний в `public/fonts/Optima-*.woff2`).
+  Источник — Optima.ttc из системного шрифта macOS (`/System/Library/Fonts/`),
+  присланного клиентом в сессии 4. Тот же шрифт, что в Figma.
+  ⚠️ **Юр.риск принят клиентом** — Optima это коммерческий шрифт от Linotype/
+  Monotype, лицензирован Apple для macOS. Web-лицензия не куплена. Если
+  потом купят — заменить файлы в `public/fonts/`, frontend код не меняется.
+- **Шрифт body:** Manrope (Google Fonts, бесплатный)
 - **Цвета:** `gold #8d7431`, `gold-bright #d1a42b`, `cream #eae4d2`
 - **Контейнер:** max 1920px, padding 7.55% (≈145px при 1920)
 
@@ -433,7 +437,7 @@ src/
 ### 🔵 Технические
 
 33. **Адаптив (mobile)** — ждём макетов от дизайнеров. Текущая вёрстка работает только на ~1920px
-34. **Optima шрифт** — покупать ли веб-лицензию или остаёмся на Marcellus?
+34. ~~**Optima шрифт** — покупать ли веб-лицензию или остаёмся на Marcellus?~~ **Закрыто в сессии 4:** клиент прислал `Optima.ttc` (системный шрифт macOS), сконвертирован в 5 woff2-файлов и подключён self-hosted из `public/fonts/`. Юр.риск принят клиентом, web-лицензия не куплена.
 35. ~~**Cloudflare Pages** — настроить preview environment + первый deploy~~ **Подготовлено в сессии 2:**
     - `astro.config.mjs` явно зафиксирован `output: 'static'` + placeholder `site` URL
     - `.nvmrc` пиннит Node 22 (Cloudflare читает автоматически)

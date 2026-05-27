@@ -17,12 +17,17 @@ export default {
         },
       },
       fontFamily: {
-        // Заголовки — Marcellus (Google Fonts, бесплатный).
-        // Оригинал в Figma — Optima (коммерческий Linotype). Заменён по решению
-        // заказчика на бесплатный аналог. Marcellus — гуманистический serif
-        // с минимальными засечками, близок по характеру к Optima.
-        // Если позднее заказчик купит лицензию Optima — заменим первое значение.
-        heading: ['Marcellus', 'Optima', 'Georgia', 'serif'],
+        // Заголовки — Optima (self-hosted из /public/fonts/, как в Figma).
+        // 5 начертаний: Regular 400, Italic 400, Bold 700, BoldItalic 700,
+        // ExtraBlack 900. См. @font-face в src/styles/global.css.
+        //
+        // ⚠️ Optima — коммерческий шрифт от Linotype/Monotype, лицензирован
+        // Apple для macOS. Web-лицензия не куплена; заказчик принял юр.риск
+        // использовать его на сайте. См. блокер #13 в docs/TODO-INVENTORY.md.
+        //
+        // Marcellus и Georgia оставлены как fallback на случай блокировки
+        // Optima (например, после смены лицензии или при загрузке woff2 fail).
+        heading: ['Optima', 'Marcellus', 'Georgia', 'serif'],
         // Body / UI — Manrope (Google Fonts, бесплатный)
         sans: ['Manrope', 'system-ui', 'sans-serif'],
       },
