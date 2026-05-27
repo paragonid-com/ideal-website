@@ -15,12 +15,24 @@
  *   лого    — узел 1:268 (Group 321)
  *   burger  — узел 1:144 (Group 6)
  *
- * Поведение на мобильном — пока используется тот же overlay
- * (по решению заказчика, см. ответ от 26.05.26). После прихода мобильных
- * макетов от дизайнеров — будем адаптировать.
+ * Поведение подменю (см. JS-блок ниже):
+ *   - При открытии overlay показывается раздел активной страницы;
+ *     если её нет (главная) — первый раздел (Wellness Services) как fallback,
+ *     чтобы UI не выглядел сломанным. Это отклонение от Figma menu-1
+ *     (где справа пусто), сделано из-за UX (см. HANDOFF).
+ *   - Hover на заголовок (desktop) — временный preview, mouseleave
+ *     возвращает к "sticky" (последнее click'нутое или server default).
+ *   - Click на заголовок (touch и desktop) — меняет sticky.
+ *     Touch-friendly: на iPad/телефонах нет hover, работает только click.
+ *   - Орнамент-цветочек возле раскрытого раздела (узел Figma 1:1983).
  *
- * Открыть/закрыть overlay — клик по #menu-toggle / #menu-close.
- * Раскрытие подменю по hover — чистый CSS (group-hover).
+ * Sub-навигация (отдельная фича поверх Figma): внутри подменю текущий
+ * пункт помечен `aria-current="page"` + `font-semibold`. Применяется
+ * к любой странице, которая есть в навигации.
+ *
+ * Поведение на мобильном — пока тот же overlay (по решению заказчика,
+ * см. ответ от 26.05.26). После прихода мобильных макетов от дизайнеров —
+ * будем адаптировать.
  */
 
 import { mainNav, bookingCta, type NavGroup } from '../data/navigation.ts';
@@ -53,7 +65,24 @@ function isGroupActive(group: NavGroup): boolean {
   return Boolean(group.items?.some((item) => isItemCurrent(item.href)));
 }
 
+// Состояние навигации использует две разные концепции:
+//
+// activeGroupLabel — раздел, **реально содержащий текущую страницу**.
+//   Используется для sub-навигации: орнамент-индикатор и aria-current="page"
+//   на конкретной ссылке внутри подменю. Если страница не в меню (`/`,
+//   /aboutus и т.п.) — undefined, орнамент не показываем.
+//
+// defaultOpenLabel — какой подменю-список открыть при открытии overlay.
+//   Если есть реальная активная страница — открываем её раздел. Если нет
+//   (домашняя) — fallback на первый раздел (Wellness Services), чтобы
+//   справа не пустовало. Это отклонение от Figma menu-1 (там в дефолте
+//   пусто), но без него UX сломан. См. HANDOFF.
+//
+// data-nav-active атрибут используется JS для возврата к default state
+// после mouseleave с nav — поэтому ставится по defaultOpenLabel.
+// aria-current="true" и орнамент — только по activeGroupLabel.
 const activeGroupLabel = mainNav.find(isGroupActive)?.label;
+const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
 ---
 
 {/* === TOP BAR (на каждой странице) === */}
@@ -146,20 +175,23 @@ const activeGroupLabel = mainNav.find(isGroupActive)?.label;
           <ul class="flex flex-col gap-1">
             {mainNav.map((group: NavGroup) => {
               const isActive = group.label === activeGroupLabel;
+              const isDefaultOpen = group.label === defaultOpenLabel;
               return (
                 <li class="group/item" data-nav-group={group.label}>
                   <button
                     type="button"
                     class="inline-flex items-center gap-4 font-heading text-[64px] uppercase leading-tight text-gold transition-opacity hover:opacity-70 [text-shadow:0_1px_0_rgba(255,255,255,0.4)]"
                     data-nav-target={group.label}
-                    data-nav-active={isActive ? 'true' : undefined}
+                    data-nav-active={isDefaultOpen ? 'true' : undefined}
                     aria-current={isActive ? 'true' : undefined}
                   >
                     <span>{group.label}</span>
                     {/* Орнамент-индикатор активного раздела (узел Figma 1:1983).
-                        В макете показан только при наведении/раскрытии;
-                        здесь — постоянно для текущей секции (sub-навигация).
-                        JS ниже добавит/уберёт его при hover на других секциях. */}
+                        Показывается только для реально активной страницы
+                        (sub-навигация). На главной — не показываем ни для одного
+                        раздела, хотя defaultOpenLabel = Wellness Services
+                        (чтобы юзер не думал, будто он на странице Wellness).
+                        JS ниже переключает opacity при hover. */}
                     <img
                       src="/assets/images/ornament.png"
                       alt=""
@@ -186,14 +218,15 @@ const activeGroupLabel = mainNav.find(isGroupActive)?.label;
           </a>
         </nav>
 
-        {/* Подменю справа от пунктов. Видно только для активного раздела
-            на текущей странице, либо при hover на другом разделе. */}
+        {/* Подменю справа от пунктов. Открыто по умолчанию для defaultOpenLabel
+            (= активный раздел текущей страницы, либо первый раздел как fallback
+            для главной). При hover/click на другом разделе — переключается. */}
         <div class="flex-1 border-l border-gold/40 pl-12">
           {mainNav.map((group: NavGroup) => {
-            const isActive = group.label === activeGroupLabel;
+            const isDefaultOpen = group.label === defaultOpenLabel;
             return (
               <ul
-                class={`flex-col gap-2 ${isActive ? 'flex' : 'hidden'}`}
+                class={`flex-col gap-2 ${isDefaultOpen ? 'flex' : 'hidden'}`}
                 data-nav-panel={group.label}
               >
                 {group.items?.map((item) => {
@@ -231,13 +264,15 @@ const activeGroupLabel = mainNav.find(isGroupActive)?.label;
   const close = document.getElementById('menu-close');
   const overlay = document.getElementById('overlay-menu');
 
-  // Какой раздел активен по умолчанию (вычислен на сервере и проставлен
-  // через data-nav-active="true"). Используется как fallback при закрытии
-  // hover/focus, чтобы меню вернулось к "current page" состоянию.
-  function getActiveSection(): string | undefined {
-    const activeBtn = document.querySelector<HTMLElement>('[data-nav-target][data-nav-active="true"]');
-    return activeBtn?.dataset.navTarget;
+  // Текущее "запомненное" состояние подменю. Изначально = серверный default
+  // (data-nav-active="true" на одном из заголовков). При hover временно
+  // показываем другой раздел, на mouseleave возвращаемся к запомненному.
+  // При click — меняем запомненное на новое.
+  function getServerDefault(): string | undefined {
+    const el = document.querySelector<HTMLElement>('[data-nav-target][data-nav-active="true"]');
+    return el?.dataset.navTarget;
   }
+  let stickySection: string | undefined = getServerDefault();
 
   function openMenu() {
     if (!overlay || !toggle) return;
@@ -246,8 +281,8 @@ const activeGroupLabel = mainNav.find(isGroupActive)?.label;
     overlay.setAttribute('aria-hidden', 'false');
     toggle.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
-    // При открытии — показываем активный раздел (если есть).
-    showPanel(getActiveSection());
+    // При открытии — показываем sticky (последнее выбранное или server default).
+    showPanel(stickySection);
   }
 
   function closeMenu() {
@@ -264,9 +299,6 @@ const activeGroupLabel = mainNav.find(isGroupActive)?.label;
     overlay.setAttribute('aria-hidden', 'true');
     toggle.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
-    // Возвращаемся к активному состоянию (а не прячем всё) —
-    // чтобы при следующем открытии видеть актуальный sub-nav.
-    showPanel(getActiveSection());
   }
 
   toggle?.addEventListener('click', openMenu);
@@ -279,16 +311,26 @@ const activeGroupLabel = mainNav.find(isGroupActive)?.label;
     }
   });
 
-  // Hover/focus по главному пункту → показать соответствующий подменю-список
+  // Hover/focus/click по главному пункту → показать соответствующий подменю-список
   // + показать орнамент рядом с этим пунктом.
+  // - hover/focus: временный show (mouseleave возвращает к sticky)
+  // - click: сохранить новый sticky (touch-friendly — на iPad/телефонах нет hover)
   document.querySelectorAll<HTMLElement>('[data-nav-target]').forEach((btn) => {
-    btn.addEventListener('mouseenter', () => showPanel(btn.dataset.navTarget));
-    btn.addEventListener('focus', () => showPanel(btn.dataset.navTarget));
+    const target = btn.dataset.navTarget;
+    btn.addEventListener('mouseenter', () => showPanel(target));
+    btn.addEventListener('focus', () => showPanel(target));
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      stickySection = target;
+      showPanel(target);
+    });
   });
 
-  // При уходе курсора с навигации — возвращаемся к active state.
+  // При уходе курсора с навигации — возвращаемся к sticky выбору.
+  // На touch-устройствах mouseleave обычно не срабатывает — sticky уже обновлён
+  // в click handler выше, и подменю остаётся в выбранном состоянии.
   const navList = document.querySelector<HTMLElement>('nav[aria-label="Main navigation"]');
-  navList?.addEventListener('mouseleave', () => showPanel(getActiveSection()));
+  navList?.addEventListener('mouseleave', () => showPanel(stickySection));
 
   function showPanel(name?: string) {
     // Панели
@@ -297,7 +339,9 @@ const activeGroupLabel = mainNav.find(isGroupActive)?.label;
       p.classList.toggle('flex', match);
       p.classList.toggle('hidden', !match);
     });
-    // Орнаменты — показываем только для активного раздела
+    // Орнамент — показываем при hover/click на любой раздел.
+    // SSR-орнамент (для реально активной страницы) остаётся постоянно.
+    // На главной activeGroupLabel = undefined, орнамент при hover тоже временный.
     document.querySelectorAll<HTMLElement>('[data-nav-ornament]').forEach((o) => {
       const match = !!name && o.dataset.navOrnament === name;
       o.classList.toggle('opacity-100', match);
