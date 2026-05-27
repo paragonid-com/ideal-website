@@ -2,22 +2,28 @@
 /**
  * Our Signature Services — заголовок + ряд из 5 карточек услуг.
  *
- * Source в Figma:
+ * Source в Figma (file jmzQqLFWpZXSII6xTkgCgu):
  *   - Заголовок секции: 1:149 (h2), 1:155 (lead), 1:230 (орнамент справа)
- *   - Карточки: 1:248, 1:351, 1:536, 1:353, 1:350 (291×436 фоновые)
- *   - Заголовки услуг: 1:71, 1:186, 1:531, 1:192, 1:189 — 2 строки, h=58
- *   - DISCOVER: 1:534 (293×48 золотой Rect) + 1:535 (текст)
- *   - Предметные оверлеи:
- *     - Hormone Group 380 (1:354): 288×243 at offset (3.5, 94) in card (291×436)
- *       → top: 21.5%, left: 1.2%, width: 99%, height: 55.7%
- *     - Peptide Group 310 (1:537): 245×402 at offset (26.6, 7.3)
- *       → top: 1.7%, left: 9.1%, width: 84%, height: 92.2%
- *     - IV Therapy Group 402 (1:482): 448×322 at offset (-22, 68)
- *       → top: 15.6%, left: -7.5%, width: 153%, height: 73.8%
- *       (выходит за края карточки, обрезается overflow-hidden)
+ *   - 5 фоновых VECTOR'ов с image fill (scaleMode=CROP, scalingFactor=0.5):
+ *     1:352 Medical Weight Loss, 1:351 Hormone, 1:536 Peptide,
+ *     1:353 Sexual Health, 1:350 IV Therapy — все 291×436
+ *   - 3 предметных overlay'я (поверх фона):
+ *     - Hormone Group 380 (1:354): 288×243 at (3.5, 94) в карточке
+ *       → top:21.5% left:1.2% w:99% h:55.7%
+ *     - Peptide Group 310 (1:537): 245×402 at (26.6, 7.3)
+ *       → top:1.7% left:9.1% w:84% h:92.2%
+ *     - IV Therapy Group 402 (1:482): 448×322 at (-22, 68)
+ *       → точные Figma-значения: top:15.6% left:-7.5% w:153.4% h:73.85%.
+ *         Но overlay-файл `service-iv-therapy-overlay.webp` после очистки
+ *         alpha-bbox имеет тесный crop вокруг пакетов (~468×573, aspect 0.82),
+ *         поэтому используется упрощённая модель: top + height + autoCenterX
+ *         — overlay растягивается по высоте и центрируется по X.
  *
- * Удаление белого фона у overlay-картинок — через flood-fill из углов +
- * Gaussian feathering для сглаживания краёв (см. scripts/remove-bg.py).
+ * Особенность: фоновые фото у Weight Loss и Sexual Health имеют исходный
+ * aspect ratio близкий к карточке (≈0.67), но содержат много фоновых полей.
+ * В Figma эффект zoom 2× получается из `scalingFactor: 0.5`. У нас —
+ * через CSS `transform: scale()` и `object-position`. См. поля
+ * `imageScale` и `imagePosition` ниже.
  */
 import Container from '../Container.astro';
 
@@ -25,14 +31,31 @@ interface Service {
   titleLines: [string, string];
   href: string;
   image: string;
+  /**
+   * Доп. zoom фонового фото (CSS transform: scale).
+   * В Figma фоновые фото у Weight Loss / Sexual Health имеют
+   * `scaleMode: CROP` + `scalingFactor: 0.5`, что эквивалентно
+   * увеличению в ~2× относительно cover. Наши webp экспортированы
+   * с исходным aspect карточки (=0.67), поэтому без CSS-зума показывают
+   * слишком много пустого фона. Дефолт: 1 (без зума).
+   */
+  imageScale?: number;
+  /**
+   * object-position для фонового фото. По умолчанию center.
+   */
+  imagePosition?: string;
   overlay?: {
     src: string;
     alt: string;
     /** Точные процентные координаты относительно карточки 291×436 из Figma */
     top: string;
-    left: string;
-    width: string;
+    left?: string;
+    width?: string;
     height: string;
+    /** Если true — горизонтально центрировать overlay через transform: translateX(-50%).
+        Использовать, когда overlay-картинка имеет естественные пропорции и нет смысла
+        задавать абсолютные left/width — пусть растягивается по height, центрируется сама. */
+    autoCenterX?: boolean;
   };
 }
 
@@ -41,6 +64,11 @@ const services: Service[] = [
     titleLines: ['Medical', 'Weight Loss'],
     href: '/services/weight-loss',
     image: '/assets/images/service-weight-loss.webp',
+    // webp уже содержит фигуру целиком в правильном aspect — нужен лишь
+    // лёгкий зум, чтобы не было пустых полей по бокам. Top-anchor чтобы
+    // голову не подрезало.
+    imageScale: 1.05,
+    imagePosition: 'center top',
   },
   {
     titleLines: ['Hormone', 'Optimization'],
@@ -72,6 +100,10 @@ const services: Service[] = [
     titleLines: ['Sexual', 'Health'],
     href: '/services/sexualhealth',
     image: '/assets/images/service-sexual-health.webp',
+    // В исходном webp лицо смещено правее центра — небольшой zoom
+    // + position 75% выводит лицо примерно в центр кадра карточки.
+    imageScale: 1.3,
+    imagePosition: '75% center',
   },
   {
     titleLines: ['IV', 'Therapy'],
@@ -80,10 +112,12 @@ const services: Service[] = [
     overlay: {
       src: '/assets/images/service-iv-therapy-overlay.webp',
       alt: 'NAD+ and Radiant AF IV bags',
-      top: '15.6%',
-      left: '-7.5%',
-      width: '115%',
-      height: '73.8%',
+      // Overlay-файл обрезан по alpha-bbox (~468×573), пакеты заполняют
+      // практически весь кадр без лишних полей. Задаём только высоту +
+      // авто-центрирование по X — пропорция сохраняется естественно.
+      top: '15%',
+      height: '70%',
+      autoCenterX: true,
     },
   },
 ];
@@ -123,7 +157,8 @@ const services: Service[] = [
               <img
                 src={s.image}
                 alt=""
-                class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-[var(--scale-hover)]"
+                style={`object-position: ${s.imagePosition ?? 'center'}; transform: scale(${s.imageScale ?? 1}); --scale-hover: ${((s.imageScale ?? 1) * 1.05).toFixed(3)};`}
                 loading="lazy"
               />
               {s.overlay && (
@@ -131,7 +166,11 @@ const services: Service[] = [
                   src={s.overlay.src}
                   alt={s.overlay.alt}
                   class="absolute object-contain pointer-events-none"
-                  style={`top: ${s.overlay.top}; left: ${s.overlay.left}; width: ${s.overlay.width}; height: ${s.overlay.height};`}
+                  style={
+                    s.overlay.autoCenterX
+                      ? `top: ${s.overlay.top}; left: 50%; transform: translateX(-50%); height: ${s.overlay.height}; width: auto; max-width: none;`
+                      : `top: ${s.overlay.top}; left: ${s.overlay.left}; width: ${s.overlay.width}; height: ${s.overlay.height};`
+                  }
                   loading="lazy"
                 />
               )}
