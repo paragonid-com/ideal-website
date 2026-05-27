@@ -1,0 +1,59 @@
+---
+/**
+ * ServiceWhatIs — секция "What is X?".
+ *
+ * Структура (узлы Figma 1:1500, 1:1510, 1:1549 для Weight Loss):
+ *  - Слева: фото (clip-path 1:1545: x=0 y=895 w=923 h=939)
+ *  - Справа: заголовок "What is Medical Weight Loss?" (x=1002 y=890)
+ *           + длинный многоабзацный текст (x=1002 y=1076 width=693)
+ *
+ * Высота секции в Figma ~1100px (с фоном cream сверху, под Hero).
+ *
+ * Body — многоабзацный текст, абзацы разделены пустой строкой (\n\n).
+ */
+
+interface Props {
+  title: string;
+  image: string;
+  imageAlt: string;
+  body: string;
+}
+
+const { title, image, imageAlt, body } = Astro.props;
+const lines = title.split('\n');
+// Разбиваем body на абзацы
+const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
+---
+
+<section
+  class="w-full bg-cream"
+  data-section="service-what-is"
+>
+  <div class="mx-auto max-w-design grid grid-cols-2 items-center min-h-[940px]">
+    {/* Левая колонка — фото на всю высоту секции */}
+    <div class="relative h-full">
+      <img
+        src={image}
+        alt={imageAlt}
+        class="block h-full w-full object-cover"
+        loading="lazy"
+      />
+    </div>
+
+    {/* Правая колонка — текст */}
+    <div class="px-[7.55%] py-24">
+      <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
+        {lines.map((line, i) => (
+          <>
+            {line}
+            {i < lines.length - 1 && <br />}
+          </>
+        ))}
+      </h2>
+
+      <div class="mt-12 space-y-6 max-w-[693px] font-sans text-body-lg text-gold leading-relaxed">
+        {paragraphs.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+  </div>
+</section>

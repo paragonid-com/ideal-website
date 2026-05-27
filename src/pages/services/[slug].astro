@@ -1,0 +1,90 @@
+---
+/**
+ * /services/[slug] — динамический маршрут страниц услуг.
+ *
+ * Читает Content Collection 'services' и рендерит общий шаблон.
+ * Страницы с draft: true исключаются из getStaticPaths (не генерируются в build).
+ *
+ * Структура страницы (по образцу Weight Loss, узел Figma 1:1919):
+ *   ServiceHero
+ *   ServiceCTABand        ← BOOK APPOINTMENT после Hero
+ *   ServiceWhatIs
+ *   ServiceCTABand        ← BOOK APPOINTMENT после WhatIs
+ *   ServiceBenefits
+ *   ServiceCTABand        ← BOOK APPOINTMENT после Benefits
+ *   ServiceWhoFor
+ *   ServiceResults
+ *   ServiceFAQ
+ *   NewIn2026             (переиспользованный с главной)
+ *   StartYourTransformation (переиспользованный с главной)
+ */
+
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import ServiceHero from '../../components/services/ServiceHero.astro';
+import ServiceCTABand from '../../components/services/ServiceCTABand.astro';
+import ServiceWhatIs from '../../components/services/ServiceWhatIs.astro';
+import ServiceBenefits from '../../components/services/ServiceBenefits.astro';
+import ServiceWhoFor from '../../components/services/ServiceWhoFor.astro';
+import ServiceResults from '../../components/services/ServiceResults.astro';
+import ServiceFAQ from '../../components/services/ServiceFAQ.astro';
+import NewIn2026 from '../../components/sections/NewIn2026.astro';
+import StartYourTransformation from '../../components/sections/StartYourTransformation.astro';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services', ({ data }) => !data.draft);
+  return services.map((service) => ({
+    params: { slug: service.id },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+const { data } = service;
+---
+
+<BaseLayout title={data.seoTitle} description={data.seoDescription}>
+  <ServiceHero
+    title={data.heroTitle}
+    lead={data.heroLead}
+    image={data.heroImage}
+    imageAlt={data.heroImageAlt}
+  />
+
+  <ServiceCTABand />
+
+  <ServiceWhatIs
+    title={data.whatIsTitle}
+    image={data.whatIsImage}
+    imageAlt={data.whatIsImageAlt}
+    body={data.whatIsBody}
+  />
+
+  <ServiceCTABand />
+
+  <ServiceBenefits
+    title={data.benefitsTitle}
+    intro={data.benefitsIntro}
+    benefits={data.benefits}
+  />
+
+  <ServiceCTABand />
+
+  <ServiceWhoFor
+    title={data.whoForTitle}
+    image={data.whoForImage}
+    imageAlt={data.whoForImageAlt}
+    lead={data.whoForLead}
+    bullets={data.whoForBullets}
+  />
+
+  <ServiceResults
+    title={data.resultsTitle}
+    body={data.resultsBody}
+  />
+
+  <ServiceFAQ faq={data.faq} />
+
+  <NewIn2026 />
+  <StartYourTransformation />
+</BaseLayout>

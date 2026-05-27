@@ -1,0 +1,60 @@
+---
+/**
+ * ServiceHero — Hero страницы услуги.
+ *
+ * Структура (узлы Figma 1:1485-1:1509 для Weight Loss):
+ *  - Полноширинное фото (1920×814 в Figma)
+ *  - Текст слева:
+ *      * H1, 2 строки, font-heading, 62px, x=145 y=224
+ *      * Подзаголовок-параграф, x=145 y=389 width=632
+ *      * (на главной тут была кнопка BOOK NOW — на странице услуги кнопки нет,
+ *         CTA-band идёт ниже отдельным компонентом)
+ *
+ * Высота 814px (меньше чем главная — 1079px).
+ */
+
+interface Props {
+  /** Заголовок — поддерживает \n для переноса */
+  title: string;
+  /** Лид-параграф */
+  lead: string;
+  /** Путь к фото в /public/ (большое фоновое) */
+  image: string;
+  /** Alt для фото */
+  imageAlt: string;
+}
+
+const { title, lead, image, imageAlt } = Astro.props;
+// Разбиваем title на строки по \n чтобы отрисовать через <br/>
+const lines = title.split('\n');
+---
+
+<section
+  class="relative h-[814px] w-full overflow-hidden bg-white"
+  data-section="service-hero"
+>
+  <img
+    src={image}
+    alt={imageAlt}
+    class="absolute inset-0 h-full w-full object-cover object-right"
+    loading="eager"
+    decoding="async"
+  />
+
+  <div class="relative z-10 mx-auto h-full max-w-design px-[7.55%]">
+    <div class="flex h-full flex-col justify-start pt-[224px]">
+      <h1 class="font-heading text-h1 uppercase text-gold leading-tight">
+        {lines.map((line, i) => (
+          <>
+            {line}
+            {i < lines.length - 1 && <br />}
+          </>
+        ))}
+      </h1>
+
+      <p class="mt-[27px] max-w-[632px] font-sans text-body-lg text-gold leading-relaxed">
+        {lead}
+      </p>
+    </div>
+  </div>
+</section>

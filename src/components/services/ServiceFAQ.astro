@@ -1,0 +1,75 @@
+---
+/**
+ * ServiceFAQ — секция "Common FAQs" с аккордеоном.
+ *
+ * Структура (узлы Figma 1:1668-1:1684 для Weight Loss):
+ *  - Заголовок "COMMON FAQs" (слева, h2)
+ *  - Список вопросов, каждый с разделителем-линией снизу и стрелкой "›" справа
+ *  - 5 вопросов на Weight Loss
+ *
+ * 💡 В Figma все вопросы свёрнуты, ответы текстом не указаны.
+ *    Используется нативный <details>/<summary> для аккордеона:
+ *    - Не нужно JS
+ *    - Доступно (a11y из коробки)
+ *    - Поисковики индексируют контент даже свёрнутый
+ *
+ * ⚠️ Тексты ответов придут от клиента (помечено data-todo).
+ */
+
+interface FAQ {
+  question: string;
+  answer: string;
+}
+
+interface Props {
+  faq: FAQ[];
+}
+
+const { faq } = Astro.props;
+---
+
+<section
+  class="w-full bg-gold py-24"
+  data-section="service-faq"
+>
+  <div class="mx-auto max-w-design px-[7.55%]">
+    <h2 class="font-heading text-h1 uppercase text-cream leading-tight">
+      Common FAQs
+    </h2>
+
+    <ul class="mt-16">
+      {faq.map((item, i) => (
+        <li
+          class={`border-t border-cream/40 ${i === faq.length - 1 ? 'border-b' : ''}`}
+        >
+          <details class="group">
+            <summary
+              class="flex cursor-pointer items-center justify-between gap-8 py-6 list-none
+                     font-sans text-[28px] text-cream leading-tight
+                     hover:opacity-80 transition-opacity"
+            >
+              <span>{item.question}</span>
+              {/* Стрелка › — поворачивается на 90° при раскрытии */}
+              <svg
+                class="flex-shrink-0 transition-transform duration-200 group-open:rotate-90"
+                width="40"
+                height="20"
+                viewBox="0 0 55 27"
+                fill="none"
+                aria-hidden="true"
+              >
+                <path d="M2 2L27.5 24.5L53 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+              </svg>
+            </summary>
+            <div
+              class="pb-6 pr-16 font-sans text-body-lg text-cream leading-relaxed"
+              data-todo={!item.answer.trim() ? 'faq-answer-from-client' : undefined}
+            >
+              {item.answer || '— ответ будет добавлен клиентом —'}
+            </div>
+          </details>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

@@ -1,0 +1,36 @@
+---
+/**
+ * ServiceResults — секция "The Results".
+ *
+ * Структура (узлы Figma 1:1656, 1:1657, 1:1655 для Weight Loss):
+ *  - Центрированный заголовок "THE RESULTS"
+ *  - Центрированный многоабзацный текст (800px ширина)
+ *  - Фон золотой (узел 1:1655 GOLD BACK)
+ *
+ * Высота ~720px (фон занимает y=4397..5119 ≈ 722px).
+ */
+
+interface Props {
+  title: string;
+  body: string;
+}
+
+const { title, body } = Astro.props;
+const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
+---
+
+<section
+  class="w-full py-24"
+  data-section="service-results"
+  style="background: radial-gradient(ellipse at center, #f3eedd 0%, #c4a576 70%, #a78050 100%);"
+>
+  <div class="mx-auto max-w-design px-[7.55%] text-center">
+    <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
+      {title}
+    </h2>
+
+    <div class="mx-auto mt-12 max-w-[799px] space-y-6 font-sans text-body-lg text-gold leading-relaxed">
+      {paragraphs.map((p) => <p>{p}</p>)}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,68 @@
+---
+/**
+ * ServiceWhoFor — секция "Who is X For?".
+ *
+ * Структура (узлы Figma 1:1620, 1:1623, 1:1628, 1:1647 для Weight Loss):
+ *  - Слева (x=140 y=3496):
+ *      * Заголовок "Who is Medical Weight Loss For?" (2 строки)
+ *      * Лид-текст: пояснение + строка "You may be the ideal candidate ... if:"
+ *      * Буллет-список с критериями (4 пункта на Weight Loss)
+ *  - Справа (x=925 y=3276): большое фото (996×1203)
+ *
+ * Высота секции в Figma ~1000px.
+ */
+
+interface Props {
+  title: string;
+  image: string;
+  imageAlt: string;
+  lead: string;
+  bullets: string[];
+}
+
+const { title, image, imageAlt, lead, bullets } = Astro.props;
+const titleLines = title.split('\n');
+const leadParas = lead.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
+---
+
+<section
+  class="w-full bg-cream"
+  data-section="service-who-for"
+>
+  <div class="mx-auto max-w-design grid grid-cols-2 items-center min-h-[1000px]">
+    {/* Левая колонка — заголовок, lead, буллеты */}
+    <div class="px-[7.55%] py-24">
+      <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
+        {titleLines.map((line, i) => (
+          <>
+            {line}
+            {i < titleLines.length - 1 && <br />}
+          </>
+        ))}
+      </h2>
+
+      <div class="mt-12 max-w-[685px] space-y-6 font-sans text-body-lg text-gold leading-relaxed">
+        {leadParas.map((p) => <p>{p}</p>)}
+      </div>
+
+      <ul class="mt-8 space-y-6 max-w-[685px] font-sans text-body-lg text-gold leading-relaxed">
+        {bullets.map((b) => (
+          <li class="flex gap-4">
+            <span aria-hidden="true" class="select-none text-[24px] leading-[1.2]">•</span>
+            <span>{b}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    {/* Правая колонка — фото */}
+    <div class="relative h-full min-h-[700px]">
+      <img
+        src={image}
+        alt={imageAlt}
+        class="block h-full w-full object-cover"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
