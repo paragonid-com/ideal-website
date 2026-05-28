@@ -271,6 +271,16 @@ const goldBanner = normalizeBanner(data.goldBanner);
     />
   )}
 
+  {/* Video embed сразу после первой grid (emsella: BTL Emsella mechanism,
+     Figma 1:5400). Идёт перед CTA и Sexual Wellness. */}
+  {data.videoEmbed && data.videoEmbed.position === 'after-first-grid' && (
+    <ServiceVideoEmbed
+      url={data.videoEmbed.url}
+      posterImage={data.videoEmbed.posterImage}
+      posterAlt={data.videoEmbed.posterAlt}
+    />
+  )}
+
   {/* CTA после первой grid — только когда дальше идёт after-categories-grid
      two-col (паттерн emsella, Figma 1:5169). emface/emsculpt не затрагиваются. */}
   {firstCategoriesGrid && twoColAfterGrid.length > 0 && <ServiceCTABand />}
@@ -288,8 +298,8 @@ const goldBanner = normalizeBanner(data.goldBanner);
     </>
   ))}
 
-  {/* Video embed #1 (emsculpt, exomind, emface) */}
-  {data.videoEmbed && (
+  {/* Video embed #1 (emsculpt, exomind, emface) — поздняя позиция (default) */}
+  {data.videoEmbed && data.videoEmbed.position !== 'after-first-grid' && (
     <ServiceVideoEmbed
       url={data.videoEmbed.url}
       posterImage={data.videoEmbed.posterImage}

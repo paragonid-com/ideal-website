@@ -275,6 +275,15 @@ const services = defineCollection({
           /** Постер до загрузки видео (опционально) */
           posterImage: z.string().optional(),
           posterAlt: z.string().default('Video preview'),
+          /** Где рендерить относительно categories-grid / two-col:
+           *  'late' (default) — текущее поведение (emsculpt/emface/exomind):
+           *    после twoColAfterGrid.
+           *  'after-first-grid' — emsella: сразу ПОСЛЕ первой categories-grid
+           *    (incontinence), перед CTA и Sexual Wellness (Figma 1:5400). */
+          position: z
+            .enum(['late', 'after-first-grid'])
+            .default('late')
+            .optional(),
         })
         .optional(),
 

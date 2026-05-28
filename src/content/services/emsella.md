@@ -81,6 +81,13 @@ categoriesGrids:
         image: "/assets/images/services/emsella/incontinence-mixed.webp"
         imageAlt: "Mixed incontinence"
 
+# ---------- Video после сетки "What Emsella is for?" (Figma 1:5400 —
+# "BTL EMSELLA® - Mechanism of action", YouTube). URL даёт клиент
+# (data-todo='video-from-client' проставит компонент при пустом url). ----------
+videoEmbed:
+  position: "after-first-grid"
+  posterAlt: "BTL Emsella — Mechanism of action"
+
 # ---------- FAQ (content pending from client) ----------
 faq:
   - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
