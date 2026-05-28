@@ -75,20 +75,30 @@ const services = defineCollection({
         })
         .optional(),
 
-      // ===== Benefits (Weight Loss) =====
+      // ===== Benefits (Weight Loss + Peptide) =====
+      // Weight Loss: 3-6 карточек icon + title + description (текст под заголовком).
+      // Peptide (узлы Figma 1:3875 + 1:3944-3977): 9 элементов icon + title БЕЗ
+      //   description, сетка 3x3 на gold-gradient. Для этого:
+      //     - description сделан optional (icon-only режим)
+      //     - max поднят до 9
+      //     - benefitsIconOnly: true переключает компонент в режим icon+title
+      //       (без интро-параграфа места под description, плотнее grid).
+      //   Дефолт benefitsIconOnly не задан → текущее поведение Weight Loss.
       benefitsTitle: z.string().optional(),
       benefitsIntro: z.string().optional(),
+      /** true → режим Peptide: icon + title (без description), сетка 3x3. */
+      benefitsIconOnly: z.boolean().default(false).optional(),
       benefits: z
         .array(
           z.object({
             title: z.string(),
-            description: z.string(),
+            description: z.string().optional(),
             icon: image(),
             iconAlt: z.string().default(''),
           })
         )
         .min(3)
-        .max(6)
+        .max(9)
         .optional(),
 
       // ===== Who is For (Weight Loss) =====
@@ -411,12 +421,16 @@ const services = defineCollection({
       stars: z
         .object({
           hero: z.boolean().default(false),
+          whatIs: z.boolean().default(false),
           twoColumnText: z.boolean().default(false),
+          benefits: z.boolean().default(false),
           commonSigns: z.boolean().default(false),
           categoriesGrid: z.boolean().default(false),
           conditionsList: z.boolean().default(false),
+          whoFor: z.boolean().default(false),
           roadmap: z.boolean().default(false),
           whyTrust: z.boolean().default(false),
+          results: z.boolean().default(false),
           experience: z.boolean().default(false),
         })
         .optional(),

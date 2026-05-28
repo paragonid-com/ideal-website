@@ -18,9 +18,11 @@ interface Props {
   imageAlt: string;
   lead: string;
   bullets: string[];
+  /** Показать gold-звезду справа от заголовка (Figma Peptide узел 1:3900). */
+  showStar?: boolean;
 }
 
-const { title, image, imageAlt, lead, bullets } = Astro.props;
+const { title, image, imageAlt, lead, bullets, showStar = false } = Astro.props;
 const titleLines = title.split('\n');
 const leadParas = lead.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
 ---
@@ -31,7 +33,16 @@ const leadParas = lead.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
 >
   <div class="mx-auto max-w-design grid grid-cols-2 items-center min-h-[1000px]">
     {/* Левая колонка — заголовок, lead, буллеты */}
-    <div class="px-[7.55%] py-24">
+    <div class="relative px-[7.55%] py-24">
+      {showStar && (
+        <img
+          src="/assets/images/star-sign.svg"
+          alt=""
+          width="43"
+          height="50"
+          class="absolute right-[7.55%] top-24 h-[50px] w-[43px]"
+        />
+      )}
       <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
         {titleLines.map((line, i) => (
           <>

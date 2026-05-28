@@ -13,9 +13,11 @@
 interface Props {
   title: string;
   body: string;
+  /** Показать gold-звезду по центру под текстом (Figma Peptide узел 1:3925). */
+  showStar?: boolean;
 }
 
-const { title, body } = Astro.props;
+const { title, body, showStar = false } = Astro.props;
 const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
 ---
 
@@ -32,5 +34,15 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
     <div class="mx-auto mt-12 max-w-[799px] space-y-6 font-sans text-body-lg text-gold leading-relaxed">
       {paragraphs.map((p) => <p>{p}</p>)}
     </div>
+
+    {showStar && (
+      <img
+        src="/assets/images/star-sign.svg"
+        alt=""
+        width="43"
+        height="50"
+        class="mx-auto mt-12 h-[50px] w-[43px]"
+      />
+    )}
   </div>
 </section>

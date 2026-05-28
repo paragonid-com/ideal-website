@@ -28,32 +28,23 @@ import { Image } from 'astro:assets';
 
 interface Benefit {
   title: string;
-  description: string;
+  description?: string;
   icon: any; // ImageMetadata из Astro Image
   iconAlt?: string;
 }
 
 interface Props {
   title: string;
-  intro: string;
+  intro?: string;
   benefits: Benefit[];
+  /** Peptide-режим: icon + title без description, сетка 3x3. */
+  iconOnly?: boolean;
+  /** Показать gold-звезду над заголовком (Figma Peptide узел 1:3878). */
+  showStar?: boolean;
 }
 
-const { title, intro, benefits } = Astro.props;
+const { title, intro, benefits, iconOnly = false, showStar = false } = Astro.props;
 const titleLines = title.split('\n');
-
-// Если 5 элементов — добавим offset для центровки последнего ряда.
-// Сетка 3 cols: 5 = ряд 3 + ряд 2 (центрированный).
-// Для центровки используем justify-items-center + grid-cols-3, и для 5/4
-// добавляем col-start на последние элементы.
-const total = benefits.length;
-const offsetClasses: Record<number, string> = {
-  4: 'lg:col-start-2', // 4-й элемент в одиночку — центр (col 2 из 3)
-  5: 'lg:[&:nth-child(4)]:col-start-1 lg:[&:nth-child(4)]:col-end-2', // нет, проще через wrapper
-};
-// На самом деле проще — Container с flex flex-wrap justify-center
-// Каждая карточка ширины (100%-2*gap)/3 = ~30%.
-// Для 5: 3 в первом ряду + 2 во втором (центрированы flex'ом)
 ---
 
 <section
@@ -63,6 +54,16 @@ const offsetClasses: Record<number, string> = {
 >
   <div class="mx-auto max-w-design px-[7.55%]">
     <div class="text-center">
+      {showStar && (
+        <img
+          src="/assets/images/star-sign.svg"
+          alt=""
+          width="43"
+          height="50"
+          class="mx-auto mb-6 h-[50px] w-[43px]"
+        />
+      )}
+
       <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
         {titleLines.map((line, i) => (
           <>
@@ -72,32 +73,34 @@ const offsetClasses: Record<number, string> = {
         ))}
       </h2>
 
-      <p class="mx-auto mt-8 max-w-[779px] font-sans text-body-lg text-gold leading-relaxed">
-        {intro}
-      </p>
+      {intro && (
+        <p class="mx-auto mt-8 max-w-[779px] font-sans text-body-lg text-gold leading-relaxed">
+          {intro}
+        </p>
+      )}
     </div>
 
-    {/* flex flex-wrap с justify-center даёт ровно тот auto-flow поведение:
-       3 + 2 (5 элементов), 3 + 3 (6), 3 + 1 (4 — одинокая по центру), 3 (3 элемента).
-       Каждая карточка занимает 1/3 минус gap. */}
-    <ul class="mt-20 flex flex-wrap justify-center gap-x-8 gap-y-16">
+    {/* flex flex-wrap с justify-center: 3+3 (6), 3+2 (5), 3+3+3 (9 icon-only). */}
+    <ul class={`flex flex-wrap justify-center ${iconOnly ? 'mt-16 gap-x-8 gap-y-20' : 'mt-20 gap-x-8 gap-y-16'}`}>
       {benefits.map((b) => (
         <li class="flex flex-col items-center text-center w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.34rem)] max-w-[400px]">
-          <div class="h-[104px] w-[104px] flex items-center justify-center">
+          <div class={iconOnly ? 'h-[112px] w-[112px] flex items-center justify-center' : 'h-[104px] w-[104px] flex items-center justify-center'}>
             <Image
               src={b.icon}
               alt={b.iconAlt || b.title}
-              width={104}
-              height={104}
+              width={iconOnly ? 112 : 104}
+              height={iconOnly ? 112 : 104}
               class="h-full w-full object-contain"
             />
           </div>
-          <h3 class="mt-6 font-heading text-[28px] uppercase text-gold leading-tight">
+          <h3 class={`font-heading uppercase text-gold leading-tight ${iconOnly ? 'mt-6 text-[22px] max-w-[300px]' : 'mt-6 text-[28px]'}`}>
             {b.title}
           </h3>
-          <p class="mt-4 font-sans text-[18px] text-gold leading-relaxed">
-            {b.description}
-          </p>
+          {!iconOnly && b.description && (
+            <p class="mt-4 font-sans text-[18px] text-gold leading-relaxed">
+              {b.description}
+            </p>
+          )}
         </li>
       ))}
     </ul>

@@ -17,9 +17,11 @@ interface Props {
   image: string;
   imageAlt: string;
   body: string;
+  /** Показать gold-звезду справа от заголовка (Figma Peptide узел 1:3865). */
+  showStar?: boolean;
 }
 
-const { title, image, imageAlt, body } = Astro.props;
+const { title, image, imageAlt, body, showStar = false } = Astro.props;
 const lines = title.split('\n');
 // Разбиваем body на абзацы
 const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
@@ -41,7 +43,16 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
     </div>
 
     {/* Правая колонка — текст */}
-    <div class="px-[7.55%] py-24">
+    <div class="relative px-[7.55%] py-24">
+      {showStar && (
+        <img
+          src="/assets/images/star-sign.svg"
+          alt=""
+          width="43"
+          height="50"
+          class="absolute right-[7.55%] top-24 h-[50px] w-[43px]"
+        />
+      )}
       <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
         {lines.map((line, i) => (
           <>

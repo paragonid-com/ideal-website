@@ -173,6 +173,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
         image={data.whatIsImage}
         imageAlt={data.whatIsImageAlt || ''}
         body={data.whatIsBody}
+        showStar={data.stars?.whatIs}
       />
       <ServiceCTABand />
     </>
@@ -222,13 +223,15 @@ const goldBanner = normalizeBanner(data.goldBanner);
     />
   ))}
 
-  {/* Сетка преимуществ (Weight Loss) */}
-  {data.benefitsTitle && data.benefitsIntro && data.benefits && (
+  {/* Сетка преимуществ (Weight Loss: icon+title+desc; Peptide: icon+title 3x3) */}
+  {data.benefitsTitle && data.benefits && (
     <>
       <ServiceBenefits
         title={data.benefitsTitle}
         intro={data.benefitsIntro}
         benefits={data.benefits}
+        iconOnly={data.benefitsIconOnly}
+        showStar={data.stars?.benefits}
       />
       <ServiceCTABand />
     </>
@@ -358,6 +361,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       imageAlt={data.whoForImageAlt || ''}
       lead={data.whoForLead}
       bullets={data.whoForBullets}
+      showStar={data.stars?.whoFor}
     />
   )}
 
@@ -417,6 +421,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
     <ServiceResults
       title={data.resultsTitle || 'THE RESULTS'}
       body={data.resultsBody}
+      showStar={data.stars?.results}
     />
   )}
 
