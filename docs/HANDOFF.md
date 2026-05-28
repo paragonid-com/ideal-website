@@ -1,4 +1,4 @@
-# HANDOFF — состояние проекта на конец сессии 4
+# HANDOFF — состояние проекта на конец сессии 5
 
 Этот документ — точка входа для **следующей сессии работы с Claude**.
 Прочитав его, новая сессия сможет продолжить работу без необходимости
@@ -13,7 +13,7 @@
 
 | Что | Статус |
 |---|---|
-| Главная страница (`/`) | ✅ **Полностью сверстана + прошла визуальное ревью vs Figma** |
+| Главная страница (`/`) | ✅ **Полностью сверстана + прошла визуальное ревью vs Figma.** Сессия 5: добавлены 6 недостающих звёзд (star-sign) в Hero / Discover / SignatureServices / WhoWeAre / AdvancedTreatments / StartYourTransformation |
 | Signature Services карточки | ✅ Скорректированы под Figma (сессия 3): фоновые фото зум + position, IV Therapy overlay 153% вместо 115%, overlay-файл обрезан по alpha-bbox |
 | Header / Footer / общие компоненты | ✅ Готовы |
 | Overlay-меню — поведение | ✅ Доработано в сессии 3: hover/click/touch, sticky-section, hover-zone покрывает заголовки + подменю + пустоту между, min-h=489px чтобы линия и футер не прыгали |
@@ -21,7 +21,8 @@
 | Дизайн-токены (цвета, шрифты) | ✅ Извлечены и в `tailwind.config.mjs` |
 | Документация (карта меню, инвентарь фото) | ✅ В `/docs` |
 | Шаблон страниц услуг | ✅ Гибридный шаблон с условным рендером (сессия 4): поддерживает Weight Loss / hormone / emsculpt структуры без отдельных файлов |
-| 10 draft-заглушек услуг | 🟡 Hormone и Emsculpt сняты с draft в сессии 4. Остальные 8 (regenerative, bloodwork, exomind, peptide, emsella, ivtherapy, emface, sexualhealth) — всё ещё `draft: true` |
+| 10 draft-заглушек услуг | 🟡 Hormone, Emsculpt (сессия 4) и **Exomind (сессия 5)** сняты с draft. Остальные 7 (regenerative, bloodwork, peptide, emsella, ivtherapy, emface, sexualhealth) — всё ещё `draft: true` |
+| Exomind (`/services/exomind`) | ✅ **Наполнена контентом из Figma (сессия 5)**: hero + twoColumnText (whatIs+whoFor) + video#1 + goldBanner#1 + deviceShowcase + howWorks + whyChoose + conditionsList + video#2 + goldBanner#2 + FAQ. Тексты FAQ и YouTube-ссылки ждут от клиента. Звёзды на самой странице ещё не добавлены (см. блокеры) |
 | Hormone (`/services/hormone`) | ✅ **Наполнена контентом из Figma (сессия 4)**: hero + whatIs + reclaiming + commonSigns + roadmap + whyTrust + goldBanner + experience. Тексты FAQ ждут от клиента. |
 | Emsculpt Neo (`/services/emsculpt`) | ✅ **Наполнена контентом из Figma (сессия 4)**: hero + simpleWhatIs + 2× categoriesGrid + videoEmbed (placeholder) + extendedDescription + beforeAfter. Тексты FAQ ждут от клиента. |
 | Страницы About / Contact / Blog | ✅ Созданы (контент About есть; Blog — placeholder) |
@@ -299,6 +300,106 @@ emface), но фундаментально шаблон готов.
 
 ---
 
+## Сессия 5 — что доделано (27.05.26)
+
+Две задачи: звёзды на главной (дорожка 2) + страница **exomind** (дорожка 1).
+Обе доставлены как git-патчи (см. `git log`: `2bbeac2` звёзды, `d58fdd4`
+exomind). Локально применяются через `git am`.
+
+### Звёзды на главной — коммит `feat(home): add 6 star-sign ornaments`
+
+В Figma на главной 6 золотых звёзд (star-sign), которых не было в вёрстке.
+Все 6 добавлены, сверены со скриншотами Figma попиксельно (side-by-side),
+все `43×50px` (Figma-оригинал 42.57×50), `aria-hidden="true"`:
+
+| nodeId | Секция | Позиция |
+|---|---|---|
+| 1:218 | Hero | между параграфом и кнопкой BOOK NOW |
+| 1:224 | Discover | `absolute right-[7.55%] top-24` (верх правой колонки) |
+| 1:230 | SignatureServices | inline сразу после слова "SERVICES" (`left-full`); заодно размер увеличен с 33×39 до 43×50 и убран `hidden md:` |
+| 1:236 | WhoWeAre | `absolute right-0 top-0` на уровне H2 |
+| 1:242 | AdvancedTreatments | inline после слова "TREATMENTS" |
+| 1:258 | StartYourTransformation B | inline в конце "YOUR" первой строки H2 |
+
+Файл звезды уже был в репо: `public/assets/images/star-sign.svg`.
+Затронуто 6 файлов: `Hero.astro`, `sections/{Discover,SignatureServices,
+WhoWeAre,AdvancedTreatments,StartYourTransformation}.astro`.
+
+### Exomind — коммит `feat(services): exomind page + hybrid template extensions`
+
+Страница `/services/exomind` (Figma node `1:3218`) собрана полностью.
+У неё пять «своих» секций, которых не было у hormone/emsculpt/weight-loss,
+поэтому шаблон расширен. **3 новых компонента + 2 расширенных:**
+
+**Новые** (`src/components/services/`):
+- `ServiceTwoColumnText.astro` — два независимых текстовых блока (title +
+  body/bullets/tail) рядом, без фото. Для exomind: «WHAT IS EXOMIND?»
+  слева + «WHO IS A GOOD CANDIDATE?» справа.
+- `ServiceFullWidthImage.astro` — картинка во всю ширину между секциями.
+  Для exomind: close-up устройства TMS. Принимает `image`, `imageAlt`,
+  опционально `todo` (метка data-todo).
+- `ServiceConditionsList.astro` — центрированный крупный список на gold-фоне
+  + eyebrow-заголовок слева. Для exomind: «WHAT CAN EXOMIND IMPROVE?»
+  (MDD, ANXIETY, DEPRESSION, …).
+
+**Расширенные:**
+- `ServiceGoldBanner.astro` — добавлены опц. `ctaLabel` + `ctaHref`
+  (рендерят cream-on-gold кнопку BOOK APPOINTMENT). **Размер шрифта
+  условный**: с CTA (exomind) — крупный `text-h1`; без CTA (hormone
+  pull-quote) — прежний `38-44px`. Это важно: hormone использует длинную
+  2-строчную цитату, которая при h1 переносилась бы некрасиво.
+- `ServiceTextWithPhoto.astro` — добавлены опц. `bullets[]`,
+  `bulletStyle` (`'dash'` | `'number'`), `tail` (параграф после списка).
+  hormone оставляет их пустыми (работает как раньше); exomind переиспользует
+  для «HOW EXOMIND WORKS» (нумерованный) и «WHY CHOOSE» (dash).
+
+**Схема** (`src/content.config.ts`):
+- Новые поля: `twoColumnText`, `fullWidthImages[]` (с `position`, пока
+  единственное значение `'after-gold-banner-1'`), `conditionsList`,
+  `videoEmbed2`, `midGoldBanner1`, `midGoldBanner2`.
+- `textWithPhotoBlocks` получил `bullets`/`bulletStyle`/`tail` и новую
+  позицию `'before-conditions'`.
+- `goldBanner` расширен до `union(string, object)` — hormone по-прежнему
+  передаёт строку и рендерится после WhyTrust, перед Experience.
+
+**Шаблон** (`src/pages/services/[slug].astro`):
+- Все новые секции рендерятся условно; существующие страницы не затронуты
+  (проверено скриншотами: hormone pull-quote того же размера и на том же
+  месте; emsculpt/weight-loss без gold-banner).
+- ⚠️ Важный нюанс расположения gold-баннеров: hormone использует ТОЛЬКО
+  `goldBanner` (поздняя позиция, после WhyTrust). exomind использует
+  ТОЛЬКО `midGoldBanner1`/`midGoldBanner2` (центральные позиции). Это
+  специально разведено на разные поля, чтобы один шаблон обслуживал обе
+  раскладки. **Не объединять их обратно в одно поле.**
+- Порядок секций exomind: Hero → CTABand → TwoColumnText → VideoEmbed#1
+  → midGoldBanner1 → FullWidthImage → TextWithPhoto×2(before-conditions)
+  → ConditionsList → VideoEmbed#2 → midGoldBanner2 → FAQ → NewIn2026
+  → StartYourTransformation.
+
+**Контент** (`src/content/services/exomind.md`): все тексты сняты дословно
+из Figma (узлы 1:2888..1:3197). `draft: false`. FAQ-вопросы = Lorem ipsum,
+оба `videoEmbed.url` пустые — ждут от клиента.
+
+**Ассеты** (`public/assets/images/services/exomind/`): `hero.webp`,
+`video-1-poster.webp`, `device-showcase.webp`, `how-works.webp`,
+`why-choose.webp`, `video-2-poster.webp`. ⚠️ Это сжатые скриншоты из Figma
+(мелкое разрешение, ~12-32 KB) — макетные, на проде заменить клиентскими
+оригиналами. `device-showcase.webp` помечен
+`data-todo="trademark-authorization-from-btl"` (BTL trademark на устройстве).
+
+### Известные TODO по exomind (НЕ блокеры вёрстки, перенесены в очередь)
+
+- **Звёзды на самой странице exomind** не добавлены: Figma узлы 1:2861
+  (Hero, между lead и BOOK NOW), 1:2862 (заголовок HOW WORKS, справа),
+  1:3203 (заголовок WHY CHOOSE, справа). Аналог задачи звёзд на главной —
+  стоит сделать единым проходом по всем specialty-страницам, когда они
+  будут готовы.
+- **CTA BOOK APPOINTMENT между WHY CHOOSE и ConditionsList** (Figma 1:2913)
+  — в макете там ещё одна кнопка-баннер, у нас её нет. Добавить
+  опциональным флагом, чтобы не ломать порядок других страниц.
+
+---
+
 ## Стек и архитектура
 
 - **Astro 5** + **Tailwind CSS 3** — статический генератор сайтов
@@ -405,7 +506,7 @@ src/
     - Once I lose the weight, how can I keep it off?
     - How can I choose between the different medical weight loss options?
     - What side effects can I experience with medical weight loss?
-16. **Контент для 10 draft-страниц услуг** (regenerative, bloodwork, exomind, hormone, peptide, emsella, emsculpt, ivtherapy, emface, sexualhealth) — все сейчас в `draft: true`, не генерируются в build
+16. **Контент для 7 draft-страниц услуг** (regenerative, bloodwork, peptide, emsella, ivtherapy, emface, sexualhealth) — все сейчас в `draft: true`, не генерируются в build. Hormone/emsculpt (сессия 4) и exomind (сессия 5) уже сняты с draft.
 17. **Реальные blog-посты** — у меня 4 одинаковые placeholder-карточки. Нужны: тексты, фото, slugs
 18. **Должность Laudin P.** — в Figma "Owner & TBD title"
 19. **Финальный disclaimer** под формой подписки (сейчас Lorem Ipsum)
@@ -497,60 +598,74 @@ grep -rn 'data-todo' src/
 
 ---
 
-## Что делать в следующей сессии (сессия 5+)
+## Что делать в следующей сессии (сессия 6+)
 
-### Главный приоритет — 3 оставшиеся specialty-страницы
+### Главный приоритет — 2 оставшиеся specialty-страницы
 
-После сессии 4 в `draft: true` остались: **exomind, emface, emsella**.
-Архитектура шаблона теперь гибридная и доказана на hormone+emsculpt
-(см. секцию "Сессия 4 — что доделано"). Для оставшихся трёх:
+После сессии 5 exomind готов. В `draft: true` из приоритетной тройки
+остались: **emface, emsella**. Архитектура шаблона гибридная и доказана
+теперь на hormone + emsculpt + exomind (см. «Сессия 5 — что доделано» —
+там появились ServiceTwoColumnText, ServiceFullWidthImage,
+ServiceConditionsList, расширенные GoldBanner/TextWithPhoto). Для
+оставшихся двух новых компонентов, скорее всего, почти не понадобится.
 
-1. Снять Figma-узлы через `Figma:get_design_context`:
-   - `/exomind` → nodeId `1:3218`
+1. Снять Figma-узлы через `Figma:get_design_context` + `get_screenshot`:
    - `/emface` → nodeId `1:6536`
    - `/emsella` → nodeId `1:5436`
 2. Сверить структуру каждой с существующими компонентами в
-   `src/components/services/`. Скорее всего понадобятся **только новые
-   компоненты для специфичных блоков** (не вся страница):
-   - **emface** — фото-сетка лица 3×2 (eyes/nose/forehead/jawline/submental/
-     face). Возможно реализуется через `ServiceCategoriesGrid` с 6 items
-     и `lg:grid-cols-3` + 2 ряда — стоит сначала проверить, прежде чем
-     писать новый компонент `ServiceFaceMap`.
-   - **emsella** — "What to expect" + "Book your session" + before/after.
-     Beforeafter уже есть. "What to expect" и "Book your session" могут
-     быть `ServiceCategoriesGrid` без фото или `ServiceTextWithPhoto`.
-   - **exomind** — кастомные секции с устройством TMS. Скорее всего
-     нужен один новый компонент `ServiceTMSDevice` (или `ServiceDeviceShowcase`).
+   `src/components/services/` (теперь их 21):
+   - **emface** — фото-сетка лица 3×2 (eyes/nose/forehead/jawline/
+     submental/face). **Сначала проверить**, покрывается ли
+     `ServiceCategoriesGrid` с 6 items и `lg:grid-cols-3` (2 ряда),
+     прежде чем писать новый `ServiceFaceMap`. Скорее всего покрывается.
+   - **emsella** — «What to expect» + «Book your session» + before/after.
+     `ServiceBeforeAfter` и `ServiceTextWithPhoto` уже есть, должны
+     покрыть всю страницу. Новых компонентов, вероятно, не нужно вовсе.
 3. Расширить schema **только если** существующих полей не хватит.
 4. Заполнить контент из Figma в markdown, снять `draft: false`.
-5. ⚠️ Trademark ассеты (EMFACE/EMSCULPT/EMSELLA/EXOMIND — BTL trademarks)
-   требуют авторизации от BTL Industries. Это **блокер запуска**
-   этих страниц, но не блокер вёрстки — можно собрать макетно.
+5. Собрать билд, снять скриншоты, сверить side-by-side с Figma, оформить
+   патч (с `--binary` для WebP-ассетов, fallback `git apply --3way`).
 
-Оценочно — одна полная сессия на все три.
+⚠️ Trademark ассеты (EMFACE/EMSELLA — BTL trademarks) требуют авторизации
+от BTL Industries — блокер запуска, но не блокер вёрстки. Собираем макетно,
+помечаем `data-todo="trademark-authorization-from-btl"`.
 
-### Альтернативы
+### Технический долг по гибридному шаблону (накопился за сессии 4-5)
 
-- **Реальные фото для hormone + emsculpt** — сейчас 14 placeholder-webp
-  (копии weight-loss). Когда клиент пришлёт реальные ассеты — просто
-  заменить файлы в `public/assets/images/services/hormone/` и
-  `services/emsculpt/` (имена сохранены семантически: `hero.webp`,
-  `category-body-sculpting.webp` и т.д.).
-- **FAQ-тексты** для hormone и emsculpt — сейчас Lorem ipsum как в Figma,
-  ждут от клиента.
-- **YouTube URL для emsculpt** — `videoEmbed.url` пустой, placeholder
-  "Video coming soon". Заменить когда клиент пришлёт ссылку.
+- **Звёзды на specialty-страницах** — на hormone/emsculpt/exomind в Figma
+  есть star-sign в заголовках и Hero, в вёрстке их нет. Сделать единым
+  проходом по всем готовым specialty, по образцу задачи звёзд на главной
+  (сессия 5). Для exomind конкретные узлы: 1:2861, 1:2862, 1:3203.
+- **Опциональный CTA-баннер** между секциями (exomind 1:2913) — добавить
+  как опциональное поле, чтобы кнопка BOOK APPOINTMENT могла стоять в
+  произвольной позиции, не ломая порядок страниц.
+
+### Альтернативы (без клиента)
+
 - **A11y color-contrast (#37)**: gold #8d7431 на cream #eae4d2 = 3.54:1
-  при норме AA 4.5:1. Затемнить gold до #7a6428 в `tailwind.config.mjs`
-  и проверить визуально на всех страницах.
-- **Адаптив главной + services** — когда придут мобильные макеты.
-  Сейчас все новые компоненты уже используют `grid-cols-1 lg:grid-cols-2`
-  и `flex-wrap`, базовое мобильное поведение работает, но без точной
-  выверки vs дизайн.
-- **Реальные blog-посты** — когда придут от клиента: добавить
-  Content Collection 'posts' + динамический маршрут `/blog/[slug]`.
-- **Интеграции** — booking system, form submission, newsletter ESP
-  (см. блокеры #27-32). Все ждут выбора клиентом конкретной системы.
+  при норме AA 4.5:1. Затемнить gold до ~#7a6428 в `tailwind.config.mjs`
+  и визуально сверить все 7+ страниц, чтобы ничего не разъехалось.
+- **Адаптив (mobile)** — ⚠️ **изменение по сравнению с прошлым HANDOFF:**
+  клиент сказал, что мобильную версию мы делаем САМИ, макетов ждать НЕ
+  нужно (зафиксировано в сессии 5). Все новые компоненты уже на
+  `grid-cols-1 lg:grid-cols-2`, базовое поведение работает, но без точной
+  выверки. Это теперь наша задача, а не «ждёт макетов».
+- **Чистка `data-todo` и `.gitignore`**.
+
+### Альтернативы (требуют клиента)
+
+- **Реальные фото для hormone + emsculpt + exomind** — сейчас placeholder
+  (hormone/emsculpt — копии weight-loss; exomind — сжатые скриншоты Figma).
+  Имена файлов семантические, просто заменить файлы.
+- **FAQ-тексты** для hormone, emsculpt, exomind — сейчас Lorem ipsum.
+- **YouTube URL** для emsculpt (`videoEmbed.url`) и exomind (`videoEmbed.url`
+  + `videoEmbed2.url`) — пустые.
+- **Реальные blog-посты** + Content Collection 'posts' + `/blog/[slug]`.
+- **Замена stock-фото на главной** (doTERRA, istockphoto watermarks, BTL).
+- **Booking / Form / Newsletter** интеграции.
+- **5 FAQ-ответов для Weight Loss**.
+
+Оценочно — emface + emsella за одну сессию (обе проще exomind).
 
 ---
 
@@ -753,6 +868,15 @@ c9b9eae feat(services): hybrid template + hormone & emsculpt pages
 - `9b8d025` — конвертация Optima.ttc → 5 woff2-файлов + @font-face + tailwind.config (Marcellus убран, остался как fallback).
 - `3b67a96` — замена ornament.png на star-sign.svg (тот же знак из лого, но вектор; 4.9 KB после svgo + ручной чистки маски).
 
+**Сессия 5** — звёзды на главной + exomind (доставлены патчами через `git am`):
+```
+2bbeac2 feat(home): add 6 star-sign ornaments per Figma layout
+d58fdd4 feat(services): exomind page + hybrid template extensions
+```
+Содержимое коммитов:
+- `2bbeac2` — 6 звёзд star-sign на главной (Hero, Discover, SignatureServices, WhoWeAre, AdvancedTreatments, StartYourTransformation), сверены попиксельно с Figma. 6 файлов.
+- `d58fdd4` — страница exomind: 3 новых компонента (ServiceTwoColumnText, ServiceFullWidthImage, ServiceConditionsList) + 2 расширенных (ServiceGoldBanner +CTA с условным размером шрифта, ServiceTextWithPhoto +bullets/bulletStyle/tail) + расширенная schema (twoColumnText, fullWidthImages, conditionsList, videoEmbed2, midGoldBanner1/2, goldBanner→union) + обновлённый `[slug].astro` + `exomind.md` с реальным контентом + 6 webp-ассетов. Hormone/emsculpt/weight-loss не затронуты (проверено скриншотами).
+
 ---
 
 ## Ревизия главной vs Figma (после первой сборки)
@@ -804,42 +928,53 @@ Playwright + headless Chromium и сравнивался с `Figma:get_screensho
 >
 > Путь к проекту локально: /Users/yuris/Documents/Claude-Projects/ideal-website (macOS). Все bash-команды для меня — с этим путём.
 >
-> Состояние проекта описано в `docs/HANDOFF.md` — прочитай его перед тем как что-то делать. Особенно: TL;DR-таблицу + секцию **"Сессия 4 — что доделано"** в начале (там описана гибридная архитектура шаблона услуг и какие компоненты появились) + **"Открытые вопросы и блокеры"** в конце.
+> Состояние проекта описано в `docs/HANDOFF.md` — прочитай его перед тем как что-то делать. Особенно: TL;DR-таблицу + секцию **"Сессия 5 — что доделано"** в начале (там описаны звёзды на главной, страница exomind и расширения гибридного шаблона) + **"Что делать в следующей сессии"** и **"Открытые вопросы и блокеры"**.
 >
-> Что готово после сессии 4: главная (визуальное ревью пройдено), шаблон страниц услуг с **гибридной архитектурой** — один `[slug].astro` с условным рендером 18+ типов секций, по фактическому наполнению frontmatter определяющий структуру страницы. На этом шаблоне работают Weight Loss / **hormone** / **emsculpt** (3 разные структуры, без дублирования). About / Contact / Blog работают. Билд проходит, **7 страниц** генерируются. Сайт уже деплоится в Cloudflare Pages.
+> ⚠️ **Про синхронизацию с origin:** работа сессий 5 ведётся через git-патчи, которые я применяю локально и пушу сам. Перед стартом скажи мне, запушены ли коммиты звёзд (`feat(home): add 6 star-sign ornaments`) и exomind (`feat(services): exomind page`) в origin/main, либо я начну с `git log --oneline` чтобы свериться. Если их нет в origin — у меня в чатах есть патчи в `/mnt/user-data/outputs/`, могу переприменить.
 >
-> Самый приоритетный следующий шаг — **3 оставшиеся specialty-страницы услуг** (exomind, emface, emsella). Они сейчас в `draft: true` и не генерируются, поэтому 3 пункта меню ведут в 404. Архитектура шаблона уже доказана на hormone+emsculpt, скорее всего понадобится 0-2 новых компонента максимум:
->   - exomind — кастомные секции с устройством TMS (1 новый компонент)
->   - emface — фото-сетка лица 3×2 (возможно покрывается ServiceCategoriesGrid с 6 items)
->   - emsella — "What to expect" / "Book your session" + before/after (before/after уже есть)
+> Что готово после сессии 5: главная (визуальное ревью пройдено, + 6 звёзд star-sign), шаблон страниц услуг с **гибридной архитектурой** — один `[slug].astro` с условным рендером 20+ типов секций. На нём работают Weight Loss / hormone / emsculpt / **exomind** (4 разные структуры). About / Contact / Blog работают. Билд проходит, **8 страниц** генерируются. Сайт деплоится в Cloudflare Pages.
 >
-> Альтернативные дорожки если по 3 specialty не готовы:
+> Самый приоритетный следующий шаг — **2 оставшиеся specialty-страницы** (emface, emsella). Они в `draft: true`, 2 пункта меню ведут в 404. Архитектура доказана на hormone+emsculpt+exomind, для этих двух новых компонентов почти наверняка НЕ понадобится:
+>   - **emface** (nodeId `1:6536`) — фото-сетка лица 3×2 (eyes/nose/forehead/jawline/submental/face). Сначала проверь, покрывается ли `ServiceCategoriesGrid` с 6 items и `lg:grid-cols-3` (2 ряда), прежде чем писать новый компонент.
+>   - **emsella** (nodeId `1:5436`) — "What to expect" + "Book your session" + before/after. `ServiceBeforeAfter` и `ServiceTextWithPhoto` уже есть, должны покрыть всю страницу.
+>
+> Алгоритм для каждой страницы:
+> 1. Снять Figma узел через `Figma:get_design_context` (тексты) и `Figma:get_screenshot` (эталон).
+> 2. Сверить структуру с компонентами в `src/components/services/` (21 шт: Hero, SimpleWhatIs, WhatIs, TwoColumnText, Benefits, CommonSigns, TextWithPhoto, CategoriesGrid, FullWidthImage, ConditionsList, VideoEmbed, ExtendedDescription, WhoFor, Roadmap, BeforeAfter, Results, WhyTrust, GoldBanner, Experience, CTABand, FAQ).
+> 3. Если всё покрывается — только заполнить .md, снять `draft: false`.
+> 4. Если нет — добавить компонент + поле в schema (optional!) + условный рендер в `[slug].astro` (порядок секций фиксированный).
+> 5. Собрать билд, снять скриншоты, сверить side-by-side с Figma, оформить патч (`git format-patch --binary` для WebP, fallback `git apply --3way`).
+>
+> ⚠️ Trademark ассеты (EMFACE/EMSELLA — BTL trademarks) требуют авторизации от BTL Industries — блокер запуска, не блокер вёрстки. Собираем макетно, помечаем `data-todo="trademark-authorization-from-btl"`.
+>
+> Альтернативные дорожки если по specialty не готовы:
 >
 > **Без клиента:**
-> - A11y color-contrast (HANDOFF #37): gold #8d7431 на cream #eae4d2 = 3.54:1, надо 4.5:1
-> - Чистка `data-todo` и `.gitignore` (untracked-мусор у юзера: pnpm-lock.yaml, fix-bundle/, *.report.html)
+> - Звёзды (star-sign) на specialty-страницах hormone/emsculpt/exomind — в Figma есть, в вёрстке нет. Единый проход (для exomind узлы 1:2861, 1:2862, 1:3203). По образцу задачи звёзд на главной (сессия 5).
+> - A11y color-contrast (HANDOFF #37): gold #8d7431 на cream #eae4d2 = 3.54:1, надо 4.5:1. Затемнить gold до ~#7a6428 в `tailwind.config.mjs`, потом визуально сверить все страницы.
+> - **Мобильная адаптация — делаем САМИ (НЕ ждём макетов!).** Это решение клиента, зафиксировано в сессии 5. Все компоненты на `grid-cols-1 lg:grid-cols-2`, базовое поведение работает, нужна точная выверка.
+> - Чистка `data-todo` и `.gitignore`.
 >
 > **Требует клиента:**
-> - Реальные фото для hormone и emsculpt (сейчас 14 placeholder-webp — копии weight-loss). Имена файлов в `public/assets/images/services/{hormone,emsculpt}/` уже семантические — просто заменить файлы.
-> - FAQ-тексты для hormone и emsculpt (Lorem ipsum как в Figma)
-> - YouTube URL для emsculpt (`videoEmbed.url` пустой)
-> - Реальные blog-посты + Content Collection 'posts' + `/blog/[slug]`
-> - Замена stock-фото на главной (doTERRA, istockphoto watermarks, BTL trademarks)
-> - Booking / Form / Newsletter интеграции
-> - 5 FAQ-ответов для Weight Loss
+> - Реальные фото для hormone, emsculpt, exomind (placeholder). Имена семантические — просто заменить файлы.
+> - FAQ-тексты для hormone, emsculpt, exomind (Lorem ipsum).
+> - YouTube URL для emsculpt и exomind (`videoEmbed.url`, `videoEmbed2.url` пустые).
+> - Реальные blog-посты + Content Collection 'posts' + `/blog/[slug]`.
+> - Замена stock-фото на главной (doTERRA, istockphoto watermarks, BTL trademarks).
+> - Booking / Form / Newsletter интеграции.
+> - 5 FAQ-ответов для Weight Loss.
 >
-> **Ждёт макетов:**
-> - Мобильная адаптация
+> Figma file: jmzQqLFWpZXSII6xTkgCgu (Figma MCP подключён). nodeId страниц: hormone=1:3708, emsculpt=1:5795, exomind=1:3218, emface=1:6536, emsella=1:5436, weight-loss=1:1919.
 >
-> Figma file: jmzQqLFWpZXSII6xTkgCgu (Figma MCP должен быть подключён, если нет — подскажу как). nodeId страниц: hormone=1:3708, emsculpt=1:5795, exomind=1:3218, emface=1:6536, emsella=1:5436, weight-loss=1:1919.
+> ⚠️ **Ловушка с ассетами** (баг из сессии 2): добавляя фото в подпапки `public/assets/images/<subdir>/`, убедись что в коммит попадает И удаление оригинала PNG/JPG И добавление WebP. Проверяй: `find public/assets/images -name "*.webp"` должен покрывать ВСЕ референсы из `grep -rE '/assets/images/.*\.webp' src/`.
 >
-> ⚠️ **Важная ловушка с ассетами** (баг из сессии 2, починен в сессии 3): когда добавляешь фото в подпапки `public/assets/images/<subdir>/` через `optimize-images.py` — убедись, что в коммит попадает И удаление оригинала PNG/JPG И добавление WebP-копии. Проверяй после коммита: `find public/assets/images -name "*.webp"` должен покрывать ВСЕ референсы из кода `grep -rE '/assets/images/.*\.webp' src/`.
+> ⚠️ **Бинарные патчи в git am**: WebP-бинарники в патче могут уронить `git am` у пользователя. Генерируй патч через `git format-patch --binary`, и в инструкции для меня закладывай fallback `git apply --3way --binary` (как в сессии 5 — там оба патча проверены на чистом клоне и проходят).
 >
-> 💡 **Гибридный шаблон — как добавлять новую specialty-страницу:**
-> 1. Снять структуру через `Figma:get_design_context` для nodeId страницы.
-> 2. Сверить, какие из существующих компонентов в `src/components/services/` подходят (Hero, SimpleWhatIs, WhatIs, Benefits, CommonSigns, TextWithPhoto, CategoriesGrid, VideoEmbed, ExtendedDescription, WhoFor, Roadmap, BeforeAfter, Results, WhyTrust, GoldBanner, Experience, FAQ).
-> 3. Если все секции страницы покрываются — только заполнить .md, снять `draft: false`.
-> 4. Если нет — добавить компонент в `src/components/services/`, поле в schema (`src/content.config.ts`), и условный рендер в `src/pages/services/[slug].astro`.
-> 5. Порядок секций в `[slug].astro` фиксированный — каждая secciya отрисуется только если соответствующее поле во frontmatter заполнено.
+> 💡 **Гибридный шаблон — как добавлять specialty-страницу:**
+> 1. `Figma:get_design_context` для nodeId страницы.
+> 2. Сверить какие из существующих компонентов подходят.
+> 3. Если всё покрывается — только заполнить .md, снять `draft: false`.
+> 4. Если нет — добавить компонент + поле в schema (optional!) + условный рендер в `[slug].astro`.
+> 5. Каждая секция рендерится только если её поле во frontmatter заполнено. ⚠️ Важно: gold-баннеры разведены на 3 поля (`midGoldBanner1`, `midGoldBanner2` для центральных позиций у exomind; `goldBanner` для поздней позиции у hormone) — НЕ объединять обратно.
 >
 > Спроси меня, по какой дорожке двигаемся, прежде чем начинать работу.
