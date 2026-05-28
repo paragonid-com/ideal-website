@@ -104,11 +104,12 @@ videoEmbed:
 beforeAfter:
   position: "after-video-1"
   title: "WHAT AREAS CAN YOU TREAT WITH EMFACE™?"
+  # Figma node 1:6522 (Image 121) — единая композит-картинка с впечатанными
+  # подписями BEFORE | AFTER и встроенным caption. Режим single-image:
+  # компонент рендерит одно фото во всю ширину, без накладных бейджей/подписи.
   items:
-    - beforeImage: "/assets/images/services/emface/before-after-before.webp"
-      afterImage: "/assets/images/services/emface/before-after-after.webp"
-      caption: "After 4th treatment, courtesy of: Paolini Dermatology · *EMFACE Submentum"
-      alt: "EMFACE submental before and after"
+    - image: "/assets/images/services/emface/before-after.webp"
+      alt: "EMFACE submental before and after — after 4th treatment, courtesy of Paolini Dermatology"
 
 # ---------- Video #2: "Emface VIDEO Moa Animation" (after treatments grid) ----------
 videoEmbed2:
