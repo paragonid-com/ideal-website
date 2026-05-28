@@ -310,6 +310,36 @@ emsella — НЕ имеет before/after и видео; её «изюм» — с
 
 ---
 
+## Сессия 7 — что доделано (27.05.26)
+
+Звёзды star-sign на всех 5 specialty-страницах (техдолг сессий 4-6).
+Доставлено патчем (`git log`: `feat(services): star-sign ornaments on 5
+specialty pages`).
+
+Подход A (opt-in, согласован с клиентом): декоративная звезда добавляется
+только там, где явно включена флагом — Weight Loss и прочие не-specialty
+страницы не затронуты (regression проверена: 0 service-секционных звёзд в
+weight-loss).
+
+Механика:
+- Схема: новое опц. поле `stars` (объект boolean-флагов по секциям) +
+  per-block `star` на `textWithPhotoBlocks[]`.
+- Компоненты ServiceHero / ServiceCommonSigns / ServiceRoadmap /
+  ServiceWhyTrust / ServiceExperience / ServiceTextWithPhoto: опц. проп
+  `showStar`. Три стиля по Figma (блочный под lead; центр над заголовком;
+  top-right колонки через flex).
+- Карта звёзд: hormone 6 (hero, Reclaiming, CommonSigns, Roadmap, WhyTrust,
+  Experience); exomind 2 (hero, How Works — НЕ Why Choose); emsculpt/emface/
+  emsella по 1 (hero).
+
+⚠️ Урок: per-block флаг понадобился, потому что глобальный boolean не мог
+выразить «у exomind звезда на первом before-conditions блоке, но не на
+втором». Если в будущем секция используется несколько раз на странице с
+разным оформлением — сразу делать per-block/per-instance флаг, а не
+секционный синглтон.
+
+---
+
 ## Сессия 6 — что доделано (27.05.26)
 
 Закрыт главный приоритет: **обе оставшиеся specialty-страницы — emface и
@@ -690,10 +720,19 @@ URL (emsculpt `videoEmbed`, exomind/emface `videoEmbed*.url` пустые),
 
 ### Технический долг по гибридному шаблону (накопился за сессии 4-6)
 
-1. **Звёзды на specialty-страницах** — на hormone/emsculpt/exomind (а теперь
-   и emface/emsella) в Figma есть star-sign в заголовках и Hero, в вёрстке
-   нет. Сделать единым проходом по всем пяти, по образцу задачи звёзд на
-   главной (сессия 5). Для exomind узлы: 1:2861, 1:2862, 1:3203.
+1. ~~**Звёзды на specialty-страницах**~~ **Решено (сессия 7).** Gold star-sign
+   добавлены на все 5 specialty-страниц через opt-in. Подход A (как
+   договорились): новое опц. поле `stars` (объект флагов: hero, twoColumnText,
+   commonSigns, categoriesGrid, conditionsList, roadmap, whyTrust, experience,
+   все default false) + per-block флаг `star` на `textWithPhotoBlocks[]`
+   (нужен, потому что у exomind два before-conditions блока, а звезда только
+   на «How Works»). Компоненты получили опц. проп `showStar`, 3 стиля по
+   Figma: блочный слева под lead (Hero); по центру над заголовком
+   (CommonSigns, Roadmap); top-right колонки через flex (TextWithPhoto,
+   WhyTrust, Experience). Карта: hormone 6 звёзд, exomind 2, emsculpt/emface/
+   emsella по 1 (hero). Weight Loss — 0 (regression проверена по HTML +
+   скриншотам). `Image 81` (1737,942) на всех страницах — декор в header-зоне,
+   не привязан к секции, не добавляли (как и на главной).
 2. **Опциональный CTA-баннер** между секциями (exomind 1:2913) — опц. поле,
    чтобы BOOK APPOINTMENT мог стоять в произвольной позиции.
 
