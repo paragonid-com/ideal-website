@@ -102,9 +102,7 @@ placeholder в соответствующем файле, удалить или 
 | `form-submission-endpoint` | Куда POST форма "Start Your Transformation"? | 2 формы (главная + Contact дубль) |
 | `form-submission` | Куда POST форма ContactHero? | 1 форма на /contact |
 | `newsletter-integration` | Mailchimp / Klaviyo / ConvertKit? | 1 форма в Footer |
-| `cherry-financing-url` | Реальный URL партнёрской программы Cherry | 1 ссылка в Footer Quick Links |
-| `care-credit-url` | Реальный URL Care Credit | 1 ссылка в Footer Quick Links |
-| `social-icon` | Какие соцсети (Instagram, Facebook, TikTok)? URL? | 1 placeholder-круг в Footer (нужен список соцсетей с иконками) |
+| `social-url` | Реальные URL: Facebook / Instagram / YouTube (иконки в Footer добавлены, сессия 7) | 3 ссылки в Footer Address |
 
 **Подсказка для клиента про booking system:**
 - Calendly — самый простой, бесплатный для одного человека. Нет интеграции с медкартами.
