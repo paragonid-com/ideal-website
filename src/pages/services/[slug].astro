@@ -93,6 +93,28 @@ const { data } = service;
 const firstCategoriesGrid = data.categoriesGrids?.[0];
 const secondCategoriesGrid = data.categoriesGrids?.[1];
 
+// beforeAfter position: 'after-video-1' (emface) рендерится сразу после
+// videoEmbed; 'late' (default, emsculpt) — после secondCategoriesGrid.
+const beforeAfterAfterVideo1 =
+  data.beforeAfter && data.beforeAfter.position === 'after-video-1'
+    ? data.beforeAfter
+    : undefined;
+const beforeAfterLate =
+  data.beforeAfter && data.beforeAfter.position !== 'after-video-1'
+    ? data.beforeAfter
+    : undefined;
+
+// videoEmbed2 position: 'after-second-grid' (emface) рендерится после
+// secondCategoriesGrid; 'before-second-grid' (default, exomind) — раньше.
+const videoEmbed2BeforeGrid =
+  data.videoEmbed2 && data.videoEmbed2.position !== 'after-second-grid'
+    ? data.videoEmbed2
+    : undefined;
+const videoEmbed2AfterGrid =
+  data.videoEmbed2 && data.videoEmbed2.position === 'after-second-grid'
+    ? data.videoEmbed2
+    : undefined;
+
 // Группируем textWithPhotoBlocks по позиции для удобного рендера
 const blocksBeforeCommonSigns = (data.textWithPhotoBlocks ?? []).filter(
   (b) => b.position === 'before-common-signs'
@@ -213,12 +235,20 @@ const goldBanner = normalizeBanner(data.goldBanner);
     />
   )}
 
-  {/* Video embed #1 (emsculpt, exomind) */}
+  {/* Video embed #1 (emsculpt, exomind, emface) */}
   {data.videoEmbed && (
     <ServiceVideoEmbed
       url={data.videoEmbed.url}
       posterImage={data.videoEmbed.posterImage}
       posterAlt={data.videoEmbed.posterAlt}
+    />
+  )}
+
+  {/* Before / After сразу после video #1 (emface — перед treatments-grid) */}
+  {beforeAfterAfterVideo1 && (
+    <ServiceBeforeAfter
+      title={beforeAfterAfterVideo1.title}
+      items={beforeAfterAfterVideo1.items}
     />
   )}
 
@@ -259,12 +289,12 @@ const goldBanner = normalizeBanner(data.goldBanner);
     />
   )}
 
-  {/* Video embed #2 (exomind — testimonial) */}
-  {data.videoEmbed2 && (
+  {/* Video embed #2 — позиция 'before-second-grid' (exomind testimonial) */}
+  {videoEmbed2BeforeGrid && (
     <ServiceVideoEmbed
-      url={data.videoEmbed2.url}
-      posterImage={data.videoEmbed2.posterImage}
-      posterAlt={data.videoEmbed2.posterAlt}
+      url={videoEmbed2BeforeGrid.url}
+      posterImage={videoEmbed2BeforeGrid.posterImage}
+      posterAlt={videoEmbed2BeforeGrid.posterAlt}
     />
   )}
 
@@ -322,7 +352,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
     />
   ))}
 
-  {/* Вторая Categories Grid (emsculpt "Customize Your Treatment") */}
+  {/* Вторая Categories Grid (emsculpt "Customize" / emface "Treatments Address") */}
   {secondCategoriesGrid && (
     <ServiceCategoriesGrid
       title={secondCategoriesGrid.title}
@@ -331,11 +361,20 @@ const goldBanner = normalizeBanner(data.goldBanner);
     />
   )}
 
-  {/* Before / After (emsculpt) */}
-  {data.beforeAfter && (
+  {/* Video embed #2 — позиция 'after-second-grid' (emface — после treatments-grid) */}
+  {videoEmbed2AfterGrid && (
+    <ServiceVideoEmbed
+      url={videoEmbed2AfterGrid.url}
+      posterImage={videoEmbed2AfterGrid.posterImage}
+      posterAlt={videoEmbed2AfterGrid.posterAlt}
+    />
+  )}
+
+  {/* Before / After — позиция 'late' (emsculpt, после secondGrid) */}
+  {beforeAfterLate && (
     <ServiceBeforeAfter
-      title={data.beforeAfter.title}
-      items={data.beforeAfter.items}
+      title={beforeAfterLate.title}
+      items={beforeAfterLate.items}
     />
   )}
 

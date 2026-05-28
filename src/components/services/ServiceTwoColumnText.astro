@@ -54,7 +54,16 @@ const rightTail = paras(right.tail);
       </h2>
 
       <div class="mt-10 space-y-6 font-sans text-body-lg text-gold leading-relaxed">
-        {leftParas.map((p) => <p>{p}</p>)}
+        {leftParas.map((p) => (
+          <p>
+            {p.split('\n').map((line, i, arr) => (
+              <>
+                {line}
+                {i < arr.length - 1 && <br />}
+              </>
+            ))}
+          </p>
+        ))}
         {left.bullets && left.bullets.length > 0 && (
           <ul class="mt-4 space-y-3">
             {left.bullets.map((b) => (
@@ -81,7 +90,16 @@ const rightTail = paras(right.tail);
       </h2>
 
       <div class="mt-10 space-y-6 font-sans text-body-lg text-gold leading-relaxed">
-        {rightParas.map((p) => <p>{p}</p>)}
+        {rightParas.map((p) => (
+          <p>
+            {p.split('\n').map((line, i, arr) => (
+              <>
+                {line}
+                {i < arr.length - 1 && <br />}
+              </>
+            ))}
+          </p>
+        ))}
         {right.bullets && right.bullets.length > 0 && (
           <ul class="mt-4 space-y-3">
             {right.bullets.map((b) => (

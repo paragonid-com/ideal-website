@@ -210,7 +210,7 @@ const services = defineCollection({
                 })
               )
               .min(2)
-              .max(4),
+              .max(6),
           })
         )
         .optional(),
@@ -227,12 +227,18 @@ const services = defineCollection({
         .optional(),
 
       /** Второй YouTube video — exomind использует два встроенных видео.
-       *  Та же схема, что videoEmbed. */
+       *  Та же схема, что videoEmbed.
+       *  position управляет местом рендера относительно secondCategoriesGrid:
+       *    'before-second-grid' (default) — текущее поведение (exomind: грида нет, неважно)
+       *    'after-second-grid'  — emface: video2 идёт ПОСЛЕ treatments-grid, перед FAQ */
       videoEmbed2: z
         .object({
           url: z.string().optional(),
           posterImage: z.string().optional(),
           posterAlt: z.string().default('Video preview'),
+          position: z
+            .enum(['before-second-grid', 'after-second-grid'])
+            .default('before-second-grid'),
         })
         .optional(),
 
@@ -240,6 +246,10 @@ const services = defineCollection({
       beforeAfter: z
         .object({
           title: z.string().optional(),
+          /** Где рендерить относительно secondCategoriesGrid:
+           *    'late' (default) — emsculpt: после secondGrid (текущее поведение)
+           *    'after-video-1'  — emface: сразу после videoEmbed, перед treatments-grid */
+          position: z.enum(['late', 'after-video-1']).default('late'),
           items: z
             .array(
               z.object({

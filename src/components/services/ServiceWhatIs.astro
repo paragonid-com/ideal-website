@@ -52,7 +52,19 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
       </h2>
 
       <div class="mt-12 space-y-6 max-w-[693px] font-sans text-body-lg text-gold leading-relaxed">
-        {paragraphs.map((p) => <p>{p}</p>)}
+        {paragraphs.map((p) => {
+          const innerLines = p.split('\n');
+          return (
+            <p>
+              {innerLines.map((line, i) => (
+                <>
+                  {line}
+                  {i < innerLines.length - 1 && <br />}
+                </>
+              ))}
+            </p>
+          );
+        })}
       </div>
     </div>
   </div>
