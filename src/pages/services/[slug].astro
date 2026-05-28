@@ -345,6 +345,9 @@ const goldBanner = normalizeBanner(data.goldBanner);
     />
   ))}
 
+  {/* CTA перед conditions list (exomind, Figma 1:2907) — opt-in флагом */}
+  {data.ctaBeforeConditionsList && <ServiceCTABand />}
+
   {/* Conditions list (exomind: WHAT CAN EXOMIND IMPROVE?) */}
   {data.conditionsList && (
     <ServiceConditionsList
@@ -361,6 +364,9 @@ const goldBanner = normalizeBanner(data.goldBanner);
       posterAlt={videoEmbed2BeforeGrid.posterAlt}
     />
   )}
+
+  {/* CTA после видео #2, перед gold banner #2 (exomind, Figma 1:2913) — opt-in */}
+  {data.ctaAfterVideo2 && <ServiceCTABand />}
 
   {/* Gold banner #2 в центре (exomind — повторный с CTA) */}
   {midGoldBanner2 && (

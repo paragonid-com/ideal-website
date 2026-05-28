@@ -113,6 +113,10 @@ faq:
   - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
     answer: ""
 
+# ---------- Standalone CTA-баннеры из Figma 1:3218, которых не было в вёрстке ----------
+ctaBeforeConditionsList: true   # Figma 1:2907 — перед «What can ExoMind improve?»
+ctaAfterVideo2: true            # Figma 1:2913 — после видео #2, перед gold-banner #2
+
 stars:
   hero: true
 

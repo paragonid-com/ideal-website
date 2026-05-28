@@ -274,6 +274,15 @@ const services = defineCollection({
         })
         .optional(),
 
+      /** Standalone CTA-баннеры «BOOK APPOINTMENT» в позициях, которые не
+       *  покрыты дефолтным шаблоном. Оба default false → другие страницы не
+       *  затрагиваются. Сейчас используются на exomind, где в Figma (1:3218)
+       *  есть CTA, которых не расставлял общий шаблон:
+       *    - ctaBeforeConditionsList — Figma 1:2907 (перед «What can ExoMind improve?»)
+       *    - ctaAfterVideo2          — Figma 1:2913 (после видео #2, перед gold-banner #2) */
+      ctaBeforeConditionsList: z.boolean().default(false),
+      ctaAfterVideo2: z.boolean().default(false),
+
       // ===== Categories Grid (emsculpt): 3-колонная сетка фото+заголовок+опционально-текст =====
       // Используется дважды на странице emsculpt — поэтому в frontmatter массив таких блоков.
       categoriesGrids: z
