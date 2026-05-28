@@ -1,4 +1,4 @@
-# HANDOFF — состояние проекта на конец сессии 5
+# HANDOFF — состояние проекта на конец сессии 10
 
 Этот документ — точка входа для **следующей сессии работы с Claude**.
 Прочитав его, новая сессия сможет продолжить работу без необходимости
@@ -34,6 +34,25 @@
 | Деплой на Cloudflare Pages | ✅ Сайт деплоится (актуализирую блокер в сессии 4 — раньше был помечен 🟡 как "ждёт нажатия Save and Deploy") |
 | Lighthouse-аудит | ✅ Performance 95+, A11y 96, BP/SEO 100 на всех страницах. PNG → WebP массовая миграция (37MB → 2MB) |
 | Инвентарь `data-todo` | ✅ Собран в `docs/TODO-INVENTORY.md` — всё, что ждёт клиента |
+| **Peptide Therapy (`/services/peptide`)** | ✅ **Сессия 8:** собрана с нуля по Figma (узел `1:5026`). Реальные заголовки + 9 icon-only benefits (3×3) + реальные ассеты (9 иконок, what-is/who-for фото, hero-композит с двумя ручками IDEAL). Body-тексты Lorem с `data-todo="copy"` (ждут клиента). Снята с draft. **Билд = 11 страниц.** Snято с draft 3-е меню-звено |
+| **Изображения specialty (hormone, emsella)** | ✅ **Сессии 8-10:** заменены все placeholder-WebP на реальные ассеты из Figma. Hormone (5 фото) + Emsella (7 фото). Извлечение через `Figma:get_design_context` → asset URL → cover-crop → WebP |
+
+---
+
+## Сессии 8-10 — что доделано (28.05.26)
+
+**Сессия 8 — Peptide + изображения Hormone.**
+- `feat(services)`: построена страница **Peptide Therapy** по Figma `1:5026`. Расширена schema (`benefits` description→optional, max 6→9, новый флаг `benefitsIconOnly`; добавлены star-флаги `whatIs`/`benefits`/`whoFor`/`results`). `ServiceBenefits` получил icon-only 3×3 режим + опц. intro + star. `ServiceWhatIs`/`WhoFor`/`Results` получили `showStar`. Ассеты: 9 белых line-иконок (`src/assets/services/peptide/`), 2 фото + hero-композит (золотой градиент + 2 ручки IDEAL, key-out тёмного фона) в `public/assets/images/services/peptide/`.
+- `fix(hormone)`: 5 изображений были неправильными плейсхолдерами (hero≡experience-dna, reclaiming≡why-trust — байт-в-байт дубли). Заменены реальными из Figma `1:3708`.
+
+**Сессия 9 — изображения Emsella.**
+- `fix(emsella)`: все 7 изображений были бежевыми плейсхолдер-карточками. Заменены реальными из Figma `1:5436` (hero / what-is / 3× incontinence / 2× sexual-wellness).
+
+**Сессия 10 — пропущенные секции (hormone + emsella).**
+- `fix(services)` (коммит после `3288142`): **hormone** — восстановлена full-width картинка инъекции между Common Signs и Roadmap (Figma `1:3462`); schema `fullWidthImages` получила позицию `after-common-signs`. **emsella** — восстановлены 3 пропущенных CTA «Book Appointment» (после two-col, после grid, после Sexual Wellness; Figma `1:5166/1:5169/1:5172`) + убран дубль-CTA после what-is; формат текста: `_ `-строки в `ServiceWhatIs` рендерятся как буллеты (а не литеральные подчёркивания), «What to Expect» переведён в bullets-массив.
+- `fix(emsella)` (коммит `fc0dda1`): добавлено **видео** «BTL EMSELLA® — Mechanism of action» после сетки «What Emsella is for?» (Figma `1:5400`). Schema `videoEmbed` получила опц. `position` (`late` default = текущее поведение emsculpt/emface/exomind; `after-first-grid` = emsella). URL пустой → плашка «Video coming soon» + `data-todo='video-from-client'` (ждёт клиента).
+
+> 🔑 **Паттерн-урок сессий 9-10:** общий шаблон `[slug].astro` исторически расставлял video/CTA-баннеры НЕ во всех позициях по Figma. На Emsella это всплыло дважды (пропущенные CTA, потом пропущенное видео). **Сильный сигнал, что на emsculpt / exomind / emface возможны такие же пропуски — это приоритет №1 следующей сессии (см. ниже).**
 
 ---
 
@@ -706,7 +725,50 @@ grep -rn 'data-todo' src/
 
 ---
 
-## Что делать в следующей сессии (сессия 8+)
+## Что делать в следующей сессии (сессия 11+)
+
+### 🔴 ПРИОРИТЕТ №1 — сверить emsculpt / exomind / emface с Figma на пропущенные секции, видео и CTA
+
+На **Emsella** дважды выяснилось (сессии 9-10), что общий шаблон
+`[slug].astro` исторически расставлял CTA-баннеры и видео НЕ во всех
+позициях, заданных в Figma: сначала не хватало 3 CTA «Book Appointment»,
+потом — видео после сетки «What Emsella is for?». Это сильный сигнал, что
+на остальных specialty-страницах возможны такие же пропуски.
+
+**Что сделать (по каждой странице — emsculpt `1:5795`, exomind `1:3218`,
+emface `1:6536`):**
+1. `Figma:get_metadata` по узлу → выписать ПОЛНЫЙ порядок секций сверху
+   вниз, включая все `BOOK APPOINTMENT`-кнопки и `Image 8x` (видео/баннеры).
+2. Снять собранную страницу: `npx astro preview` + Playwright, вытащить
+   `data-section` в DOM-порядке (паттерн из сессий 9-10 — см. ниже).
+3. Сравнить два списка. Каждую недостающую CTA/видео/full-width картинку
+   восстановить через уже существующие механизмы:
+   - CTA — `<ServiceCTABand />` в нужной точке шаблона (гейтить по
+     специфике страницы, чтобы не задеть другие — как сделано для emsella);
+   - видео — `videoEmbed.position` (уже есть `late` / `after-first-grid`,
+     при необходимости добавить новую позицию, default = текущее поведение);
+   - full-width фото — `fullWidthImages[].position` (уже есть
+     `after-gold-banner-1` / `after-common-signs`).
+4. Любое новое поле схемы — ВСЕГДА optional с дефолтом = текущее поведение,
+   чтобы не сломать другие 10 страниц. Проверять regression по `data-section`
+   всех страниц (скрипт ниже выводит секции для emsculpt/emface/exomind разом).
+
+Скрипт для снятия порядка секций (одним bash-вызовом, сервер живёт только
+внутри вызова):
+```bash
+cd <repo> && npm run build && npx astro preview --port 4321 >/tmp/p.log 2>&1 &
+PV=$!; for i in $(seq 1 25); do curl -sf localhost:4321/ >/dev/null && break; sleep 1; done
+python3 - <<'EOF'
+from playwright.sync_api import sync_playwright
+with sync_playwright() as p:
+    b=p.chromium.launch(); pg=b.new_page()
+    for s in ['emsculpt','exomind','emface','emsella']:
+        pg.goto(f'http://localhost:4321/services/{s}/',wait_until='load')
+        print(s, pg.eval_on_selector_all("[data-section]","e=>e.map(x=>x.getAttribute('data-section'))"))
+    b.close()
+EOF
+kill $PV
+```
 
 ### ✅ Все 5 приоритетных specialty-страниц готовы (сессия 6 завершила)
 
@@ -1056,42 +1118,47 @@ Playwright + headless Chromium и сравнивался с `Figma:get_screensho
 >
 > Путь к проекту локально: /Users/yuris/Documents/Claude-Projects/ideal-website (macOS). Все bash-команды для меня — с этим путём.
 >
-> Состояние проекта описано в `docs/HANDOFF.md` — прочитай его перед тем как что-то делать. Особенно: TL;DR-таблицу + секцию **"Сессия 7 — что доделано"** в начале (звёзды star-sign на всех 5 specialty-страницах + сверка футера с Figma) + **"Что делать в следующей сессии"** и **"Открытые вопросы и блокеры"**.
+> Состояние проекта описано в `docs/HANDOFF.md` — прочитай его перед тем как что-то делать. Особенно: TL;DR-таблицу + секцию **"Сессии 8-10 — что доделано"** в начале + **"Что делать в следующей сессии"** (там приоритет №1) + **"Открытые вопросы и блокеры"**.
 >
-> ⚠️ **Про синхронизацию с origin:** работа ведётся через git-патчи, которые я применяю локально через `git am --3way` и пушу сам. Перед стартом скажи мне, запушен ли коммит футера (`fix(footer): match Figma — star ornament + social icons`) в origin/main, либо я начну с `git log --oneline` чтобы свериться. Если его нет в origin — у меня в чатах есть патч в `/mnt/user-data/outputs/`, могу переприменить. ⚠️ У меня должна быть настроена git identity (`user.email`/`user.name`), иначе `git am` падает; fallback — `git apply --3way` без коммита.
+> ⚠️ **Про синхронизацию с origin:** работа ведётся через git-патчи, которые я применяю локально через `git am --3way` и пушу сам. Перед стартом свериться: `git log --oneline -3`, ожидаемый HEAD origin/main = **`fc0dda1`** (`fix(emsella): add video after 'What Emsella is for?' grid`). Если HEAD другой — скажи мне. ⚠️ В контейнере нужна git identity (`user.email`/`user.name`), иначе `git am`/`format-patch` падает; fallback при отдаче — `git apply --3way` без коммита.
 >
-> Что готово после сессии 7: главная (визуальное ревью пройдено + звёзды), **все 5 specialty-страниц** (hormone / emsculpt / exomind / emface / emsella) свёрстаны, наполнены контентом из Figma, сняты с draft, со звёздами star-sign. About / Contact / Blog работают. Футер сверен с Figma. Билд = **10 страниц**. Гибридный шаблон `[slug].astro` с условным рендером ~20 типов секций. Сайт деплоится в Cloudflare Pages.
+> Что готово после сессии 10: главная (визуальное ревью + звёзды), **6 specialty-страниц** (hormone / emsculpt / exomind / emface / emsella / **peptide**) свёрстаны, наполнены контентом из Figma, сняты с draft, со звёздами. About / Contact / Blog работают. Футер сверен с Figma. Реальные изображения на hormone/emsella/peptide. Билд = **11 страниц**. Гибридный шаблон `[slug].astro` с условным рендером ~21 типа секций. Сайт деплоится в Cloudflare Pages.
 >
-> Спроси меня, по какой дорожке двигаемся, прежде чем начинать. Возможные направления:
+> **Приоритет №1 (см. HANDOFF):** сверить **emsculpt (`1:5795`) / exomind (`1:3218`) / emface (`1:6536`)** с Figma на пропущенные секции, видео и позиции CTA-баннеров. На emsella это всплыло дважды (пропущенные CTA, потом видео) — шаблон исторически расставлял их не везде по макету. В HANDOFF есть готовый скрипт снятия порядка секций через Playwright.
+>
+> Спроси меня, по какой дорожке двигаемся, прежде чем начинать. Другие направления:
 >
 > **Без клиента (можем делать сразу):**
-> - **A11y color-contrast (#37):** gold `#8d7431` на cream `#eae4d2` = 3.54:1, норма AA 4.5:1. Затемнить gold до ~`#7a6428` в `tailwind.config.mjs`, затем визуально сверить ВСЕ 10 страниц (риск — gold-на-gold баннеры могут просесть). Это самый крупный незакрытый технический долг.
-> - **Мобильная адаптация — делаем САМИ (НЕ ждём макетов!),** решение клиента (сессия 5). Все компоненты на `grid-cols-1 lg:grid-cols-2`, базовое поведение работает, нужна точная выверка (брейкпоинты, отступы, размеры шрифтов на мобиле).
-> - **Опциональный CTA-баннер** в произвольной позиции между секциями (exomind узел 1:2913) — добавить опц. поле в schema.
+> - **Приоритет №1 выше — сверка emsculpt/exomind/emface.**
+> - **A11y color-contrast (#37):** gold `#8d7431` на cream `#eae4d2` = 3.54:1, норма AA 4.5:1. Затемнить gold до ~`#7a6428` в `tailwind.config.mjs`, затем визуально сверить ВСЕ 11 страниц (риск — gold-на-gold баннеры). Самый крупный незакрытый технический долг.
+> - **Мобильная адаптация — делаем САМИ (НЕ ждём макетов!),** решение клиента (сессия 5). Все компоненты на `grid-cols-1 lg:grid-cols-2`, базовое поведение работает, нужна точная выверка.
 > - Чистка `data-todo`-маркеров (см. `docs/TODO-INVENTORY.md`).
 >
 > **Требует клиента (нельзя завершить без данных):**
-> - Реальные фото для всех 5 specialty-страниц (сейчас placeholder-WebP с семантическими именами — клиент заменяет файлы, .md не трогать).
-> - FAQ-тексты (везде Lorem ipsum) — все 5 specialty + Weight Loss.
-> - YouTube URL: emsculpt (`videoEmbed.url`), exomind/emface (`videoEmbed*.url` пустые).
-> - URL соцсетей в футере (FB/IG/YouTube — сейчас placeholder `#`, `data-todo="social-url"`).
+> - Body-тексты **Peptide** — Lorem с `data-todo="copy"` (заголовки и 9 benefit-названий уже реальные).
+> - FAQ-тексты (везде Lorem ipsum) — все specialty + Weight Loss.
+> - YouTube URL: emsculpt (`videoEmbed.url`), exomind/emface (`videoEmbed*.url`), **emsella (`videoEmbed.url`)** — пустые, плашка «Video coming soon».
+> - Реальные фото там, где ещё placeholder (emsculpt/exomind/emface); URL соцсетей в футере (`data-todo="social-url"`).
 > - Реальные blog-посты + Content Collection 'posts' + `/blog/[slug]`.
-> - Замена stock-фото на главной (doTERRA / istockphoto watermarks / BTL trademarks).
 > - Booking / Form / Newsletter интеграции.
 >
-> ⚠️ **Trademark** (EMFACE/EMSELLA — BTL trademarks) требует авторизации от BTL Industries — блокер **запуска**, не вёрстки. Страницы собраны макетно.
+> ⚠️ **Trademark** (EMFACE/EMSELLA — BTL trademarks) требует авторизации от BTL Industries — блокер **запуска**, не вёрстки.
 >
-> Figma file: jmzQqLFWpZXSII6xTkgCgu (Figma MCP подключён). nodeId страниц: hormone=1:3708, emsculpt=1:5795, exomind=1:3218, emface=1:6536, emsella=1:5436, weight-loss=1:1919.
+> Figma file: jmzQqLFWpZXSII6xTkgCgu (Figma MCP подключён). nodeId страниц: hormone=1:3708, emsculpt=1:5795, exomind=1:3218, emface=1:6536, emsella=1:5436, peptide=1:5026 (главный фрейм 1:3815), weight-loss=1:1919.
 >
-> ⚠️ **Ловушка с ассетами** (баг из сессии 2): добавляя фото в `public/assets/images/<subdir>/`, проверь что в коммит попадает И удаление оригинала PNG/JPG И добавление WebP. Контроль: `find public/assets/images -name "*.webp"` должен покрывать ВСЕ референсы из `grep -rE '/assets/images/.*\.webp' src/`.
+> ⚠️ **Ловушка с ассетами** (баг из сессии 2): добавляя НОВЫЕ фото, проверь что в коммит попадает и удаление PNG/JPG, и добавление WebP. Контроль: каждый `/assets/images/.*\.webp` из `grep -rE src/` должен резолвиться на диск. (В сессиях 8-10 были in-place замены существующих WebP — удалений PNG не требовалось.)
 >
-> ⚠️ **Патчи:** генерируй через `git format-patch --binary origin/main..HEAD` (для WebP-бинарников), проверяй на чистом клоне через `git am --3way` перед отдачей. Не забудь откатить dev-загрязнение `package.json`/`package-lock.json` (playwright и т.п.) перед коммитом.
+> ⚠️ **Метод извлечения изображений из Figma (сессии 8-10):** `Figma:get_design_context(excludeScreenshot=true)` на узле-контейнере → возвращает asset URL для `<img src>` (НЕ маску) → `curl` → cover-crop под пропорции слота → WebP quality 82 method 6. Иконки 9 шт можно брать по одной (по asset-URL). Для сложных SVG-групп — `get_screenshot(contentsOnly=true)` либо композит вручную (так собирался hero Peptide).
+>
+> ⚠️ **Превью-сервер в контейнере умирает между tool-вызовами** — для скриншотов запускай `npx astro preview` + Playwright в ОДНОМ bash-вызове, со скроллом по странице для триггера lazy-load изображений (иначе фото ниже фолда не прорисуются — ложная тревога в сессии 8).
+>
+> ⚠️ **Патчи:** генерируй через `git format-patch --binary origin/main..HEAD` (для WebP-бинарников), проверяй на чистом клоне через `git am --3way` + `npm run build` перед отдачей. Не загрязняй `package.json`/`package-lock.json` (playwright/pillow ставятся только в env контейнера).
 >
 > 💡 **Гибридный шаблон — как добавлять/менять specialty-страницу:**
 > 1. `Figma:get_metadata` + `get_screenshot` для nodeId — СНАЧАЛА сними узел, не доверяй догадкам (урок сессии 6: emface оказалась не «сеткой 3×2», а 9 секциями; emsella — без before/after).
 > 2. Сверить, какие из ~21 компонентов в `src/components/services/` подходят.
 > 3. Если всё покрывается — только заполнить .md, снять `draft: false`.
 > 4. Если нет — добавить компонент + поле в schema (ВСЕГДА optional, с дефолтом = текущее поведение, чтобы не сломать другие страницы) + условный рендер в `[slug].astro` (порядок секций фиксированный).
-> 5. ⚠️ gold-баннеры разведены на 3 поля (`midGoldBanner1`, `midGoldBanner2` — центр у exomind; `goldBanner` — поздняя позиция у hormone) — НЕ объединять. Позиционные поля (`beforeAfter.position`, `videoEmbed2.position`, `twoColumnSections[].position`) и per-block флаги (`textWithPhotoBlocks[].star`) — паттерн для повторяющихся секций с разным поведением.
+> 5. ⚠️ Позиционные поля (`videoEmbed.position`, `videoEmbed2.position`, `beforeAfter.position`, `fullWidthImages[].position`, `twoColumnSections[].position`) и per-block флаги (`textWithPhotoBlocks[].star`, `stars.*`) — основной паттерн для повторяющихся секций с разным поведением на разных страницах. gold-баннеры разведены на 3 поля (`midGoldBanner1/2`, `goldBanner`) — НЕ объединять.
 >
 > Спроси меня, по какой дорожке двигаемся, прежде чем начинать работу.
