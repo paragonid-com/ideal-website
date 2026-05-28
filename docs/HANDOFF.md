@@ -1,4 +1,4 @@
-# HANDOFF — состояние проекта на конец сессии 10
+# HANDOFF — состояние проекта на конец сессии 11
 
 Этот документ — точка входа для **следующей сессии работы с Claude**.
 Прочитав его, новая сессия сможет продолжить работу без необходимости
@@ -21,7 +21,8 @@
 | Дизайн-токены (цвета, шрифты) | ✅ Извлечены и в `tailwind.config.mjs` |
 | Документация (карта меню, инвентарь фото) | ✅ В `/docs` |
 | Шаблон страниц услуг | ✅ Гибридный шаблон с условным рендером (сессия 4): поддерживает Weight Loss / hormone / emsculpt структуры без отдельных файлов |
-| 10 draft-заглушек услуг | 🟡 Hormone, Emsculpt (сессия 4), Exomind (сессия 5) и **Emface + Emsella (сессия 6)** сняты с draft. Остальные 5 (regenerative, bloodwork, peptide, ivtherapy, sexualhealth) — всё ещё `draft: true`. **Все 5 приоритетных specialty-страниц готовы, 2 пункта меню больше не ведут в 404.** Билд = **10 страниц** |
+| 10 draft-заглушек услуг | 🟡 Hormone, Emsculpt (сессия 4), Exomind (сессия 5), **Emface + Emsella (сессия 6)**, **Peptide (сессия 8)** и **IV Therapy + Blood Work (сессия 11)** сняты с draft. Остаются `draft: true` только **2** — regenerative, sexualhealth. **Все 9 specialty-страниц готовы, ни один пункт меню не ведёт в 404.** Билд = **9 specialty + 7 блог-постов + 4 статики = 20 страниц** |
+| Блог (`/blog`) | ✅ **Сессия 11 (параллельная):** коллекция `posts` — 7 статей, импортированных со старого WordPress idealmedwell.com. Маршруты `/blog` (листинг) + `/blog/[slug]`. Изображения в `/public/assets/images/blog/<slug>/`. См. секцию «Блог» ниже |
 | Звёзды star-sign на specialty | ✅ **Сессия 7:** добавлены на все 5 (hormone 6 шт, exomind 2, emsculpt/emface/emsella по 1 — hero). Opt-in через поле `stars` + per-block `star`; Weight Loss не затронут |
 | Exomind (`/services/exomind`) | ✅ **Наполнена контентом из Figma (сессия 5)**: hero + twoColumnText (whatIs+whoFor) + video#1 + goldBanner#1 + deviceShowcase + howWorks + whyChoose + conditionsList + video#2 + goldBanner#2 + FAQ. Тексты FAQ и YouTube-ссылки ждут от клиента. Звёзды добавлены в сессии 7 |
 | Hormone (`/services/hormone`) | ✅ **Наполнена контентом из Figma (сессия 4)**: hero + whatIs + reclaiming + commonSigns + roadmap + whyTrust + goldBanner + experience. Тексты FAQ ждут от клиента. |
@@ -53,6 +54,40 @@
 - `fix(emsella)` (коммит `fc0dda1`): добавлено **видео** «BTL EMSELLA® — Mechanism of action» после сетки «What Emsella is for?» (Figma `1:5400`). Schema `videoEmbed` получила опц. `position` (`late` default = текущее поведение emsculpt/emface/exomind; `after-first-grid` = emsella). URL пустой → плашка «Video coming soon» + `data-todo='video-from-client'` (ждёт клиента).
 
 > 🔑 **Паттерн-урок сессий 9-10:** общий шаблон `[slug].astro` исторически расставлял video/CTA-баннеры НЕ во всех позициях по Figma. На Emsella это всплыло дважды (пропущенные CTA, потом пропущенное видео). **Сильный сигнал, что на emsculpt / exomind / emface возможны такие же пропуски — это приоритет №1 следующей сессии (см. ниже).**
+
+---
+
+## Сессия 11 — что доделано (28.05.26)
+
+Дорожка сессии: **аудит/доведение specialty + 2 новые страницы** (4 патча поверх `42a917e`). Origin/main = `d9599e6`.
+
+**Task 1 — `fix(emsculpt)` (`ba5201e`, Figma `1:5795`).** Заменены placeholder-WebP (6 байт-в-байт дублей + before/after-заглушки) реальными ассетами: hero, 2 grid-сетки (3 категории «What Emsculpt Neo Is For» + 3 аппликатора «Customize Your Treatment»), видео-постер, before/after. Before/after в Figma — **единый композит-кадр** (узел `1:5559`) с уже впечатанными подписями BEFORE / AFTER EMSCULPT NEO и caption «3 months after… Suzanne Kilmer, M.D.». Для него добавлен backward-compatible режим **`beforeAfter.items[].image`** (рендер одной картинки без накладных бейджей/caption; `beforeImage`/`afterImage` стали optional → парный режим emface не затронут). Видео-постер (`1:5511`) проставлен как `posterImage`, URL по-прежнему пустой (`data-todo`, ждёт клиента).
+
+**Task 2 — `fix(exomind)` (`b3caceb`, Figma `1:3218`).** Заменены мелкие скриншоты-плейсхолдеры (549–800px) реальными ассетами: hero, 2 видео-постера, device-showcase (full-width), how-works/why-choose (TextWithPhoto). **+ восстановлены 2 пропущенных CTA «BOOK APPOINTMENT»** — тот самый паттерн-урок Emsella: общий шаблон не расставлял CTA перед conditions-list (Figma `1:2907`) и после видео #2 (`1:2913`). Добавлены опц. флаги **`ctaBeforeConditionsList` / `ctaAfterVideo2`** (default false → остальные 10 страниц не затронуты; включены только в exomind.md). Теперь все 5 контентных CTA макета присутствуют.
+
+**Task 3 — `feat(ivtherapy)` (`33cdfeb`, Figma `1:6189`).** Страница собрана с нуля по **стандартному шаблону** (как weight-loss/peptide) — новых компонентов/полей схемы не понадобилось: Hero → WhatIs (фото слева) → Benefits (icon-only 3×3, 9 шт, gold) → WhoFor (фото справа) → Results → FAQ. Заголовки и 9 benefit-лейблов реальные из Figma; body/intro/FAQ — Lorem с `data-todo="copy"`. Снята с draft. 3 фото из Figma `1:5808/1:5860/1:5891` (⚠️ istockphoto-stock, лицензии — блокеры); 9 benefit-иконок — собственная копия shared-набора в `src/assets/services/ivtherapy/`.
+
+**Task 4 — `feat(bloodwork)` (`d9599e6`, Figma `1:2829`).** Тот же стандартный шаблон, идентично ivtherapy. Снята с draft. 3 фото из Figma `1:2453/1:2505/1:2637` (⚠️ Unsplash + istockphoto, лицензии — блокеры); 9 иконок — собственная копия в `src/assets/services/bloodwork/`. **⚠️ Сохранена опечатка из Figma: «BOOD WORK» вместо «BLOOD WORK» в заголовке WhatIs (узел `1:2465`)** — по политике «не править опечатки Figma, помечать» (как MENTALL/APPOIMENT/teel). Hero H1 = корректное «BLOOD WORK».
+
+> 🔑 **Открыто из сессии 11 (НЕ сделано, ждёт решения):**
+> - **emsculpt CTA `1:5573`** (после Before/After, перед FAQ) — найден при Task 1, но **не добавлен** (emsculpt был ограничен «только images»). Прямое продолжение Приоритета №1 — закрыть отдельным 1-строчным gate-флагом.
+> - **CTA на ivtherapy/bloodwork:** сами фреймы `1:6189` / `1:2829` содержат только hero BOOK NOW, без mid-section CTA. Но общий шаблон авто-вставляет 3 (после Hero/WhatIs/Benefits) — оставлено как у peptide/weight-loss для консистентности сиблингов. Подавляемо флагом, если нужна строгая пиксельная точность фрейма.
+> - **«BOOD WORK»** — подтвердить с клиентом: оставить опечатку или исправить на «BLOOD».
+
+---
+
+## Блог (`/blog`) — коллекция `posts`
+
+Сделан в **параллельной сессии** (коммит `1c30cf4` `feat(blog): import posts from idealmedwell.com`). Здесь — справка для следующей сессии, чтобы услуги и блог не конфликтовали при патчах.
+
+- **Коллекция `posts`** в `src/content.config.ts` (отдельно от `services`): loader `glob` по `src/content/posts/**/*.md`. Тело статьи — Markdown под frontmatter, рендерится через `entry.render()`.
+- **Схема:** `title`, `description`, `heroImage`, `heroImageAlt` (required); `sourceUrl`, `relativePath`, `publishDate` (optional); `draft` (default false). `sourceUrl`/`relativePath` сохранены под canonical и возможные 301-редиректы со старых WordPress-URL.
+- **7 статей** (импорт с idealmedwell.com): does-tirzepatide-suppress-your-appetite, how-fast-does-semaglutide-work, is-peptide-therapy-safe-your-complete-guide, tirzepatide-vs-semaglutide-which-is-better, top-3-tips-for-losing-weight-on-semaglutide, what-are-the-benefits-of-tesamorelin, what-is-a-medical-weight-loss-program.
+- **Маршруты:** `src/pages/blog.astro` (листинг `/blog`) + `src/pages/blog/[slug].astro` (статья). Компоненты `src/components/blog/BlogGrid.astro`, `BlogPostCard.astro` (затронут также `StartYourTransformation.astro`).
+- **Изображения:** `/public/assets/images/blog/<slug>/`, абсолютные пути (heroImage + inline `![]()` в теле).
+- ⚠️ Блог-изображения — тоже потенциальный лицензионный блокер (часть кадров пересекается со stock на specialty-страницах). Проверить вместе с блокером 🔴 лицензий ниже.
+
+> ⚠️ **Для будущих патчей:** блог и услуги делят `src/content.config.ts` (коллекция `posts` — над `services`). Правки схемы услуг и блога идут в разные участки файла → `git am --3way` мержит без конфликтов, но рабочее дерево должно быть **закоммичено** перед `git am` (иначе abort «local changes would be overwritten»).
 
 ---
 
@@ -635,7 +670,7 @@ src/
     - Once I lose the weight, how can I keep it off?
     - How can I choose between the different medical weight loss options?
     - What side effects can I experience with medical weight loss?
-16. **Контент для 5 draft-страниц услуг** (regenerative, bloodwork, peptide, ivtherapy, sexualhealth) — все сейчас в `draft: true`, не генерируются в build. Hormone/emsculpt (сессия 4), exomind (сессия 5), emface/emsella (сессия 6) уже сняты с draft.
+16. **Контент для оставшихся draft-страниц услуг** — теперь в `draft: true` только **2**: regenerative, sexualhealth. Hormone/emsculpt (сессия 4), exomind (сессия 5), emface/emsella (сессия 6), peptide (сессия 8), ivtherapy/bloodwork (сессия 11) уже сняты с draft. Body-тексты на peptide/ivtherapy/bloodwork — Lorem с `data-todo="copy"` (ждут реального копирайта от клиента).
 17. **Реальные blog-посты** — у меня 4 одинаковые placeholder-карточки. Нужны: тексты, фото, slugs
 18. **Должность Laudin P.** — в Figma "Owner & TBD title"
 19. **Финальный disclaimer** под формой подписки (сейчас Lorem Ipsum)
@@ -729,11 +764,14 @@ grep -rn 'data-todo' src/
 
 ### 🔴 ПРИОРИТЕТ №1 — сверить emsculpt / exomind / emface с Figma на пропущенные секции, видео и CTA
 
+> **Прогресс сессии 11:** **exomind** проверен и исправлен — восстановлены 2 пропущенных CTA (`1:2907`, `1:2913`) через флаги `ctaBeforeConditionsList`/`ctaAfterVideo2`; изображения заменены реальными. **emsculpt** — изображения заменены, но при аудите найден **ещё не добавленный CTA `1:5573`** (после Before/After перед FAQ) — закрыть отдельным gate-флагом. **emface (`1:6536`) — НЕ проверен, остаётся за этим приоритетом.**
+
 На **Emsella** дважды выяснилось (сессии 9-10), что общий шаблон
 `[slug].astro` исторически расставлял CTA-баннеры и видео НЕ во всех
 позициях, заданных в Figma: сначала не хватало 3 CTA «Book Appointment»,
-потом — видео после сетки «What Emsella is for?». Это сильный сигнал, что
-на остальных specialty-страницах возможны такие же пропуски.
+потом — видео после сетки «What Emsella is for?». Сессия 11 подтвердила
+тот же паттерн на exomind (2 CTA) и emsculpt (1 CTA). Это сильный сигнал, что
+на остальных specialty-страницах (emface) возможны такие же пропуски.
 
 **Что сделать (по каждой странице — emsculpt `1:5795`, exomind `1:3218`,
 emface `1:6536`):**
@@ -1122,24 +1160,24 @@ Playwright + headless Chromium и сравнивался с `Figma:get_screensho
 >
 > ⚠️ **Про синхронизацию с origin:** работа ведётся через git-патчи, которые я применяю локально через `git am --3way` и пушу сам. Перед стартом свериться: `git log --oneline -3`, ожидаемый HEAD origin/main = **`fc0dda1`** (`fix(emsella): add video after 'What Emsella is for?' grid`). Если HEAD другой — скажи мне. ⚠️ В контейнере нужна git identity (`user.email`/`user.name`), иначе `git am`/`format-patch` падает; fallback при отдаче — `git apply --3way` без коммита.
 >
-> Что готово после сессии 10: главная (визуальное ревью + звёзды), **6 specialty-страниц** (hormone / emsculpt / exomind / emface / emsella / **peptide**) свёрстаны, наполнены контентом из Figma, сняты с draft, со звёздами. About / Contact / Blog работают. Футер сверен с Figma. Реальные изображения на hormone/emsella/peptide. Билд = **11 страниц**. Гибридный шаблон `[slug].astro` с условным рендером ~21 типа секций. Сайт деплоится в Cloudflare Pages.
+> Что готово после сессии 11: главная (визуальное ревью + звёзды), **9 specialty-страниц** (hormone / emsculpt / exomind / emface / emsella / peptide / **ivtherapy** / **bloodwork** / weight-loss) свёрстаны, наполнены контентом из Figma, сняты с draft, со звёздами. **Блог: `/blog` + 7 статей** (коллекция `posts`, параллельная сессия). About / Contact работают. Футер сверен с Figma. Реальные изображения на hormone/emsella/peptide/**emsculpt/exomind** (+ stock на ivtherapy/bloodwork — лицензии под вопросом). Билд = **20 страниц** (9 specialty + 7 блог + 4 статики). В draft остались только regenerative + sexualhealth. Гибридный шаблон `[slug].astro` с условным рендером ~21 типа секций. Сайт деплоится в Cloudflare Pages.
 >
-> **Приоритет №1 (см. HANDOFF):** сверить **emsculpt (`1:5795`) / exomind (`1:3218`) / emface (`1:6536`)** с Figma на пропущенные секции, видео и позиции CTA-баннеров. На emsella это всплыло дважды (пропущенные CTA, потом видео) — шаблон исторически расставлял их не везде по макету. В HANDOFF есть готовый скрипт снятия порядка секций через Playwright.
+> **Приоритет №1 (см. HANDOFF):** сессия 11 закрыла **exomind** (2 пропущенных CTA восстановлены + реальные фото) и заменила изображения **emsculpt**, но на emsculpt при аудите найден ещё не добавленный CTA **`1:5573`** (после Before/After) — закрыть отдельным флагом. **emface (`1:6536`) — ещё не проверен** на пропущенные секции/видео/CTA. В HANDOFF есть готовый скрипт снятия порядка секций через Playwright.
 >
 > Спроси меня, по какой дорожке двигаемся, прежде чем начинать. Другие направления:
 >
 > **Без клиента (можем делать сразу):**
 > - **Приоритет №1 выше — сверка emsculpt/exomind/emface.**
-> - **A11y color-contrast (#37):** gold `#8d7431` на cream `#eae4d2` = 3.54:1, норма AA 4.5:1. Затемнить gold до ~`#7a6428` в `tailwind.config.mjs`, затем визуально сверить ВСЕ 11 страниц (риск — gold-на-gold баннеры). Самый крупный незакрытый технический долг.
+> - **A11y color-contrast (#37):** gold `#8d7431` на cream `#eae4d2` = 3.54:1, норма AA 4.5:1. Затемнить gold до ~`#7a6428` в `tailwind.config.mjs`, затем визуально сверить ВСЕ страницы (9 specialty + блог + статика = 20; риск — gold-на-gold баннеры). Самый крупный незакрытый технический долг.
 > - **Мобильная адаптация — делаем САМИ (НЕ ждём макетов!),** решение клиента (сессия 5). Все компоненты на `grid-cols-1 lg:grid-cols-2`, базовое поведение работает, нужна точная выверка.
 > - Чистка `data-todo`-маркеров (см. `docs/TODO-INVENTORY.md`).
 >
 > **Требует клиента (нельзя завершить без данных):**
-> - Body-тексты **Peptide** — Lorem с `data-todo="copy"` (заголовки и 9 benefit-названий уже реальные).
+> - Body-тексты **Peptide / IV Therapy / Blood Work** — Lorem с `data-todo="copy"` (заголовки и 9 benefit-названий уже реальные).
 > - FAQ-тексты (везде Lorem ipsum) — все specialty + Weight Loss.
-> - YouTube URL: emsculpt (`videoEmbed.url`), exomind/emface (`videoEmbed*.url`), **emsella (`videoEmbed.url`)** — пустые, плашка «Video coming soon».
-> - Реальные фото там, где ещё placeholder (emsculpt/exomind/emface); URL соцсетей в футере (`data-todo="social-url"`).
-> - Реальные blog-посты + Content Collection 'posts' + `/blog/[slug]`.
+> - YouTube URL: emsculpt (`videoEmbed.url` — постер уже реальный), exomind (2 видео-постера реальные)/emface (`videoEmbed*.url`), **emsella (`videoEmbed.url`)** — пустые, плашка «Video coming soon».
+> - Реальные фото там, где ещё placeholder: **emface** (emsculpt/exomind заменены в сессии 11). ⚠️ Фото ivtherapy/bloodwork — stock (istock/Unsplash), лицензии под вопросом. URL соцсетей в футере (`data-todo="social-url"`).
+> - **Блог: ✅ сделан** (сессия 11, параллельно) — коллекция `posts`, 7 статей, `/blog` + `/blog/[slug]`. Остаётся проверить лицензии блог-изображений.
 > - Booking / Form / Newsletter интеграции.
 >
 > ⚠️ **Trademark** (EMFACE/EMSELLA — BTL trademarks) требует авторизации от BTL Industries — блокер **запуска**, не вёрстки.
