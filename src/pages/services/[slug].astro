@@ -5,38 +5,51 @@
  * Читает Content Collection 'services' и рендерит общий шаблон.
  * Страницы с draft: true исключаются из getStaticPaths (не генерируются в build).
  *
- * Гибридная архитектура (сессия 4): один шаблон умеет рендерить страницы
- * разной структуры (Weight Loss / hormone / emsculpt / ...) через условный
- * рендер опциональных секций. Какие секции у страницы есть — определяется
- * наличием соответствующего поля во frontmatter.
+ * Гибридная архитектура (сессии 4-5): один шаблон умеет рендерить страницы
+ * разной структуры (Weight Loss / hormone / emsculpt / exomind / …) через
+ * условный рендер опциональных секций. Какие секции у страницы есть —
+ * определяется наличием соответствующего поля во frontmatter.
  *
- * Эталонный порядок секций по образцу Weight Loss:
+ * Эталонный порядок секций:
  *   ServiceHero
  *   ServiceCTABand
- *   ServiceWhatIs           (если whatIsBody)
- *   ServiceSimpleWhatIs     (если simpleWhatIs)         — emsculpt
- *   ServiceCTABand          (если был whatIs или simpleWhatIs)
- *   ServiceBenefits         (если benefits)             — Weight Loss
- *   ServiceCommonSigns      (если commonSigns)          — hormone
- *   ServiceCategoriesGrid   (первая, если categoriesGrids[0]) — emsculpt "What is For"
- *   ServiceVideoEmbed       (если videoEmbed)           — emsculpt
- *   ServiceCTABand          (если был любой central block)
- *   ServiceExtendedDescription (если extendedDescription) — emsculpt "MORE FOR LESS"
- *   ServiceWhoFor           (если whoForBullets)        — Weight Loss
- *   ServiceRoadmap          (если roadmap)              — hormone
- *   ServiceCategoriesGrid   (вторая, если categoriesGrids[1]) — emsculpt "Customize"
- *   ServiceBeforeAfter      (если beforeAfter)          — emsculpt
- *   ServiceResults          (если resultsBody)          — Weight Loss
- *   ServiceWhyTrust         (если whyTrust)             — hormone
- *   ServiceGoldBanner       (если goldBanner)           — hormone
- *   ServiceExperience       (если experience)           — hormone
- *   ServiceFAQ              (если faq)
- *   NewIn2026               (всегда)
- *   StartYourTransformation (всегда)
+ *   ServiceWhatIs            (если whatIsBody)             — Weight Loss
+ *   ServiceSimpleWhatIs      (если simpleWhatIs)           — emsculpt
+ *   ServiceCTABand           (если был whatIs или simpleWhatIs)
+ *   ServiceTwoColumnText     (если twoColumnText)          — exomind
+ *   ServiceTextWithPhoto[]   (before-common-signs)         — hormone
+ *   ServiceBenefits          (если benefits)               — Weight Loss
+ *   ServiceCommonSigns       (если commonSigns)            — hormone
+ *   ServiceCategoriesGrid    (categoriesGrids[0])          — emsculpt
+ *   ServiceVideoEmbed        (если videoEmbed)             — emsculpt, exomind
+ *   ServiceGoldBanner        (midGoldBanner1 — центр)      — exomind
+ *   ServiceFullWidthImage[]  (after-gold-banner-1)         — exomind
+ *   ServiceTextWithPhoto[]   (before-conditions)           — exomind
+ *   ServiceConditionsList    (если conditionsList)         — exomind
+ *   ServiceVideoEmbed        (если videoEmbed2 — видео #2) — exomind
+ *   ServiceGoldBanner        (midGoldBanner2 — центр #2)   — exomind
+ *   ServiceExtendedDescription (если extendedDescription)  — emsculpt
+ *   ServiceCTABand           (если был extendedDescription)
+ *   ServiceWhoFor            (если whoForBullets)          — Weight Loss
+ *   ServiceRoadmap           (если roadmap)                — hormone
+ *   ServiceTextWithPhoto[]   (after-roadmap)               — hormone
+ *   ServiceCategoriesGrid    (categoriesGrids[1])          — emsculpt
+ *   ServiceBeforeAfter       (если beforeAfter)            — emsculpt
+ *   ServiceResults           (если resultsBody)            — Weight Loss
+ *   ServiceWhyTrust          (если whyTrust)               — hormone
+ *   ServiceGoldBanner        (goldBanner — после WhyTrust) — hormone
+ *   ServiceExperience        (если experience)             — hormone
+ *   ServiceFAQ               (если faq)
+ *   NewIn2026                (всегда)
+ *   StartYourTransformation  (всегда)
  *
  * Каждая страница берёт от этого порядка только те секции, что у неё
- * заполнены — поэтому Weight Loss выглядит как раньше, а hormone/emsculpt
- * получают свой набор без изменения шаблона.
+ * заполнены, поэтому Weight Loss/hormone/emsculpt не сломаны.
+ *
+ * Примечание про gold-баннеры: hormone использует ТОЛЬКО `goldBanner`
+ * (после WhyTrust). exomind использует ТОЛЬКО `midGoldBanner1` и
+ * `midGoldBanner2` (центральные позиции, обычно с CTA). emsculpt не
+ * использует ни одного.
  */
 
 import { getCollection } from 'astro:content';
@@ -45,12 +58,15 @@ import ServiceHero from '../../components/services/ServiceHero.astro';
 import ServiceCTABand from '../../components/services/ServiceCTABand.astro';
 import ServiceWhatIs from '../../components/services/ServiceWhatIs.astro';
 import ServiceSimpleWhatIs from '../../components/services/ServiceSimpleWhatIs.astro';
+import ServiceTwoColumnText from '../../components/services/ServiceTwoColumnText.astro';
 import ServiceExtendedDescription from '../../components/services/ServiceExtendedDescription.astro';
 import ServiceBenefits from '../../components/services/ServiceBenefits.astro';
 import ServiceCommonSigns from '../../components/services/ServiceCommonSigns.astro';
 import ServiceTextWithPhoto from '../../components/services/ServiceTextWithPhoto.astro';
 import ServiceCategoriesGrid from '../../components/services/ServiceCategoriesGrid.astro';
 import ServiceVideoEmbed from '../../components/services/ServiceVideoEmbed.astro';
+import ServiceFullWidthImage from '../../components/services/ServiceFullWidthImage.astro';
+import ServiceConditionsList from '../../components/services/ServiceConditionsList.astro';
 import ServiceBeforeAfter from '../../components/services/ServiceBeforeAfter.astro';
 import ServiceWhoFor from '../../components/services/ServiceWhoFor.astro';
 import ServiceRoadmap from '../../components/services/ServiceRoadmap.astro';
@@ -84,6 +100,28 @@ const blocksBeforeCommonSigns = (data.textWithPhotoBlocks ?? []).filter(
 const blocksAfterRoadmap = (data.textWithPhotoBlocks ?? []).filter(
   (b) => b.position === 'after-roadmap'
 );
+const blocksBeforeConditions = (data.textWithPhotoBlocks ?? []).filter(
+  (b) => b.position === 'before-conditions'
+);
+
+// fullWidthImages по позиции
+const fullWidthAfterGoldBanner1 = (data.fullWidthImages ?? []).filter(
+  (b) => b.position === 'after-gold-banner-1'
+);
+
+// midGoldBanner1 / midGoldBanner2 / goldBanner могут быть строкой или объектом
+// — нормализуем
+type GoldBannerData = { text: string; ctaLabel?: string; ctaHref?: string };
+function normalizeBanner(
+  b: string | { text: string; ctaLabel?: string; ctaHref?: string } | undefined
+): GoldBannerData | undefined {
+  if (!b) return undefined;
+  if (typeof b === 'string') return { text: b };
+  return b;
+}
+const midGoldBanner1 = normalizeBanner(data.midGoldBanner1);
+const midGoldBanner2 = normalizeBanner(data.midGoldBanner2);
+const goldBanner = normalizeBanner(data.goldBanner);
 ---
 
 <BaseLayout title={data.seoTitle} description={data.seoDescription}>
@@ -120,6 +158,14 @@ const blocksAfterRoadmap = (data.textWithPhotoBlocks ?? []).filter(
     </>
   )}
 
+  {/* Двухколоночный текст (exomind: WHAT IS + WHO IS A GOOD CANDIDATE) */}
+  {data.twoColumnText && (
+    <ServiceTwoColumnText
+      left={data.twoColumnText.left}
+      right={data.twoColumnText.right}
+    />
+  )}
+
   {/* Text+Photo блоки перед Common Signs (hormone "Reclaiming Yourself") */}
   {blocksBeforeCommonSigns.map((block) => (
     <ServiceTextWithPhoto
@@ -128,6 +174,9 @@ const blocksAfterRoadmap = (data.textWithPhotoBlocks ?? []).filter(
       image={block.image}
       imageAlt={block.imageAlt}
       imageSide={block.imageSide}
+      bullets={block.bullets}
+      bulletStyle={block.bulletStyle}
+      tail={block.tail}
     />
   ))}
 
@@ -164,12 +213,67 @@ const blocksAfterRoadmap = (data.textWithPhotoBlocks ?? []).filter(
     />
   )}
 
-  {/* Video embed (emsculpt) */}
+  {/* Video embed #1 (emsculpt, exomind) */}
   {data.videoEmbed && (
     <ServiceVideoEmbed
       url={data.videoEmbed.url}
       posterImage={data.videoEmbed.posterImage}
       posterAlt={data.videoEmbed.posterAlt}
+    />
+  )}
+
+  {/* Gold banner #1 в центре (exomind — с CTA, между videoEmbed и conditionsList) */}
+  {midGoldBanner1 && (
+    <ServiceGoldBanner
+      text={midGoldBanner1.text}
+      ctaLabel={midGoldBanner1.ctaLabel}
+      ctaHref={midGoldBanner1.ctaHref}
+    />
+  )}
+
+  {/* Full-width image после первого gold banner (exomind: фото устройства) */}
+  {fullWidthAfterGoldBanner1.map((b) => (
+    <ServiceFullWidthImage image={b.image} imageAlt={b.imageAlt} todo={b.todo} />
+  ))}
+
+  {/* Text+Photo блоки перед conditions list
+     (exomind: HOW EXOMIND WORKS, WHY CHOOSE IDEAL) */}
+  {blocksBeforeConditions.map((block) => (
+    <ServiceTextWithPhoto
+      title={block.title}
+      body={block.body}
+      image={block.image}
+      imageAlt={block.imageAlt}
+      imageSide={block.imageSide}
+      bullets={block.bullets}
+      bulletStyle={block.bulletStyle}
+      tail={block.tail}
+    />
+  ))}
+
+  {/* Conditions list (exomind: WHAT CAN EXOMIND IMPROVE?) */}
+  {data.conditionsList && (
+    <ServiceConditionsList
+      title={data.conditionsList.title}
+      items={data.conditionsList.items}
+    />
+  )}
+
+  {/* Video embed #2 (exomind — testimonial) */}
+  {data.videoEmbed2 && (
+    <ServiceVideoEmbed
+      url={data.videoEmbed2.url}
+      posterImage={data.videoEmbed2.posterImage}
+      posterAlt={data.videoEmbed2.posterAlt}
+    />
+  )}
+
+  {/* Gold banner #2 в центре (exomind — повторный с CTA) */}
+  {midGoldBanner2 && (
+    <ServiceGoldBanner
+      text={midGoldBanner2.text}
+      ctaLabel={midGoldBanner2.ctaLabel}
+      ctaHref={midGoldBanner2.ctaHref}
     />
   )}
 
@@ -212,6 +316,9 @@ const blocksAfterRoadmap = (data.textWithPhotoBlocks ?? []).filter(
       image={block.image}
       imageAlt={block.imageAlt}
       imageSide={block.imageSide}
+      bullets={block.bullets}
+      bulletStyle={block.bulletStyle}
+      tail={block.tail}
     />
   ))}
 
@@ -250,8 +357,14 @@ const blocksAfterRoadmap = (data.textWithPhotoBlocks ?? []).filter(
     />
   )}
 
-  {/* Gold pull-quote banner (hormone) */}
-  {data.goldBanner && <ServiceGoldBanner text={data.goldBanner} />}
+  {/* Gold pull-quote banner (hormone — после WhyTrust, перед Experience) */}
+  {goldBanner && (
+    <ServiceGoldBanner
+      text={goldBanner.text}
+      ctaLabel={goldBanner.ctaLabel}
+      ctaHref={goldBanner.ctaHref}
+    />
+  )}
 
   {/* Experience (hormone — DNA фото + текст + телефон + CTA) */}
   {data.experience && (

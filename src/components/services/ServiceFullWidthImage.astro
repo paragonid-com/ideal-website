@@ -1,0 +1,31 @@
+---
+/**
+ * ServiceFullWidthImage — полноширинная секция-картинка.
+ *
+ * Используется на странице exomind (узел Figma 1:3154 Image 138 — 1920×960
+ * фото устройства EXOMIND близко). Также пригодна для других мест,
+ * где между текстовыми секциями нужно вставить иллюстрацию во всю ширину.
+ */
+
+interface Props {
+  image: string;
+  imageAlt: string;
+  /** Опционально: метка data-todo (например 'trademark-authorization-from-btl') */
+  todo?: string;
+}
+
+const { image, imageAlt, todo } = Astro.props;
+---
+
+<section
+  class="w-full bg-cream"
+  data-section="service-full-width-image"
+  data-todo={todo}
+>
+  <img
+    src={image}
+    alt={imageAlt}
+    class="block h-auto w-full"
+    loading="lazy"
+  />
+</section>

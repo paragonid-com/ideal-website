@@ -2,26 +2,30 @@
 /**
  * ServiceTextWithPhoto — универсальная "текст + фото" секция.
  *
- * Без буллетов, без CTA, без специфики. Просто:
+ * Базовая структура:
  *   - Заголовок (3-4 строки)
  *   - Многоабзацный body
  *   - Фото
+ *
+ * Опциональное расширение (для exomind: HOW EXOMIND WORKS и WHY CHOOSE):
+ *   - bullets: список пунктов
+ *   - bulletStyle: 'dash' | 'number' (default 'dash' — _, для нумерованного 1_ 2_ 3_)
+ *   - tail: текст-параграф после буллетов (заключение)
+ *
+ * Если bullets заданы — body становится "введением" перед списком,
+ * затем рендерится список, затем (опционально) tail. Без bullets компонент
+ * работает как раньше — просто body как многоабзацный текст.
  *
  * Используется для блоков, которые структурно похожи на ServiceWhoFor /
  * ServiceWhyTrust, но не подходят ни под один из них:
  *
  *   - hormone: "RECLAIMING YOURSELF: A NEW STANDARD FOR YOUR HEALTH"
  *     (узлы Figma 1:3257, 1:3283, 1:3370 — фото справа)
+ *   - exomind: "HOW EXOMIND WORKS?" (фото слева, нумерованный список)
+ *   - exomind: "WHY CHOOSE IDEAL MEDICAL & WELLNESS FOR EXOMIND?"
+ *     (фото справа, dash-список с заключительным параграфом)
  *
- * Поддерживает `imageSide: 'left' | 'right'` для гибкости.
- *
- * Отличие от ServiceWhyTrust: тот компонент тоже использует hormone (для
- * "Why Trust Ideal Medical and Wellness"), но ради переиспользования
- * хочется один универсальный компонент. Оставляю оба пока — WhyTrust для
- * семантической ясности, TextWithPhoto для прочих случаев.
- *
- * (В будущем можно объединить: TextWithPhoto заменит WhyTrust, передав
- * нужные параметры. Пока два компонента ради читаемости [slug].astro.)
+ * Поддерживает `imageSide: 'left' | 'right'`.
  */
 
 interface Props {
@@ -31,11 +35,27 @@ interface Props {
   imageAlt: string;
   /** Где фото — слева или справа. Default 'right'. */
   imageSide?: 'left' | 'right';
+  /** Опциональный буллет-список под body */
+  bullets?: string[];
+  /** Стиль маркеров для буллетов: dash (default) или number. */
+  bulletStyle?: 'dash' | 'number';
+  /** Опциональный заключительный параграф после буллетов */
+  tail?: string;
 }
 
-const { title, body, image, imageAlt, imageSide = 'right' } = Astro.props;
+const {
+  title,
+  body,
+  image,
+  imageAlt,
+  imageSide = 'right',
+  bullets,
+  bulletStyle = 'dash',
+  tail,
+} = Astro.props;
 const titleLines = title.split('\n');
 const paragraphs = body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+const tailParas = (tail ?? '').split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
 
 const textOrderClass = imageSide === 'left' ? 'lg:order-2' : 'lg:order-1';
 const imageOrderClass = imageSide === 'left' ? 'lg:order-1' : 'lg:order-2';
@@ -59,6 +79,21 @@ const imageOrderClass = imageSide === 'left' ? 'lg:order-1' : 'lg:order-2';
 
       <div class="mt-12 max-w-[660px] space-y-6 font-sans text-body-lg text-gold leading-relaxed">
         {paragraphs.map((p) => <p>{p}</p>)}
+
+        {bullets && bullets.length > 0 && (
+          <ul class="mt-4 space-y-3">
+            {bullets.map((b, i) => (
+              <li class="flex gap-3">
+                <span aria-hidden="true" class="select-none flex-shrink-0 font-sans text-body-lg leading-relaxed">
+                  {bulletStyle === 'number' ? `${i + 1}.` : '—'}
+                </span>
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        {tailParas.map((p) => <p>{p}</p>)}
       </div>
     </div>
 

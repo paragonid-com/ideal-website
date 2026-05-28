@@ -1,0 +1,99 @@
+---
+/**
+ * ServiceTwoColumnText — двухколоночная секция: заголовок+текст слева,
+ * заголовок+буллеты+хвост справа. Без фото.
+ *
+ * Используется на странице exomind (узлы Figma 1:2888 и 1:2889):
+ *   - Слева (x=147 y=930): "WHAT IS EXOMIND?" + многоабзацный body
+ *   - Справа (x=940 y=930): "WHO IS A GOOD CANDIDATE FOR EXOMIND?"
+ *     + intro + 5 буллетов с маркером "_" + хвост-параграф
+ *
+ * Композиционно: 2 колонки grid, каждая независима. Можно использовать
+ * для любой "сравнительной" пары блоков (What is X? / Who is X for?)
+ * на одной странице без чередования с фото.
+ */
+
+interface ColumnData {
+  title: string;
+  body?: string;
+  bullets?: string[];
+  tail?: string;
+}
+
+interface Props {
+  left: ColumnData;
+  right: ColumnData;
+}
+
+const { left, right } = Astro.props;
+
+function paras(s?: string): string[] {
+  return (s ?? '').split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+}
+
+const leftParas = paras(left.body);
+const leftTail = paras(left.tail);
+const rightParas = paras(right.body);
+const rightTail = paras(right.tail);
+---
+
+<section
+  class="w-full bg-cream py-24"
+  data-section="service-two-column-text"
+>
+  <div class="mx-auto max-w-design px-[7.55%] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+    {/* Левая колонка */}
+    <div>
+      <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
+        {left.title.split('\n').map((line, i, arr) => (
+          <>
+            {line}
+            {i < arr.length - 1 && <br />}
+          </>
+        ))}
+      </h2>
+
+      <div class="mt-10 space-y-6 font-sans text-body-lg text-gold leading-relaxed">
+        {leftParas.map((p) => <p>{p}</p>)}
+        {left.bullets && left.bullets.length > 0 && (
+          <ul class="mt-4 space-y-3">
+            {left.bullets.map((b) => (
+              <li class="flex gap-3">
+                <span aria-hidden="true" class="select-none flex-shrink-0">—</span>
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        {leftTail.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+
+    {/* Правая колонка */}
+    <div>
+      <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
+        {right.title.split('\n').map((line, i, arr) => (
+          <>
+            {line}
+            {i < arr.length - 1 && <br />}
+          </>
+        ))}
+      </h2>
+
+      <div class="mt-10 space-y-6 font-sans text-body-lg text-gold leading-relaxed">
+        {rightParas.map((p) => <p>{p}</p>)}
+        {right.bullets && right.bullets.length > 0 && (
+          <ul class="mt-4 space-y-3">
+            {right.bullets.map((b) => (
+              <li class="flex gap-3">
+                <span aria-hidden="true" class="select-none flex-shrink-0">—</span>
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+        )}
+        {rightTail.map((p) => <p>{p}</p>)}
+      </div>
+    </div>
+  </div>
+</section>

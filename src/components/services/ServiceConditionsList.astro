@@ -1,0 +1,40 @@
+---
+/**
+ * ServiceConditionsList — секция с центрированным списком условий /
+ * показаний / результатов на gold-scroll-фоне.
+ *
+ * Используется на странице exomind (узлы Figma 1:2903 заголовок + 1:3144 список,
+ * фон 1:2852..1:2856 Scroll Group 24 — текстура gold).
+ *
+ * Структура:
+ *   - eyebrow-заголовок ("What can exomind™ improve?") — мелкий, в верхнем-левом
+ *   - центрированный список крупным шрифтом (Optima h2-style)
+ *     каждый item — одна строка
+ */
+
+interface Props {
+  title: string;
+  items: string[];
+}
+
+const { title, items } = Astro.props;
+---
+
+<section
+  class="w-full bg-gold/30 py-24"
+  data-section="service-conditions-list"
+>
+  <div class="mx-auto max-w-design px-[7.55%]">
+    <p class="font-sans text-[18px] tracking-wider text-gold uppercase">
+      {title}
+    </p>
+
+    <ul class="mt-16 text-center space-y-4">
+      {items.map((it) => (
+        <li class="font-heading text-[40px] md:text-[48px] uppercase text-gold leading-tight">
+          {it}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

@@ -119,6 +119,11 @@ const services = defineCollection({
       // Массив, потому что на странице может быть несколько таких блоков
       // на разных позициях. Сам порядок определяется в [slug].astro через
       // `position`, где блок должен встать.
+      //
+      // Опциональные поля bullets/bulletStyle/tail (exomind HOW WORKS, WHY CHOOSE):
+      //   - bullets: список пунктов под body
+      //   - bulletStyle: 'dash' (—) или 'number' (1./2./3.); default 'dash'
+      //   - tail: текст-параграф после буллетов (заключение)
       textWithPhotoBlocks: z
         .array(
           z.object({
@@ -127,12 +132,62 @@ const services = defineCollection({
             image: z.string(),
             imageAlt: z.string(),
             imageSide: z.enum(['left', 'right']).default('right'),
+            bullets: z.array(z.string()).optional(),
+            bulletStyle: z.enum(['dash', 'number']).default('dash').optional(),
+            tail: z.string().optional(),
             /** В каком месте шаблона показать блок.
              *  'before-common-signs' — между whatIs и commonSigns
-             *  'after-roadmap'        — после roadmap, перед whyTrust */
-            position: z.enum(['before-common-signs', 'after-roadmap']),
+             *  'after-roadmap'        — после roadmap, перед whyTrust
+             *  'before-conditions'    — после first gold banner / fullWidthImage,
+             *                            перед conditionsList (exomind) */
+            position: z.enum([
+              'before-common-signs',
+              'after-roadmap',
+              'before-conditions',
+            ]),
           })
         )
+        .optional(),
+
+      // ===== Two-column text (exomind WHAT IS + WHO IS A GOOD CANDIDATE) =====
+      // Два независимых текстовых блока (title + body/bullets/tail) рядом.
+      twoColumnText: z
+        .object({
+          left: z.object({
+            title: z.string(),
+            body: z.string().optional(),
+            bullets: z.array(z.string()).optional(),
+            tail: z.string().optional(),
+          }),
+          right: z.object({
+            title: z.string(),
+            body: z.string().optional(),
+            bullets: z.array(z.string()).optional(),
+            tail: z.string().optional(),
+          }),
+        })
+        .optional(),
+
+      // ===== Full-width image (exomind: фото устройства TMS) =====
+      fullWidthImages: z
+        .array(
+          z.object({
+            image: z.string(),
+            imageAlt: z.string(),
+            todo: z.string().optional(),
+            /** Где в шаблоне вставить:
+             *  'after-gold-banner-1' — между первым GoldBanner и TextWithPhoto(before-conditions) */
+            position: z.enum(['after-gold-banner-1']),
+          })
+        )
+        .optional(),
+
+      // ===== Conditions list (exomind: WHAT CAN EXOMIND IMPROVE?) =====
+      conditionsList: z
+        .object({
+          title: z.string(),
+          items: z.array(z.string()).min(2).max(20),
+        })
         .optional(),
 
       // ===== Categories Grid (emsculpt): 3-колонная сетка фото+заголовок+опционально-текст =====
@@ -166,6 +221,16 @@ const services = defineCollection({
           /** Полный URL YouTube-видео или embed URL. Пока placeholder, ждём от клиента. */
           url: z.string().optional(),
           /** Постер до загрузки видео (опционально) */
+          posterImage: z.string().optional(),
+          posterAlt: z.string().default('Video preview'),
+        })
+        .optional(),
+
+      /** Второй YouTube video — exomind использует два встроенных видео.
+       *  Та же схема, что videoEmbed. */
+      videoEmbed2: z
+        .object({
+          url: z.string().optional(),
           posterImage: z.string().optional(),
           posterAlt: z.string().default('Video preview'),
         })
@@ -216,8 +281,50 @@ const services = defineCollection({
         })
         .optional(),
 
-      // ===== Gold Banner (hormone): full-width цитата на gold-фоне =====
-      goldBanner: z.string().optional(),
+      // ===== Gold Banner #1 в центре страницы (exomind) =====
+      // Используется на странице exomind как первый из двух полу-CTA-баннеров
+      // (узлы Figma 1:3155 заголовок + 1:2904 BOOK APPOINTMENT). Hormone эту
+      // позицию не использует.
+      //
+      // Принимает либо строку (только текст), либо объект с CTA.
+      midGoldBanner1: z
+        .union([
+          z.string(),
+          z.object({
+            text: z.string(),
+            ctaLabel: z.string().optional(),
+            ctaHref: z.string().optional(),
+          }),
+        ])
+        .optional(),
+
+      /** Второй mid-gold banner — exomind (узлы 1:3158/1:2910), рендерится
+       *  после conditionsList / videoEmbed2. */
+      midGoldBanner2: z
+        .union([
+          z.string(),
+          z.object({
+            text: z.string(),
+            ctaLabel: z.string().optional(),
+            ctaHref: z.string().optional(),
+          }),
+        ])
+        .optional(),
+
+      // ===== Gold Banner (hormone) =====
+      // Полноширинный pull-quote на gold-фоне после WhyTrust, перед Experience
+      // (узлы Figma 1:3245 / 1:3467 для hormone). Контент-модель — просто
+      // строка (или объект с CTA для общности, но hormone использует строку).
+      goldBanner: z
+        .union([
+          z.string(),
+          z.object({
+            text: z.string(),
+            ctaLabel: z.string().optional(),
+            ctaHref: z.string().optional(),
+          }),
+        ])
+        .optional(),
 
       // ===== Experience (hormone): DNA-фото + текст + телефон + CTA =====
       experience: z

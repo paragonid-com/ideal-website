@@ -2,21 +2,26 @@
 /**
  * ServiceGoldBanner — full-width баннер с pull-quote на gold-фоне.
  *
- * Используется на странице hormone (узлы Figma 1:3245 Rectangle 102 + 1:3467 text):
- *  - Фон gold (1920×294)
- *  - Центрированный текст на 2 строки, font-heading
- *    "We don't just want to treat you; we want to be your
- *     long-term partner in this regenerative journey."
- *  - Высота фона ~294px, текст занимает ~142px из этого с padding y по 76px.
+ * Используется на:
+ *  - hormone (узлы Figma 1:3245 Rectangle 102 + 1:3467 text):
+ *      Фон gold (1920×294), центрированный текст, ~38-44px font-heading.
+ *  - exomind (узлы Figma 1:3155 заголовок + 1:2904 CTA-кнопка):
+ *      То же + кнопка BOOK APPOINTMENT внутри/под текстом.
  *
- * Контент-модель: просто строка (поддерживает \n для переноса).
+ * Контент-модель:
+ *   - text: строка (поддерживает \n для переноса) — обязательное
+ *   - ctaLabel, ctaHref: опциональная кнопка под текстом
  */
 
 interface Props {
   text: string;
+  /** Опционально: текст кнопки под баннером */
+  ctaLabel?: string;
+  /** Опционально: куда ведёт кнопка (default '#book') */
+  ctaHref?: string;
 }
 
-const { text } = Astro.props;
+const { text, ctaLabel, ctaHref = '#book' } = Astro.props;
 const lines = text.split('\n');
 ---
 
@@ -25,7 +30,14 @@ const lines = text.split('\n');
   data-section="service-gold-banner"
 >
   <div class="mx-auto max-w-design px-[7.55%] text-center">
-    <p class="font-heading text-[38px] md:text-[44px] text-cream leading-snug">
+    <p
+      class:list={[
+        'font-heading text-cream',
+        // exomind-баннеры (с CTA) — крупный h1-стиль как в Figma;
+        // hormone pull-quote (без CTA) — прежний более мелкий размер.
+        ctaLabel ? 'text-h1 uppercase leading-tight' : 'text-[38px] md:text-[44px] leading-snug',
+      ]}
+    >
       {lines.map((line, i) => (
         <>
           {line}
@@ -33,5 +45,15 @@ const lines = text.split('\n');
         </>
       ))}
     </p>
+
+    {ctaLabel && (
+      <a
+        href={ctaHref}
+        data-todo="booking-system"
+        class="mt-10 inline-block bg-cream text-gold font-sans uppercase tracking-wider text-[18px] px-12 py-4"
+      >
+        {ctaLabel}
+      </a>
+    )}
   </div>
 </section>
