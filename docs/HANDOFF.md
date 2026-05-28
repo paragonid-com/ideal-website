@@ -21,7 +21,7 @@
 | Дизайн-токены (цвета, шрифты) | ✅ Извлечены и в `tailwind.config.mjs` |
 | Документация (карта меню, инвентарь фото) | ✅ В `/docs` |
 | Шаблон страниц услуг | ✅ Гибридный шаблон с условным рендером (сессия 4): поддерживает Weight Loss / hormone / emsculpt структуры без отдельных файлов |
-| 10 draft-заглушек услуг | 🟡 Hormone, Emsculpt (сессия 4) и **Exomind (сессия 5)** сняты с draft. Остальные 7 (regenerative, bloodwork, peptide, emsella, ivtherapy, emface, sexualhealth) — всё ещё `draft: true` |
+| 10 draft-заглушек услуг | 🟡 Hormone, Emsculpt (сессия 4), Exomind (сессия 5) и **Emface + Emsella (сессия 6)** сняты с draft. Остальные 5 (regenerative, bloodwork, peptide, ivtherapy, sexualhealth) — всё ещё `draft: true`. **Все 5 приоритетных specialty-страниц готовы, 2 пункта меню больше не ведут в 404.** Билд = **10 страниц** |
 | Exomind (`/services/exomind`) | ✅ **Наполнена контентом из Figma (сессия 5)**: hero + twoColumnText (whatIs+whoFor) + video#1 + goldBanner#1 + deviceShowcase + howWorks + whyChoose + conditionsList + video#2 + goldBanner#2 + FAQ. Тексты FAQ и YouTube-ссылки ждут от клиента. Звёзды на самой странице ещё не добавлены (см. блокеры) |
 | Hormone (`/services/hormone`) | ✅ **Наполнена контентом из Figma (сессия 4)**: hero + whatIs + reclaiming + commonSigns + roadmap + whyTrust + goldBanner + experience. Тексты FAQ ждут от клиента. |
 | Emsculpt Neo (`/services/emsculpt`) | ✅ **Наполнена контентом из Figma (сессия 4)**: hero + simpleWhatIs + 2× categoriesGrid + videoEmbed (placeholder) + extendedDescription + beforeAfter. Тексты FAQ ждут от клиента. |
@@ -284,19 +284,69 @@ warnings/errors.
 
 ### Что осталось от 5 specialty-страниц
 
-Из 5 specialty-страниц, отмеченных приоритетом в HANDOFF сессии 3:
-- ✅ `hormone` — сделана
-- ✅ `emsculpt` — сделана
-- ⬜ `exomind` — `draft: true`, ждёт сессии 5
-- ⬜ `emface` — `draft: true`, ждёт сессии 5
-- ⬜ `emsella` — `draft: true`, ждёт сессии 5
+Из 5 specialty-страниц, отмеченных приоритетом в HANDOFF сессии 3 — **все готовы**:
+- ✅ `hormone` — сделана (сессия 4)
+- ✅ `emsculpt` — сделана (сессия 4)
+- ✅ `exomind` — сделана (сессия 5)
+- ✅ `emface` — сделана (сессия 6)
+- ✅ `emsella` — сделана (сессия 6)
 
-Архитектура (гибрид с условными секциями) спроектирована так, что для
-оставшихся 3 страниц **новых компонентов скорее всего не понадобится** —
-их структура должна покрываться существующими блоками (Hero, SimpleWhatIs,
-TextWithPhoto, CategoriesGrid, BeforeAfter, FAQ). Если придётся —
-добавятся ещё 1-2 компонента (например, под фото-сетку лица 3×2 для
-emface), но фундаментально шаблон готов.
+Прогноз HANDOFF подтвердился: **новых компонентов не понадобилось** ни для
+emface, ни для emsella. Их структура полностью покрылась существующими
+блоками. Понадобились лишь точечные расширения схемы/компонентов (всё
+опциональное, обратно совместимое):
+- emface: `categoriesGrids.items` max 4→6; позиционные поля
+  `beforeAfter.position` и `videoEmbed2.position`; одиночные `\n` → `<br>`
+  в ServiceWhatIs / ServiceTwoColumnText.
+- emsella: новое поле `twoColumnSections` (массив two-column секций с
+  позициями + опц. heading/background/per-column photo). Старый
+  `twoColumnText` (объект) не тронут.
+
+⚠️ **Расхождение Figma vs HANDOFF-догадки** (на будущее — всегда снимать
+узел перед оценкой): emface — НЕ просто «фото-сетка 3×2», а полная
+страница из 9 секций (две grid-сетки по 6, два видео, before/after).
+emsella — НЕ имеет before/after и видео; её «изюм» — секция Sexual Wellness
+(2 фото + WOMAN/MAN колонки).
+
+---
+
+## Сессия 6 — что доделано (27.05.26)
+
+Закрыт главный приоритет: **обе оставшиеся specialty-страницы — emface и
+emsella** — свёрстаны, наполнены контентом из Figma, сняты с `draft`.
+Билд = **10 страниц**, 2 пункта меню больше не ведут в 404. Доставлено
+двумя git-патчами (см. `git log`: emface = `b7a91c1`, emsella = `a054ae0`).
+
+**emface** (Figma 1:6536) — оказалась НЕ «фото-сеткой 3×2», а полной
+страницей из 9 секций: Hero → WhatIs → TwoColumnText(How/Benefit) →
+CategoriesGrid(areas, gold, 6 items) → Video1 → BeforeAfter →
+CategoriesGrid(treatments, cream, 6 items) → Video2 → FAQ. **Все секции
+покрылись существующими компонентами.** Расширения схемы:
+`categoriesGrids.items` max 4→6; `beforeAfter.position` (`late` default |
+`after-video-1`); `videoEmbed2.position` (`before-second-grid` default |
+`after-second-grid`). Все дефолты сохраняют поведение emsculpt/exomind.
+
+**emsella** (Figma 1:5436) — НЕ имеет before/after и видео (вопреки
+прошлой догадке HANDOFF). Структура: Hero → WhatIs → TwoColumnText(What to
+Expect / Book) → CategoriesGrid(incontinence типы, gold, 3 items) →
+Sexual Wellness (heading + 2 фото + WOMAN/MAN колонки) → FAQ. Введено
+новое поле `twoColumnSections` (массив two-column секций с позициями
+`after-whatis` / `after-categories-grid`, опц. heading/background/photo).
+Компонент `ServiceTwoColumnText` расширен (heading, background, per-column
+image) — обратно совместимо, exomind/emface не затронуты.
+
+**Общая правка типографики:** в `ServiceWhatIs` и `ServiceTwoColumnText`
+одиночные `\n` внутри абзаца теперь рендерятся как `<br>` (нужно для
+буллет-списков emface/emsella вида `_ Lift…`). На сплошные абзацы
+weight-loss/exomind/emsculpt не влияет — regression проверена визуально.
+
+**Ассеты:** 18 (emface) + 7 (emsella) placeholder-WebP с семантическими
+именами. Клиент заменяет файлы, markdown не трогает. Asset-консистентность
+(ловушка сессии 2) проверена: все референсы из .md покрыты файлами, orphan
+нет. Оба патча проверены на чистом клоне: `git am --3way` применяется,
+билд = 10 страниц. ⚠️ У пользователя должна быть настроена git identity
+(`user.email`/`user.name`), иначе `git am` падает — fallback
+`git apply --3way` без коммита.
 
 ---
 
@@ -506,7 +556,7 @@ src/
     - Once I lose the weight, how can I keep it off?
     - How can I choose between the different medical weight loss options?
     - What side effects can I experience with medical weight loss?
-16. **Контент для 7 draft-страниц услуг** (regenerative, bloodwork, peptide, emsella, ivtherapy, emface, sexualhealth) — все сейчас в `draft: true`, не генерируются в build. Hormone/emsculpt (сессия 4) и exomind (сессия 5) уже сняты с draft.
+16. **Контент для 5 draft-страниц услуг** (regenerative, bloodwork, peptide, ivtherapy, sexualhealth) — все сейчас в `draft: true`, не генерируются в build. Hormone/emsculpt (сессия 4), exomind (сессия 5), emface/emsella (сессия 6) уже сняты с draft.
 17. **Реальные blog-посты** — у меня 4 одинаковые placeholder-карточки. Нужны: тексты, фото, slugs
 18. **Должность Laudin P.** — в Figma "Owner & TBD title"
 19. **Финальный disclaimer** под формой подписки (сейчас Lorem Ipsum)
@@ -519,12 +569,12 @@ src/
 
 ### 🟡 Структурные решения
 
-23. **5 страниц услуг со специфичной структурой** требуют отдельных шаблонов (текущий шаблон им не подходит):
-    - `hormone` — "Common Signs" в 2 колонки списков вместо Benefits-карточек
-    - `emsculpt` — YouTube-видео + before/after + 3 категории сверху
-    - `exomind` — кастомные секции с устройством
-    - `emface` — фото-сетка лица 3×2 (eyes/nose/forehead/jawline/submental/face)
-    - `emsella` — "What to expect / Book your session" + before/after
+23. ~~**5 страниц услуг со специфичной структурой** требуют отдельных шаблонов~~ **Решено (сессии 4-6):** все 5 покрыты ОДНИМ гибридным шаблоном `[slug].astro`, отдельные шаблоны НЕ понадобились:
+    - `hormone` — "Common Signs" в 2 колонки списков вместо Benefits-карточек ✅
+    - `emsculpt` — YouTube-видео + before/after + 3 категории сверху ✅
+    - `exomind` — кастомные секции с устройством ✅
+    - `emface` — 9 секций: 2 grid-сетки по 6, 2 видео, before/after (НЕ просто фото-сетка 3×2) ✅
+    - `emsella` — WhatIs + 2 two-column секции + incontinence grid + Sexual Wellness (НЕ before/after) ✅
 24. **Sexual Health страница** — есть, но не в основном меню (`/services/sexualhealth` помечена как orphan в `data/navigation.ts`). Добавить в Wellness Services?
 25. **Emsculpt дубликат в Wellness+Aesthetic** — оба пункта меню ведут на `/services/emsculpt`. Sub-nav сейчас подсвечивает Wellness (первый match). Если хочется иначе — добавить `data.preferredSection`
 26. ~~**TrustBadges** (Google ★ + BusinessRate) — есть в Figma на главной, About, Contact, Blog. У меня сейчас только на главной. Вынести в переиспользуемый компонент~~ **Решено в сессии 2:** `src/components/TrustBadges.astro` подключён на главной (внутри Testimonials, `standalone={false}`) и на About / Contact / Blog (`standalone={true}`, белый фон + py-16).
@@ -598,47 +648,54 @@ grep -rn 'data-todo' src/
 
 ---
 
-## Что делать в следующей сессии (сессия 6+)
+## Что делать в следующей сессии (сессия 7+)
 
-### Главный приоритет — 2 оставшиеся specialty-страницы
+### ✅ Все 5 приоритетных specialty-страниц готовы (сессия 6 завершила)
 
-После сессии 5 exomind готов. В `draft: true` из приоритетной тройки
-остались: **emface, emsella**. Архитектура шаблона гибридная и доказана
-теперь на hormone + emsculpt + exomind (см. «Сессия 5 — что доделано» —
-там появились ServiceTwoColumnText, ServiceFullWidthImage,
-ServiceConditionsList, расширенные GoldBanner/TextWithPhoto). Для
-оставшихся двух новых компонентов, скорее всего, почти не понадобится.
+emface + emsella сделаны в сессии 6, сняты с draft, **2 пункта меню больше
+не ведут в 404**. Билд = **10 страниц**. Гибридный шаблон доказан на всех
+пяти (hormone / emsculpt / exomind / emface / emsella) без единого
+отдельного шаблона и без новых компонентов.
 
-1. Снять Figma-узлы через `Figma:get_design_context` + `get_screenshot`:
-   - `/emface` → nodeId `1:6536`
-   - `/emsella` → nodeId `1:5436`
-2. Сверить структуру каждой с существующими компонентами в
-   `src/components/services/` (теперь их 21):
-   - **emface** — фото-сетка лица 3×2 (eyes/nose/forehead/jawline/
-     submental/face). **Сначала проверить**, покрывается ли
-     `ServiceCategoriesGrid` с 6 items и `lg:grid-cols-3` (2 ряда),
-     прежде чем писать новый `ServiceFaceMap`. Скорее всего покрывается.
-   - **emsella** — «What to expect» + «Book your session» + before/after.
-     `ServiceBeforeAfter` и `ServiceTextWithPhoto` уже есть, должны
-     покрыть всю страницу. Новых компонентов, вероятно, не нужно вовсе.
-3. Расширить schema **только если** существующих полей не хватит.
-4. Заполнить контент из Figma в markdown, снять `draft: false`.
-5. Собрать билд, снять скриншоты, сверить side-by-side с Figma, оформить
-   патч (с `--binary` для WebP-ассетов, fallback `git apply --3way`).
+Расширения сессии 6 (всё опциональное, обратно совместимое):
+- `categoriesGrids.items` max 4→6 (emface — две сетки по 6 ячеек).
+- `beforeAfter.position` (`late` default | `after-video-1`) и
+  `videoEmbed2.position` (`before-second-grid` default | `after-second-grid`)
+  — emface переставляет before/after и второе видео в фиксированном порядке.
+- Новое поле `twoColumnSections` (массив, позиции `after-whatis` /
+  `after-categories-grid`) + расширенный `ServiceTwoColumnText`
+  (опц. `heading`, `background`, per-column `image`/`imageAlt`) — emsella.
+  Старый `twoColumnText` (объект, exomind/emface) НЕ тронут.
+- ServiceWhatIs / ServiceTwoColumnText: одиночные `\n` внутри абзаца
+  теперь рендерятся как `<br>` (для буллет-списков emface/emsella; на
+  сплошные абзацы weight-loss/exomind/emsculpt не влияет — regression
+  проверена визуально).
 
-⚠️ Trademark ассеты (EMFACE/EMSELLA — BTL trademarks) требуют авторизации
-от BTL Industries — блокер запуска, но не блокер вёрстки. Собираем макетно,
-помечаем `data-todo="trademark-authorization-from-btl"`.
+⚠️ Trademark (EMFACE/EMSELLA — BTL trademarks) требует авторизации от BTL
+Industries — **блокер запуска, не блокер вёрстки**. Страницы собраны
+макетно. На будущее закладываем `data-todo="trademark-authorization-from-btl"`.
 
-### Технический долг по гибридному шаблону (накопился за сессии 4-5)
+⚠️ **Урок сессии 6:** HANDOFF-догадки о структуре страниц были неточны
+(emface ≠ «фото-сетка 3×2»; у emsella нет before/after). **Всегда снимать
+Figma-узел через `get_metadata` + `get_screenshot` ПЕРЕД оценкой объёма**,
+а не доверять прошлым описаниям.
 
-- **Звёзды на specialty-страницах** — на hormone/emsculpt/exomind в Figma
-  есть star-sign в заголовках и Hero, в вёрстке их нет. Сделать единым
-  проходом по всем готовым specialty, по образцу задачи звёзд на главной
-  (сессия 5). Для exomind конкретные узлы: 1:2861, 1:2862, 1:3203.
-- **Опциональный CTA-баннер** между секциями (exomind 1:2913) — добавить
-  как опциональное поле, чтобы кнопка BOOK APPOINTMENT могла стоять в
-  произвольной позиции, не ломая порядок страниц.
+### Следующий приоритет — наполнение фото/контента (требует клиента)
+
+Все 5 specialty-страниц (включая emface/emsella) сейчас на
+**семантически именованных placeholder-WebP** — клиент заменяет файлы, не
+трогая markdown. Также от клиента: FAQ-тексты (везде Lorem ipsum), YouTube
+URL (emsculpt `videoEmbed`, exomind/emface `videoEmbed*.url` пустые),
+реальные фото.
+
+### Технический долг по гибридному шаблону (накопился за сессии 4-6)
+
+1. **Звёзды на specialty-страницах** — на hormone/emsculpt/exomind (а теперь
+   и emface/emsella) в Figma есть star-sign в заголовках и Hero, в вёрстке
+   нет. Сделать единым проходом по всем пяти, по образцу задачи звёзд на
+   главной (сессия 5). Для exomind узлы: 1:2861, 1:2862, 1:3203.
+2. **Опциональный CTA-баннер** между секциями (exomind 1:2913) — опц. поле,
+   чтобы BOOK APPOINTMENT мог стоять в произвольной позиции.
 
 ### Альтернативы (без клиента)
 
@@ -928,7 +985,7 @@ Playwright + headless Chromium и сравнивался с `Figma:get_screensho
 >
 > Путь к проекту локально: /Users/yuris/Documents/Claude-Projects/ideal-website (macOS). Все bash-команды для меня — с этим путём.
 >
-> Состояние проекта описано в `docs/HANDOFF.md` — прочитай его перед тем как что-то делать. Особенно: TL;DR-таблицу + секцию **"Сессия 5 — что доделано"** в начале (там описаны звёзды на главной, страница exomind и расширения гибридного шаблона) + **"Что делать в следующей сессии"** и **"Открытые вопросы и блокеры"**.
+> Состояние проекта описано в `docs/HANDOFF.md` — прочитай его перед тем как что-то делать. Особенно: TL;DR-таблицу + секцию **"Сессия 6 — что доделано"** в начале (emface + emsella готовы, все 5 specialty-страниц закрыты, расширения гибридного шаблона) + **"Что делать в следующей сессии"** и **"Открытые вопросы и блокеры"**.
 >
 > ⚠️ **Про синхронизацию с origin:** работа сессий 5 ведётся через git-патчи, которые я применяю локально и пушу сам. Перед стартом скажи мне, запушены ли коммиты звёзд (`feat(home): add 6 star-sign ornaments`) и exomind (`feat(services): exomind page`) в origin/main, либо я начну с `git log --oneline` чтобы свериться. Если их нет в origin — у меня в чатах есть патчи в `/mnt/user-data/outputs/`, могу переприменить.
 >
