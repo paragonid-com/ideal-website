@@ -47,9 +47,10 @@ categoriesGrids:
         imageAlt: "Small Emsculpt Neo applicator"
 
 # === YouTube видео — placeholder, ждём URL от клиента.
-# Узел Figma 1:5511 Image 83 (1920×844 placeholder).
+# Узел Figma 1:5511 Image 83 — реальный постер кадра видео (с baked YouTube UI).
 videoEmbed:
   url: ""
+  posterImage: "/assets/images/services/emsculpt/video-poster.webp"
   posterAlt: "Emsculpt Neo treatment video"
 
 # === Extended Description — узлы Figma 1:5451, 1:5454.
@@ -62,14 +63,13 @@ extendedDescription:
 
     Perfect for men and women of all fitness levels, Emsculpt Neo helps you achieve a stronger, leaner, and more confident body—quickly, safely, and effectively.
 
-# === Before / After — узел Figma 1:5559 Image 90 (placeholder 1598×654).
-# В Figma один кадр; caption видно на скриншоте.
+# === Before / After — узел Figma 1:5559 Image 90.
+# Один композит-кадр: BEFORE | AFTER EMSCULPT NEO + caption «3 months after…»
+# уже впечатаны в саму картинку → режим `image` (без накладных бейджей/caption).
 beforeAfter:
   items:
-    - beforeImage: "/assets/images/services/emsculpt/before-1.webp"
-      afterImage: "/assets/images/services/emsculpt/after-1.webp"
-      alt: "Patient abdomen before and after Emsculpt Neo treatment"
-      caption: "3 months after the last treatment. Courtesy of Suzanne Kilmer, M.D."
+    - image: "/assets/images/services/emsculpt/before-after.webp"
+      alt: "Patient abdomen before and after Emsculpt Neo — 3 months after last treatment, courtesy of Suzanne Kilmer, M.D."
 
 # === FAQ — Lorem ipsum placeholder в Figma (узлы 1:5493-1:5497)
 faq:

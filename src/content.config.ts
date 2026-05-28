@@ -346,8 +346,15 @@ const services = defineCollection({
           items: z
             .array(
               z.object({
-                beforeImage: z.string(),
-                afterImage: z.string(),
+                /** Режим «одна композит-картинка» (emsculpt: узел Figma 1:5559 —
+                 *  готовый кадр BEFORE | AFTER с впечатанными подписями и caption).
+                 *  Если задан `image`, рендерится одно фото во всю ширину БЕЗ
+                 *  накладных бейджей и без отдельного caption. */
+                image: z.string().optional(),
+                /** Классический режим «два фото бок-о-бок» (компонент сам рисует
+                 *  бейджи Before/After). Используется, если `image` не задан. */
+                beforeImage: z.string().optional(),
+                afterImage: z.string().optional(),
                 caption: z.string().optional(),
                 alt: z.string().default('Before and after treatment'),
               })

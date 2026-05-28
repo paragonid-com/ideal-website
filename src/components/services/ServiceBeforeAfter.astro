@@ -28,8 +28,13 @@
  */
 
 interface BeforeAfterItem {
-  beforeImage: string;
-  afterImage: string;
+  /** Режим «одна композит-картинка» (emsculpt, Figma 1:5559): готовый кадр
+   *  BEFORE | AFTER с уже впечатанными подписями и caption — рендерим как есть,
+   *  без накладных бейджей и без отдельного caption. */
+  image?: string;
+  /** Классический режим «два фото» (бейджи рисует компонент). */
+  beforeImage?: string;
+  afterImage?: string;
   caption?: string;
   alt: string;
 }
@@ -56,6 +61,15 @@ const { title, items } = Astro.props;
     <div class="space-y-12">
       {items.map((item) => (
         <figure>
+          {item.image ? (
+            /* Композит-кадр (emsculpt): подписи + caption уже в самой картинке */
+            <img
+              src={item.image}
+              alt={item.alt}
+              class="block w-full max-w-[1598px] mx-auto rounded-md"
+              loading="lazy"
+            />
+          ) : (
           <div class="grid grid-cols-2 gap-1 max-w-[1598px] mx-auto bg-white">
             {/* BEFORE */}
             <div class="relative aspect-[4/3]">
@@ -82,7 +96,8 @@ const { title, items } = Astro.props;
               </span>
             </div>
           </div>
-          {item.caption && (
+          )}
+          {!item.image && item.caption && (
             <figcaption class="mt-4 text-center font-sans text-[16px] text-gold leading-relaxed">
               {item.caption}
             </figcaption>
