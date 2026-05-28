@@ -1,12 +1,12 @@
 ---
 /**
- * BlogPostCard — одна карточка в сетке Blog.
+ * BlogPostCard — одна карточка в сетке Blog и в блоке "Continue Reading".
  *
- * Структура (узлы Figma для одной карточки, например 1:6797 + 1:6594 + 1:6550 + 1:6574):
- *  - Фото 771×299 (горизонтальное, пейзажное)
- *  - Заголовок (2 строки uppercase font-heading)
- *  - Описание (4 строки font-sans)
- *  - Кнопка "READ MORE" (216×45, gold)
+ * Структура (узлы Figma 1:6797 + 1:6594 + 1:6550 + 1:6574):
+ *  - Фото (горизонтальное, пейзажное) — кликабельное, лёгкий zoom на hover
+ *  - Заголовок (uppercase font-heading, gold) — подчёркивается на hover
+ *  - Описание (font-sans, ограничено 4 строками для ровной сетки)
+ *  - Кнопка "READ MORE" (gold pill)
  */
 
 interface Props {
@@ -15,36 +15,50 @@ interface Props {
   image: string;
   imageAlt: string;
   href: string;
+  /** Компактный режим для блока похожих статей внизу страницы поста */
+  compact?: boolean;
 }
 
-const { title, description, image, imageAlt, href } = Astro.props;
+const { title, description, image, imageAlt, href, compact = false } = Astro.props;
 ---
 
-<article class="flex flex-col">
-  <a href={href} class="block group" data-todo="blog-post-link">
+<article class="group flex flex-col">
+  <a href={href} class="block overflow-hidden">
     <div class="relative w-full aspect-[771/299] overflow-hidden">
       <img
         src={image}
         alt={imageAlt}
         loading="lazy"
-        class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        class="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
       />
     </div>
   </a>
 
-  <h2 class="mt-6 font-heading text-[40px] uppercase text-gold leading-tight">
-    {title}
+  <h2
+    class={`mt-6 font-heading uppercase text-gold leading-tight ${
+      compact ? 'text-[28px]' : 'text-[40px]'
+    }`}
+  >
+    <a href={href} class="decoration-2 underline-offset-4 group-hover:underline">
+      {title}
+    </a>
   </h2>
 
-  <p class="mt-4 max-w-[642px] font-sans text-body-lg text-gold leading-relaxed">
+  <p class="post-card-desc mt-4 max-w-[642px] font-sans text-body-lg text-gold leading-relaxed">
     {description}
   </p>
 
-  <a
-    href={href}
-    data-todo="blog-post-link"
-    class="btn-gold mt-6 self-start min-w-[216px]"
-  >
+  <a href={href} class="btn-gold mt-6 self-start min-w-[216px]">
     READ MORE
   </a>
 </article>
+
+<style>
+  /* Ограничиваем описание 4 строками, чтобы карточки в сетке были ровными */
+  .post-card-desc {
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+</style>

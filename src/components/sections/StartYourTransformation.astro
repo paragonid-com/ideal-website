@@ -9,12 +9,13 @@
  *          CTA и адрес справа, под ними — Google Maps embed
  *
  * Источник: узлы 1:1366 (заголовок Start), 1:1371-1:1390 (поля формы),
- *           1:251 (Ready), 1:255 (BOOK APPOIMENT — опечатка из Figma),
- *           1:264 (We are located), 1:296/1444 (адрес),
- *           1:310 (Image 109 — building photo), 1:1393 (Lorem Ipsum placeholder)
+ *           1:251 (Ready), 1:255 (BOOK APPOINTMENT — в Figma была опечатка
+ *           "APPOIMENT", исправлена), 1:264 (We are located),
+ *           1:296/1444 (адрес), 1:310 (Image 109 — building photo),
+ *           1:1393 (был Lorem Ipsum — заменён на consent-текст)
  *
- * ⚠️ Опечатка "APPOIMENT" в Figma сохранена. Также Lorem Ipsum text
- * под формой требует замены на реальный текст от заказчика.
+ * ⚠️ Текст согласия под формой — нейтральный плейсхолдер; заказчику нужно
+ * утвердить финальную формулировку под свою privacy-политику.
  */
 import Container from '../Container.astro';
 import { bookingCta } from '../../data/navigation.ts';
@@ -110,15 +111,15 @@ const address = {
           <button type="submit" class="btn-gold w-[195px]">SUBMIT</button>
         </div>
 
-        {/* Lorem Ipsum placeholder — узел 1:1393 — требует замены на реальный
-           disclaimer / privacy notice от заказчика */}
+        {/* Согласие на обработку/связь. Текст нейтральный — заказчику нужно
+           утвердить финальную формулировку под свою privacy-политику. */}
         <p
           class="md:col-span-2 font-sans text-[14px] leading-relaxed text-gold/70"
-          data-todo="replace-lorem-ipsum-disclaimer"
+          data-todo="confirm-consent-disclaimer-text"
         >
-          Lorem Ipsum in dolor metLorem Ipsum in dolor met Lorem Ipsum
-          in dolor metLorem Ipsum in dolor metLorem Ipsum in dolor met
-          metLorem Ipsum in dolor met
+          By submitting this form, you agree to be contacted by Ideal Medical
+          and Wellness regarding your inquiry. We respect your privacy and will
+          never share your information with third parties.
         </p>
       </form>
     </div>
@@ -162,13 +163,14 @@ const address = {
         Transformation Today?
       </h2>
 
-      {/* В Figma — "BOOK APPOIMENT" (без второй n). Оставлено как в макете. */}
+      {/* В Figma была опечатка "BOOK APPOIMENT" (без второй n) — исправлено
+          на "BOOK APPOINTMENT". */}
       <a
         href={bookingCta.href}
         data-todo="booking-system"
         class="btn-gold mt-8 w-[270px]"
       >
-        BOOK APPOIMENT
+        BOOK APPOINTMENT
       </a>
 
       <p class="mt-12 font-heading text-[36px] uppercase leading-tight text-gold">

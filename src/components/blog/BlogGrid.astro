@@ -1,41 +1,37 @@
 ---
 /**
- * BlogGrid — сетка постов 2×2 на странице Blog.
+ * BlogGrid — сетка постов на странице Blog.
  *
- * В Figma (узлы 1:6594, 1:6597, 1:6600, 1:6603) все 4 карточки имеют
- * ИДЕНТИЧНЫЙ placeholder-контент ("IS PEPTIDE THERAPY SAFE? YOUR COMPLETE
- * GUIDE"). Это указывает, что **реальных постов клиент не предоставил** —
- * макет показывает только структуру.
- *
- * Реализую соответственно: 4 placeholder-карточки с тем же контентом
- * + data-todo на странице. Когда придут реальные посты — заменим
- * на Content Collection с типом `posts` (как services).
+ * Читает Content Collection 'posts' (импортировано со старого сайта
+ * idealmedwell.com) и рендерит карточку на каждый пост. Посты с draft: true
+ * исключены. Ссылки ведут на /blog/<slug>.
  */
+import { getCollection } from 'astro:content';
 import BlogPostCard from './BlogPostCard.astro';
 
-// Placeholder контент. Все 4 карточки одинаковые — точно как в Figma.
-const placeholderPost = {
-  title: 'Is Peptide Therapy Safe? Your Complete Guide',
-  description:
-    'Peptide therapy is gaining attention as a transformative treatment that influences bodily functions for results you can see and feel. Peptides, naturally occurring in the body, are short chains of amino acids that serve as…',
-  image: '/assets/images/blog/post-placeholder.webp',
-  imageAlt: 'Honey drizzling from a dipper — placeholder image',
-  href: '#',
-};
+const posts = await getCollection('posts', ({ data }) => !data.draft);
 
-const posts = Array(4).fill(placeholderPost);
+// Сортировка: по publishDate (новые сверху), затем по заголовку.
+posts.sort((a, b) => {
+  const da = a.data.publishDate?.getTime() ?? 0;
+  const db = b.data.publishDate?.getTime() ?? 0;
+  if (db !== da) return db - da;
+  return a.data.title.localeCompare(b.data.title);
+});
 ---
 
-<section
-  class="w-full bg-cream py-24"
-  data-section="blog-grid"
-  data-todo="blog-content-from-client"
->
+<section class="w-full bg-cream py-24" data-section="blog-grid">
   <div class="mx-auto max-w-design px-[7.55%]">
     <ul class="grid grid-cols-1 gap-16 lg:grid-cols-2">
       {posts.map((post) => (
         <li>
-          <BlogPostCard {...post} />
+          <BlogPostCard
+            title={post.data.title}
+            description={post.data.description}
+            image={post.data.heroImage}
+            imageAlt={post.data.heroImageAlt}
+            href={`/blog/${post.id}`}
+          />
         </li>
       ))}
     </ul>

@@ -34,6 +34,38 @@ import { glob } from 'astro/loaders';
  * Поле `sectionOrder` опционально определяет порядок секций; если не задан,
  * шаблон рендерит секции в "стандартном" порядке (см. [slug].astro).
  */
+/**
+ * Posts collection — блог-статьи (/blog/[slug]).
+ *
+ * Контент импортирован со старого WordPress-сайта idealmedwell.com.
+ * Тело статьи — в Markdown под frontmatter (рендерится через entry.render()).
+ * Изображения лежат в /public/assets/images/blog/<slug>/ и ссылаются
+ * абсолютным путём (heroImage + inline ![]() в теле).
+ *
+ *   sourceUrl / relativePath — сохранены для canonical и возможных 301-редиректов
+ *   со старых URL (см. инструкцию переноса).
+ */
+const posts = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/posts' }),
+  schema: z.object({
+    /** Заголовок поста (H1 + meta title) */
+    title: z.string(),
+    /** Краткое описание — превью в сетке блога и meta description */
+    description: z.string(),
+    /** Hero-изображение, абсолютный путь в /public */
+    heroImage: z.string(),
+    heroImageAlt: z.string(),
+    /** Оригинальный URL статьи на старом сайте (для canonical/редиректов) */
+    sourceUrl: z.string().optional(),
+    /** Относительный путь статьи на старом сайте */
+    relativePath: z.string().optional(),
+    /** Дата публикации (опционально) */
+    publishDate: z.coerce.date().optional(),
+    /** Если true — пост исключён из сборки */
+    draft: z.boolean().default(false),
+  }),
+});
+
 const services = defineCollection({
   loader: glob({ pattern: '**/*.md', base: './src/content/services' }),
   schema: ({ image }) =>
@@ -455,4 +487,4 @@ const services = defineCollection({
     }),
 });
 
-export const collections = { services };
+export const collections = { services, posts };

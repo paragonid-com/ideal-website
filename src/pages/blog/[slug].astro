@@ -1,0 +1,242 @@
+---
+/**
+ * /blog/[slug] — страница отдельной статьи блога.
+ *
+ * Читает Content Collection 'posts' и рендерит Markdown-тело через
+ * <Content /> (entry.render()). Посты с draft: true исключены из сборки.
+ *
+ * Дизайн (в концепте сайта — gold/cream, Optima/Manrope):
+ *   Hero          — фото с gold-градиентом, eyebrow "IDEAL MEDICAL BLOG",
+ *                   заголовок поста, мета (время чтения)
+ *   Article       — узкая читаемая колонка (~720px), увеличенный lead-абзац,
+ *                   стилизованные H2/H3 с gold-акцентом, аккуратные списки,
+ *                   ссылка "Back to all articles"
+ *   ContinueReading — 2 случайные другие статьи (карточки)
+ *   StartYourTransformation — общий CTA с других страниц
+ */
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Container from '../../components/Container.astro';
+import BlogPostCard from '../../components/blog/BlogPostCard.astro';
+import StartYourTransformation from '../../components/sections/StartYourTransformation.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+
+  return posts.map((post) => {
+    // 2 случайные ДРУГИЕ статьи для блока "Continue Reading".
+    // Рандом детерминирован на этапе сборки (порядок фиксируется в билде).
+    const others = posts.filter((p) => p.id !== post.id);
+    for (let i = others.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [others[i], others[j]] = [others[j], others[i]];
+    }
+    const related = others.slice(0, 2);
+
+    return {
+      params: { slug: post.id },
+      props: { post, related },
+    };
+  });
+}
+
+const { post, related } = Astro.props;
+const { data } = post;
+const { Content } = await render(post);
+
+// Оценка времени чтения по «сырому» тексту тела (≈200 слов/мин)
+const words = post.body ? post.body.trim().split(/\s+/).length : 0;
+const readingTime = Math.max(1, Math.round(words / 200));
+---
+
+<BaseLayout title={`${data.title} | Ideal Medical & Wellness`} description={data.description}>
+  {/* ===== HERO ===== */}
+  <section class="relative h-[560px] w-full overflow-hidden bg-cream" data-section="post-hero">
+    <img
+      src={data.heroImage}
+      alt={data.heroImageAlt}
+      class="absolute inset-0 h-full w-full object-cover"
+      loading="eager"
+      decoding="async"
+    />
+    {/* Gold-градиент снизу для читаемости заголовка (в палитре сайта) */}
+    <div
+      class="absolute inset-0"
+      style="background: linear-gradient(to top, rgba(141,116,49,0.92) 0%, rgba(141,116,49,0.55) 40%, rgba(141,116,49,0.15) 100%);"
+    >
+    </div>
+
+    <div class="relative z-10 mx-auto flex h-full max-w-design flex-col justify-end px-[7.55%] pb-16">
+      <div class="max-w-[1000px]">
+        <p class="flex items-center gap-3 font-sans text-[15px] font-semibold uppercase tracking-[0.2em] text-cream/90">
+          Ideal Medical Blog
+          <span class="inline-block h-px w-10 bg-cream/60"></span>
+          <span>{readingTime} min read</span>
+        </p>
+        <h1 class="mt-4 font-heading text-h1 uppercase leading-[1.05] text-cream">
+          {data.title}
+        </h1>
+      </div>
+    </div>
+  </section>
+
+  {/* ===== ARTICLE ===== */}
+  <Container as="article" class="bg-white py-20 md:py-28">
+    <div class="mx-auto max-w-[720px]">
+      {/* Декоративная gold-звезда сверху колонки */}
+      <img
+        src="/assets/images/star-sign.svg"
+        alt=""
+        width="34"
+        height="40"
+        class="mb-10 h-10 w-[34px]"
+        aria-hidden="true"
+      />
+
+      <div class="post-body font-sans text-gold">
+        <Content />
+      </div>
+
+      {/* Назад к списку статей */}
+      <div class="mt-16 border-t border-gold/20 pt-8">
+        <a
+          href="/blog"
+          class="inline-flex items-center gap-2 font-sans text-[16px] font-semibold uppercase tracking-[0.12em] text-gold transition-opacity hover:opacity-70"
+        >
+          <span aria-hidden="true">&larr;</span> Back to all articles
+        </a>
+      </div>
+    </div>
+  </Container>
+
+  {/* ===== CONTINUE READING — 2 случайные статьи ===== */}
+  {related.length > 0 && (
+    <section class="w-full bg-cream py-20 md:py-24" data-section="continue-reading">
+      <Container>
+        <div class="mb-12 flex items-end justify-between gap-6">
+          <h2 class="font-heading text-[44px] uppercase leading-tight text-gold">
+            Continue Reading
+          </h2>
+          <a
+            href="/blog"
+            class="hidden shrink-0 font-sans text-[16px] font-semibold uppercase tracking-[0.12em] text-gold hover:opacity-70 md:inline-block"
+          >
+            View all &rarr;
+          </a>
+        </div>
+
+        <ul class="grid grid-cols-1 gap-12 lg:grid-cols-2">
+          {related.map((p) => (
+            <li>
+              <BlogPostCard
+                title={p.data.title}
+                description={p.data.description}
+                image={p.data.heroImage}
+                imageAlt={p.data.heroImageAlt}
+                href={`/blog/${p.id}`}
+                compact
+              />
+            </li>
+          ))}
+        </ul>
+      </Container>
+    </section>
+  )}
+
+  <StartYourTransformation />
+</BaseLayout>
+
+<style>
+  /* ===== Типографика тела статьи ===== */
+  .post-body {
+    font-size: 19px;
+    line-height: 1.75;
+  }
+
+  /* Lead-абзац (первый абзац) — крупнее и выразительнее */
+  .post-body :global(> p:first-of-type) {
+    font-size: 23px;
+    line-height: 1.6;
+    color: #6f5c27; /* чуть глубже gold для акцента */
+    margin-bottom: 2rem;
+  }
+
+  .post-body :global(p) {
+    margin-bottom: 1.5rem;
+  }
+
+  /* H2 — с тонкой gold-линией сверху как разделителем секций */
+  .post-body :global(h2) {
+    font-family: var(--font-heading, 'Optima', serif);
+    text-transform: uppercase;
+    font-size: 30px;
+    line-height: 1.15;
+    color: #8d7431;
+    margin-top: 3rem;
+    margin-bottom: 1.1rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid rgba(141, 116, 49, 0.2);
+  }
+
+  .post-body :global(h3) {
+    font-family: var(--font-heading, 'Optima', serif);
+    text-transform: uppercase;
+    font-size: 22px;
+    line-height: 1.2;
+    color: #8d7431;
+    margin-top: 2rem;
+    margin-bottom: 0.6rem;
+  }
+
+  /* Списки с gold-маркерами */
+  .post-body :global(ul) {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 1.5rem;
+  }
+  .post-body :global(ul li) {
+    position: relative;
+    padding-left: 1.6rem;
+    margin-bottom: 0.6rem;
+  }
+  .post-body :global(ul li::before) {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.7em;
+    width: 7px;
+    height: 7px;
+    border-radius: 9999px;
+    background: #d1a42b; /* gold-bright */
+  }
+
+  .post-body :global(ol) {
+    padding-left: 1.4rem;
+    margin-bottom: 1.5rem;
+  }
+  .post-body :global(ol li) {
+    margin-bottom: 0.6rem;
+  }
+
+  /* Ссылки — gold-bright с подчёркиванием */
+  .post-body :global(a) {
+    color: #a8821f;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    transition: opacity 0.2s;
+  }
+  .post-body :global(a:hover) {
+    opacity: 0.7;
+  }
+
+  /* Изображения в теле (если появятся) */
+  .post-body :global(img) {
+    width: 100%;
+    height: auto;
+    margin: 2.5rem 0;
+    border-radius: 2px;
+  }
+
+  /* Финальный CTA-абзац статьи часто идёт под H2 "...Today!" —
+     отдельной обработки не требует, наследует общие стили. */
+</style>
