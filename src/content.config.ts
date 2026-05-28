@@ -168,6 +168,45 @@ const services = defineCollection({
         })
         .optional(),
 
+      // ===== Two-column SECTIONS (emsella) =====
+      // В отличие от единичного twoColumnText (объект, exomind/emface),
+      // это МАССИВ двухколоночных секций для страниц, где их несколько и/или
+      // нужны фото над колонками + общий заголовок секции. Старое поле
+      // twoColumnText не трогаем — обратная совместимость.
+      //
+      // emsella использует две такие секции:
+      //   1) position 'after-whatis'   — "What to Expect" / "Book Your Treatment"
+      //      (фон cream, без фото, без heading)
+      //   2) position 'after-categories-grid' — "Emsella for Sexual Wellness"
+      //      (heading сверху + фото над каждой колонкой WOMAN / MAN)
+      twoColumnSections: z
+        .array(
+          z.object({
+            /** Опциональный общий заголовок над обеими колонками */
+            heading: z.string().optional(),
+            background: z.enum(['cream', 'gold']).default('cream'),
+            position: z.enum(['after-whatis', 'after-categories-grid']),
+            left: z.object({
+              title: z.string(),
+              body: z.string().optional(),
+              bullets: z.array(z.string()).optional(),
+              tail: z.string().optional(),
+              /** Опц. фото над колонкой (emsella Sexual Wellness) */
+              image: z.string().optional(),
+              imageAlt: z.string().optional(),
+            }),
+            right: z.object({
+              title: z.string(),
+              body: z.string().optional(),
+              bullets: z.array(z.string()).optional(),
+              tail: z.string().optional(),
+              image: z.string().optional(),
+              imageAlt: z.string().optional(),
+            }),
+          })
+        )
+        .optional(),
+
       // ===== Full-width image (exomind: фото устройства TMS) =====
       fullWidthImages: z
         .array(

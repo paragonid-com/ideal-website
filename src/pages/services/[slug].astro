@@ -93,6 +93,14 @@ const { data } = service;
 const firstCategoriesGrid = data.categoriesGrids?.[0];
 const secondCategoriesGrid = data.categoriesGrids?.[1];
 
+// twoColumnSections (emsella) — массив, фильтруем по позиции
+const twoColAfterWhatIs = (data.twoColumnSections ?? []).filter(
+  (s) => s.position === 'after-whatis'
+);
+const twoColAfterGrid = (data.twoColumnSections ?? []).filter(
+  (s) => s.position === 'after-categories-grid'
+);
+
 // beforeAfter position: 'after-video-1' (emface) рендерится сразу после
 // videoEmbed; 'late' (default, emsculpt) — после secondCategoriesGrid.
 const beforeAfterAfterVideo1 =
@@ -188,6 +196,16 @@ const goldBanner = normalizeBanner(data.goldBanner);
     />
   )}
 
+  {/* Two-column секции 'after-whatis' (emsella: What to Expect / Book Your Treatment) */}
+  {twoColAfterWhatIs.map((s) => (
+    <ServiceTwoColumnText
+      heading={s.heading}
+      background={s.background}
+      left={s.left}
+      right={s.right}
+    />
+  ))}
+
   {/* Text+Photo блоки перед Common Signs (hormone "Reclaiming Yourself") */}
   {blocksBeforeCommonSigns.map((block) => (
     <ServiceTextWithPhoto
@@ -234,6 +252,16 @@ const goldBanner = normalizeBanner(data.goldBanner);
       items={firstCategoriesGrid.items}
     />
   )}
+
+  {/* Two-column секции 'after-categories-grid' (emsella: Sexual Wellness — heading + фото) */}
+  {twoColAfterGrid.map((s) => (
+    <ServiceTwoColumnText
+      heading={s.heading}
+      background={s.background}
+      left={s.left}
+      right={s.right}
+    />
+  ))}
 
   {/* Video embed #1 (emsculpt, exomind, emface) */}
   {data.videoEmbed && (

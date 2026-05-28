@@ -18,14 +18,26 @@ interface ColumnData {
   body?: string;
   bullets?: string[];
   tail?: string;
+  /** Опц. фото над колонкой (emsella Sexual Wellness) */
+  image?: string;
+  imageAlt?: string;
 }
 
 interface Props {
   left: ColumnData;
   right: ColumnData;
+  /** Опц. общий заголовок над обеими колонками (emsella Sexual Wellness) */
+  heading?: string;
+  /** Фон секции: cream (default) или gold */
+  background?: 'cream' | 'gold';
 }
 
-const { left, right } = Astro.props;
+const { left, right, heading, background = 'cream' } = Astro.props;
+
+const bgStyle =
+  background === 'gold'
+    ? 'background: radial-gradient(ellipse at center, #faf8eb 0%, #d2bea3 70%, #b89a76 100%);'
+    : 'background-color: #eae4d2;';
 
 function paras(s?: string): string[] {
   return (s ?? '').split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
@@ -38,12 +50,29 @@ const rightTail = paras(right.tail);
 ---
 
 <section
-  class="w-full bg-cream py-24"
+  class="w-full py-24"
   data-section="service-two-column-text"
+  style={bgStyle}
 >
-  <div class="mx-auto max-w-design px-[7.55%] grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+  <div class="mx-auto max-w-design px-[7.55%]">
+    {heading && (
+      <h2 class="font-heading text-h1 uppercase text-gold leading-tight mb-12">
+        {heading}
+      </h2>
+    )}
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
     {/* Левая колонка */}
     <div>
+      {left.image && (
+        <div class="aspect-[783/522] w-full overflow-hidden rounded-md mb-8">
+          <img
+            src={left.image}
+            alt={left.imageAlt || ''}
+            class="block h-full w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      )}
       <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
         {left.title.split('\n').map((line, i, arr) => (
           <>
@@ -80,6 +109,16 @@ const rightTail = paras(right.tail);
 
     {/* Правая колонка */}
     <div>
+      {right.image && (
+        <div class="aspect-[783/522] w-full overflow-hidden rounded-md mb-8">
+          <img
+            src={right.image}
+            alt={right.imageAlt || ''}
+            class="block h-full w-full object-cover"
+            loading="lazy"
+          />
+        </div>
+      )}
       <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
         {right.title.split('\n').map((line, i, arr) => (
           <>
@@ -112,6 +151,7 @@ const rightTail = paras(right.tail);
         )}
         {rightTail.map((p) => <p>{p}</p>)}
       </div>
+    </div>
     </div>
   </div>
 </section>
