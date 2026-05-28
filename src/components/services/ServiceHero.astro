@@ -22,9 +22,11 @@ interface Props {
   image: string;
   /** Alt для фото */
   imageAlt: string;
+  /** Показать gold-звезду под lead (specialty-страницы, Figma) */
+  showStar?: boolean;
 }
 
-const { title, lead, image, imageAlt } = Astro.props;
+const { title, lead, image, imageAlt, showStar = false } = Astro.props;
 // Разбиваем title на строки по \n чтобы отрисовать через <br/>
 const lines = title.split('\n');
 ---
@@ -55,6 +57,16 @@ const lines = title.split('\n');
       <p class="mt-[27px] max-w-[632px] font-sans text-body-lg text-gold leading-relaxed">
         {lead}
       </p>
+
+      {showStar && (
+        <img
+          src="/assets/images/star-sign.svg"
+          alt=""
+          width="43"
+          height="50"
+          class="mt-[21px] h-[50px] w-[43px]"
+        />
+      )}
     </div>
   </div>
 </section>

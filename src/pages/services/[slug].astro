@@ -160,6 +160,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
     lead={data.heroLead}
     image={data.heroImage}
     imageAlt={data.heroImageAlt}
+    showStar={data.stars?.hero}
   />
 
   <ServiceCTABand />
@@ -217,6 +218,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       bullets={block.bullets}
       bulletStyle={block.bulletStyle}
       tail={block.tail}
+      showStar={block.star}
     />
   ))}
 
@@ -239,6 +241,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
         title={data.commonSigns.title}
         intro={data.commonSigns.intro}
         items={data.commonSigns.items}
+        showStar={data.stars?.commonSigns}
       />
       <ServiceCTABand />
     </>
@@ -306,6 +309,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       bullets={block.bullets}
       bulletStyle={block.bulletStyle}
       tail={block.tail}
+      showStar={block.star}
     />
   ))}
 
@@ -363,6 +367,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       title={data.roadmap.title}
       intro={data.roadmap.intro}
       items={data.roadmap.items}
+      showStar={data.stars?.roadmap}
     />
   )}
 
@@ -377,6 +382,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       bullets={block.bullets}
       bulletStyle={block.bulletStyle}
       tail={block.tail}
+      showStar={block.star}
     />
   ))}
 
@@ -421,6 +427,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       body={data.whyTrust.body}
       image={data.whyTrust.image}
       imageAlt={data.whyTrust.imageAlt}
+      showStar={data.stars?.whyTrust}
     />
   )}
 
@@ -441,6 +448,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       image={data.experience.image}
       imageAlt={data.experience.imageAlt}
       phone={data.experience.phone}
+      showStar={data.stars?.experience}
     />
   )}
 

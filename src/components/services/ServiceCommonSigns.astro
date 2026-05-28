@@ -31,9 +31,10 @@ interface Props {
   title: string;
   intro: string;
   items: SignItem[];
+  showStar?: boolean;
 }
 
-const { title, intro, items } = Astro.props;
+const { title, intro, items, showStar = false } = Astro.props;
 const titleLines = title.split('\n');
 ---
 
@@ -44,6 +45,15 @@ const titleLines = title.split('\n');
 >
   <div class="mx-auto max-w-design px-[7.55%]">
     <div class="text-center">
+      {showStar && (
+        <img
+          src="/assets/images/star-sign.svg"
+          alt=""
+          width="43"
+          height="50"
+          class="mx-auto mb-6 h-[50px] w-[43px]"
+        />
+      )}
       <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
         {titleLines.map((line, i) => (
           <>

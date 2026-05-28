@@ -27,6 +27,7 @@ textWithPhotoBlocks:
     imageAlt: "Man considering hormone optimization journey"
     imageSide: "right"
     position: "before-common-signs"
+    star: true
 
 # === Common Signs grid — узлы Figma 1:3236, 1:3305, 1:3316, 1:3345.
 commonSigns:
@@ -97,6 +98,13 @@ faq:
     answer: ""
   - question: "Lorem Ipsum in dolor ipsum Hormone Replacement?"
     answer: ""
+
+stars:
+  hero: true
+  commonSigns: true
+  roadmap: true
+  whyTrust: true
+  experience: true
 
 draft: false
 category:

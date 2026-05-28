@@ -135,6 +135,8 @@ const services = defineCollection({
             bullets: z.array(z.string()).optional(),
             bulletStyle: z.enum(['dash', 'number']).default('dash').optional(),
             tail: z.string().optional(),
+            /** Показать gold-звезду top-right у заголовка блока (per-block) */
+            star: z.boolean().default(false).optional(),
             /** В каком месте шаблона показать блок.
              *  'before-common-signs' — между whatIs и commonSigns
              *  'after-roadmap'        — после roadmap, перед whyTrust
@@ -399,6 +401,24 @@ const services = defineCollection({
           })
         )
         .max(8)
+        .optional(),
+
+      // ===== Star-sign ornaments (per Figma) =====
+      // Декоративная gold-звезда (star-sign.svg) появляется на specialty-
+      // страницах в разных секциях. Каждый флаг включает звезду в своей
+      // секции. По умолчанию всё off — Weight Loss и др. не затрагиваются.
+      // Позиции соответствуют узлам Figma (см. HANDOFF, сессия 7).
+      stars: z
+        .object({
+          hero: z.boolean().default(false),
+          twoColumnText: z.boolean().default(false),
+          commonSigns: z.boolean().default(false),
+          categoriesGrid: z.boolean().default(false),
+          conditionsList: z.boolean().default(false),
+          roadmap: z.boolean().default(false),
+          whyTrust: z.boolean().default(false),
+          experience: z.boolean().default(false),
+        })
         .optional(),
 
       // ===== Layout / Meta =====

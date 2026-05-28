@@ -59,6 +59,7 @@ textWithPhotoBlocks:
     imageAlt: "Client seated next to the ExoMind device demonstrating treatment positioning"
     imageSide: "left"
     position: "before-conditions"
+    star: true
 
   - title: "Why Choose Ideal\nMedical & Wellness\nfor ExoMind™?"
     body: "At Ideal Medical & Wellness, we combine advanced technology with personalized care:"
@@ -111,6 +112,9 @@ faq:
     answer: ""
   - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
     answer: ""
+
+stars:
+  hero: true
 
 draft: false
 category:

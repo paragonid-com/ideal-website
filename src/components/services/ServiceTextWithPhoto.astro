@@ -41,6 +41,8 @@ interface Props {
   bulletStyle?: 'dash' | 'number';
   /** Опциональный заключительный параграф после буллетов */
   tail?: string;
+  /** Показать gold-звезду top-right у заголовка (hormone Reclaiming) */
+  showStar?: boolean;
 }
 
 const {
@@ -52,6 +54,7 @@ const {
   bullets,
   bulletStyle = 'dash',
   tail,
+  showStar = false,
 } = Astro.props;
 const titleLines = title.split('\n');
 const paragraphs = body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
@@ -68,14 +71,25 @@ const imageOrderClass = imageSide === 'left' ? 'lg:order-1' : 'lg:order-2';
   <div class="mx-auto max-w-design grid grid-cols-1 lg:grid-cols-2 items-center min-h-[800px]">
     {/* Текст */}
     <div class={`px-[7.55%] py-24 ${textOrderClass}`}>
-      <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
-        {titleLines.map((line, i) => (
-          <>
-            {line}
-            {i < titleLines.length - 1 && <br />}
-          </>
-        ))}
-      </h2>
+      <div class="flex items-start justify-between gap-4">
+        <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
+          {titleLines.map((line, i) => (
+            <>
+              {line}
+              {i < titleLines.length - 1 && <br />}
+            </>
+          ))}
+        </h2>
+        {showStar && (
+          <img
+            src="/assets/images/star-sign.svg"
+            alt=""
+            width="43"
+            height="50"
+            class="mt-1 h-[50px] w-[43px] flex-shrink-0"
+          />
+        )}
+      </div>
 
       <div class="mt-12 max-w-[660px] space-y-6 font-sans text-body-lg text-gold leading-relaxed">
         {paragraphs.map((p) => <p>{p}</p>)}

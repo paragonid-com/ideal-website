@@ -95,6 +95,9 @@ faq:
   - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
     answer: ""
 
+stars:
+  hero: true
+
 draft: false
 category:
   - aesthetic
