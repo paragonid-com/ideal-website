@@ -142,11 +142,23 @@ const address = {
     </div>
 
     <div
-      class="flex flex-col justify-center px-[7.55%] py-16"
+      class="relative flex flex-col justify-center px-[7.55%] py-16"
       style="background: linear-gradient(to bottom right, #d4c3a3, #b5946a);"
     >
       <h2 class="font-heading text-h1 uppercase leading-tight text-gold">
-        Ready to Start Your<br />
+        <span class="relative inline-block">
+          Ready to Start Your
+          {/* Звезда из Figma (узел 1:258) — inline в конце первой строки H2.
+              Figma-координаты: x=1723, y=7675, размер 42.57×50. */}
+          <img
+            src="/assets/images/star-sign.svg"
+            alt=""
+            width="43"
+            height="50"
+            class="absolute left-full top-1/2 -translate-y-1/2 ml-2 h-[50px] w-[43px]"
+            aria-hidden="true"
+          />
+        </span><br />
         Transformation Today?
       </h2>
 

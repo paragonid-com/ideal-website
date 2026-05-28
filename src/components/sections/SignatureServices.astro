@@ -126,17 +126,22 @@ const services: Service[] = [
 <section class="w-full bg-cream py-24" data-section="signature-services">
   <Container>
     <div class="relative text-center">
-      <h2 class="font-heading text-h1 uppercase text-gold inline-block">
-        Our Signature Services
-      </h2>
-      <img
-        src="/assets/images/star-sign.svg"
-        alt=""
-        width="33"
-        height="39"
-        class="absolute right-0 top-0 hidden h-[39px] w-[33px] md:inline-block"
-        aria-hidden="true"
-      />
+      <div class="relative inline-block">
+        <h2 class="font-heading text-h1 uppercase text-gold">
+          Our Signature Services
+        </h2>
+        {/* Звезда из Figma (узел 1:230) — сразу после слова SERVICES, как в макете.
+            Figma-размер 42.57×50. Прижата к правому краю H2 (left-full),
+            слегка приподнята (-top). */}
+        <img
+          src="/assets/images/star-sign.svg"
+          alt=""
+          width="43"
+          height="50"
+          class="absolute left-full top-0 ml-2 h-[50px] w-[43px]"
+          aria-hidden="true"
+        />
+      </div>
       <p class="mx-auto mt-8 max-w-[821px] font-sans text-body-lg leading-relaxed text-gold">
         Explore our range of specialized treatments designed to enhance
         your well-being. Each service at Ideal Medical and Wellness is

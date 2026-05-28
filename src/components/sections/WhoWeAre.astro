@@ -37,7 +37,21 @@ const aboutText = `Ideal Medical & Wellness is a premier medical spa and wellnes
   data-section="who-we-are"
 >
   <Container>
-    <h2 class="font-heading text-h1 uppercase text-gold">Who We Are</h2>
+    <div class="relative">
+      <h2 class="font-heading text-h1 uppercase text-gold">Who We Are</h2>
+
+      {/* Звезда из Figma (узел 1:236) — в правом верхнем углу контейнера на одной
+          линии с H2. Figma-координаты: x=1732, y=3184, размер 42.57×50. */}
+      <img
+        src="/assets/images/star-sign.svg"
+        alt=""
+        width="43"
+        height="50"
+        class="absolute right-0 top-0 h-[50px] w-[43px]"
+        aria-hidden="true"
+      />
+    </div>
+
     <p class="mt-8 max-w-[902px] font-sans text-body-lg leading-relaxed text-gold">
       {aboutText}
     </p>
