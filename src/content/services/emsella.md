@@ -27,12 +27,11 @@ twoColumnSections:
     background: "cream"
     left:
       title: "WHAT TO EXPECT\nFROM YOUR\nEMSELLA™ SESSION"
-      body: |
-        Non-invasive: You remain fully clothed during treatment
-
-        Comfortable: Simply sit back and relax in the Emsella chair
-        Quick sessions: Only 30 minutes per session
-        No downtime: Resume normal activities immediately
+      bullets:
+        - "Non-invasive: You remain fully clothed during treatment"
+        - "Comfortable: Simply sit back and relax in the Emsella chair"
+        - "Quick sessions: Only 30 minutes per session"
+        - "No downtime: Resume normal activities immediately"
       tail: "Most clients see noticeable results after just a few sessions, with improvements continuing over the following weeks."
     right:
       title: "BOOK YOUR\nEMSELLA™\nTREATMENT TODAY"

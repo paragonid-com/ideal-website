@@ -227,8 +227,9 @@ const services = defineCollection({
             imageAlt: z.string(),
             todo: z.string().optional(),
             /** Где в шаблоне вставить:
-             *  'after-gold-banner-1' — между первым GoldBanner и TextWithPhoto(before-conditions) */
-            position: z.enum(['after-gold-banner-1']),
+             *  'after-gold-banner-1'  — между первым GoldBanner и TextWithPhoto(before-conditions) (exomind)
+             *  'after-common-signs'   — между Common Signs и Roadmap (hormone, узел Figma 1:3462) */
+            position: z.enum(['after-gold-banner-1', 'after-common-signs']),
           })
         )
         .optional(),

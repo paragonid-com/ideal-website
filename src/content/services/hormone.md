@@ -49,6 +49,13 @@ commonSigns:
     - title: "VASOMOTOR INSTABILITY:"
       body: "Frequent hot flashes, night sweats, and disruptive sleep patterns typical of the perimenopause or menopause transition."
 
+# === Full-width image между Common Signs и Roadmap — узел Figma 1:3462
+# (alexander-mass-unsplash, фото инъекции). Full-bleed, ~1920x746.
+fullWidthImages:
+  - image: "/assets/images/services/hormone/common-signs-band.webp"
+    imageAlt: "Clinician preparing a precise hormone injection — Ideal Medical, Aventura"
+    position: "after-common-signs"
+
 # === Roadmap — узлы Figma 1:3239, 1:3310, 1:3329, 1:3355.
 roadmap:
   title: "From Symptom to Solution:\nYour Roadmap to Vitality"

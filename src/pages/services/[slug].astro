@@ -138,6 +138,9 @@ const blocksBeforeConditions = (data.textWithPhotoBlocks ?? []).filter(
 const fullWidthAfterGoldBanner1 = (data.fullWidthImages ?? []).filter(
   (b) => b.position === 'after-gold-banner-1'
 );
+const fullWidthAfterCommonSigns = (data.fullWidthImages ?? []).filter(
+  (b) => b.position === 'after-common-signs'
+);
 
 // midGoldBanner1 / midGoldBanner2 / goldBanner могут быть строкой или объектом
 // — нормализуем
@@ -175,7 +178,9 @@ const goldBanner = normalizeBanner(data.goldBanner);
         body={data.whatIsBody}
         showStar={data.stars?.whatIs}
       />
-      <ServiceCTABand />
+      {/* CTA после what-is — кроме emsella, где следом идёт two-col
+         'after-whatis' со своим завершающим CTA (иначе двойной баннер). */}
+      {twoColAfterWhatIs.length === 0 && <ServiceCTABand />}
     </>
   )}
 
@@ -200,12 +205,15 @@ const goldBanner = normalizeBanner(data.goldBanner);
 
   {/* Two-column секции 'after-whatis' (emsella: What to Expect / Book Your Treatment) */}
   {twoColAfterWhatIs.map((s) => (
-    <ServiceTwoColumnText
-      heading={s.heading}
-      background={s.background}
-      left={s.left}
-      right={s.right}
-    />
+    <>
+      <ServiceTwoColumnText
+        heading={s.heading}
+        background={s.background}
+        left={s.left}
+        right={s.right}
+      />
+      <ServiceCTABand />
+    </>
   ))}
 
   {/* Text+Photo блоки перед Common Signs (hormone "Reclaiming Yourself") */}
@@ -246,11 +254,15 @@ const goldBanner = normalizeBanner(data.goldBanner);
         items={data.commonSigns.items}
         showStar={data.stars?.commonSigns}
       />
+      {/* Full-width image между Common Signs и Roadmap (hormone, Figma 1:3462) */}
+      {fullWidthAfterCommonSigns.map((b) => (
+        <ServiceFullWidthImage image={b.image} imageAlt={b.imageAlt} todo={b.todo} />
+      ))}
       <ServiceCTABand />
     </>
   )}
 
-  {/* Первая Categories Grid (emsculpt "What is For") */}
+  {/* Первая Categories Grid (emsculpt "What is For" / emsella incontinence) */}
   {firstCategoriesGrid && (
     <ServiceCategoriesGrid
       title={firstCategoriesGrid.title}
@@ -259,14 +271,21 @@ const goldBanner = normalizeBanner(data.goldBanner);
     />
   )}
 
+  {/* CTA после первой grid — только когда дальше идёт after-categories-grid
+     two-col (паттерн emsella, Figma 1:5169). emface/emsculpt не затрагиваются. */}
+  {firstCategoriesGrid && twoColAfterGrid.length > 0 && <ServiceCTABand />}
+
   {/* Two-column секции 'after-categories-grid' (emsella: Sexual Wellness — heading + фото) */}
   {twoColAfterGrid.map((s) => (
-    <ServiceTwoColumnText
-      heading={s.heading}
-      background={s.background}
-      left={s.left}
-      right={s.right}
-    />
+    <>
+      <ServiceTwoColumnText
+        heading={s.heading}
+        background={s.background}
+        left={s.left}
+        right={s.right}
+      />
+      <ServiceCTABand />
+    </>
   ))}
 
   {/* Video embed #1 (emsculpt, exomind, emface) */}

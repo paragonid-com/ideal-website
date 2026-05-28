@@ -65,6 +65,22 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
       <div class="mt-12 space-y-6 max-w-[693px] font-sans text-body-lg text-gold leading-relaxed">
         {paragraphs.map((p) => {
           const innerLines = p.split('\n');
+          // Если все строки абзаца начинаются с "_ " — это буллет-список
+          // (соглашение Figma: "_" = маркер). Рендерим <ul> с "—".
+          const isBulletBlock =
+            innerLines.length > 0 && innerLines.every((l) => l.trim().startsWith('_ '));
+          if (isBulletBlock) {
+            return (
+              <ul class="space-y-3">
+                {innerLines.map((l) => (
+                  <li class="flex gap-3">
+                    <span aria-hidden="true" class="select-none flex-shrink-0">—</span>
+                    <span>{l.trim().replace(/^_\s+/, '')}</span>
+                  </li>
+                ))}
+              </ul>
+            );
+          }
           return (
             <p>
               {innerLines.map((line, i) => (
