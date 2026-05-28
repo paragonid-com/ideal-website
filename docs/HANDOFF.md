@@ -341,6 +341,11 @@ src/
   потом купят — заменить файлы в `public/fonts/`, frontend код не меняется.
 - **Шрифт body:** Manrope (Google Fonts, бесплатный)
 - **Цвета:** `gold #8d7431`, `gold-bright #d1a42b`, `cream #eae4d2`
+- **Звезда-знак (Star Sign):** атом + ДНК-нить из логотипа IDEAL.
+  Используется как акцент рядом с крупными заголовками и в overlay-меню
+  для индикации активного раздела. Файл — `/public/assets/images/star-sign.svg`
+  (4.9 KB после оптимизации, цвет gold #8d7431 зашит в path). Источник —
+  Figma узлы `1:218`, `1:1983`, `1:6869` и др.; клиент прислал в сессии 4.
 - **Контейнер:** max 1920px, padding 7.55% (≈145px при 1920)
 
 ### Структура URL
@@ -646,11 +651,12 @@ emsella, emsculpt, ivtherapy, emface, sexualhealth
 
 1. **На сервере** определяется активный раздел через `Astro.url.pathname`
    (см. `src/components/Header.astro` — функция `isGroupActive`).
-2. **Орнамент-цветочек** (узел Figma `1:1983` → `/public/assets/images/ornament.png`)
-   показывается рядом с заголовком активного раздела.
+2. **Звезда-знак из логотипа** (узел Figma `1:1983` → `/public/assets/images/star-sign.svg`)
+   показывается рядом с заголовком активного раздела. Это атом + ДНК-нить
+   из логотипа IDEAL, используется как акцент-знак везде в макете.
 3. **Текущий пункт** в подменю помечен `aria-current="page"` + `font-semibold`.
 4. **При открытии меню** автоматически раскрывается активный раздел.
-5. **При hover** на другой раздел — орнамент и панель переключаются;
+5. **При hover** на другой раздел — звезда и панель переключаются;
    `mouseleave` с навигации возвращает к active state.
 
 Emsculpt дублируется в Wellness + Aesthetic. Сейчас при заходе на
@@ -736,12 +742,16 @@ ef8ed39 fix(assets): restore missing webp images in subfolders
 26d9ae5 docs(handoff): update for session 3
 ```
 
-**Сессия 4** — гибридная архитектура шаблона + страницы hormone и emsculpt:
+**Сессия 4** — гибридная архитектура шаблона + hormone/emsculpt + Optima + Star Sign:
 ```
-TBD feat(services): hybrid template + hormone & emsculpt pages
+c9b9eae feat(services): hybrid template + hormone & emsculpt pages
+9b8d025 feat(fonts): self-host Optima from macOS Optima.ttc (Figma original)
+3b67a96 feat(brand): replace ornament.png with star-sign.svg (Figma original)
 ```
-(один общий коммит — расширение schema + 10 новых компонентов + обновлённый
-`[slug].astro` + наполненные `hormone.md`/`emsculpt.md` + 14 placeholder-webp).
+Содержимое коммитов:
+- `c9b9eae` — расширение schema + 11 новых компонентов + обновлённый `[slug].astro` + наполненные `hormone.md`/`emsculpt.md` + 14 placeholder-webp.
+- `9b8d025` — конвертация Optima.ttc → 5 woff2-файлов + @font-face + tailwind.config (Marcellus убран, остался как fallback).
+- `3b67a96` — замена ornament.png на star-sign.svg (тот же знак из лого, но вектор; 4.9 KB после svgo + ручной чистки маски).
 
 ---
 
