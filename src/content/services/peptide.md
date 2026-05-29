@@ -101,6 +101,10 @@ stars:
   whoFor: true
   results: true
 
+# CTA: Figma-фрейм не содержит mid-section CTA (только hero+footer) —
+# подавляем 3 дефолтных band'а шаблона.
+suppressDefaultCtas: true
+
 draft: false
 category:
   - wellness

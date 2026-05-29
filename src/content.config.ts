@@ -280,6 +280,10 @@ const services = defineCollection({
        *  есть CTA, которых не расставлял общий шаблон:
        *    - ctaBeforeConditionsList — Figma 1:2907 (перед «What can ExoMind improve?»)
        *    - ctaAfterVideo2          — Figma 1:2913 (после видео #2, перед gold-banner #2) */
+      /** Если true — подавляет 3 дефолтных CTA-band (после Hero / WhatIs /
+       *  Benefits). Для страниц, чьи Figma-фреймы не содержат mid-CTA
+       *  (peptide/ivtherapy/bloodwork/regenerative/sexualhealth). Default false. */
+      suppressDefaultCtas: z.boolean().default(false),
       ctaBeforeConditionsList: z.boolean().default(false),
       ctaAfterVideo2: z.boolean().default(false),
       /** CTA «BOOK APPOINTMENT» прямо перед FAQ. Figma-макеты emsculpt (1:5573,

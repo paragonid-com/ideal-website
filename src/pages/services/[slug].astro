@@ -166,7 +166,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
     showStar={data.stars?.hero}
   />
 
-  <ServiceCTABand />
+  {!data.suppressDefaultCtas && <ServiceCTABand />}
 
   {/* Long-form "What is X?" (Weight Loss формат: фото + многоабзацный текст) */}
   {data.whatIsTitle && data.whatIsImage && data.whatIsBody && (
@@ -180,7 +180,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       />
       {/* CTA после what-is — кроме emsella, где следом идёт two-col
          'after-whatis' со своим завершающим CTA (иначе двойной баннер). */}
-      {twoColAfterWhatIs.length === 0 && <ServiceCTABand />}
+      {twoColAfterWhatIs.length === 0 && !data.suppressDefaultCtas && <ServiceCTABand />}
     </>
   )}
 
@@ -241,7 +241,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
         iconOnly={data.benefitsIconOnly}
         showStar={data.stars?.benefits}
       />
-      <ServiceCTABand />
+      {!data.suppressDefaultCtas && <ServiceCTABand />}
     </>
   )}
 
