@@ -1,8 +1,11 @@
-# HANDOFF — состояние проекта на конец сессии 11
+# HANDOFF — состояние проекта на конец сессии 12 (все страницы готовы)
 
 Этот документ — точка входа для **следующей сессии работы с Claude**.
 Прочитав его, новая сессия сможет продолжить работу без необходимости
 переспрашивать решения, которые уже приняты.
+
+> **ФОКУС СЛЕДУЮЩЕЙ СЕССИИ: мобильный адаптив (responsive).** Подробности —
+> в разделе «СЛЕДУЮЩАЯ СЕССИЯ: мобильный адаптив» ниже (перед блокерами).
 
 ---
 
@@ -21,7 +24,7 @@
 | Дизайн-токены (цвета, шрифты) | ✅ Извлечены и в `tailwind.config.mjs` |
 | Документация (карта меню, инвентарь фото) | ✅ В `/docs` |
 | Шаблон страниц услуг | ✅ Гибридный шаблон с условным рендером (сессия 4): поддерживает Weight Loss / hormone / emsculpt структуры без отдельных файлов |
-| 10 draft-заглушек услуг | 🟡 Hormone, Emsculpt (сессия 4), Exomind (сессия 5), **Emface + Emsella (сессия 6)**, **Peptide (сессия 8)** и **IV Therapy + Blood Work (сессия 11)** сняты с draft. Остаются `draft: true` только **2** — regenerative, sexualhealth. **Все 9 specialty-страниц готовы, ни один пункт меню не ведёт в 404.** Билд = **9 specialty + 7 блог-постов + 4 статики = 20 страниц** |
+| Draft-заглушки услуг | ✅ **Все сняты с draft (сессия 12: regenerative + sexualhealth).** 0 draft-страниц. Все **11 specialty** готовы, ни один пункт меню не ведёт в 404. Билд = **11 specialty + 7 блог + 4 статики = 22 страницы** |
 | Блог (`/blog`) | ✅ **Сессия 11 (параллельная):** коллекция `posts` — 7 статей, импортированных со старого WordPress idealmedwell.com. Маршруты `/blog` (листинг) + `/blog/[slug]`. Изображения в `/public/assets/images/blog/<slug>/`. См. секцию «Блог» ниже |
 | Звёзды star-sign на specialty | ✅ **Сессия 7:** добавлены на все 5 (hormone 6 шт, exomind 2, emsculpt/emface/emsella по 1 — hero). Opt-in через поле `stars` + per-block `star`; Weight Loss не затронут |
 | Exomind (`/services/exomind`) | ✅ **Наполнена контентом из Figma (сессия 5)**: hero + twoColumnText (whatIs+whoFor) + video#1 + goldBanner#1 + deviceShowcase + howWorks + whyChoose + conditionsList + video#2 + goldBanner#2 + FAQ. Тексты FAQ и YouTube-ссылки ждут от клиента. Звёзды добавлены в сессии 7 |
@@ -30,13 +33,47 @@
 | Страницы About / Contact / Blog | ✅ Созданы (контент About есть; Blog — placeholder) |
 | WebP-ассеты в подпапках (about/, blog/, services/weight-loss/) | ✅ Восстановлены в сессии 3 — были потеряны в коммите 215ea55 при WebP-миграции |
 | TrustBadges (Google ★ + BusinessRate) | ✅ Вынесены в `components/TrustBadges.astro`, подключены на 4 страницах |
-| Адаптив (mobile) | 🟡 **Делаем САМИ, макетов НЕ ждём** (решение клиента, сессия 5). Все компоненты на `grid-cols-1 lg:grid-cols-2`, базовое поведение работает; нужна точная выверка |
-| Интеграции (форма, бронирование, newsletter) | ⬜ Не начаты |
+| Адаптив (mobile) | 🟡 **← СЛЕДУЮЩАЯ СЕССИЯ.** Делаем САМИ, макетов НЕ ждём (решение клиента). Все компоненты на `grid-cols-1 lg:grid-cols-2`, базовое поведение есть; нужна сплошная выверка всех страниц на узких вьюпортах. См. раздел «СЛЕДУЮЩАЯ СЕССИЯ» ниже |
+| Интеграции (форма, бронирование, newsletter) | 🟡 **Booking ГОТОВ (сессия 12)** — все CTA на Boulevard-виджет. Остаются: форма (form-submission-endpoint), newsletter, соцсети-URL, blog-post-link |
 | Деплой на Cloudflare Pages | ✅ Сайт деплоится (актуализирую блокер в сессии 4 — раньше был помечен 🟡 как "ждёт нажатия Save and Deploy") |
 | Lighthouse-аудит | ✅ Performance 95+, A11y 96, BP/SEO 100 на всех страницах. PNG → WebP массовая миграция (37MB → 2MB) |
 | Инвентарь `data-todo` | ✅ Собран в `docs/TODO-INVENTORY.md` — всё, что ждёт клиента |
 | **Peptide Therapy (`/services/peptide`)** | ✅ **Сессия 8:** собрана с нуля по Figma (узел `1:5026`). Реальные заголовки + 9 icon-only benefits (3×3) + реальные ассеты (9 иконок, what-is/who-for фото, hero-композит с двумя ручками IDEAL). Body-тексты Lorem с `data-todo="copy"` (ждут клиента). Снята с draft. **Билд = 11 страниц.** Snято с draft 3-е меню-звено |
 | **Изображения specialty (hormone, emsella)** | ✅ **Сессии 8-10:** заменены все placeholder-WebP на реальные ассеты из Figma. Hormone (5 фото) + Emsella (7 фото). Извлечение через `Figma:get_design_context` → asset URL → cover-crop → WebP |
+
+---
+
+## Сессия 12 — regenerative, emface-картинки, booking, CTA-аудит, опечатки, badges (28.05.26)
+
+**Состояние на конец сессии:** билд = **22 страницы** (11 specialty + 7 блог + 4 статики).
+**Все specialty-страницы готовы — `draft: true` не осталось ни одной.**
+
+Сделано (коммиты поверх `302b9c3`, доставлены git-патчами):
+
+1. **`feat(regenerative)`** — страница `/services/regenerative` собрана с нуля по Figma `1:2444`, снята с draft. Стандартный гибридный шаблон: Hero (PRP & Allograft) → WhatIs (фото слева) → How Does It Work (text+photo) → Benefits (icon-only 3×3, 9 шт) → Who Is It For (text+photo) → What To Expect (gold Results) → 5 **реальных** FAQ-вопросов. 4 фото сконвертированы из Figma; 9 benefit-иконок — копия shared-набора из peptide.
+   - ⚠️ **Баг макета:** тело "How Does It Work" (узел `1:2140`) дословно дублирует тело "Who Is It For" (`1:2127`). Воспроизведено как есть, помечено в `.md`. Нужен корректный текст «как это работает».
+   - ⚠️ Hero + what-is — Unsplash stock (cdc-IFpQtennlj8, julia-koblitz) → блокер лицензий.
+
+2. **`fix(emface): real images`** — все 18 плейсхолдеров заменены реальными ассетами из Figma `1:6536`: hero, what-is (device), 2 видео-постера, 6 area-* (нарезаны из единого композита `1:6296` без впечатанных подписей — компонент рисует свои), 6 treat-*. beforeAfter переведён в single-image режим (композит `1:6522` со встроенными BEFORE|AFTER + caption); удалены парные before/after webp.
+
+3. **`feat(booking)`** — **ВСЕ** кнопки Book Appointment/Book Now ведут на booking-виджет Boulevard:
+   `https://www.joinblvd.com/b/ideal-medical-and-wellness/widget#/visit-type`
+   (target=_blank rel=noopener). Источник — `bookingCta.href` в `src/data/navigation.ts` + home Hero + ServiceGoldBanner default + exomind ctaHref. Все плейсхолдеры `#book`/`#`/`data-todo="booking-system"` убраны. **Блокер интеграции #27 ЗАКРЫТ.**
+
+4. **`fix(services): restore + suppress CTAs`** (две правки) — полный аудит CTA по всем 10 страницам против Figma. Все секции на месте (ничего не пропущено). По CTA:
+   - Восстановлены 3 пропущенных band'а (тот же класс бага, что emsella/exomind): hormone (между gold-цитатой и Experience), emsculpt (после before/after, перед FAQ), emface (после видео #2, перед FAQ). Флаги `ctaAfterGoldBanner`, `ctaBeforeFaq`.
+   - Подавлены 3 дефолтных band'а на peptide/ivtherapy/bloodwork/regenerative (в Figma у них 0 mid-CTA). Флаг `suppressDefaultCtas`.
+   - **Итог: mid-CTA совпадает с Figma на всех 10 страницах** — peptide/iv/bloodwork/regen=0, weight-loss 3, hormone 5, emsella 4, emsculpt 4, exomind 5, emface 3.
+
+5. **`fix(copy)`** — исправлены опечатки Figma по запросу клиента: `Mentall→Mental Wellness`, `teel→feel` (отзыв Emily R.), `BOOD→BLOOD WORK`. (`BOOK APPOIMENT` было исправлено ранее.) Сняты data-todo `typo-mentall`/`typo-teel-vs-feel`.
+
+6. **`fix(assets)`** — badge-google-5star.png (был RGB) и badge-best-of-2025.png (RGBA alpha=255) → прозрачный фон через edge-flood-fill (внутренние белые сохранены). Больше не выглядят белыми наклейками на cream. **Закрывает #26а.**
+
+7. **`feat(sexualhealth)`** — последняя draft-страница `/services/sexualhealth` собрана с нуля по Figma `1:7461`, снята с draft. Стандартный шаблон (как peptide/regenerative): Hero → WhatIs (фото слева) → Benefits (icon-only 3×3, 9 шт) → WhoFor (фото справа) → Results (gold) → 5 FAQ. `suppressDefaultCtas: true` (в Figma только hero+footer). 3 фото (WebP) + 9 иконок (копия shared-набора). **Выведена в меню Wellness Services** (как ранее regenerative) — `orphanPages` теперь пуст. ⚠️ Body/FAQ — Lorem (`data-todo="copy"`); 3 фото iStock → блокер лицензий.
+
+**Итог: 0 draft-страниц, все 11 specialty готовы. Билд = 22 страницы.**
+
+**Что НЕ трогали (parked):** широкий контент-аудит (Lorem-тексты, FAQ-ответы); лицензии/trademark; мобильный адаптив (следующая сессия).
 
 ---
 
@@ -636,6 +673,68 @@ src/
 
 ---
 
+## СЛЕДУЮЩАЯ СЕССИЯ: мобильный адаптив (responsive)
+
+**Задача:** довести сайт до корректного отображения на мобильных и планшетах.
+Макетов от дизайнера НЕТ и не будет (решение клиента) — адаптив делаем сами,
+здравым смыслом, сохраняя десктоп 1:1.
+
+**Текущее состояние (отправная точка):**
+- Вся вёрстка проектировалась под фиксированную ширину ~1920px. Многие секции
+  используют `grid-cols-2` / `lg:grid-cols-2`, абсолютные пиксели и
+  `max-w-design` (= дизайн-ширина из tailwind.config).
+- Базовый responsive есть точечно (часть `ServiceTextWithPhoto`/`CategoriesGrid`
+  на `grid-cols-1 lg:grid-cols-N`), но **сплошной выверки на мобиле не было**.
+- Десктоп прошёл визуальное ревью и НЕ должен сломаться — все правки только
+  через мобильные брейкпоинты (`max-md:` / дефолт→`md:`/`lg:`), не трогая
+  существующие `lg:`-классы.
+
+**Известные «горячие точки» (фиксированные размеры, которые поедут на мобиле):**
+- `ServiceHero` — `h-[814px]`, заголовок `text-h1`, `pt-[224px]`, абсолютные
+  оверлеи. На узком экране текст/звезда вылезут.
+- `ServiceWhatIs` / `ServiceWhoFor` — `grid-cols-2` без `lg:`-гейта +
+  `min-h-[940px]`/`min-h-[1000px]` (на мобиле фото и текст надо в колонку).
+- `ServiceTwoColumnText`, `ServiceCommonSigns`, `ServiceCategoriesGrid`,
+  `ServiceBenefits` (3×3) — проверить переход в 1 колонку.
+- `Header.astro` — overlay-меню рассчитано на десктоп (hover-зоны, sticky,
+  `min-h=489px`). Нужен мобильный паттерн (burger → полноэкранное меню).
+  Это, вероятно, **самый крупный кусок** работы.
+- `StartYourTransformation` — форма в 2 колонки + карта `aspect-[1920/400]`.
+- Главная: `Hero`, `SignatureServices`, `AdvancedTreatments`, `WhoWeAre`,
+  `Testimonials` — все с абсолютным позиционированием/фикс-px.
+- Типографика: `text-h1` и прочие крупные размеры заданы фиксированно в
+  `tailwind.config.mjs` — возможно, понадобится `clamp()` или мобильные варианты.
+
+**Рекомендованный подход:**
+1. Начать с глобальных примитивов: проверить `tailwind.config.mjs` (брейкпоинты,
+   `max-w-design`, размеры шрифтов) — возможно, ввести fluid-типографику.
+2. Чинить по слою: сначала общие (`Header`/`Footer`/`StartYourTransformation`/
+   `TrustBadges`), потом шаблон услуг (`[slug].astro` + Service*-компоненты —
+   починка одного компонента чинит все 10 страниц), потом главная, потом
+   About/Blog/Contact.
+3. Гейтить мобильные правки так, чтобы `lg:`-десктоп оставался нетронутым.
+4. Тестовые вьюпорты: 375 (iPhone SE/моб), 768 (планшет), 1024, 1440 (десктоп).
+
+**Как проверять (рабочий метод этого проекта):**
+- Контейнер — Linux, путь репо `/home/claude/ideal-website`. Превью+Playwright
+  в ОДНОМ bash-вызове (сервер умирает между вызовами):
+  `npm run preview -- --port PORT` в фоне, затем Playwright со скроллом для
+  lazy-load, `fullPage` скриншоты на разных `viewport.width`.
+- `npm run build` → 21 страница. Десктоп-скриншоты сравнивать с текущими, чтобы
+  поймать регрессии.
+
+**Рабочий процесс (важно — не меняется):**
+- Claude работает в Linux-контейнере; клон репо в `/home/claude/ideal-website`.
+  Правки отдаются git-патчами (`git format-patch --binary origin/main..HEAD`),
+  пользователь применяет из `~/Downloads` через `git am --3way` и пушит.
+- Локальный путь пользователя (macOS): `/Users/yuris/Documents/Claude-Projects/ideal-website`.
+- Git identity в контейнере: проверить/выставить `user.email claude@anthropic.com`,
+  `user.name Claude` (на свежем клоне сбрасывается).
+- `/bin/sh` (не bash) — без ассоц-массивов; pillow ставить `pip install pillow
+  --break-system-packages`; Figma-ассеты качать `curl` (urllib даёт 0 байт).
+
+---
+
 ## Открытые вопросы и блокеры
 
 Сгруппированы по типу владельца действия. **🔴 = блокер запуска**, **🟠 = серьёзный риск**, **🟡 = желательно решить**, **🔵 = на будущее**.
@@ -670,15 +769,17 @@ src/
     - Once I lose the weight, how can I keep it off?
     - How can I choose between the different medical weight loss options?
     - What side effects can I experience with medical weight loss?
-16. **Контент для оставшихся draft-страниц услуг** — теперь в `draft: true` только **2**: regenerative, sexualhealth. Hormone/emsculpt (сессия 4), exomind (сессия 5), emface/emsella (сессия 6), peptide (сессия 8), ivtherapy/bloodwork (сессия 11) уже сняты с draft. Body-тексты на peptide/ivtherapy/bloodwork — Lorem с `data-todo="copy"` (ждут реального копирайта от клиента).
+16. ~~**Контент для оставшихся draft-страниц услуг**~~ **✅ ВСЕ страницы сняты с draft (сессия 12).** Остаётся наполнить реальным копирайтом Lorem-тексты (см. блокер контента ниже) на peptide/ivtherapy/bloodwork/regenerative/sexualhealth/emsculpt/emsella/exomind/hormone/emface. Hormone/emsculpt (сессия 4), exomind (сессия 5), emface/emsella (сессия 6), peptide (сессия 8), ivtherapy/bloodwork (сессия 11) уже сняты с draft. Body-тексты на peptide/ivtherapy/bloodwork — Lorem с `data-todo="copy"` (ждут реального копирайта от клиента).
 17. **Реальные blog-посты** — у меня 4 одинаковые placeholder-карточки. Нужны: тексты, фото, slugs
 18. **Должность Laudin P.** — в Figma "Owner & TBD title"
 19. **Финальный disclaimer** под формой подписки (сейчас Lorem Ipsum)
 20. **Дубль на странице Contact** — в Figma 2 раза подряд "START YOUR WELLNESS TRANSFORMATION" (ContactHero + StartYourTransformation). Похоже на ошибку дизайна. Оставить дубль или убрать?
-21. **Опечатки** из макета — фиксить или оставить?
-    - `MENTALL WELLNESS` (двойная L)
-    - `BOOK APPOIMENT` (без второй n)
-    - `teel` вместо `feel` в отзыве Emily R.
+21. **Опечатки** из макета — **частично исправлены (сессия 12, по запросу клиента):**
+    - ✅ `MENTALL WELLNESS` → `Mental Wellness`
+    - ✅ `BOOK APPOIMENT` → `BOOK APPOINTMENT` (ещё раньше)
+    - ✅ `teel` → `feel` (отзыв Emily R.)
+    - ✅ `BOOD WORK` → `BLOOD WORK` (bloodwork WhatIs)
+    - Других опечаток в макете на ревью не осталось.
 22. **Layout Benefits Weight Loss** — в Figma 2 сверху + 3 снизу, у меня 3 + 2 (упрощённая сетка). Достаточно ли близко?
 
 ### 🟡 Структурные решения
@@ -689,15 +790,17 @@ src/
     - `exomind` — кастомные секции с устройством ✅
     - `emface` — 9 секций: 2 grid-сетки по 6, 2 видео, before/after (НЕ просто фото-сетка 3×2) ✅
     - `emsella` — WhatIs + 2 two-column секции + incontinence grid + Sexual Wellness (НЕ before/after) ✅
-24. **Sexual Health страница** — есть, но не в основном меню (`/services/sexualhealth` помечена как orphan в `data/navigation.ts`). Добавить в Wellness Services?
+24. ~~**Sexual Health страница** — orphan, добавить в меню?~~ **✅ РЕШЕНО (сессия 12):** собрана, снята с draft, выведена в **Wellness Services** (как ранее regenerative). `orphanPages` пуст.
 25. **Emsculpt дубликат в Wellness+Aesthetic** — оба пункта меню ведут на `/services/emsculpt`. Sub-nav сейчас подсвечивает Wellness (первый match). Если хочется иначе — добавить `data.preferredSection`
 26. ~~**TrustBadges** (Google ★ + BusinessRate) — есть в Figma на главной, About, Contact, Blog. У меня сейчас только на главной. Вынести в переиспользуемый компонент~~ **Решено в сессии 2:** `src/components/TrustBadges.astro` подключён на главной (внутри Testimonials, `standalone={false}`) и на About / Contact / Blog (`standalone={true}`, белый фон + py-16).
 
-26а. **Прозрачность badge-PNG** (новое, обнаружено в сессии 2): `badge-google-5star.png` сохранён в RGB-режиме с непрозрачным белым фоном, `badge-best-of-2025.png` — RGBA, но alpha=255. На белом фоне About/Contact/Blog незаметно, но **на cream-фоне Testimonials главной badges выглядят как white "stickers"** на бежевом — это видимо было и до сессии. Решения: (a) перегнать PNG через PIL, замазав чистый белый в alpha=0; (b) попросить клиента дать badges с прозрачным фоном; (c) принять как есть (возможно, это осознанный дизайн).
+26а. ~~**Прозрачность badge-PNG**~~ **✅ РЕШЕНО (сессия 12):** оба PNG перегнаны через edge-flood-fill, фон прозрачный, внутренние белые сохранены. Далее — историческое описание проблемы:
+
+_(было)_ **Прозрачность badge-PNG** (новое, обнаружено в сессии 2): `badge-google-5star.png` сохранён в RGB-режиме с непрозрачным белым фоном, `badge-best-of-2025.png` — RGBA, но alpha=255. На белом фоне About/Contact/Blog незаметно, но **на cream-фоне Testimonials главной badges выглядят как white "stickers"** на бежевом — это видимо было и до сессии. Решения: (a) перегнать PNG через PIL, замазав чистый белый в alpha=0; (b) попросить клиента дать badges с прозрачным фоном; (c) принять как есть (возможно, это осознанный дизайн).
 
 ### 🔵 Интеграции (помечены `data-todo` в коде)
 
-27. **`booking-system`** — Calendly / NexHealth / Mindbody / что-то ещё? Все кнопки BOOK APPOINTMENT сейчас ведут на `#`
+27. ~~**`booking-system`**~~ **✅ РЕШЕНО (сессия 12):** все CTA ведут на Boulevard-виджет `joinblvd.com/b/ideal-medical-and-wellness/widget#/visit-type` (новая вкладка). Источник — `bookingCta.href`.
 28. **`form-submission`** — куда отправлять данные с формы главной и Contact?
 29. **`newsletter-integration`** — Mailchimp / Klaviyo / ConvertKit?
 30. ~~Cherry/Care Credit financing URLs~~ — **исключены из проекта** (сессия 7), в футере их нет.
