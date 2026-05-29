@@ -172,8 +172,8 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
         внутри этого контейнера (на заголовках ИЛИ внутри подменю, ИЛИ в
         пустом пространстве между ними), временный hover-preview сохраняется.
         Выход за пределы возвращает к sticky состоянию. */}
-    <div class="flex flex-1 items-start px-[7.55%] pt-[120px]">
-      <div class="flex w-full max-w-content gap-12" data-nav-hover-zone>
+    <div class="flex flex-1 items-start px-[7.55%] pt-[120px] max-lg:pt-10">
+      <div class="flex w-full max-w-content gap-12 max-lg:flex-col max-lg:gap-6" data-nav-hover-zone>
         {/* Основные пункты */}
         <nav class="flex flex-col gap-1" aria-label="Main navigation">
           <ul class="flex flex-col gap-1">
@@ -184,7 +184,7 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
                 <li class="group/item" data-nav-group={group.label}>
                   <button
                     type="button"
-                    class="inline-flex items-center gap-4 font-heading text-[64px] uppercase leading-tight text-gold transition-opacity hover:opacity-70 [text-shadow:0_1px_0_rgba(255,255,255,0.4)]"
+                    class="inline-flex items-center gap-4 font-heading text-[34px] md:text-[44px] lg:text-[64px] uppercase leading-tight text-gold transition-opacity hover:opacity-70 [text-shadow:0_1px_0_rgba(255,255,255,0.4)]"
                     data-nav-target={group.label}
                     data-nav-active={isDefaultOpen ? 'true' : undefined}
                     aria-current={isActive ? 'true' : undefined}
@@ -217,7 +217,7 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
             href={bookingCta.href}
             target="_blank"
             rel="noopener noreferrer"
-            class="btn-gold mt-12 self-start min-w-[282px] whitespace-nowrap"
+            class="btn-gold mt-12 self-start lg:min-w-[282px] max-lg:w-full max-lg:mt-8 whitespace-nowrap"
           >
             {bookingCta.label}
           </a>
@@ -233,7 +233,7 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
             при переключении с 9-пунктового Wellness на 2-3-пунктовые Aesthetic/
             About контейнер сжимается, линия укорачивается, и нижний футер
             "прыгает" вверх на 30+px. */}
-        <div class="flex-1 border-l border-gold/40 pl-12 min-h-[489px]">
+        <div class="flex-1 lg:border-l lg:border-gold/40 lg:pl-12 lg:min-h-[489px]">
           {mainNav.map((group: NavGroup) => {
             const isDefaultOpen = group.label === defaultOpenLabel;
             return (
@@ -247,7 +247,7 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
                     <li>
                       <a
                         href={item.href}
-                        class={`font-sans text-[28px] transition-opacity hover:opacity-70
+                        class={`font-sans text-[20px] lg:text-[28px] transition-opacity hover:opacity-70
                                 ${current ? 'text-gold font-semibold' : 'text-gold'}`}
                         aria-current={current ? 'page' : undefined}
                       >
