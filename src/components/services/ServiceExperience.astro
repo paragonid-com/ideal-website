@@ -93,7 +93,8 @@ const telHref = phone ? `tel:+1${phone.replace(/\D/g, '')}` : undefined;
 
       <a
         href={bookingCta.href}
-        data-todo="booking-system"
+        target="_blank"
+        rel="noopener noreferrer"
         class="mt-8 inline-flex items-center justify-center bg-gold text-cream font-sans uppercase tracking-wider px-12 py-4 max-w-[488px] hover:bg-gold-bright transition-colors"
       >
         {bookingCta.label}

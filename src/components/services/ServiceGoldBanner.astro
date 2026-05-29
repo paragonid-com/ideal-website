@@ -17,11 +17,15 @@ interface Props {
   text: string;
   /** Опционально: текст кнопки под баннером */
   ctaLabel?: string;
-  /** Опционально: куда ведёт кнопка (default '#book') */
+  /** Опционально: куда ведёт кнопка (default — booking-виджет Boulevard) */
   ctaHref?: string;
 }
 
-const { text, ctaLabel, ctaHref = '#book' } = Astro.props;
+const {
+  text,
+  ctaLabel,
+  ctaHref = 'https://www.joinblvd.com/b/ideal-medical-and-wellness/widget#/visit-type',
+} = Astro.props;
 const lines = text.split('\n');
 ---
 
@@ -49,7 +53,8 @@ const lines = text.split('\n');
     {ctaLabel && (
       <a
         href={ctaHref}
-        data-todo="booking-system"
+        target="_blank"
+        rel="noopener noreferrer"
         class="mt-10 inline-block bg-cream text-gold font-sans uppercase tracking-wider text-[18px] px-12 py-4"
       >
         {ctaLabel}

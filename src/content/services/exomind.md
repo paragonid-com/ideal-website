@@ -36,7 +36,7 @@ videoEmbed:
 midGoldBanner1:
   text: "ADVANCED BRAIN WELLNESS\n& MENTAL PERFORMANCE OPTIMIZATION"
   ctaLabel: "BOOK APPOINTMENT"
-  ctaHref: "#book"
+  ctaHref: "https://www.joinblvd.com/b/ideal-medical-and-wellness/widget#/visit-type"
 
 # ---------- Full-width image: TMS device close-up ----------
 fullWidthImages:
@@ -98,7 +98,7 @@ videoEmbed2:
 midGoldBanner2:
   text: "ADVANCED BRAIN WELLNESS\n& MENTAL PERFORMANCE OPTIMIZATION"
   ctaLabel: "BOOK APPOINTMENT"
-  ctaHref: "#book"
+  ctaHref: "https://www.joinblvd.com/b/ideal-medical-and-wellness/widget#/visit-type"
 
 # ---------- FAQ (placeholders — text from client pending) ----------
 faq:

@@ -53,11 +53,11 @@ export const mainNav: NavGroup[] = [
 ];
 
 /** CTA в шапке/меню/везде.
- *  href = '#' пока система записи не выбрана.
- *  Поиск по 'data-todo="booking-system"' покажет все места, требующие подключения. */
+ *  href ведёт на виджет записи Boulevard (JoinBlvd) клиники.
+ *  Открывается в новой вкладке (target="_blank") — внешняя booking-система. */
 export const bookingCta = {
   label: 'BOOK APPOINTMENT',
-  href: '#',
+  href: 'https://www.joinblvd.com/b/ideal-medical-and-wellness/widget#/visit-type',
 };
 
 /** Известные страницы, которые есть в Figma, но НЕ выведены в меню.
