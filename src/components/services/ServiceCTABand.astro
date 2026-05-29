@@ -16,13 +16,13 @@
 import { bookingCta } from '../../data/navigation.ts';
 ---
 
-<section class="w-full bg-cream py-12 flex justify-center" data-section="service-cta-band">
+<section class="w-full bg-cream py-12 flex justify-center max-md:px-[7.55%]" data-section="service-cta-band">
   <a
     href={bookingCta.href}
     target="_blank"
     rel="noopener noreferrer"
     class="inline-flex items-center justify-center bg-gold text-cream font-sans uppercase tracking-wider rounded-full
-           min-w-[488px] py-4 px-12 text-[24px] hover:opacity-90 transition-opacity"
+           md:min-w-[488px] max-md:w-full py-4 px-12 max-md:px-6 text-[24px] hover:opacity-90 transition-opacity"
   >
     BOOK APPOINTMENT
   </a>

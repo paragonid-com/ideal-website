@@ -32,11 +32,16 @@ export default {
         sans: ['Manrope', 'system-ui', 'sans-serif'],
       },
       fontSize: {
-        // Размеры из Figma 1:1
-        // H1 = 62px (1:76), Body = 21px (1:104), Button = 22px (1:209)
-        'h1': ['62px', { lineHeight: '1.1' }],
-        'body-lg': ['21px', { lineHeight: '1.4' }],
-        'btn': ['22px', { lineHeight: '1' }],
+        // Размеры из Figma 1:1 (десктоп). Обёрнуты в clamp() для мобильного
+        // адаптива: верхняя граница = исходный десктоп-размер (1:1 сохранён),
+        // нижняя — безопасная для узких экранов, средний vw-член даёт плавное
+        // масштабирование между ними. lineHeight без изменений.
+        //   H1   = 62px (1:76)  → clamp(34px … 62px)
+        //   Body = 21px (1:104) → clamp(17px … 21px)
+        //   Btn  = 22px (1:209) → clamp(16px … 22px)
+        'h1': ['clamp(34px, 5vw + 1rem, 62px)', { lineHeight: '1.1' }],
+        'body-lg': ['clamp(17px, 1vw + 0.6rem, 21px)', { lineHeight: '1.4' }],
+        'btn': ['clamp(16px, 1.2vw + 0.6rem, 22px)', { lineHeight: '1' }],
       },
       maxWidth: {
         // Дизайн нарисован под 1920px; рабочий контент-блок ~1632px (1920 - 144*2)

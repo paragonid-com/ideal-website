@@ -48,7 +48,11 @@
   font-display: swap;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap');
+/* Manrope подключается через <link rel="preconnect"> + <link rel="stylesheet">
+   в <head> (src/layouts/BaseLayout.astro). Раньше здесь стоял @import после
+   @font-face Optima — это вызывало build-warning «@import must precede all
+   other statements» (CSS требует @import до любых правил). Перенос в <head>
+   убирает warning и через preconnect чуть ускоряет загрузку шрифта. */
 
 @tailwind base;
 @tailwind components;
