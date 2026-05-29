@@ -10,10 +10,8 @@ heroImage: "/assets/images/services/bloodwork/hero.webp"
 heroImageAlt: "Blood sample vials in a laboratory — Ideal Medical & Wellness, Aventura"
 
 # === "What is Blood Work Therapy?" — узлы Figma 1:2464 (заголовок) + 1:2473 (body) + 1:2505 (фото слева)
-# ⚠️ ОПЕЧАТКА из Figma: "BOOD" вместо "BLOOD" (узел 1:2465). Сохранена как есть
-#    по политике проекта (как MENTALL/APPOIMENT/teel) — data-todo для ревью клиента.
 # Заголовок (с опечаткой) реальный; body Lorem (data-todo="copy").
-whatIsTitle: "WHAT IS BOOD\nWORK THERAPY?"
+whatIsTitle: "WHAT IS BLOOD\nWORK THERAPY?"
 # ⚠️ Stock: istockphoto-2206913658 — лицензия требует проверки (блокер)
 whatIsImage: "/assets/images/services/bloodwork/what-is.webp"
 whatIsImageAlt: "Lab technician analyzing blood work results — Ideal Medical clinic"
@@ -103,6 +101,10 @@ stars:
   benefits: true
   whoFor: true
   results: true
+
+# CTA: Figma-фрейм не содержит mid-section CTA (только hero+footer) —
+# подавляем 3 дефолтных band'а шаблона.
+suppressDefaultCtas: true
 
 draft: false
 category:
