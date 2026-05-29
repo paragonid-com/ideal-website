@@ -31,7 +31,7 @@ const leadParas = lead.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
   class="w-full bg-cream"
   data-section="service-who-for"
 >
-  <div class="mx-auto max-w-design grid grid-cols-2 items-center min-h-[1000px]">
+  <div class="mx-auto max-w-design grid grid-cols-1 lg:grid-cols-2 items-center lg:min-h-[1000px]">
     {/* Левая колонка — заголовок, lead, буллеты */}
     <div class="relative px-[7.55%] py-24">
       {showStar && (
@@ -67,7 +67,7 @@ const leadParas = lead.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
     </div>
 
     {/* Правая колонка — фото */}
-    <div class="relative h-full min-h-[700px]">
+    <div class="relative h-[320px] md:h-[480px] lg:h-full lg:min-h-[700px]">
       <img
         src={image}
         alt={imageAlt}

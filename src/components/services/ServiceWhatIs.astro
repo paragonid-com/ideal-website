@@ -31,9 +31,9 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
   class="w-full bg-cream"
   data-section="service-what-is"
 >
-  <div class="mx-auto max-w-design grid grid-cols-2 items-center min-h-[940px]">
+  <div class="mx-auto max-w-design grid grid-cols-1 lg:grid-cols-2 items-center lg:min-h-[940px]">
     {/* Левая колонка — фото на всю высоту секции */}
-    <div class="relative h-full">
+    <div class="relative h-[320px] md:h-[480px] lg:h-full">
       <img
         src={image}
         alt={imageAlt}

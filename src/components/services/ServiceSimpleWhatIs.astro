@@ -33,9 +33,9 @@ const paragraphs = body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
   class="w-full bg-cream py-24"
   data-section="service-simple-what-is"
 >
-  <div class="mx-auto max-w-design px-[7.55%] grid grid-cols-12 gap-8 items-start">
+  <div class="mx-auto max-w-design px-[7.55%] grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
     {/* Заголовок занимает ~5 из 12 колонок (примерно как у Weight Loss whatIs) */}
-    <div class="col-span-12 lg:col-span-5 lg:col-start-7">
+    <div class="lg:col-span-5 lg:col-start-7">
       <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
         {titleLines.map((line, i) => (
           <>
