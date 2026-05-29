@@ -31,6 +31,7 @@ export const mainNav: NavGroup[] = [
       { label: 'IV Therapy', href: '/services/ivtherapy' },
       { label: 'Blood Work', href: '/services/bloodwork' },
       { label: 'PRP & Allograft', href: '/services/regenerative' },
+      { label: 'Sexual Health', href: '/services/sexualhealth' },
     ],
   },
   {
@@ -62,11 +63,6 @@ export const bookingCta = {
 
 /** Известные страницы, которые есть в Figma, но НЕ выведены в меню.
  *  Не используются в Header, но перечислены для sitemap / справки. */
-export const orphanPages = [
-  {
-    label: 'Sexual Health',
-    href: '/services/sexualhealth',
-    note: 'В Figma есть страница (узел 1:7461), но в menu-1..4 не выведена. ' +
-          'По решению заказчика — оставить в инвентаре проблем, выводим как orphan.',
-  },
-];
+/** Известные страницы из Figma, не выведенные в меню.
+ *  Сейчас пусто: Sexual Health (1:7461) выведена в Wellness Services. */
+export const orphanPages: NavItem[] = [];
