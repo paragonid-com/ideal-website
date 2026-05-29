@@ -113,6 +113,9 @@ stars:
   whyTrust: true
   experience: true
 
+# CTA между gold pull-quote и Experience (Figma band y6891, перед EXPERIENCE)
+ctaAfterGoldBanner: true
+
 draft: false
 category:
   - wellness

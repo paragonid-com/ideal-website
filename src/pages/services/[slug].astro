@@ -480,6 +480,9 @@ const goldBanner = normalizeBanner(data.goldBanner);
     />
   )}
 
+  {/* CTA между gold pull-quote и Experience (hormone, Figma band y6891) — opt-in */}
+  {data.ctaAfterGoldBanner && <ServiceCTABand />}
+
   {/* Experience (hormone — DNA фото + текст + телефон + CTA) */}
   {data.experience && (
     <ServiceExperience
@@ -491,6 +494,9 @@ const goldBanner = normalizeBanner(data.goldBanner);
       showStar={data.stars?.experience}
     />
   )}
+
+  {/* CTA прямо перед FAQ (emsculpt Figma 1:5573, emface 1:6327) — opt-in */}
+  {data.ctaBeforeFaq && <ServiceCTABand />}
 
   {/* FAQ */}
   {data.faq && data.faq.length > 0 && <ServiceFAQ faq={data.faq} />}

@@ -134,6 +134,9 @@ faq:
 stars:
   hero: true
 
+# CTA после видео #2, перед FAQ (Figma 1:6327)
+ctaBeforeFaq: true
+
 draft: false
 category:
   - aesthetic

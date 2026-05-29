@@ -282,6 +282,13 @@ const services = defineCollection({
        *    - ctaAfterVideo2          — Figma 1:2913 (после видео #2, перед gold-banner #2) */
       ctaBeforeConditionsList: z.boolean().default(false),
       ctaAfterVideo2: z.boolean().default(false),
+      /** CTA «BOOK APPOINTMENT» прямо перед FAQ. Figma-макеты emsculpt (1:5573,
+       *  после before/after) и emface (1:6327, после видео #2) ставят здесь band,
+       *  которого не было в общем шаблоне. Default false → остальные не затронуты. */
+      ctaBeforeFaq: z.boolean().default(false),
+      /** CTA «BOOK APPOINTMENT» между gold-pull-quote и Experience (hormone,
+       *  Figma 1:3467→Experience: band на y6891). Default false. */
+      ctaAfterGoldBanner: z.boolean().default(false),
 
       // ===== Categories Grid (emsculpt): 3-колонная сетка фото+заголовок+опционально-текст =====
       // Используется дважды на странице emsculpt — поэтому в frontmatter массив таких блоков.

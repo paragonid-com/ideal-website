@@ -87,6 +87,9 @@ faq:
 stars:
   hero: true
 
+# CTA после before/after, перед FAQ (Figma 1:5573)
+ctaBeforeFaq: true
+
 draft: false
 category:
   - wellness
