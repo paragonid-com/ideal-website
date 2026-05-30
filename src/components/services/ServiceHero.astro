@@ -43,6 +43,14 @@ const lines = title.split('\n');
     decoding="async"
   />
 
+  {/* Скрим под текстом: на мобиле фото короче и текст ложится на детальную
+      часть кадра — кремовый градиент слева повышает контраст золотого текста.
+      На десктопе слабее (текст и так лежит на спокойной зоне слева). */}
+  <div
+    class="absolute inset-0 z-[1] bg-gradient-to-r from-cream/85 via-cream/45 to-transparent lg:from-cream/55 lg:via-cream/10"
+    aria-hidden="true"
+  ></div>
+
   <div class="relative z-10 mx-auto h-full max-w-design px-[7.55%]">
     <div class="flex h-full flex-col justify-start pt-[120px] lg:pt-[224px]">
       <h1 class="font-heading text-h1 uppercase text-gold leading-tight">
