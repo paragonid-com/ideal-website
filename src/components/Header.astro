@@ -2,13 +2,20 @@
 /**
  * Header — единый компонент для всех страниц сайта.
  *
- * Состоит из двух частей:
+ * Состоит из трёх частей:
  *   1. Top bar — лого слева + иконка-burger справа.
  *      Лежит поверх контента страницы (absolute, не fixed),
  *      так как на Hero контент сам отрисовывает фон под шапкой.
- *   2. Overlay-меню — full-screen, открывается по клику burger.
+ *   2. Overlay-меню (#overlay-menu) — ДЕСКТОПНОЕ (`lg+`), full-screen.
  *      Внутри: лого, X-кнопка закрытия, 3 раскрывающихся раздела,
  *      CTA-кнопка BOOK APPOINTMENT, нижний блок Address/Quick Links/Subscribe.
+ *      На мобиле force-hidden (`max-lg:!hidden`) — НЕ показывается.
+ *   3. Mobile-меню (#mobile-menu) — МОБИЛЬНОЕ (`< lg`), двухуровневый
+ *      drill-down (Вариант C): L1 = 3 категории, тап → L2 выезжает справа
+ *      со списком пунктов раздела. CTA закреплён на обоих уровнях.
+ *      На десктопе force-hidden (`lg:!hidden`).
+ *      Бургер один; openMenu/closeMenu открывают/закрывают ОБА overlay,
+ *      видимость решает CSS-гейт по брейкпоинту (без JS-детекта вьюпорта).
  *
  * Источник в Figma:
  *   menu-1 (1:1963), menu-2 (1:2012), menu-3 (1:3813), menu-4 (1:3757)
@@ -29,10 +36,6 @@
  * Sub-навигация (отдельная фича поверх Figma): внутри подменю текущий
  * пункт помечен `aria-current="page"` + `font-semibold`. Применяется
  * к любой странице, которая есть в навигации.
- *
- * Поведение на мобильном — пока тот же overlay (по решению заказчика,
- * см. ответ от 26.05.26). После прихода мобильных макетов от дизайнеров —
- * будем адаптировать.
  */
 
 import { mainNav, bookingCta, type NavGroup } from '../data/navigation.ts';
@@ -104,7 +107,7 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
     type="button"
     class="block rounded-full bg-black/35 p-3 text-white backdrop-blur-sm transition-colors hover:bg-black/50 [filter:drop-shadow(0_2px_4px_rgba(0,0,0,0.3))]"
     aria-label="Open menu"
-    aria-controls="overlay-menu"
+    aria-controls="overlay-menu mobile-menu"
     aria-expanded="false"
   >
     {/* Burger из 4 линий — нестандартный (3 — обычный), взято 1:1 из Figma узел 1:144.
@@ -127,10 +130,13 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
   </button>
 </header>
 
-{/* === OVERLAY MENU === */}
+{/* === OVERLAY MENU (ДЕСКТОП, lg+) ===
+   max-lg:!hidden — на мобиле не показывается никогда (даже когда JS вешает
+   `flex` при открытии): !important перекрывает .flex. Мобильный путь — ниже,
+   отдельный #mobile-menu. */}
 <div
   id="overlay-menu"
-  class="fixed inset-0 z-50 hidden flex-col overflow-y-auto bg-cream"
+  class="fixed inset-0 z-50 hidden flex-col overflow-y-auto bg-cream max-lg:!hidden"
   aria-hidden="true"
 >
   {/* Фон-градиент — на основе того, что виден на скриншотах menu-1..4.
@@ -270,11 +276,171 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
   </div>
 </div>
 
+{/* === MOBILE MENU (< lg) — двухуровневый drill-down (Вариант C) ===
+   Два уровня — состояние ОДНОГО overlay (URL не меняется):
+     L1 (data-mobile-panel="l1") — 3 категории, тап → drill-in.
+     L2 (data-mobile-panel="l2") — метка раздела + пункты, выезжает справа.
+   У каждой панели свой НЕПРОЗРАЧНЫЙ градиент-фон, иначе при slide
+   просвечивают друг через друга (словлено на прототипе).
+   lg:!hidden — на десктопе не показывается (там #overlay-menu выше). */}
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-50 hidden h-[100dvh] flex-col overflow-hidden lg:!hidden"
+  aria-hidden="true"
+>
+  {/* --- LEVEL 1 --- */}
+  <div
+    data-mobile-panel="l1"
+    class="absolute inset-0 flex translate-x-0 flex-col transition-transform duration-[340ms] ease-out motion-reduce:transition-none"
+    style="background: radial-gradient(ellipse 70% 90% at 20% 35%, #f0eadc 0%, #ddc8a0 70%, #c9b187 100%);"
+  >
+    {/* top-bar: лого слева + ✕ справа */}
+    <div class="flex shrink-0 items-center justify-between px-[7.55%] pb-6 pt-8">
+      <a href="/" class="block" aria-label="IDEAL Medical and Wellness — home">
+        <img
+          src="/assets/images/logo-ideal.svg"
+          alt="IDEAL Medical and Wellness"
+          width="194"
+          height="62"
+          class="h-auto w-[160px]"
+        />
+      </a>
+      <button
+        type="button"
+        data-mobile-close
+        class="-mr-1 block p-1 text-gold-bright transition-opacity hover:opacity-70"
+        aria-label="Close menu"
+      >
+        <svg width="30" height="30" viewBox="0 0 42 42" fill="none" aria-hidden="true">
+          <path d="M2 2 L40 40 M40 2 L2 40" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </button>
+    </div>
+
+    {/* 3 категории — drill-in по тапу */}
+    <nav class="flex-1 overflow-y-auto overscroll-contain px-[7.55%]" aria-label="Mobile menu">
+      <ul class="border-t border-gold/20">
+        {mainNav.map((group: NavGroup) => (
+          <li class="border-b border-gold/20">
+            <button
+              type="button"
+              data-mobile-drill={group.label}
+              class="flex min-h-[44px] w-full items-center justify-between gap-4 py-5 text-left font-heading text-[32px] uppercase leading-tight text-gold transition-opacity hover:opacity-70"
+            >
+              <span>{group.label}</span>
+              <svg class="shrink-0 text-gold-bright" width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M9 6l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    {/* CTA закреплён внизу (L1) */}
+    <div class="shrink-0 px-[7.55%] pb-8 pt-6">
+      <a
+        href={bookingCta.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-gold w-full"
+      >
+        {bookingCta.label}
+      </a>
+    </div>
+  </div>
+
+  {/* --- LEVEL 2 --- (z-10: поверх L1 во время slide) */}
+  <div
+    data-mobile-panel="l2"
+    class="absolute inset-0 z-10 flex translate-x-full flex-col transition-transform duration-[340ms] ease-out motion-reduce:transition-none"
+    style="background: radial-gradient(ellipse 70% 90% at 20% 35%, #f0eadc 0%, #ddc8a0 70%, #c9b187 100%);"
+    inert
+  >
+    {/* top-bar: ‹ Back слева + ✕ справа */}
+    <div class="flex shrink-0 items-center justify-between px-[7.55%] pb-6 pt-8">
+      <button
+        type="button"
+        data-mobile-back
+        class="-ml-1 flex items-center gap-1 p-1 font-sans text-[15px] uppercase tracking-[0.12em] text-gold transition-opacity hover:opacity-70"
+        aria-label="Back to main menu"
+      >
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+          <path d="M15 6l-6 6 6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+        <span>Back</span>
+      </button>
+      <button
+        type="button"
+        data-mobile-close
+        class="-mr-1 block p-1 text-gold-bright transition-opacity hover:opacity-70"
+        aria-label="Close menu"
+      >
+        <svg width="30" height="30" viewBox="0 0 42 42" fill="none" aria-hidden="true">
+          <path d="M2 2 L40 40 M40 2 L2 40" stroke="currentColor" stroke-width="2" />
+        </svg>
+      </button>
+    </div>
+
+    {/* Списки разделов — виден активный (data-mobile-cat). Зона свайпа-Back. */}
+    <div data-mobile-swipe class="flex-1 overflow-y-auto overscroll-contain px-[7.55%]">
+      {mainNav.map((group: NavGroup) => (
+        <div data-mobile-cat={group.label} class="hidden">
+          {/* некликабельная метка-заголовок раздела (focus при drill-in) */}
+          <p
+            data-mobile-label
+            tabindex="-1"
+            class="pb-5 pt-2 font-sans text-[13px] uppercase tracking-[0.18em] text-gold/70 outline-none"
+          >
+            {group.label}
+          </p>
+          <ul class="flex flex-col gap-1 pb-2">
+            {group.items?.map((item) => {
+              const current = isItemCurrent(item.href);
+              return (
+                <li>
+                  <a
+                    href={item.href}
+                    class={`flex min-h-[44px] items-center gap-3 py-3 font-sans text-[20px] transition-opacity hover:opacity-70
+                            ${current ? 'font-semibold text-gold' : 'text-gold'}`}
+                    aria-current={current ? 'page' : undefined}
+                  >
+                    {/* слот-точка фиксированной ширины → текст всех пунктов выровнен,
+                        точка-индикатор видна только у текущей страницы */}
+                    <span
+                      class={`h-2 w-2 shrink-0 rounded-full ${current ? 'bg-gold-bright' : 'bg-transparent'}`}
+                      aria-hidden="true"
+                    ></span>
+                    <span>{item.label}</span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      ))}
+    </div>
+
+    {/* CTA закреплён внизу И на L2 (в один тап на обоих уровнях) */}
+    <div class="shrink-0 px-[7.55%] pb-8 pt-6">
+      <a
+        href={bookingCta.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-gold w-full"
+      >
+        {bookingCta.label}
+      </a>
+    </div>
+  </div>
+</div>
+
 <script>
   // Управление overlay-меню — minimal vanilla JS, без зависимостей.
   const toggle = document.getElementById('menu-toggle');
   const close = document.getElementById('menu-close');
-  const overlay = document.getElementById('overlay-menu');
+  const overlay = document.getElementById('overlay-menu');       // десктоп (lg+)
+  const mobileMenu = document.getElementById('mobile-menu');     // мобильный drill-down (< lg)
 
   // Текущее "запомненное" состояние подменю. Изначально = серверный default
   // (data-nav-active="true" на одном из заголовков). При hover временно
@@ -286,40 +452,176 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
   }
   let stickySection: string | undefined = getServerDefault();
 
+  // --- Открытие/закрытие управляет ОБОИМИ overlay (#overlay-menu для lg+,
+  //     #mobile-menu для < lg). Видимость решает CSS-гейт по брейкпоинту,
+  //     поэтому JS-детект вьюпорта не нужен — открываем оба, видно нужный. ---
   function openMenu() {
-    if (!overlay || !toggle) return;
-    overlay.classList.remove('hidden');
-    overlay.classList.add('flex');
-    overlay.setAttribute('aria-hidden', 'false');
+    if (!toggle) return;
     toggle.setAttribute('aria-expanded', 'true');
     document.body.style.overflow = 'hidden';
-    // При открытии — показываем sticky (последнее выбранное или server default).
-    showPanel(stickySection);
+
+    if (overlay) {
+      overlay.classList.remove('hidden');
+      overlay.classList.add('flex');
+      overlay.setAttribute('aria-hidden', 'false');
+      // Десктоп: показываем sticky (последнее выбранное или server default).
+      showPanel(stickySection);
+    }
+    if (mobileMenu) {
+      mobileMenu.classList.remove('hidden');
+      mobileMenu.classList.add('flex');
+      mobileMenu.setAttribute('aria-hidden', 'false');
+      setMobileLevel(null); // всегда с корня (L1) — последний раздел не запоминаем
+    }
   }
 
   function closeMenu() {
-    if (!overlay || !toggle) return;
-    // Перед сменой aria-hidden на true — снять фокус с любого элемента
-    // внутри overlay, иначе браузер ругается (aria-hidden на предке фокуса).
-    // Возвращаем фокус на toggle-кнопку, она как раз сейчас становится видимой.
-    if (overlay.contains(document.activeElement) && document.activeElement instanceof HTMLElement) {
-      document.activeElement.blur();
+    if (!toggle) return;
+    // Снять фокус с элемента внутри overlay перед aria-hidden=true
+    // (иначе браузер ругается на aria-hidden у предка фокуса).
+    const active = document.activeElement;
+    if (
+      active instanceof HTMLElement &&
+      (overlay?.contains(active) || mobileMenu?.contains(active))
+    ) {
+      active.blur();
     }
     toggle.focus();
-    overlay.classList.add('hidden');
-    overlay.classList.remove('flex');
-    overlay.setAttribute('aria-hidden', 'true');
     toggle.setAttribute('aria-expanded', 'false');
     document.body.style.overflow = '';
+
+    if (overlay) {
+      overlay.classList.add('hidden');
+      overlay.classList.remove('flex');
+      overlay.setAttribute('aria-hidden', 'true');
+    }
+    if (mobileMenu) {
+      mobileMenu.classList.add('hidden');
+      mobileMenu.classList.remove('flex');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      setMobileLevel(null); // сброс на L1 для следующего открытия
+    }
   }
 
   toggle?.addEventListener('click', openMenu);
   close?.addEventListener('click', closeMenu);
 
-  // Esc — закрыть
+  // Esc — закрыть (любой из overlay открыт). На L2 Esc закрывает целиком
+  // (не Back) — по утверждённой спеке.
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && overlay?.getAttribute('aria-hidden') === 'false') {
-      closeMenu();
+    if (e.key !== 'Escape') return;
+    const open =
+      overlay?.getAttribute('aria-hidden') === 'false' ||
+      mobileMenu?.getAttribute('aria-hidden') === 'false';
+    if (open) closeMenu();
+  });
+
+  // ===== МОБИЛЬНЫЙ drill-down (< lg) =====
+  const mPanelL1 = mobileMenu?.querySelector<HTMLElement>('[data-mobile-panel="l1"]');
+  const mPanelL2 = mobileMenu?.querySelector<HTMLElement>('[data-mobile-panel="l2"]');
+  let activeCategory: string | null = null;     // null = L1, иначе ярлык раздела (L2)
+  let lastDrillBtn: HTMLElement | null = null;   // категория-источник (фокус при Back)
+
+  // Переключение уровня: null → L1, иначе → L2 выбранного раздела.
+  function setMobileLevel(category: string | null) {
+    activeCategory = category;
+    const atL2 = category !== null;
+
+    if (mPanelL1 && mPanelL2) {
+      // L1 — лёгкий параллакс влево; L2 — выезжает справа.
+      mPanelL1.classList.toggle('-translate-x-1/4', atL2);
+      mPanelL1.classList.toggle('translate-x-0', !atL2);
+      mPanelL2.classList.toggle('translate-x-0', atL2);
+      mPanelL2.classList.toggle('translate-x-full', !atL2);
+      // Фокус-разделение: неактивная панель inert (вне tab-порядка и от AT) —
+      // иначе её фокусируемые элементы остаются в обходе Tab, хоть и за экраном.
+      mPanelL1.toggleAttribute('inert', atL2);
+      mPanelL2.toggleAttribute('inert', !atL2);
+    }
+    // На L2 показываем список ровно активного раздела.
+    mobileMenu?.querySelectorAll<HTMLElement>('[data-mobile-cat]').forEach((block) => {
+      block.classList.toggle('hidden', block.dataset.mobileCat !== category);
+    });
+  }
+
+  function mobileDrillIn(category: string, sourceBtn: HTMLElement) {
+    lastDrillBtn = sourceBtn;
+    setMobileLevel(category);
+    // Фокус → некликабельная метка раздела (tabindex=-1, принимает focus().
+    const label = mobileMenu?.querySelector<HTMLElement>(
+      `[data-mobile-cat="${category}"] [data-mobile-label]`
+    );
+    label?.focus();
+  }
+
+  function mobileBack() {
+    setMobileLevel(null);
+    lastDrillBtn?.focus(); // фокус → категория-источник
+  }
+
+  // L1: тап категории → drill-in
+  mobileMenu?.querySelectorAll<HTMLElement>('[data-mobile-drill]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const cat = btn.dataset.mobileDrill;
+      if (cat) mobileDrillIn(cat, btn);
+    });
+  });
+  // L2: ‹ Back → обратно на L1
+  mobileMenu?.querySelectorAll<HTMLElement>('[data-mobile-back]').forEach((btn) => {
+    btn.addEventListener('click', mobileBack);
+  });
+  // ✕ (оба уровня) → закрыть
+  mobileMenu?.querySelectorAll<HTMLElement>('[data-mobile-close]').forEach((btn) => {
+    btn.addEventListener('click', closeMenu);
+  });
+
+  // Свайп вправо в зоне списка L2 = Back (v1). Порог 60px, горизонталь > вертикали.
+  const swipeZone = mobileMenu?.querySelector<HTMLElement>('[data-mobile-swipe]');
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let tracking = false;
+  swipeZone?.addEventListener(
+    'touchstart',
+    (e) => {
+      if (activeCategory === null) return;
+      const t = e.touches[0];
+      touchStartX = t.clientX;
+      touchStartY = t.clientY;
+      tracking = true;
+    },
+    { passive: true }
+  );
+  swipeZone?.addEventListener(
+    'touchend',
+    (e) => {
+      if (!tracking || activeCategory === null) return;
+      tracking = false;
+      const t = e.changedTouches[0];
+      const dx = t.clientX - touchStartX;
+      const dy = t.clientY - touchStartY;
+      if (dx > 60 && Math.abs(dx) > Math.abs(dy) * 1.5) mobileBack();
+    },
+    { passive: true }
+  );
+
+  // Focus-trap внутри мобильного меню (Tab по кругу). Неактивная панель inert,
+  // поэтому в обход попадают только видимые фокусируемые элементы активной.
+  mobileMenu?.addEventListener('keydown', (e) => {
+    if (e.key !== 'Tab' || !mobileMenu) return;
+    const focusables = Array.from(
+      mobileMenu.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      )
+    ).filter((el) => el.offsetParent !== null && !el.closest('[inert]'));
+    if (focusables.length === 0) return;
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault();
+      last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault();
+      first.focus();
     }
   });
 
