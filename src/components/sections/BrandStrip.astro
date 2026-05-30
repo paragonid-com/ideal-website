@@ -12,32 +12,36 @@
 import Container from '../Container.astro';
 
 const brands = [
-  { name: 'Tesamorelin', src: '/assets/images/brand-tesamorelin.png' },
-  { name: 'Ozempic',     src: '/assets/images/brand-ozempic.png',  trademark: true },
-  { name: 'NAD+',        src: null, isText: true },
+  // Высоты подобраны так, чтобы визуальный «рост» начертаний совпадал
+  // (одностройчные wordmark'и ниже по px, двухстрочные логотипы выше),
+  // как в макете Figma (узлы 1:210-1:217, 1:179). PNG обрезаны по контенту
+  // и имеют прозрачный фон (без белой плашки).
+  { name: 'Tesamorelin',  src: '/assets/images/brand-tesamorelin.png', h: 'h-[34px]' },
+  { name: 'Ozempic',      src: '/assets/images/brand-ozempic.png', h: 'h-[56px]', trademark: true },
+  { name: 'NAD+',         src: null, isText: true },
   { name: 'TESTOSTERONE', src: null, isText: true },
-  { name: 'Mounjaro',    src: '/assets/images/brand-mounjaro.png', trademark: true },
+  { name: 'Mounjaro',     src: '/assets/images/brand-mounjaro.png', h: 'h-[52px]', trademark: true },
 ];
 ---
 
 <section class="w-full bg-cream pb-16" data-section="brand-strip">
   <Container>
     <div
-      class="flex flex-wrap items-center justify-between gap-x-12 gap-y-8"
+      class="flex flex-wrap items-center justify-center gap-x-10 gap-y-8 lg:justify-between lg:gap-x-12"
       data-todo="trademark-review"
     >
       {brands.map((brand) => (
         brand.isText ? (
-          /* NAD+ и TESTOSTERONE — sans-serif в макете, не Marcellus.
-             Используется font-sans (Manrope), без bold, обычный вес. */
-          <span class="font-sans text-[36px] tracking-wide text-[#333]">
+          /* NAD+ и TESTOSTERONE — текстовые узлы в Figma (sans-serif, не
+             Marcellus). font-sans (Manrope), обычный вес. */
+          <span class="font-sans text-[26px] lg:text-[36px] tracking-wide text-[#333]">
             {brand.name}
           </span>
         ) : (
           <img
             src={brand.src}
             alt={brand.name}
-            class="h-[60px] w-auto object-contain"
+            class={`${brand.h} w-auto object-contain`}
             loading="lazy"
             data-trademark={brand.trademark ? 'yes' : undefined}
           />

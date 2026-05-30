@@ -13,13 +13,16 @@
   data-section="discover"
 >
   <div class="mx-auto grid w-full max-w-design grid-cols-1 lg:grid-cols-2 items-center">
-    {/* Левая колонка — фото на всю высоту, без padding'а */}
-    <div class="relative h-[280px] md:h-[420px] lg:h-full">
+    {/* Левая колонка — фото. Аспект исходника (2054×1368 ≈ 3:2) на всех
+        брейкпоинтах, чтобы object-cover не срезал людей по краям (раньше
+        колонка была квадратной из-за h-full и обрезала мужчину слева и
+        женщину справа). */}
+    <div class="relative w-full aspect-[2054/1368]">
       <img
         src="/assets/images/team-reception.webp"
         alt="The IDEAL Medical and Wellness team at our Aventura reception"
-        width="1027"
-        height="684"
+        width="2054"
+        height="1368"
         class="block h-full w-full object-cover"
         loading="lazy"
       />
