@@ -1,51 +1,67 @@
 ---
 /**
- * BrandStrip — горизонтальный ряд логотипов / названий препаратов, которые
- * клиника предлагает. Расположен между Discover и Signature Services.
+ * BrandStrip — ряд логотипов препаратов на БЕЛОЙ полосе.
+ * Между Discover (cream) и Signature Services (cream): белый фон образует
+ * отдельную полосу, как в макете.
  *
- * Источник: узлы 1:210-1:217 (изображения), 1:179 (текст TESTOSTERONE)
+ * Источник Figma (HOME): 1:210 Tesamorelin, 1:211 Ozempic,
+ * 1:216 NAD+, 1:179 TESTOSTERONE, 1:217 Mounjaro.
+ * Логотипы выровнены по близкой визуальной высоте и равномерно распределены.
  *
- * ⚠️ ВНИМАНИЕ (юридический вопрос): Ozempic® и Mounjaro® — зарегистрированные
- * товарные знаки фарм-компаний. Использование требует юридической проверки.
- * См. docs/stock-photo-inventory.md → "Trademark concerns".
+ * NAD+ и TESTOSTERONE — текст (sans-serif в макете); Tesamorelin, Ozempic,
+ * Mounjaro — PNG (обрезаны по контенту, прозрачный фон, читаются и на белом).
+ *
+ * ⚠️ Ozempic® и Mounjaro® — товарные знаки. Использование требует
+ * юридической проверки. См. docs/stock-photo-inventory.md.
  */
 import Container from '../Container.astro';
 
-const brands = [
-  // Высоты подобраны так, чтобы визуальный «рост» начертаний совпадал
-  // (одностройчные wordmark'и ниже по px, двухстрочные логотипы выше),
-  // как в макете Figma (узлы 1:210-1:217, 1:179). PNG обрезаны по контенту
-  // и имеют прозрачный фон (без белой плашки).
-  { name: 'Tesamorelin',  src: '/assets/images/brand-tesamorelin.png', h: 'h-[34px]' },
-  { name: 'Ozempic',      src: '/assets/images/brand-ozempic.png', h: 'h-[56px]', trademark: true },
-  { name: 'NAD+',         src: null, isText: true },
-  { name: 'TESTOSTERONE', src: null, isText: true },
-  { name: 'Mounjaro',     src: '/assets/images/brand-mounjaro.png', h: 'h-[52px]', trademark: true },
+// Высоты подобраны под макет так, чтобы визуальная высота начертаний была
+// примерно одинаковой. У двухстрочных логотипов (Ozempic — лого+подпись,
+// Mounjaro — иконка+слово) высота больше, у одностройчного Tesamorelin меньше.
+const logos = [
+  { name: 'Tesamorelin', src: '/assets/images/brand-tesamorelin.png', cls: 'h-[30px] md:h-[36px]' },
+  { name: 'Ozempic',     src: '/assets/images/brand-ozempic.png',     cls: 'h-[48px] md:h-[58px]', trademark: true },
+];
+const logosRight = [
+  { name: 'Mounjaro',    src: '/assets/images/brand-mounjaro.png',    cls: 'h-[46px] md:h-[56px]', trademark: true },
 ];
 ---
 
-<section class="w-full bg-cream pb-16" data-section="brand-strip">
+<section class="w-full bg-white py-12 md:py-14" data-section="brand-strip">
   <Container>
     <div
-      class="flex flex-wrap items-center justify-center gap-x-10 gap-y-8 lg:justify-between lg:gap-x-12"
+      class="flex flex-wrap items-center justify-center gap-x-10 gap-y-8 md:justify-between md:gap-x-8"
       data-todo="trademark-review"
     >
-      {brands.map((brand) => (
-        brand.isText ? (
-          /* NAD+ и TESTOSTERONE — текстовые узлы в Figma (sans-serif, не
-             Marcellus). font-sans (Manrope), обычный вес. */
-          <span class="font-sans text-[26px] lg:text-[36px] tracking-wide text-[#333]">
-            {brand.name}
-          </span>
-        ) : (
-          <img
-            src={brand.src}
-            alt={brand.name}
-            class={`${brand.h} w-auto object-contain`}
-            loading="lazy"
-            data-trademark={brand.trademark ? 'yes' : undefined}
-          />
-        )
+      {logos.map((b) => (
+        <img
+          src={b.src}
+          alt={b.name}
+          class={`${b.cls} w-auto object-contain`}
+          loading="lazy"
+          data-trademark={b.trademark ? 'yes' : undefined}
+        />
+      ))}
+
+      {/* NAD+ — bold sans, dark. Плюс слегка приподнят как в макете. */}
+      <span class="font-sans text-[34px] md:text-[40px] font-bold leading-none text-[#222]">
+        NAD<sup class="text-[0.62em] top-[-0.45em] relative font-semibold">+</sup>
+      </span>
+
+      {/* TESTOSTERONE — bold sans с разрядкой, dark. */}
+      <span class="font-sans text-[24px] md:text-[28px] font-bold tracking-[0.04em] leading-none text-[#222]">
+        TESTOSTERONE
+      </span>
+
+      {logosRight.map((b) => (
+        <img
+          src={b.src}
+          alt={b.name}
+          class={`${b.cls} w-auto object-contain`}
+          loading="lazy"
+          data-trademark={b.trademark ? 'yes' : undefined}
+        />
       ))}
     </div>
   </Container>
