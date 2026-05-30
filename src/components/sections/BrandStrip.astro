@@ -20,11 +20,11 @@ import Container from '../Container.astro';
 // примерно одинаковой. У двухстрочных логотипов (Ozempic — лого+подпись,
 // Mounjaro — иконка+слово) высота больше, у одностройчного Tesamorelin меньше.
 const logos = [
-  { name: 'Tesamorelin', src: '/assets/images/brand-tesamorelin.png', cls: 'h-[30px] md:h-[36px]' },
-  { name: 'Ozempic',     src: '/assets/images/brand-ozempic.png',     cls: 'h-[48px] md:h-[58px]', trademark: true },
+  { name: 'Tesamorelin', src: '/assets/images/brand-tesamorelin.png', cls: 'h-[28px] md:h-[32px]' },
+  { name: 'Ozempic',     src: '/assets/images/brand-ozempic.png',     cls: 'h-[46px] md:h-[56px]', trademark: true },
 ];
 const logosRight = [
-  { name: 'Mounjaro',    src: '/assets/images/brand-mounjaro.png',    cls: 'h-[46px] md:h-[56px]', trademark: true },
+  { name: 'Mounjaro',    src: '/assets/images/brand-mounjaro.png',    cls: 'h-[56px] md:h-[66px]', trademark: true },
 ];
 ---
 
@@ -45,12 +45,12 @@ const logosRight = [
       ))}
 
       {/* NAD+ — bold sans, dark. Плюс слегка приподнят как в макете. */}
-      <span class="font-sans text-[34px] md:text-[40px] font-bold leading-none text-[#222]">
+      <span class="font-sans text-[34px] md:text-[42px] font-bold leading-none text-[#222]">
         NAD<sup class="text-[0.62em] top-[-0.45em] relative font-semibold">+</sup>
       </span>
 
       {/* TESTOSTERONE — bold sans с разрядкой, dark. */}
-      <span class="font-sans text-[24px] md:text-[28px] font-bold tracking-[0.04em] leading-none text-[#222]">
+      <span class="font-sans text-[26px] md:text-[29px] font-bold tracking-[0.02em] leading-none text-[#222]">
         TESTOSTERONE
       </span>
 
