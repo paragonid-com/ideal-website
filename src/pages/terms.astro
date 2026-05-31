@@ -1,0 +1,36 @@
+---
+/**
+ * /terms — Terms of Service.
+ *
+ * Политика подгружается виджетом Termageddon (см. PolicyEmbed). Текст в репо
+ * не хранится и автоматически обновляется на стороне Termageddon.
+ * Дизайн — в концепте сайта: PolicyHero + контейнер с встроенной политикой,
+ * затем общий CTA StartYourTransformation.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/Container.astro';
+import PolicyHero from '../components/PolicyHero.astro';
+import PolicyEmbed from '../components/PolicyEmbed.astro';
+import StartYourTransformation from '../components/sections/StartYourTransformation.astro';
+---
+
+<BaseLayout
+  title="Terms of Service | Ideal Medical & Wellness"
+  description="Terms of Service for Ideal Medical & Wellness in Aventura, Florida."
+>
+  <PolicyHero
+    title="Terms of Service"
+    subtitle="Please review the terms below that govern your use of the Ideal Medical and Wellness website and services."
+  />
+
+  <Container as="section" class="bg-white py-16 md:py-24">
+    <div class="mx-auto max-w-[900px]">
+      <PolicyEmbed
+        policyKey="TVcxbWEzQkRNa296ZVhaaVlWRTlQUT09"
+        fallbackUrl="https://app.termageddon.com/api/policy/TVcxbWEzQkRNa296ZVhaaVlWRTlQUT09?css-compatibility=true&h-align=left&table-style=accordion"
+      />
+    </div>
+  </Container>
+
+  <StartYourTransformation />
+</BaseLayout>

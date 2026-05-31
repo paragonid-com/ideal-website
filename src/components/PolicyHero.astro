@@ -1,0 +1,40 @@
+---
+/**
+ * PolicyHero — компактный hero для юридических страниц (/terms, /privacy).
+ *
+ * В Figma отдельного макета для этих страниц нет (на старом сайте — простой
+ * заголовок над встроенной политикой Termageddon). Делаем в концепте сайта:
+ * gold-баннер с заголовком, декоративной звездой и подзаголовком. Без
+ * полноэкранного фото — для текстовой юр-страницы это уместнее и читабельнее.
+ */
+interface Props {
+  title: string;
+  subtitle?: string;
+}
+const { title, subtitle } = Astro.props;
+---
+
+<section
+  class="relative w-full overflow-hidden"
+  style="background: linear-gradient(135deg, #d4c3a3 0%, #b5946a 100%);"
+  data-section="policy-hero"
+>
+  <div class="mx-auto max-w-design px-[7.55%] py-20 md:py-28">
+    <img
+      src="/assets/images/star-sign.svg"
+      alt=""
+      width="43"
+      height="50"
+      class="h-[50px] w-[43px]"
+      aria-hidden="true"
+    />
+    <h1 class="mt-6 font-heading text-h1 uppercase leading-[1.05] text-gold">
+      {title}
+    </h1>
+    {subtitle && (
+      <p class="mt-4 max-w-[680px] font-sans text-body-lg leading-relaxed text-gold/90">
+        {subtitle}
+      </p>
+    )}
+  </div>
+</section>

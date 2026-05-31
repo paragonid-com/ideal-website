@@ -1,0 +1,87 @@
+---
+/**
+ * PolicyEmbed — встраивает авто-обновляемую политику Termageddon.
+ *
+ * Точный embed-код взят со старого сайта idealmedwell.com (плагин Termageddon,
+ * compatibility-mode). Текст политики НЕ хранится в репозитории — он
+ * подгружается и автоматически обновляется Termageddon при изменении законов.
+ * Менять текст напрямую нельзя; правки делаются в кабинете Termageddon.
+ *
+ * Ключи политик (data-policy-key) — те же, что на старом сайте:
+ *   Terms of Service : TVcxbWEzQkRNa296ZVhaaVlWRTlQUT09
+ *   Privacy Policy   : V2tJelRtMWpXbVpqYTNVMWNHYzlQUT09
+ *
+ * ⚠️ Termageddon — платная подписка клиента. Перед запуском убедиться, что в
+ * кабинете Termageddon для новой страницы прописан корректный домен (Termageddon
+ * проверяет, на каких доменах разрешён показ политики). Также возможно
+ * потребуется заново сгенерировать embed-код под новый домен — см. data-todo.
+ *
+ * data-extra повторяет параметры старого сайта: compatibility CSS, выравнивание
+ * по левому краю, таблицы в виде аккордеона.
+ */
+interface Props {
+  /** Уникальный ключ политики из кабинета Termageddon */
+  policyKey: string;
+  /** Прямая ссылка-fallback (если JS не загрузился) */
+  fallbackUrl: string;
+}
+const { policyKey, fallbackUrl } = Astro.props;
+const extra = 'css-compatibility=true&h-align=left&table-style=accordion';
+---
+
+<div class="policy-embed font-sans text-gold" data-todo="confirm-termageddon-domain-and-embed-key">
+  <div
+    id="policy_embed_div"
+    data-policy-key={policyKey}
+    data-extra={extra}
+  >
+    Please wait while the policy is loaded. If it does not load, please
+    <a rel="nofollow" href={fallbackUrl} target="_blank" aria-label="View Policy">
+      click here to view the policy</a>.
+  </div>
+  <script src="https://app.termageddon.com/js/termageddon-compatibility.js" is:inline></script>
+</div>
+
+<style>
+  /* Лёгкая стилизация подгружаемой политики под палитру сайта.
+     Termageddon рендерит контент внутри #policy_embed_div; используем
+     :global, т.к. разметка приходит из внешнего скрипта во время выполнения. */
+  .policy-embed {
+    font-size: 17px;
+    line-height: 1.7;
+  }
+  .policy-embed :global(h1),
+  .policy-embed :global(h2),
+  .policy-embed :global(h3),
+  .policy-embed :global(h4) {
+    font-family: var(--font-heading, 'Optima', serif);
+    color: #8d7431;
+    text-transform: uppercase;
+    line-height: 1.2;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+  }
+  .policy-embed :global(h2) { font-size: 26px; }
+  .policy-embed :global(h3) { font-size: 20px; }
+  .policy-embed :global(p),
+  .policy-embed :global(li) {
+    color: #5f4f22;
+    margin-bottom: 0.9rem;
+  }
+  .policy-embed :global(a) {
+    color: #a8821f;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .policy-embed :global(table) {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.25rem 0;
+  }
+  .policy-embed :global(th),
+  .policy-embed :global(td) {
+    border: 1px solid rgba(141, 116, 49, 0.25);
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+  }
+</style>

@@ -3,7 +3,7 @@ seoTitle: "Bioidentical Hormone Replacement Therapy in Aventura | Ideal Medical 
 seoDescription: "Restore vitality with Bioidentical Hormone Replacement Therapy in Aventura. Ideal Medical offers elite BHRT, pellet therapy, and hormone optimization. Book today!"
 
 heroTitle: "AVENTURA\nBIOIDENTICAL HORMONE\nREPLACEMENT THERAPY"
-heroLead: "ANTI-AGING MEDICINE\nRestore vitality with Bioidentical Hormone Replacement Therapy in Aventura. Ideal Medical offers elite BHRT, pellet therapy, and hormone optimization. Book today!"
+heroLead: "ANTI-AGING MEDICINE\nLab-tested, physician-supervised BHRT and pellet therapy in Aventura — built around your bloodwork, not a template. Book a consultation today."
 heroImage: "/assets/images/services/hormone/hero.webp"
 heroImageAlt: "Doctor reviewing patient hormone test results in Aventura clinic"
 
@@ -13,16 +13,16 @@ whatIsTitle: "UNDERSTANDING\nBIOIDENTICAL HORMONE\nREPLACEMENT THERAPY:\nTHE FUT
 whatIsImage: "/assets/images/services/hormone/what-is.webp"
 whatIsImageAlt: "Bioidentical hormone vials and pellets — Ideal Medical clinic"
 whatIsBody: |
-  You've seen the results among your peers and heard the talk about functional anti-aging medicine. Now, you're likely asking, what is Bioidentical Hormone Replacement Therapy (BHRT) and how can it help me? Think of it as restoring a masterpiece. BHRT uses plant-derived hormones with the exact bioidentical hormone molecular structure to restore your physiological balance.
+  You have probably heard about hormone optimization from friends or your own research, and now you are asking the practical question: what is Bioidentical Hormone Replacement Therapy (BHRT), and would it actually help me? BHRT uses plant-derived hormones with the same molecular structure as the ones your body produces — estradiol, estriol, progesterone, and testosterone — to correct a documented hormonal imbalance.
 
-  Bioidentical Hormone Replacement Therapy is the pinnacle of restorative medicine. Unlike standard synthetic options, hormones like estradiol, estriol, progesterone, and testosterone are biologically indistinguishable from your own. This ensures a seamless integration into your system and, frankly, much better results.
+  The "bioidentical" part matters because your body recognizes these hormones as its own, which is different from older synthetic formulations. But the molecule is only half of it. What determines whether BHRT works for you is accurate diagnosis and careful dosing, which is why every plan at Ideal Medical begins with comprehensive blood work and a clinical review before a single hormone is prescribed.
 
 # === Reclaiming Yourself — узлы Figma 1:3257 + 1:3283 + 1:3371.
 # Это блок "текст слева + фото справа" ПЕРЕД Common Signs.
 # Используем универсальный TextWithPhoto, position='before-common-signs'.
 textWithPhotoBlocks:
   - title: "RECLAIMING\nYOURSELF:\nA NEW STANDARD\nFOR YOUR HEALTH"
-    body: "Instead of just masking symptoms, our restorative med spa in Aventura targets the root causes of burnout and metabolic decline. Ideal Medical replaces generic pharmacy solutions with a comprehensive executive health assessment, using hormone optimization as the foundation for your drive and peak mental performance."
+    body: "Most people do not arrive because of one dramatic symptom. They arrive because energy, focus, sleep, and body composition have all drifted in the wrong direction at once, and willpower is no longer closing the gap. Rather than treating each complaint in isolation, we look at the endocrine and metabolic systems together and identify what is actually driving the decline — then we use hormone optimization to address the cause, with your follow-up labs telling us whether the plan is working."
     image: "/assets/images/services/hormone/reclaiming-yourself.webp"
     imageAlt: "Man considering hormone optimization journey"
     imageSide: "right"
@@ -32,22 +32,22 @@ textWithPhotoBlocks:
 # === Common Signs grid — узлы Figma 1:3236, 1:3305, 1:3316, 1:3345.
 commonSigns:
   title: "Common Signs of Hormonal\nImbalance & Decline"
-  intro: "Certain technical symptoms indicate that your metabolic and endocrine health may be compromised, making you an ideal candidate for age-management medicine. At Aventura's leading concierge longevity center, we often see these signs as the primary red flags that your system is out of sync:"
+  intro: "Hormonal decline tends to show up as a cluster of changes that are easy to attribute to stress or age. When several of the following appear together, lab testing is the only way to confirm whether hormones are the cause. These are the patterns we see most often:"
   items:
     - title: "METABOLIC ADAPTATION:"
-      body: "Struggling with unexplained weight gain or treatment-resistant obesity that does not respond to a 1,200-calorie diet."
+      body: "Unexplained weight gain or stubborn fat that does not respond to diet or calorie restriction."
     - title: "PHYSICAL DECONDITIONING:"
-      body: "Sudden loss of lean muscle mass, decreased stamina, or slow injury recovery times, even in highly active individuals or competitive athletes."
+      body: "Loss of lean muscle, reduced stamina, or slower recovery, even in active people and athletes."
     - title: "COGNITIVE BURNOUT:"
-      body: "Persistent brain fog, loss of mental clarity, and declining cognitive performance during high-stakes professional work."
+      body: "Persistent brain fog and loss of mental clarity during demanding professional work."
     - title: "ANDROGEN DECLINE:"
-      body: "Significant shifts in mood, loss of libido, and muscle mass recovery, indicating the specific signs of low testosterone in your 40s and 50s."
+      body: "Mood changes, low libido, and the signs of low testosterone common in your 40s and 50s."
     - title: "ENDOCRINE FATIGUE:"
-      body: "Chronic lethargy and physical exhaustion that persists despite adequate rest, often linked to hypothalamic-pituitary-gonadal axis deregulation."
+      body: "Chronic exhaustion that does not improve with adequate rest."
     - title: "MICRONUTRIENT GAPS:"
-      body: "Physical markers of deficiency found through the detailed blood work and lab-monitored protocols we prioritize."
+      body: "Deficiencies identified through the detailed blood work we run before treatment."
     - title: "VASOMOTOR INSTABILITY:"
-      body: "Frequent hot flashes, night sweats, and disruptive sleep patterns typical of the perimenopause or menopause transition."
+      body: "Hot flashes, night sweats, and disrupted sleep during the perimenopause or menopause transition."
 
 # === Full-width image между Common Signs и Roadmap — узел Figma 1:3462
 # (alexander-mass-unsplash, фото инъекции). Full-bleed, ~1920x746.
@@ -59,26 +59,26 @@ fullWidthImages:
 # === Roadmap — узлы Figma 1:3239, 1:3310, 1:3329, 1:3355.
 roadmap:
   title: "From Symptom to Solution:\nYour Roadmap to Vitality"
-  intro: "Now that we've identified the symptom, what does the path to recovery actually look like? Transitioning from hormonal decline to peak vitality requires a sophisticated, medical-grade strategy. Our BHRT clinic in Aventura moves beyond temporary fixes to initiate a true regenerative journey. Here's our five-step clinical roadmap designed to restore your hormonal equilibrium and elevate your quality of life."
+  intro: "Once we understand your symptoms, the path is deliberate — and the same for every patient, because the science requires measuring before treating. Here is how care actually proceeds at our BHRT clinic in Aventura."
   items:
     - title: "THE DISCOVERY: COMPREHENSIVE METABOLIC LAB PANEL"
-      body: "We don't guess; we measure. Your journey begins with in-depth blood work designed to map your specific hormonal markers and overall metabolic health. This comprehensive metabolic lab panel serves as the blueprint for your entire restoration."
+      body: "We don't guess; we measure. Your first step is in-depth blood work that maps your hormonal and metabolic markers and serves as the baseline for everything that follows."
     - title: "THE SAFEGUARD: SYSTEMIC MONITORING"
-      body: "Your safety is the foundation of our clinical excellence. We provide systemic monitoring, which includes continuous tracking of hematocrit levels, estradiol balance, and androgen receptor sensitivity, ensuring your transition is not only effective but medically sound at every turn."
+      body: "Safety is built into the protocol. We track markers such as hematocrit and estradiol throughout treatment and adjust your plan as your follow-up labs and response dictate, so your care stays medically sound at every step."
     - title: "THE SCIENCE: BIOIDENTICAL MOLECULAR ALIGNMENT"
-      body: "We believe in working with your body, not against it. Ideal Medical uses only plant-derived hormones that are biologically indistinguishable from your natural hormones, allowing your system to recognize and use the BHRT therapy immediately."
+      body: "When treatment is indicated, we use plant-derived hormones structurally identical to your own, so your body recognizes and uses them directly rather than processing a synthetic substitute."
     - title: "THE RESULT: PERFORMANCE OPTIMIZATION"
-      body: "The final phase is a living process. Ideal Medical focuses on performance optimization, refining your specific protocol based on real-world outcomes. Whether we are targeting cognitive sharpness for the boardroom or physical body recomposition for your active lifestyle, we stay with you until you reach your peak state."
+      body: "Hormone therapy is not set-and-forget. We refine your protocol over time based on follow-up labs and how you actually feel — whether the goal is mental sharpness or body recomposition."
     - title: "THE DELIVERY: PRECISION PELLET IMPLANTATION"
-      body: "Consistency is the key to feeling your best. Using subcutaneous delivery, medical aesthetic clinicians in Aventura perform precision pellet implantation to provide a steady, physiologic release of hormones over several months, keeping your levels optimized around the clock."
+      body: "For patients who choose it, subcutaneous pellet therapy delivers a steady, physiologic release of hormones over several months — a convenient alternative to frequent dosing. Pellets are one delivery option among several; the right method is decided with your clinician."
 
 # === Why Trust — узлы Figma 1:3262, 1:3290.
 whyTrust:
   title: "Why Trust\nIdeal Medical\nand Wellness?"
   body: |
-    Ideal Medical and Wellness is Aventura's premier anti-aging clinic. Our goal is to optimize your metabolic, cognitive, and physical performance so you can enjoy everything life in South Florida has to offer.
+    Ideal Medical and Wellness is a hormone optimization and longevity practice in Aventura, serving patients across South Florida from Bal Harbour to Golden Beach. What sets the practice apart is the process, not the marketing: blood work before treatment, one clinician who knows your case, and an honest conversation about what hormone therapy can and cannot do for you.
 
-    Led by Dr. Ksenia P., Ideal Medical serves a discerning clientele from Bal Harbour to Golden Beach who prioritize clinical excellence and discretion. The most trusted med spa in Aventura combines medical-grade authority with a discreet, concierge approach for specialized, lab-monitored professional male endocrine optimization and women's wellness.
+    Hormone optimization at Ideal Medical is led by Ksenia Petrushkina, PA-C, MPAS, a board-certified physician assistant with a Master of Physician Assistant Studies. She manages each patient's protocol from initial labs through ongoing follow-up, with treatment provided under appropriate physician supervision, for both male endocrine optimization and women's hormonal health.
   image: "/assets/images/services/hormone/why-trust-team.webp"
   imageAlt: "Ideal Medical and Wellness team — Aventura, FL"
 
@@ -88,23 +88,23 @@ goldBanner: "We don't just want to treat you; we want to be your\nlong-term part
 # === Experience block — узлы Figma 1:3389 (DNA), 1:3479-1:3492 (text), 1:3483 (phone).
 experience:
   title: "Experience\nthe Future\nof Wellness"
-  body: "It would be our honor to welcome you into South Florida's high-performance longevity center, Ideal Medical, where we specialize in integrative age-management and data-driven BHRT. Whether you are seeking male endocrine optimization or advanced perimenopause support, Aventura's leading hormone optimization center is here to facilitate your regenerative journey and get you on the road to long-term metabolic health."
+  body: "Whether you are seeking male endocrine optimization, testosterone replacement therapy, or perimenopause and menopause support, our Aventura clinic offers integrative, data-driven BHRT — including pellet therapy — grounded in lab testing and ongoing monitoring. Call to start with the blood work that maps your path."
   image: "/assets/images/services/hormone/experience-dna.webp"
   imageAlt: "DNA strand — symbol of regenerative medicine"
   phone: "305.650.1884"
 
 # === FAQ — узлы Figma 1:3699-1:3691 (Lorem ipsum в макете → placeholder с todo-маркером)
 faq:
-  - question: "Lorem Ipsum in dolor met lorem ipsum?"
-    answer: ""
-  - question: "Lorem Ipsum in dolor met lorem ipsum Hormone Replacement?"
-    answer: ""
-  - question: "Lorem Ipsum in dolor met lorem ipsum?"
-    answer: ""
-  - question: "Lorem Ipsum in dolor met lorem ipsum Hormone Replacement?"
-    answer: ""
-  - question: "Lorem Ipsum in dolor ipsum Hormone Replacement?"
-    answer: ""
+  - question: "What is Bioidentical Hormone Replacement Therapy (BHRT)?"
+    answer: "BHRT uses plant-derived hormones with the same molecular structure as the ones your body produces, rather than synthetic alternatives. For patients with a documented hormonal imbalance, it can address symptoms such as fatigue, weight gain, low libido, and brain fog. Whether it is appropriate for you is determined by lab testing and a clinical review, not by symptoms alone."
+  - question: "What are the signs I might need hormone optimization in my 40s or 50s?"
+    answer: "Common signs include persistent fatigue, weight gain, brain fog, low libido, and — in men — the signs of low testosterone. Because these symptoms have many possible causes, we use comprehensive blood work to confirm whether hormones are the driver before recommending treatment."
+  - question: "What is pellet therapy, and is it right for me?"
+    answer: "Pellet therapy delivers bioidentical hormones through a small subcutaneous implant that releases a steady dose over several months, avoiding frequent dosing. It is one of several delivery options. Which method suits you depends on your labs, your goals, and your clinician's recommendation."
+  - question: "Is BHRT safe for menopause and perimenopause symptoms?"
+    answer: "BHRT can be an effective option for hot flashes, night sweats, and other perimenopause and menopause symptoms in appropriate candidates, but it is not suitable for everyone. We assess individual risk, require baseline labs, and monitor markers such as estradiol and progesterone throughout treatment so that your care stays medically sound."
+  - question: "Where can I find male hormone optimization in South Florida?"
+    answer: "Ideal Medical & Wellness in Aventura offers testosterone replacement therapy and low testosterone treatment for men, managed with lab-based protocols and ongoing monitoring. Treatment begins with blood work to confirm whether testosterone is the underlying issue."
 
 stars:
   hero: true

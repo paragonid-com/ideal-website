@@ -1,0 +1,36 @@
+---
+/**
+ * /privacy — Privacy Policy.
+ *
+ * Политика подгружается виджетом Termageddon (см. PolicyEmbed). Текст в репо
+ * не хранится и автоматически обновляется на стороне Termageddon.
+ * Дизайн — в концепте сайта: PolicyHero + контейнер с встроенной политикой,
+ * затем общий CTA StartYourTransformation.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Container from '../components/Container.astro';
+import PolicyHero from '../components/PolicyHero.astro';
+import PolicyEmbed from '../components/PolicyEmbed.astro';
+import StartYourTransformation from '../components/sections/StartYourTransformation.astro';
+---
+
+<BaseLayout
+  title="Privacy Policy | Ideal Medical & Wellness"
+  description="Privacy Policy for Ideal Medical & Wellness in Aventura, Florida — how we collect, use, and protect your information."
+>
+  <PolicyHero
+    title="Privacy Policy"
+    subtitle="Learn how Ideal Medical and Wellness collects, uses, and protects your personal information."
+  />
+
+  <Container as="section" class="bg-white py-16 md:py-24">
+    <div class="mx-auto max-w-[900px]">
+      <PolicyEmbed
+        policyKey="V2tJelRtMWpXbVpqYTNVMWNHYzlQUT09"
+        fallbackUrl="https://app.termageddon.com/api/policy/V2tJelRtMWpXbVpqYTNVMWNHYzlQUT09?css-compatibility=true&h-align=left&table-style=accordion"
+      />
+    </div>
+  </Container>
+
+  <StartYourTransformation />
+</BaseLayout>

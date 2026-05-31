@@ -4,32 +4,28 @@
  *
  * Источник: узлы 1:103 (заголовок WHO WE ARE), 1:135 (длинный параграф),
  *           1:248/48/49 (три портрета), 1:180-1:185 (имена и должности)
- *
- * ⚠️ В Figma должность одного из членов команды отмечена как "TBD title".
- * Помечено как data-todo="team-title-laudin".
  */
 import Container from '../Container.astro';
 
 const team = [
   {
-    name: 'Dr. Ksenia P.',
+    name: 'Ksenia Petrushkina, PA-C, MPAS',
     title: 'Owner & Director of Operations',
     photo: '/assets/images/team-ksenia.webp',
   },
   {
-    name: 'Kenneth P.',
+    name: 'Kenneth Persy',
     title: 'Owner & Wellness Expert',
     photo: '/assets/images/team-kenneth.webp',
   },
   {
-    name: 'Laudin P.',
-    title: 'Owner & TBD title', // TODO from client
+    name: 'Laudin Percy',
+    title: 'Owner',
     photo: '/assets/images/team-laudin.webp',
-    todo: 'team-title-laudin',
   },
 ];
 
-const aboutText = `Ideal Medical & Wellness is a premier medical spa and wellness center in Aventura, Florida, dedicated to providing advanced aesthetic and regenerative treatments. Our expert team specializes in a comprehensive suite of services, including medical-grade device treatments, personalized weight loss programs, peptide therapy, IV therapy and so much more. Conveniently located in Aventura, we combine clinical expertise with a luxurious boutique experience. Whether you are seeking transformative anti-aging skin treatments or holistic wellness solutions, our facility serves as the ultimate destination for those looking to enhance their natural beauty and optimize their long-term health.`;
+const aboutText = `Ideal Medical & Wellness is a physician-supervised medical and wellness practice in Aventura, Florida, serving patients across South Florida. We offer a comprehensive range of care — hormone optimization and BHRT, medical weight loss, peptide therapy, IV therapy, and advanced aesthetic device treatments — and we combine clinical rigor with a concierge experience. Every treatment begins with diagnostics, not assumptions, and is managed by a clinician who knows your case. Whether your goal is anti-aging, weight loss, or long-term metabolic health, our team builds a plan around your labs, your goals, and your schedule.`;
 ---
 
 <section
@@ -72,7 +68,6 @@ const aboutText = `Ideal Medical & Wellness is a premier medical spa and wellnes
           </h3>
           <p
             class="mt-1 font-sans text-[18px] uppercase tracking-wider text-gold"
-            data-todo={member.todo}
           >
             {member.title}
           </p>
