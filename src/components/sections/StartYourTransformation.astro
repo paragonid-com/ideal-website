@@ -20,6 +20,15 @@
 import Container from '../Container.astro';
 import { bookingCta } from '../../data/navigation.ts';
 
+interface Props {
+  /** Какие части показывать: обе, только форму, или только CTA-баннер.
+   *  Дефолт 'both' — обратная совместимость со старыми вызовами. */
+  show?: 'both' | 'form' | 'cta';
+}
+const { show = 'both' } = Astro.props;
+const showForm = show === 'both' || show === 'form';
+const showCta = show === 'both' || show === 'cta';
+
 const address = {
   name: 'Ideal Medical and Wellness',
   street: '2999 NE 191 Street',
@@ -28,7 +37,7 @@ const address = {
 };
 ---
 
-{/* ЧАСТЬ A — форма + копирайт-текст */}
+{showForm && (
 <section
   class="w-full bg-cream py-24"
   data-section="start-transformation-form"
@@ -125,8 +134,9 @@ const address = {
     </div>
   </Container>
 </section>
+)}
 
-{/* ЧАСТЬ B — Ready to start (CTA + здание + карта) */}
+{showCta && (
 <section
   class="relative w-full"
   data-section="start-transformation-cta"
@@ -208,3 +218,4 @@ const address = {
     ></iframe>
   </div>
 </section>
+)}

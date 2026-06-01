@@ -75,7 +75,6 @@ import ServiceGoldBanner from '../../components/services/ServiceGoldBanner.astro
 import ServiceExperience from '../../components/services/ServiceExperience.astro';
 import ServiceResults from '../../components/services/ServiceResults.astro';
 import ServiceFAQ from '../../components/services/ServiceFAQ.astro';
-import NewIn2026 from '../../components/sections/NewIn2026.astro';
 import StartYourTransformation from '../../components/sections/StartYourTransformation.astro';
 
 export async function getStaticPaths() {
@@ -508,6 +507,5 @@ const goldBanner = normalizeBanner(data.goldBanner);
   {/* FAQ */}
   {data.faq && data.faq.length > 0 && <ServiceFAQ faq={data.faq} />}
 
-  <NewIn2026 />
-  <StartYourTransformation />
+  <StartYourTransformation show="form" />
 </BaseLayout>
