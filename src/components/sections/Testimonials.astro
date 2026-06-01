@@ -1,15 +1,16 @@
 ---
 /**
- * Testimonials — секция с отзывами клиентов в виде карусели.
+ * Testimonials — "What Our Clients Say": карусель отзывов.
  *
- * Источник: узлы 1:154 (заголовок), 1:159 (отзыв 1 Emily R.),
- *           1:167 (отзыв 2 Marian S.), 1:101/102 (декоративные кавычки),
- *           1:249 (badge Best of 2025), 1:250 (Google 5-star)
+ * Отзывы — реальные, перенесены со старого сайта idealmedwell.com
+ * (раздел "What Our Clients Say"). Это дословные цитаты клиентов —
+ * НЕ редактировать текст (в т.ч. упоминания "Dr Ksenia/Dr Ken" — это
+ * слова клиента; на новом сайте регалии Ksenia = PA-C, MPAS, но цитату
+ * менять нельзя).
  *
- * для верности дизайну, помечено для финального ревью.
- *
- * Карусель сейчас статичная (2 отзыва видны одновременно). Если в будущем
- * понадобится прокрутка → проще всего подключить Swiper.js одной строкой.
+ * Карусель: один отзыв виден за раз, авто-смена каждые 7с, клик по
+ * индикаторам переключает, пауза при наведении/фокусе. Без внешних
+ * библиотек. Уважает prefers-reduced-motion (тогда авто-смена отключена).
  */
 import Container from '../Container.astro';
 import TrustBadges from '../TrustBadges.astro';
@@ -25,6 +26,26 @@ const testimonials = [
       'I recently visited Ideal Medical and Wellness Center and had an outstanding experience. The staff was incredibly professional and attentive, making sure all my needs were met. The facility itself is modern, clean, and well-equipped with the latest medical technology. I was particularly impressed by the thoroughness of the doctors and the personalized care I received. They took the time to explain everything in detail and made me feel comfortable throughout my visit. I highly recommend this center to anyone looking for top-notch medical and wellness services.',
     author: 'Marian S.',
   },
+  {
+    quote:
+      'I am extremely blessed to have met these two amazing doctors who have helped me tremendously when other doctors could not. Dr Ksenia and Dr Ken are both extremely knowledgeable and they take their time to understand all your needs so they can help you completely until you are well. They are doctors to my husband and my children as well. The staff are wonderful and friendly and make you feel very comfortable. If I could give 1000 stars I would!',
+    author: 'Kim D.',
+  },
+  {
+    quote:
+      'The entire team at Ideal Medical and Wellness are fantastic. When it comes to your health, communication is key and they are the best. They make the process easy and continue to be a true partner in your treatment long after your first visit. I highly recommend them!',
+    author: 'Diz R.',
+  },
+  {
+    quote:
+      'Ideal Medical and Wellness has been instrumental in helping me bounce back after my stage 4 cancer battle. Their personalized care was exactly what I needed during my recovery. From day one, the team listened carefully to my unique health challenges and created a comprehensive wellness plan that focused on my physical and emotional healing. The staff\u2019s expertise, combined with their genuine compassion, made all the difference.',
+    author: 'Kyle R.',
+  },
+  {
+    quote:
+      'Nothing but an amazing experience here, I am extremely thankful to have found and dealt with them, they truly care about their patients here. Dr Ksenia and Ken are very knowledgeable and have a lot of experience behind them. They truly strive for the best for their patients and are passionate about helping.',
+    author: 'Isaac G.',
+  },
 ];
 ---
 
@@ -37,37 +58,100 @@ const testimonials = [
       What Our Clients Say
     </h2>
 
-    <div class="mt-16 grid grid-cols-1 gap-12 md:grid-cols-2">
-      {testimonials.map((t) => (
-        <figure class="flex flex-col items-center text-center">
-          <span class="font-heading text-[80px] leading-none text-gold" aria-hidden="true">
-            &ldquo;&rdquo;
-          </span>
-          <blockquote
-            class="mt-4 max-w-[610px] font-sans text-[18px] leading-relaxed text-gold"
-            data-todo={t.todo}
+    <div
+      class="mt-16"
+      data-carousel
+      role="group"
+      aria-roledescription="carousel"
+      aria-label="Client testimonials"
+    >
+      <div class="relative min-h-[360px] sm:min-h-[300px] md:min-h-[260px]">
+        {testimonials.map((t, i) => (
+          <figure
+            class="absolute inset-0 flex flex-col items-center text-center transition-opacity duration-500 ease-out motion-reduce:transition-none"
+            data-slide
+            data-index={i}
+            style={i === 0 ? '' : 'opacity:0;visibility:hidden;'}
+            aria-roledescription="testimonial"
+            aria-label={`${i + 1} of ${testimonials.length}`}
           >
-            {t.quote}
-          </blockquote>
-          <figcaption class="mt-6 font-sans text-[18px] uppercase tracking-wider text-gold">
-            {t.author}
-          </figcaption>
-        </figure>
-      ))}
+            <span class="font-heading text-[80px] leading-none text-gold" aria-hidden="true">
+              &ldquo;&rdquo;
+            </span>
+            <blockquote class="mt-4 max-w-[680px] font-sans text-[18px] leading-relaxed text-gold">
+              {t.quote}
+            </blockquote>
+            <figcaption class="mt-6 font-sans text-[18px] uppercase tracking-wider text-gold">
+              {t.author}
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+
+      <div class="mt-12 flex flex-wrap justify-center gap-2" role="tablist" aria-label="Choose testimonial">
+        {testimonials.map((t, i) => (
+          <button
+            type="button"
+            data-dot
+            data-index={i}
+            role="tab"
+            aria-label={`Show testimonial from ${t.author}`}
+            aria-selected={i === 0 ? 'true' : 'false'}
+            class="h-[3px] w-[50px] sm:w-[70px] bg-gold/40 aria-selected:bg-gold transition-colors"
+          ></button>
+        ))}
+      </div>
     </div>
 
-    {/* Точки-индикаторы карусели + бейджи доверия */}
-    <div class="mt-16 flex flex-col items-center gap-8">
-      <div class="flex gap-2" aria-hidden="true">
-        <span class="h-[3px] w-[70px] bg-gold"></span>
-        <span class="h-[3px] w-[70px] bg-gold/40"></span>
-        <span class="h-[3px] w-[70px] bg-gold/40"></span>
-        <span class="h-[3px] w-[70px] bg-gold/40"></span>
-      </div>
-
-      <div class="mt-8">
-        <TrustBadges standalone={false} />
-      </div>
+    <div class="mt-12 flex flex-col items-center">
+      <TrustBadges standalone={false} />
     </div>
   </Container>
 </section>
+
+<script>
+  document.querySelectorAll('[data-carousel]').forEach((root) => {
+    const slides = Array.from(root.querySelectorAll('[data-slide]'));
+    const dots = Array.from(root.querySelectorAll('[data-dot]'));
+    if (slides.length <= 1) return;
+
+    let current = 0;
+    let timer;
+    const INTERVAL = 7000;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function show(next) {
+      const n = (next + slides.length) % slides.length;
+      slides.forEach((s, i) => {
+        const active = i === n;
+        s.style.opacity = active ? '1' : '0';
+        s.style.visibility = active ? 'visible' : 'hidden';
+      });
+      dots.forEach((d, i) => d.setAttribute('aria-selected', i === n ? 'true' : 'false'));
+      current = n;
+    }
+
+    function start() {
+      if (reduceMotion) return;
+      stop();
+      timer = window.setInterval(() => show(current + 1), INTERVAL);
+    }
+    function stop() {
+      if (timer) window.clearInterval(timer);
+    }
+
+    dots.forEach((dot, i) =>
+      dot.addEventListener('click', () => {
+        show(i);
+        start();
+      })
+    );
+
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', start);
+
+    start();
+  });
+</script>

@@ -1,0 +1,72 @@
+---
+/**
+ * LocationBlock — фото здания клиники + Google Maps.
+ *
+ * Чистый блок "где мы находимся": слева фото здания, справа адрес/телефон,
+ * под ними — встроенная карта на всю ширину. БЕЗ баннера-CTA "Ready to Start"
+ * (тот убран как дубль призыва к действию). Используется на About и Contact.
+ *
+ * Данные адреса/карты — из src/data/site.ts (единый источник, совпадает со
+ * structured data и футером).
+ *
+ * ⚠️ Координаты карты привязаны к адресу из site.ts — сверить с Google
+ *    Business Profile при финализации site.ts.
+ */
+import { SITE } from '../data/site';
+
+const { street, city, region, postalCode } = SITE.address;
+const fullAddress = `${street}, ${city}, ${region} ${postalCode}`;
+const mapEmbed = `https://www.google.com/maps?q=${encodeURIComponent(
+  `${SITE.legalName}, ${fullAddress}`
+)}&output=embed`;
+---
+
+<section class="relative w-full" data-section="location-block">
+  <div class="grid grid-cols-1 lg:grid-cols-2">
+    {/* Фото здания */}
+    <div class="relative aspect-[802/707] lg:aspect-auto lg:min-h-[420px]">
+      <img
+        src="/assets/images/building-clinic.webp"
+        alt={`${SITE.legalName} building in ${city}, ${region}`}
+        class="absolute inset-0 h-full w-full object-cover"
+        loading="lazy"
+      />
+    </div>
+
+    {/* Адрес / телефон */}
+    <div
+      class="relative flex flex-col justify-center px-[7.55%] py-16"
+      style="background: linear-gradient(to bottom right, #d4c3a3, #b5946a);"
+    >
+      <p class="font-heading text-[26px] md:text-[36px] uppercase leading-tight text-gold">
+        We are located in the<br />
+        heart of Aventura, Florida
+      </p>
+
+      <address class="mt-8 not-italic font-sans text-[18px] leading-relaxed text-gold">
+        <p class="font-heading text-[24px] uppercase">Address</p>
+        <p class="mt-2">{SITE.legalName}</p>
+        <p>{street}</p>
+        <p>{city}, {region} {postalCode}</p>
+        <p class="mt-4">
+          <a href={`tel:${SITE.telephone}`} class="hover:underline">
+            {SITE.phoneDisplay}
+          </a>
+        </p>
+      </address>
+    </div>
+  </div>
+
+  {/* Карта на всю ширину */}
+  <div class="aspect-[4/3] md:aspect-[1920/400] w-full">
+    <iframe
+      title={`Map showing ${SITE.legalName} location`}
+      src={mapEmbed}
+      width="100%"
+      height="100%"
+      style="border:0;"
+      loading="lazy"
+      referrerpolicy="no-referrer-when-downgrade"
+    ></iframe>
+  </div>
+</section>
