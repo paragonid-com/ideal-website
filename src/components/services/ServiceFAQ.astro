@@ -44,22 +44,28 @@ const { faq } = Astro.props;
         >
           <details class="group">
             <summary
-              class="flex cursor-pointer items-center justify-between gap-8 py-6 list-none
-                     font-sans text-[28px] text-cream leading-tight
-                     hover:opacity-80 transition-opacity"
+              class="cursor-pointer list-none py-6 text-left
+                     hover:opacity-80 transition-opacity
+                     [&::-webkit-details-marker]:hidden"
             >
-              <span>{item.question}</span>
-              {/* Стрелка › — поворачивается на 90° при раскрытии */}
-              <svg
-                class="flex-shrink-0 transition-transform duration-200 group-open:rotate-90"
-                width="40"
-                height="20"
-                viewBox="0 0 55 27"
-                fill="none"
-                aria-hidden="true"
-              >
-                <path d="M2 2L27.5 24.5L53 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-              </svg>
+              {/* Flex-обёртка ВНУТРИ summary: Safari/WebKit игнорирует
+                  display:flex на самом <summary>, из-за чего вопросы
+                  визуально центрировались на iPad. Обёртка-div решает это. */}
+              <div class="flex items-center justify-between gap-8 text-left
+                          font-sans text-[28px] text-cream leading-tight">
+                <span class="text-left">{item.question}</span>
+                {/* Стрелка › — поворачивается на 90° при раскрытии */}
+                <svg
+                  class="flex-shrink-0 transition-transform duration-200 group-open:rotate-90"
+                  width="40"
+                  height="20"
+                  viewBox="0 0 55 27"
+                  fill="none"
+                  aria-hidden="true"
+                >
+                  <path d="M2 2L27.5 24.5L53 2" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                </svg>
+              </div>
             </summary>
             <div
               class="pb-6 pr-16 font-sans text-body-lg text-cream leading-relaxed"
