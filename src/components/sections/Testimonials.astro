@@ -1,16 +1,15 @@
 ---
 /**
- * Testimonials — "What Our Clients Say": карусель отзывов.
+ * Testimonials — "What Our Clients Say": карусель отзывов по 2 на странице.
  *
- * Отзывы — реальные, перенесены со старого сайта idealmedwell.com
- * (раздел "What Our Clients Say"). Это дословные цитаты клиентов —
- * НЕ редактировать текст (в т.ч. упоминания "Dr Ksenia/Dr Ken" — это
- * слова клиента; на новом сайте регалии Ksenia = PA-C, MPAS, но цитату
- * менять нельзя).
+ * Отзывы реальные, со старого сайта idealmedwell.com. Дословные цитаты —
+ * НЕ редактировать (включая "Dr Ksenia/Dr Ken": это слова клиента).
  *
- * Карусель: один отзыв виден за раз, авто-смена каждые 7с, клик по
- * индикаторам переключает, пауза при наведении/фокусе. Без внешних
- * библиотек. Уважает prefers-reduced-motion (тогда авто-смена отключена).
+ * Карусель: показываем ПО 2 отзыва за раз (6 отзывов → 3 страницы).
+ * Переключение через display (hidden), НЕ через absolute-наложение —
+ * поэтому высота секции подстраивается под контент и текст никогда не
+ * налезает на индикаторы. Авто-смена 8с, клик по точкам, пауза при
+ * hover/focus, уважает prefers-reduced-motion.
  */
 import Container from '../Container.astro';
 import TrustBadges from '../TrustBadges.astro';
@@ -47,6 +46,12 @@ const testimonials = [
     author: 'Isaac G.',
   },
 ];
+
+// Группируем по 2 отзыва на страницу
+const pages = [];
+for (let i = 0; i < testimonials.length; i += 2) {
+  pages.push(testimonials.slice(i, i + 2));
+}
 ---
 
 <section
@@ -65,39 +70,39 @@ const testimonials = [
       aria-roledescription="carousel"
       aria-label="Client testimonials"
     >
-      <div class="relative min-h-[360px] sm:min-h-[300px] md:min-h-[260px]">
-        {testimonials.map((t, i) => (
-          <figure
-            class="absolute inset-0 flex flex-col items-center text-center transition-opacity duration-500 ease-out motion-reduce:transition-none"
-            data-slide
-            data-index={i}
-            style={i === 0 ? '' : 'opacity:0;visibility:hidden;'}
-            aria-roledescription="testimonial"
-            aria-label={`${i + 1} of ${testimonials.length}`}
-          >
-            <span class="font-heading text-[80px] leading-none text-gold" aria-hidden="true">
-              &ldquo;&rdquo;
-            </span>
-            <blockquote class="mt-4 max-w-[680px] font-sans text-[18px] leading-relaxed text-gold">
-              {t.quote}
-            </blockquote>
-            <figcaption class="mt-6 font-sans text-[18px] uppercase tracking-wider text-gold">
-              {t.author}
-            </figcaption>
-          </figure>
-        ))}
-      </div>
+      {pages.map((pair, p) => (
+        <div
+          data-page
+          data-index={p}
+          class={`grid grid-cols-1 gap-12 md:grid-cols-2 ${p === 0 ? '' : 'hidden'}`}
+        >
+          {pair.map((t) => (
+            <figure class="flex flex-col items-center text-center">
+              <span class="font-heading text-[80px] leading-none text-gold" aria-hidden="true">
+                &ldquo;&rdquo;
+              </span>
+              <blockquote class="mt-4 max-w-[610px] font-sans text-[18px] leading-relaxed text-gold">
+                {t.quote}
+              </blockquote>
+              <figcaption class="mt-6 font-sans text-[18px] uppercase tracking-wider text-gold">
+                {t.author}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      ))}
 
-      <div class="mt-12 flex flex-wrap justify-center gap-2" role="tablist" aria-label="Choose testimonial">
-        {testimonials.map((t, i) => (
+      {/* Индикаторы — по одному на страницу (пару отзывов) */}
+      <div class="mt-16 flex justify-center gap-2" role="tablist" aria-label="Choose testimonials page">
+        {pages.map((_, p) => (
           <button
             type="button"
             data-dot
-            data-index={i}
+            data-index={p}
             role="tab"
-            aria-label={`Show testimonial from ${t.author}`}
-            aria-selected={i === 0 ? 'true' : 'false'}
-            class="h-[3px] w-[50px] sm:w-[70px] bg-gold/40 aria-selected:bg-gold transition-colors"
+            aria-label={`Show testimonials page ${p + 1} of ${pages.length}`}
+            aria-selected={p === 0 ? 'true' : 'false'}
+            class="h-[3px] w-[70px] bg-gold/40 aria-selected:bg-gold transition-colors"
           ></button>
         ))}
       </div>
@@ -111,26 +116,21 @@ const testimonials = [
 
 <script>
   document.querySelectorAll('[data-carousel]').forEach((root) => {
-    const slides = Array.from(root.querySelectorAll('[data-slide]'));
+    const pages = Array.from(root.querySelectorAll('[data-page]'));
     const dots = Array.from(root.querySelectorAll('[data-dot]'));
-    if (slides.length <= 1) return;
+    if (pages.length <= 1) return;
 
     let current = 0;
     let timer;
-    const INTERVAL = 7000;
+    const INTERVAL = 8000;
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     function show(next) {
-      const n = (next + slides.length) % slides.length;
-      slides.forEach((s, i) => {
-        const active = i === n;
-        s.style.opacity = active ? '1' : '0';
-        s.style.visibility = active ? 'visible' : 'hidden';
-      });
+      const n = ((next % pages.length) + pages.length) % pages.length;
+      pages.forEach((pg, i) => pg.classList.toggle('hidden', i !== n));
       dots.forEach((d, i) => d.setAttribute('aria-selected', i === n ? 'true' : 'false'));
       current = n;
     }
-
     function start() {
       if (reduceMotion) return;
       stop();
