@@ -292,7 +292,7 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
   {/* --- LEVEL 1 --- */}
   <div
     data-mobile-panel="l1"
-    class="absolute inset-0 flex translate-x-0 flex-col transition-transform duration-[340ms] ease-out motion-reduce:transition-none"
+    class="absolute inset-0 flex translate-x-0 flex-col transform-gpu will-change-transform transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none"
     style="background: radial-gradient(ellipse 70% 90% at 20% 35%, #f0eadc 0%, #ddc8a0 70%, #c9b187 100%);"
   >
     {/* top-bar: лого слева + ✕ справа */}
@@ -354,7 +354,7 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
   {/* --- LEVEL 2 --- (z-10: поверх L1 во время slide) */}
   <div
     data-mobile-panel="l2"
-    class="absolute inset-0 z-10 flex translate-x-full flex-col transition-transform duration-[340ms] ease-out motion-reduce:transition-none"
+    class="absolute inset-0 z-10 flex translate-x-full flex-col transform-gpu will-change-transform transition-transform duration-300 ease-[cubic-bezier(0.32,0.72,0,1)] motion-reduce:transition-none"
     style="background: radial-gradient(ellipse 70% 90% at 20% 35%, #f0eadc 0%, #ddc8a0 70%, #c9b187 100%);"
     inert
   >
@@ -528,6 +528,17 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
     activeCategory = category;
     const atL2 = category !== null;
 
+    // Сначала готовим контент L2: показываем нужный раздел и сбрасываем скролл
+    // в начало — ДО запуска slide, чтобы панель выезжала уже с правильным
+    // содержимым и с верха (иначе мелькание прошлого раздела и прыжок скролла).
+    mobileMenu?.querySelectorAll<HTMLElement>('[data-mobile-cat]').forEach((block) => {
+      block.classList.toggle('hidden', block.dataset.mobileCat !== category);
+    });
+    if (atL2 && mPanelL2) {
+      const scroller = mPanelL2.querySelector<HTMLElement>('[data-mobile-swipe]');
+      if (scroller) scroller.scrollTop = 0;
+    }
+
     if (mPanelL1 && mPanelL2) {
       // L1 — лёгкий параллакс влево; L2 — выезжает справа.
       mPanelL1.classList.toggle('-translate-x-1/4', atL2);
@@ -539,25 +550,23 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
       mPanelL1.toggleAttribute('inert', atL2);
       mPanelL2.toggleAttribute('inert', !atL2);
     }
-    // На L2 показываем список ровно активного раздела.
-    mobileMenu?.querySelectorAll<HTMLElement>('[data-mobile-cat]').forEach((block) => {
-      block.classList.toggle('hidden', block.dataset.mobileCat !== category);
-    });
   }
 
   function mobileDrillIn(category: string, sourceBtn: HTMLElement) {
     lastDrillBtn = sourceBtn;
     setMobileLevel(category);
     // Фокус → некликабельная метка раздела (tabindex=-1, принимает focus().
+    // preventScroll: иначе браузер проматывает скролл-контейнер L2 к метке
+    // прямо во время slide-анимации → визуальный рывок.
     const label = mobileMenu?.querySelector<HTMLElement>(
       `[data-mobile-cat="${category}"] [data-mobile-label]`
     );
-    label?.focus();
+    label?.focus({ preventScroll: true });
   }
 
   function mobileBack() {
     setMobileLevel(null);
-    lastDrillBtn?.focus(); // фокус → категория-источник
+    lastDrillBtn?.focus({ preventScroll: true }); // фокус → категория-источник
   }
 
   // L1: тап категории → drill-in
