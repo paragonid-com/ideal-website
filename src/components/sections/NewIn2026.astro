@@ -12,7 +12,7 @@ import Container from '../Container.astro';
 ---
 
 <section
-  class="relative w-full overflow-hidden bg-[#101a3a] min-h-[248px] flex items-center"
+  class="group relative w-full overflow-hidden bg-[#101a3a] min-h-[248px] flex items-center"
   data-section="new-in-2026"
 >
   {/* Фоновое изображение (тёмно-синий с золотом) — справа */}
@@ -34,8 +34,16 @@ import Container from '../Container.astro';
     aria-hidden="true"
   />
 
+  {/* Растянутая ссылка — вся полоса кликабельна и ведёт на страницу EXOMIND.
+      aria-label даёт скринридеру осмысленный текст вместо «New in 2026 EXOMIND…». */}
+  <a
+    href="/services/exomind"
+    class="absolute inset-0 z-20"
+    aria-label="EXOMIND — new in 2026. Learn more"
+  ></a>
+
   <Container class="relative z-10 py-12">
-    <div class="flex flex-col items-start gap-4 md:flex-row md:items-center md:gap-12">
+    <div class="flex flex-col items-start gap-4 md:flex-row md:items-center md:gap-12 transition-opacity duration-200 group-hover:opacity-90">
       <p class="font-heading text-[40px] uppercase tracking-wider text-cream">
         New in 2026
       </p>
