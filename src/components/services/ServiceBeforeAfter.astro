@@ -44,6 +44,7 @@ interface Props {
   items: BeforeAfterItem[];
 }
 
+import { imgDim } from '../../data/imageDimensions';
 const { title, items } = Astro.props;
 ---
 
@@ -66,6 +67,8 @@ const { title, items } = Astro.props;
             <img
               src={item.image}
               alt={item.alt}
+              width={imgDim(item.image)?.w}
+              height={imgDim(item.image)?.h}
               class="block w-full max-w-[1598px] mx-auto rounded-md"
               loading="lazy"
             />

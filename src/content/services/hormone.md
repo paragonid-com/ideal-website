@@ -91,7 +91,7 @@ experience:
   body: "Whether you are seeking male endocrine optimization, testosterone replacement therapy, or perimenopause and menopause support, our Aventura clinic offers integrative, data-driven BHRT — including pellet therapy — grounded in lab testing and ongoing monitoring. Call to start with the blood work that maps your path."
   image: "/assets/images/services/hormone/experience-dna.webp"
   imageAlt: "DNA strand — symbol of regenerative medicine"
-  phone: "305.650.1884"
+  phone: "(305) 650-1884"
 
 # === FAQ — узлы Figma 1:3699-1:3691 (Lorem ipsum в макете → placeholder с todo-маркером)
 faq:
