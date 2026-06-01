@@ -157,7 +157,14 @@ const midGoldBanner2 = normalizeBanner(data.midGoldBanner2);
 const goldBanner = normalizeBanner(data.goldBanner);
 ---
 
-<BaseLayout title={data.seoTitle} description={data.seoDescription}>
+<BaseLayout
+  title={data.seoTitle}
+  description={data.seoDescription}
+  pageType="service"
+  serviceName={data.heroTitle?.replace(/\n/g, ' ')}
+  serviceDescription={data.seoDescription}
+  faq={data.faq}
+>
   <ServiceHero
     title={data.heroTitle}
     lead={data.heroLead}

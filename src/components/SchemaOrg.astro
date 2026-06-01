@@ -1,0 +1,131 @@
+---
+/**
+ * SchemaOrg — JSON-LD структурированные данные.
+ *
+ * Всегда выводит организацию (MedicalClinic) — это ядро локального SEO:
+ * имя, адрес, гео, телефон, часы, sameAs (соцсети). Плюс по типу страницы
+ * добавляет: FAQPage (если переданы faq), BlogPosting (для статей),
+ * MedicalWebPage/Service-обёртку.
+ *
+ * Использование:
+ *   <SchemaOrg />                              — только организация (главная и т.п.)
+ *   <SchemaOrg faq={data.faq} />               — + FAQ-сниппеты
+ *   <SchemaOrg type="article" article={...} /> — статья блога
+ */
+import { SITE, socialUrls } from '../data/site';
+
+interface FaqItem {
+  question: string;
+  answer: string;
+}
+interface ArticleMeta {
+  title: string;
+  description?: string;
+  image?: string;
+  datePublished?: string;
+  dateModified?: string;
+  author?: string;
+}
+interface Props {
+  /** Тип страницы для дополнительной схемы поверх организации. */
+  type?: 'website' | 'service' | 'article';
+  /** Канон. URL текущей страницы (обычно Astro.url.href). */
+  canonical?: string;
+  /** Заголовок/описание услуги (для type="service"). */
+  serviceName?: string;
+  serviceDescription?: string;
+  /** FAQ — оборачивается в FAQPage (rich-сниппеты). */
+  faq?: FaqItem[];
+  /** Метаданные статьи (для type="article"). */
+  article?: ArticleMeta;
+}
+
+const { type = 'website', canonical, serviceName, serviceDescription, faq, article } = Astro.props;
+
+const abs = (path?: string) =>
+  !path ? undefined : path.startsWith('http') ? path : `${SITE.url}${path}`;
+
+// --- Организация: MedicalClinic ---
+const org: Record<string, unknown> = {
+  '@context': 'https://schema.org',
+  '@type': 'MedicalClinic',
+  '@id': `${SITE.url}/#clinic`,
+  name: SITE.name,
+  legalName: SITE.legalName,
+  url: SITE.url,
+  description: SITE.description,
+  telephone: SITE.telephone,
+  priceRange: SITE.priceRange,
+  image: abs(SITE.ogImage),
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE.address.street,
+    addressLocality: SITE.address.city,
+    addressRegion: SITE.address.region,
+    postalCode: SITE.address.postalCode,
+    addressCountry: SITE.address.country,
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: SITE.geo.latitude,
+    longitude: SITE.geo.longitude,
+  },
+  openingHoursSpecification: SITE.openingHours.map((h) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: h.days,
+    opens: h.opens,
+    closes: h.closes,
+  })),
+};
+const sameAs = socialUrls();
+if (sameAs.length) org.sameAs = sameAs;
+
+const graph: Record<string, unknown>[] = [org];
+
+// --- FAQPage ---
+if (faq && faq.length) {
+  graph.push({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq
+      .filter((f) => f.question && f.answer)
+      .map((f) => ({
+        '@type': 'Question',
+        name: f.question,
+        acceptedAnswer: { '@type': 'Answer', text: f.answer },
+      })),
+  });
+}
+
+// --- Service (страница услуги) ---
+if (type === 'service' && serviceName) {
+  graph.push({
+    '@context': 'https://schema.org',
+    '@type': 'MedicalProcedure',
+    name: serviceName,
+    description: serviceDescription,
+    url: canonical,
+    provider: { '@id': `${SITE.url}/#clinic` },
+  });
+}
+
+// --- BlogPosting (статья) ---
+if (type === 'article' && article) {
+  graph.push({
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: article.title,
+    description: article.description,
+    image: abs(article.image),
+    datePublished: article.datePublished,
+    dateModified: article.dateModified ?? article.datePublished,
+    author: { '@type': article.author ? 'Person' : 'Organization', name: article.author ?? SITE.name },
+    publisher: { '@id': `${SITE.url}/#clinic` },
+    mainEntityOfPage: canonical,
+  });
+}
+---
+
+{graph.map((node) => (
+  <script type="application/ld+json" set:html={JSON.stringify(node)} />
+))}

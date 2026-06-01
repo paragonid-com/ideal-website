@@ -1,6 +1,7 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
+import sitemap from '@astrojs/sitemap';
 
 /**
  * Astro config.
@@ -15,5 +16,5 @@ import tailwind from '@astrojs/tailwind';
 export default defineConfig({
   output: 'static',
   site: 'https://ideal-website.pages.dev',
-  integrations: [tailwind()],
+  integrations: [tailwind(), sitemap()],
 });

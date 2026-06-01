@@ -49,7 +49,17 @@ const words = post.body ? post.body.trim().split(/\s+/).length : 0;
 const readingTime = Math.max(1, Math.round(words / 200));
 ---
 
-<BaseLayout title={`${data.title} | Ideal Medical & Wellness`} description={data.description}>
+<BaseLayout
+  title={`${data.title} | Ideal Medical & Wellness`}
+  description={data.description}
+  pageType="article"
+  ogImage={data.heroImage}
+  article={{
+    title: data.title,
+    description: data.description,
+    image: data.heroImage,
+  }}
+>
   {/* ===== HERO ===== */}
   <section class="relative h-[560px] w-full overflow-hidden bg-cream" data-section="post-hero">
     <img

@@ -2,6 +2,8 @@
 import '../styles/global.css';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import SchemaOrg from '../components/SchemaOrg.astro';
+import { SITE } from '../data/site';
 
 interface Props {
   title: string;
@@ -10,14 +12,44 @@ interface Props {
   header?: boolean;
   /** Включать ли Footer. По умолчанию true. */
   footer?: boolean;
+  /** OG/Twitter превью-картинка (путь от корня или абсолютный URL). */
+  ogImage?: string;
+  /** Тип страницы для og:type и structured data. */
+  pageType?: 'website' | 'service' | 'article';
+  /** FAQ для FAQPage schema (массив {question, answer}). */
+  faq?: { question: string; answer: string }[];
+  /** Имя/описание услуги для Service schema. */
+  serviceName?: string;
+  serviceDescription?: string;
+  /** Метаданные статьи для BlogPosting schema. */
+  article?: {
+    title: string;
+    description?: string;
+    image?: string;
+    datePublished?: string;
+    dateModified?: string;
+    author?: string;
+  };
 }
 
 const {
   title,
-  description = 'Ideal Medical & Wellness — premier medical spa and wellness center in Aventura, Florida.',
+  description = SITE.description,
   header = true,
   footer = true,
+  ogImage = SITE.ogImage,
+  pageType = 'website',
+  faq,
+  serviceName,
+  serviceDescription,
+  article,
 } = Astro.props;
+
+// Канонический URL текущей страницы относительно production-домена
+// (Astro.url может быть localhost при dev/preview — нормализуем на SITE.url).
+const canonical = new URL(Astro.url.pathname, SITE.url).href.replace(/\/$/, '') || SITE.url;
+const ogImageAbs = ogImage.startsWith('http') ? ogImage : `${SITE.url}${ogImage}`;
+const ogType = pageType === 'article' ? 'article' : 'website';
 ---
 
 <!doctype html>
@@ -26,6 +58,22 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    {/* Open Graph (соцсети/мессенджеры — превью при шеринге) */}
+    <meta property="og:type" content={ogType} />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogImageAbs} />
+
+    {/* Twitter card */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageAbs} />
+
     {/* Manrope (body/UI шрифт) с Google Fonts. preconnect к обоим хостам
         (fonts.googleapis.com — CSS, fonts.gstatic.com — woff2) сокращает
         задержку соединения. Перенесён сюда из @import в global.css, где он
@@ -37,6 +85,15 @@ const {
       href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&display=swap"
     />
     <title>{title}</title>
+
+    <SchemaOrg
+      type={pageType}
+      canonical={canonical}
+      faq={faq}
+      serviceName={serviceName}
+      serviceDescription={serviceDescription}
+      article={article}
+    />
   </head>
   <body class="bg-white text-gold">
     {header && <Header />}
