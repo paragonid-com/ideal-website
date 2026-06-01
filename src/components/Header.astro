@@ -286,7 +286,6 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
 <div
   id="mobile-menu"
   class="fixed inset-0 z-50 hidden flex-col overflow-hidden bg-cream lg:!hidden"
-  style="background: radial-gradient(ellipse 70% 90% at 20% 35%, #f0eadc 0%, #ddc8a0 70%, #c9b187 100%);"
   aria-hidden="true"
 >
   {/* --- LEVEL 1 --- */}
@@ -456,10 +455,36 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
   // --- Открытие/закрытие управляет ОБОИМИ overlay (#overlay-menu для lg+,
   //     #mobile-menu для < lg). Видимость решает CSS-гейт по брейкпоинту,
   //     поэтому JS-детект вьюпорта не нужен — открываем оба, видно нужный. ---
+  // Сохранённая позиция скролла для iOS-safe блокировки.
+  let savedScrollY = 0;
+
+  function lockScroll() {
+    // body{overflow:hidden} НЕ блокирует скролл в iOS Safari — страница
+    // остаётся прокрученной под overlay, из-за чего внизу проступает футер.
+    // Надёжно: фиксируем body со сдвигом на текущий скролл.
+    savedScrollY = window.scrollY || window.pageYOffset || 0;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${savedScrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+    document.body.style.overflow = 'hidden';
+  }
+
+  function unlockScroll() {
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+    window.scrollTo(0, savedScrollY); // вернуть пользователя туда, где был
+  }
+
   function openMenu() {
     if (!toggle) return;
     toggle.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
+    lockScroll();
 
     if (overlay) {
       overlay.classList.remove('hidden');
@@ -487,9 +512,9 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
     ) {
       active.blur();
     }
-    toggle.focus();
     toggle.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
+    unlockScroll();
+    toggle.focus({ preventScroll: true });
 
     if (overlay) {
       overlay.classList.add('hidden');
