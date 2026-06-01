@@ -2,33 +2,29 @@
 /**
  * /contact — страница Contact.
  *
- * Структура (узел Figma 1:7682):
- *   ContactHero       — заголовок "Start your wellness transformation" + 4-полевая форма
- *   NewIn2026         — переиспользован с главной
- *   StartYourTransformation — переиспользован с главной (⚠️ дубль заголовка, см. ниже)
+ * Структура:
+ *   ContactHero  — заголовок "Start your wellness transformation" + форма (Name/Email/Phone/Message)
+ *   ContactInfo  — часы работы + адрес + телефон (данные из site.ts)
+ *   TrustBadges  — бейджи доверия
+ *   NewIn2026    — промо EXOMIND (переиспользован с главной)
  *
- * ⚠️ В Figma на этой странице ПОВТОРНО показан блок "START YOUR WELLNESS
- *    TRANSFORMATION" с 5-полевой формой. Это дублирование заголовков
- *    выглядит как ошибка дизайна — добавил в open questions для клиента.
- *    Реализую как в Figma (с обеими формами), но помечаю TODO.
+ * Дублирующая вторая форма "Start Your Wellness Transformation" удалена:
+ * она повторяла заголовок и поля из ContactHero. Вместо неё — ContactInfo
+ * с практической информацией (когда открыто, где, как позвонить).
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactHero from '../components/contact/ContactHero.astro';
+import ContactInfo from '../components/contact/ContactInfo.astro';
 import TrustBadges from '../components/TrustBadges.astro';
 import NewIn2026 from '../components/sections/NewIn2026.astro';
-import StartYourTransformation from '../components/sections/StartYourTransformation.astro';
 ---
 
 <BaseLayout
   title="Contact | Ideal Medical & Wellness"
-  description="Get in touch with Ideal Medical & Wellness in Aventura, Florida. Send us a message or book an appointment."
+  description="Get in touch with Ideal Medical & Wellness in Aventura, Florida. View our hours, location, and phone, or send us a message."
 >
   <ContactHero />
+  <ContactInfo />
   <TrustBadges />
   <NewIn2026 />
-  {/* ⚠️ data-todo: дубль заголовка "Start Your Wellness Transformation" —
-      есть и в ContactHero выше, и здесь. Уточнить у клиента. */}
-  <div data-todo="duplicate-section-confirm-with-client">
-    <StartYourTransformation />
-  </div>
 </BaseLayout>
