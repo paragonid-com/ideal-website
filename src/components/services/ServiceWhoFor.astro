@@ -34,15 +34,6 @@ const leadParas = lead.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
   <div class="mx-auto max-w-design grid grid-cols-1 lg:grid-cols-2 items-center lg:min-h-[1000px]">
     {/* Левая колонка — заголовок, lead, буллеты */}
     <div class="relative px-[7.55%] py-24">
-      {showStar && (
-        <img
-          src="/assets/images/star-sign.svg"
-          alt=""
-          width="43"
-          height="50"
-          class="absolute right-[7.55%] top-24 h-[50px] w-[43px]"
-        />
-      )}
       <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
         {titleLines.map((line, i) => (
           <>
@@ -51,6 +42,16 @@ const leadParas = lead.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
           </>
         ))}
       </h2>
+
+      {showStar && (
+        <img
+          src="/assets/images/star-sign.svg"
+          alt=""
+          width="43"
+          height="50"
+          class="mt-6 h-[50px] w-[43px]"
+        />
+      )}
 
       <div class="mt-12 max-w-[685px] space-y-6 font-sans text-body-lg text-gold leading-relaxed">
         {leadParas.map((p) => <p>{p}</p>)}

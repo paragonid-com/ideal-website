@@ -44,15 +44,6 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
 
     {/* Правая колонка — текст */}
     <div class="relative px-[7.55%] py-24">
-      {showStar && (
-        <img
-          src="/assets/images/star-sign.svg"
-          alt=""
-          width="43"
-          height="50"
-          class="absolute right-[7.55%] top-24 h-[50px] w-[43px]"
-        />
-      )}
       <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
         {lines.map((line, i) => (
           <>
@@ -61,6 +52,16 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
           </>
         ))}
       </h2>
+
+      {showStar && (
+        <img
+          src="/assets/images/star-sign.svg"
+          alt=""
+          width="43"
+          height="50"
+          class="mt-6 h-[50px] w-[43px]"
+        />
+      )}
 
       <div class="mt-12 space-y-6 max-w-[693px] font-sans text-body-lg text-gold leading-relaxed">
         {paragraphs.map((p) => {
