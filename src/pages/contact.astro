@@ -3,18 +3,15 @@
  * /contact — страница Contact.
  *
  * Структура:
- *   ContactHero  — заголовок "Start your wellness transformation" + форма (Name/Email/Phone/Message)
- *   ContactInfo  — часы работы + адрес + телефон (данные из site.ts)
- *   TrustBadges  — бейджи доверия
- *   NewIn2026    — промо EXOMIND (переиспользован с главной)
+ *   ContactHero   — заголовок "Start your wellness transformation" + форма
+ *   LocationBlock — фото офиса + адрес + часы работы + Google Maps
+ *   TrustBadges   — бейджи доверия
  *
- * Дублирующая вторая форма "Start Your Wellness Transformation" удалена:
- * она повторяла заголовок и поля из ContactHero. Вместо неё — ContactInfo
- * с практической информацией (когда открыто, где, как позвонить).
+ * Часы работы переехали в LocationBlock (рядом с адресом). Отдельная
+ * ContactInfo-секция удалена как дублирующая.
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactHero from '../components/contact/ContactHero.astro';
-import ContactInfo from '../components/contact/ContactInfo.astro';
 import LocationBlock from '../components/LocationBlock.astro';
 import TrustBadges from '../components/TrustBadges.astro';
 ---
@@ -24,7 +21,6 @@ import TrustBadges from '../components/TrustBadges.astro';
   description="Get in touch with Ideal Medical & Wellness in Aventura, Florida. View our hours, location, and phone, or send us a message."
 >
   <ContactHero />
-  <ContactInfo />
   <LocationBlock />
   <TrustBadges />
 </BaseLayout>
