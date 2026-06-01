@@ -137,18 +137,13 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
 <div
   id="overlay-menu"
   class="fixed inset-0 z-50 hidden flex-col overflow-y-auto bg-cream max-lg:!hidden"
+  style="background: radial-gradient(ellipse 70% 90% at 20% 35%, #f0eadc 0%, #ddc8a0 70%, #c9b187 100%); background-attachment: local;"
   aria-hidden="true"
 >
-  {/* Фон-градиент — на основе того, что виден на скриншотах menu-1..4.
-     Без отдельного фото — чистый CSS градиент в кремово-золотых тонах.
-     Сделан мягче исходного, чтобы gold-текст не растворялся
-     в правой тёмной части (раньше доходило до #b5946a, теперь #c9b187). */}
-  <div
-    class="pointer-events-none absolute inset-0"
-    style="background: radial-gradient(ellipse 70% 90% at 20% 35%, #f0eadc 0%, #ddc8a0 70%, #c9b187 100%);"
-    aria-hidden="true"
-  ></div>
-
+  {/* Фон-градиент задан на самом скролл-контейнере (с background-attachment:
+     local — фон прокручивается вместе с контентом и покрывает всю высоту).
+     Раньше был absolute inset-0 — покрывал только вьюпорт, и при прокрутке
+     длинного меню снизу проступала страница/футер. */}
   <div class="relative z-10 flex min-h-full flex-col">
     {/* Верх overlay: лого + крестик */}
     <div class="flex items-start justify-between px-[7.55%] pt-8">
