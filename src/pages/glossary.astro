@@ -1,0 +1,159 @@
+---
+/**
+ * /glossary — сводный глоссарий терминов по услугам клиники.
+ *
+ * Контент курирован под реальные услуги (см. docs/HANDOFF — Сессия 15):
+ * убраны trial-only/не предлагаемые позиции, добавлены Emsella и Human Allograft.
+ * Тон нейтрально-маркетинговый (без суперлативов/обещаний — стандарт #8),
+ * регуляторная оговорка вынесена в общий блок Disclosures внизу.
+ *
+ * Видимый текст (НЕ аккордеон) — для индексации Google и AI-поиска (E-E-A-T).
+ *
+ * Дизайн в концепте сайта: PolicyHero (gold) + категории с термин/определение
+ * в 2 колонки (1 на мобиле) + спокойный блок Disclosures на cream.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PolicyHero from '../components/PolicyHero.astro';
+import StartYourTransformation from '../components/sections/StartYourTransformation.astro';
+
+type Term = { term: string; definition: string };
+type Category = { title: string; items: Term[] };
+
+const categories: Category[] = [
+  {
+    title: 'Metabolic & Weight Management (GLP-1 & Beyond)',
+    items: [
+      { term: 'GLP-1 (Glucagon-like Peptide-1)', definition: 'A hormone produced in the gut that promotes a feeling of fullness, slows gastric emptying, and helps regulate blood sugar.' },
+      { term: 'GIP (Glucose-dependent Insulinotropic Polypeptide)', definition: 'A naturally occurring incretin hormone released after eating that supports insulin secretion and how the body processes energy.' },
+      { term: 'Semaglutide (Ozempic, Wegovy)', definition: 'A GLP-1 receptor agonist prescription medication that supports appetite regulation, blood-sugar balance, and long-term weight management.' },
+      { term: 'Tirzepatide (Mounjaro, Zepbound)', definition: 'A prescription medication that activates both the GLP-1 and GIP receptors to support insulin response and weight management.' },
+      { term: 'Metformin', definition: 'A prescription medication used to improve insulin sensitivity and reduce glucose production by the liver.' },
+      { term: 'Lipotropic Injections (MIC/B12)', definition: 'A blend of methionine, inositol, and choline with vitamin B12, used to support metabolism, liver function, and energy.' },
+    ],
+  },
+  {
+    title: 'Regenerative & Body Contouring',
+    items: [
+      { term: 'PRP (Platelet-Rich Plasma)', definition: "A treatment using a concentrated sample of the patient's own platelets, rich in growth factors, used to support healing in joints, tendons, skin, and hair." },
+      { term: 'PRF (Platelet-Rich Fibrin)', definition: "A second-generation concentrate of the patient's own blood that forms a fibrin scaffold for a sustained release of growth factors." },
+      { term: 'PRP Microneedling (the "Vampire Facial")', definition: "Microneedling combined with the patient's own PRP to support collagen production and skin texture." },
+      { term: 'Human Allograft Injection', definition: "A regenerative injection using processed donor-derived tissue to support the body's natural healing and tissue repair." },
+      { term: 'Emface', definition: 'A non-invasive facial treatment combining radiofrequency and electrical muscle stimulation to tone facial muscles and tighten skin.' },
+      { term: 'Emsculpt / Emsculpt NEO', definition: 'A body-contouring technology that uses high-intensity focused electromagnetic (HIFEM) energy to stimulate muscle contractions, supporting muscle tone and fat reduction.' },
+      { term: 'Emsella', definition: 'A non-invasive treatment that uses high-intensity focused electromagnetic (HIFEM) technology to strengthen the pelvic floor, supporting bladder control and sexual wellness.' },
+    ],
+  },
+  {
+    title: 'Performance, Longevity & IV Therapy',
+    items: [
+      { term: 'Exomind™ (TMS Therapy)', definition: 'A non-invasive transcranial magnetic stimulation therapy used to support mood, focus, and cognitive performance.' },
+      { term: 'Glutathione IV Push', definition: "An intravenous dose of the antioxidant glutathione, used to support the body's detoxification pathways and skin appearance." },
+      { term: 'High-Dose Vitamin C Therapy', definition: 'An IV infusion delivering vitamin C at levels beyond oral supplementation, used to support immune function.' },
+      { term: "Myers' Cocktail", definition: 'An IV infusion blending B-vitamins, vitamin C, magnesium, and calcium, used to support hydration, energy, and immune function.' },
+      { term: 'NAD+ / NAD Therapy', definition: 'A coenzyme that supports cellular energy production and repair, used in longevity-focused protocols.' },
+    ],
+  },
+  {
+    title: 'Advanced Diagnostics & Screening',
+    items: [
+      { term: 'Micronutrient Testing (SpectraCell)', definition: 'A test that assesses how well the body absorbs and uses vitamins, minerals, and antioxidants, to guide personalized supplementation.' },
+      { term: 'Food Sensitivity / ALCAT Testing', definition: "A blood test that measures the body's cellular response to various foods and chemicals to help identify potential triggers." },
+    ],
+  },
+  {
+    title: 'Peptide Therapy (Healing & Hormonal)',
+    items: [
+      { term: 'BPC-157 (Body Protection Compound)', definition: 'A peptide studied for its role in healing tendons, ligaments, and the gut lining by supporting blood flow and tissue repair.' },
+      { term: 'CJC-1295 + Ipamorelin', definition: "A peptide combination studied for supporting the body's natural growth-hormone production, muscle recovery, and sleep quality." },
+      { term: 'GHK-Cu (Copper Peptide)', definition: 'A copper peptide studied for supporting collagen and elastin production, skin rejuvenation, and hair.' },
+      { term: 'MOTs-c (Mitochondrial-Derived Peptide)', definition: 'A mitochondrial-derived peptide studied for metabolic regulation, energy, and physical endurance.' },
+      { term: 'PT-141 (Bremelanotide)', definition: 'A peptide that works through the central nervous system to support sexual desire and arousal; FDA-approved as Vyleesi for a specific condition.' },
+      { term: 'Sermorelin', definition: 'A growth-hormone-releasing peptide studied for supporting healthy hormone levels, energy, and sleep.' },
+      { term: 'TB-500 / Thymosin Beta-4', definition: 'A peptide studied for its role in cell migration and tissue repair.' },
+      { term: 'Tesamorelin', definition: 'A peptide that supports healthy growth-hormone levels and visceral-fat reduction; FDA-approved as Egrifta for a specific condition.' },
+      { term: 'Thymosin Alpha-1', definition: "A peptide studied for immune modulation and the body's internal defense." },
+    ],
+  },
+  {
+    title: 'Clinical Supplies & Terms',
+    items: [
+      { term: 'Auto-Injector Pen', definition: 'A user-friendly precision device for self-administration, featuring a concealed needle and a simple click mechanism.' },
+      { term: 'Bacteriostatic Water', definition: 'Sterile water containing a small amount of benzyl alcohol that inhibits bacterial growth, used to reconstitute injectable medications for multi-dose use.' },
+      { term: 'Centrifuge', definition: 'A medical device that spins blood samples at high speed to separate their components, used to isolate the platelets in PRP and PRF.' },
+      { term: 'Intramuscular (IM) Injection', definition: 'Delivery of medication into muscle tissue, allowing absorption into the bloodstream; used for certain vitamins and hormone therapies.' },
+      { term: 'Reconstitution', definition: 'Mixing a sterile liquid (such as bacteriostatic water) with a freeze-dried medication to prepare it for administration.' },
+      { term: 'Subcutaneous (Sub-Q) Injection', definition: 'A shallow injection into the fatty tissue beneath the skin; the most common method for many peptides and weight-management medications.' },
+      { term: 'Troche / Sublingual Lozenge', definition: 'A medicated tablet that dissolves under the tongue, allowing absorption through the lining of the mouth.' },
+    ],
+  },
+];
+
+const disclosures: { heading: string; body: string }[] = [
+  {
+    heading: 'Informational Purpose Only',
+    body: 'This glossary is provided for educational and informational purposes to help patients understand common terms in regenerative medicine. The inclusion of a term, peptide, or treatment does not constitute an offer to sell, a recommendation for use, or a guarantee that Ideal Medical & Wellness currently provides these specific services.',
+  },
+  {
+    heading: 'Medical Advice',
+    body: 'Nothing on this page should be interpreted as medical advice. All medical treatments and prescriptions require a formal consultation with a licensed healthcare provider, an evaluation of your medical history, and a determination of medical necessity.',
+  },
+  {
+    heading: 'FDA Disclosure',
+    body: 'Some peptides and regenerative therapies are used off-label or are under clinical investigation. These statements have not been evaluated by the Food and Drug Administration, and these products and services are not intended to diagnose, treat, cure, or prevent any disease.',
+  },
+];
+---
+
+<BaseLayout
+  title="Regenerative Medicine & Peptide Glossary | Ideal Medical & Wellness"
+  description="Clear definitions of terms used in our services — GLP-1 weight loss, hormone and peptide therapy, IV therapy, PRP, and aesthetics."
+>
+  <PolicyHero
+    title="A Guide to Regenerative Medicine & Performance Peptides"
+    subtitle="Plain-language definitions of the treatments and terms used across our services."
+  />
+
+  <section class="w-full bg-white py-16 md:py-24" data-section="glossary">
+    <div class="mx-auto max-w-design px-[7.55%]">
+      <div class="mx-auto max-w-[1100px]">
+        {categories.map((cat, i) => (
+          <div class={i === 0 ? '' : 'mt-16 md:mt-20'}>
+            <h2 class="font-heading text-[clamp(26px,3vw,38px)] uppercase leading-tight text-gold">
+              {cat.title}
+            </h2>
+            <div class="mt-3 h-[3px] w-[46px] bg-gold-bright"></div>
+            <dl class="mt-8 grid grid-cols-1 gap-x-12 gap-y-7 md:grid-cols-2">
+              {cat.items.map((item) => (
+                <div>
+                  <dt class="font-heading text-[19px] leading-snug text-[#7a6428]">
+                    {item.term}
+                  </dt>
+                  <dd class="mt-1 font-sans text-[15px] leading-relaxed text-[#26221a]">
+                    {item.definition}
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="w-full border-t-2 border-gold-bright bg-cream py-14 md:py-16" data-section="glossary-disclosures">
+    <div class="mx-auto max-w-design px-[7.55%]">
+      <div class="mx-auto max-w-[900px]">
+        <h2 class="font-heading text-[15px] uppercase tracking-[0.12em] text-gold">
+          Important Disclosures
+        </h2>
+        {disclosures.map((d) => (
+          <p class="mt-4 font-sans text-[13.5px] leading-[1.72] text-[#4a4636]">
+            <span class="font-semibold text-[#26221a]">{d.heading}.</span> {d.body}
+          </p>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <StartYourTransformation show="form" />
+</BaseLayout>

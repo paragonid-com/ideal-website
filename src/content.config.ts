@@ -284,6 +284,10 @@ const services = defineCollection({
        *  Benefits). Для страниц, чьи Figma-фреймы не содержат mid-CTA
        *  (peptide/ivtherapy/bloodwork/regenerative/sexualhealth). Default false. */
       suppressDefaultCtas: z.boolean().default(false),
+      /** Если true — скрывает блок Patient Notice & Disclaimer на этой странице
+       *  услуги. Default false → блок рендерится на ВСЕХ страницах услуг
+       *  (LegitScript-комплаенс). Аналогично suppressDefaultCtas. */
+      suppressPatientNotice: z.boolean().default(false),
       ctaBeforeConditionsList: z.boolean().default(false),
       ctaAfterVideo2: z.boolean().default(false),
       /** CTA «BOOK APPOINTMENT» прямо перед FAQ. Figma-макеты emsculpt (1:5573,

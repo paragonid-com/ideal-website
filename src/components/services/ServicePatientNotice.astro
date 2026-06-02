@@ -1,0 +1,41 @@
+---
+/**
+ * ServicePatientNotice — блок «Patient Notice & Disclaimer» внизу страницы услуги.
+ *
+ * Рендерится по умолчанию на всех страницах услуг (см. [slug].astro), opt-out
+ * через frontmatter-флаг `suppressPatientNotice: true`. Текст — единый, из
+ * src/data/site.ts (PATIENT_DISCLAIMER + patientDisclaimerBody), чтобы правка
+ * шла в одном месте.
+ *
+ * Дизайн: сдержанная полоса на cream с тонкой золотой линией сверху, мелкий
+ * капс-заголовок (gold), приглушённый текст узкой колонкой — дисклеймер виден,
+ * но не «кричит». Соответствует утверждённому макету.
+ *
+ * ⚠️ Зона обслуживания (serviceArea) — заглушка 'Florida', помечена data-todo;
+ *    подтвердить реальные штаты (LegitScript Standard #5).
+ */
+import { PATIENT_DISCLAIMER, patientDisclaimerBody } from '../../data/site';
+
+const { heading, privacyHref, privacyTail } = PATIENT_DISCLAIMER;
+const body = patientDisclaimerBody();
+---
+
+<section
+  class="w-full border-t-2 border-gold-bright bg-cream py-12 md:py-14"
+  data-section="patient-notice"
+>
+  <div class="mx-auto max-w-design px-[7.55%]">
+    <div class="mx-auto max-w-[820px]">
+      <h2 class="font-heading text-[15px] uppercase tracking-[0.12em] text-gold">
+        {heading}
+      </h2>
+      <p
+        class="mt-4 font-sans text-[13.5px] leading-[1.72] text-[#4a4636]"
+        data-todo="service-area-states"
+      >
+        {body}{' '}
+        See our <a href={privacyHref} class="text-gold underline hover:opacity-80">Privacy Policy</a> {privacyTail}
+      </p>
+    </div>
+  </div>
+</section>

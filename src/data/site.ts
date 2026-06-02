@@ -52,3 +52,29 @@ export const SITE = {
 /** Соцсети как массив непустых URL — для schema sameAs и футера. */
 export const socialUrls = (): string[] =>
   Object.values(SITE.socials).filter((u): u is string => Boolean(u) && u !== '#');
+
+/**
+ * Patient Notice & Disclaimer — единый источник текста дисклеймера, который
+ * рендерится по умолчанию на КАЖДОЙ странице услуги (компонент
+ * ServicePatientNotice). Закрывает по существу стандарты LegitScript #5/#6/#7/#8
+ * (зона обслуживания, приватность, валидный рецепт, прозрачность/без обещаний).
+ *
+ * ⚠️ serviceArea — ЗАГЛУШКА. Подтвердить/расширить реальные штаты обслуживания
+ *    у клиники (LegitScript Standard #5). Сейчас — только Florida.
+ */
+export const PATIENT_DISCLAIMER = {
+  heading: 'Patient Notice & Disclaimer',
+  // ⚠️ data-todo: подтвердить/расширить список штатов (LegitScript #5)
+  serviceArea: 'the State of Florida',
+  privacyHref: '/privacy',
+  privacyTail: 'for how your health information is collected and protected.',
+} as const;
+
+/** Основной текст дисклеймера (до ссылки на Privacy Policy). */
+export const patientDisclaimerBody = (): string =>
+  `All treatments, including peptides and metabolic therapies, are administered only after a comprehensive medical consultation and diagnostic testing. ` +
+  `Prescriptions are based on medical necessity as determined by our licensed providers. ` +
+  `${SITE.name} does not sell prescription medications directly; we provide medically supervised treatment programs. ` +
+  `Services are available only to patients located in ${PATIENT_DISCLAIMER.serviceArea}. ` +
+  `Individual results vary and are not guaranteed. These statements have not been evaluated by the Food and Drug Administration, ` +
+  `and these products and services are not intended to diagnose, treat, cure, or prevent any disease.`;

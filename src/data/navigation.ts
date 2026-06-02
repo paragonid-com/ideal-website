@@ -48,6 +48,7 @@ export const mainNav: NavGroup[] = [
     items: [
       { label: 'About', href: '/about' },
       { label: 'Blog', href: '/blog' },
+      { label: 'Glossary', href: '/glossary' },
       { label: 'Contact', href: '/contact' },
     ],
   },

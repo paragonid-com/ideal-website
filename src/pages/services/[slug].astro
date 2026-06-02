@@ -75,6 +75,7 @@ import ServiceGoldBanner from '../../components/services/ServiceGoldBanner.astro
 import ServiceExperience from '../../components/services/ServiceExperience.astro';
 import ServiceResults from '../../components/services/ServiceResults.astro';
 import ServiceFAQ from '../../components/services/ServiceFAQ.astro';
+import ServicePatientNotice from '../../components/services/ServicePatientNotice.astro';
 import StartYourTransformation from '../../components/sections/StartYourTransformation.astro';
 
 export async function getStaticPaths() {
@@ -506,6 +507,10 @@ const goldBanner = normalizeBanner(data.goldBanner);
 
   {/* FAQ */}
   {data.faq && data.faq.length > 0 && <ServiceFAQ faq={data.faq} />}
+
+  {/* Patient Notice & Disclaimer — LegitScript/FTC/FDA. Рендерится по умолчанию
+      на всех страницах услуг; opt-out через suppressPatientNotice. */}
+  {!data.suppressPatientNotice && <ServicePatientNotice />}
 
   <StartYourTransformation show="form" />
 </BaseLayout>
