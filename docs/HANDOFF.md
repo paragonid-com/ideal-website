@@ -83,6 +83,80 @@
 
 ---
 
+## Сессия 15 — LegitScript-комплаенс: Patient Notice + Glossary (01.06.26)
+
+**Контекст:** сайт готовится «на будущее / под запуск рекламы». Реклама мед-услуг
+(гормоны, пептиды, GLP-1, IV) на Google/Meta/Microsoft/TikTok требует сертификации
+**LegitScript** — платформы блокируют такие объявления без неё. Контент приводим
+в соответствие заранее.
+
+**Требования LegitScript (офиц. страница стандартов):** «дисклеймер на каждой
+странице» и «глоссарий» — НЕ дословные правила, но закрывают стандарты по существу.
+Сертификация = 9 стандартов; на контент сайта влияют 4:
+- **#5 Patient Services** — явно раскрыть штаты/страны обслуживания.
+- **#6 Privacy** — Privacy Policy, HIPAA, HTTPS (Cloudflare — по умолчанию).
+- **#7 Validity of Prescription** — не «продажа препаратов напрямую»; рецепт только после осмотра.
+- **#8 Transparency** — без вводящих в заблуждение/непроверяемых benefit-claims (FTC/FDA).
+
+⚠️ **Пептиды + GLP-1 — флешпоинт:** многие пептиды (BPC-157, TB-500, CJC-1295,
+Ipamorelin, GHK-Cu, Selank, Semax, Thymosin α1 и др.) ограничены к компаундированию
+в США (FDA Cat. 2 / на ревью PCAC, июль 2026); названия GLP-1 (Ozempic/Wegovy/
+Mounjaro/Zepbound, semaglutide/tirzepatide) блокируются Google/Meta в рекламе без сертификации.
+
+### ✅ Этап 1 — Patient Notice & Disclaimer (РЕАЛИЗОВАНО — патч `feat(compliance)`)
+
+- `src/components/services/ServicePatientNotice.astro` — блок внизу страницы услуги
+  (cream + золотая линия сверху, капс-заголовок, приглушённый текст, ссылка на Privacy
+  Policy + контекстная ссылка на /glossary).
+- Текст — ЕДИНЫЙ источник в `src/data/site.ts`: `PATIENT_DISCLAIMER` + `patientDisclaimerBody()`.
+- Рендер **по умолчанию на всех 11 страницах услуг** в `[slug].astro` (перед
+  `StartYourTransformation`); opt-out флаг `suppressPatientNotice` (default false) в `content.config.ts`.
+- ⚠️ Зона обслуживания = заглушка **«the State of Florida»**, помечена
+  `data-todo="service-area-states"` — подтвердить/расширить реальные штаты (Standard #5).
+
+### ✅ Этап 4 — Glossary (РЕАЛИЗОВАНО — патчи `feat(compliance)` + `feat(nav)`)
+
+- **Архитектура:** отдельная страница `src/pages/glossary.astro` (свой Title/Meta/H1),
+  НЕ блок в конце каждой услуги (глоссарий — сводный по всем услугам). Видимый текст
+  (НЕ аккордеон) — для индексации/E-E-A-T.
+- Дизайн: `PolicyHero` (gold) + категории «термин/определение» в 2 колонки + спокойный
+  блок Disclosures (Informational / Medical Advice / FDA) на cream.
+- Курирован под реальные услуги. Тон нейтрально-маркетинговый — без суперлативов/гарантий
+  результата (#8); регуляторные оговорки — одним нижним блоком, без пер-строчных «негативов».
+- **Добавлены** Emsella и Human Allograft (услуги клиники, которых не было в исходном
+  глоссарии). **Убраны:** trial-only/недоступные (Retatrutide, Cagrilintide, Tesofensine,
+  AOD-9604, SS-31); не предлагаемые услуги (Morpheus8, Softwave, Exosomes, ACS, Chelation,
+  Methylene Blue, Rapamycin, Ozone); спец-диагностика без признаков на сайте (Full-Body MRI,
+  Galleri, Cleerly, DEXA, Biological Age); вся секция нейро-пептидов (Cerebrolysin, Dihexa,
+  DSIP, Selank, Semax, Oxytocin, VIP).
+- Ссылка на /glossary в **3 местах:** меню (About Us, `navigation.ts`), футер Quick Links
+  (`FooterBlock.astro`), контекстная строка в блоке Patient Notice.
+- ⚠️ **Borderline — подтвердить у клиники** (при наличии услуги — вернуть в глоссарий):
+  DEXA, Galleri, Full-Body MRI, Cleerly, Biological Age; PRF / Vampire Facial; AOD-9604,
+  Oxytocin nasal spray, Chelation, Methylene Blue, Rapamycin.
+
+**Билд:** 25 страниц (было 24 — добавилась /glossary). Исходники курированного глоссария —
+в outputs: `glossary-curated.md` (финальный для сайта) и `glossary-compliance-revised.md`
+(осторожная версия с пер-строчными статус-флагами, если понадобится).
+
+### ⚠️ ОБЯЗАТЕЛЬНО — Этапы 2 и 3 (перед запуском/рекламой)
+
+Тексты страниц услуг (Peptide/IV/Bloodwork/Sexual Health — Lorem; FAQ — Lorem) ещё не
+написаны. План: **сначала пишем копирайт вместе, затем аудируем** под LegitScript.
+**Нельзя запускать сайт/рекламу без обоих этапов.**
+- **Этап 2 — аудит формулировок (#8 + Google/Meta restricted-drug):** пометить и переписать
+  категоричные гарантии результата, непроверяемые benefit-claims по пептидам/GLP-1, упоминания
+  названий рецептурных препаратов в рекламном контексте.
+- **Этап 3 — зона обслуживания + приватность (#5, #6):** заменить placeholder «Florida»
+  реальными штатами, проверить Privacy Policy + HIPAA-формулировки, подтвердить HTTPS.
+
+**Патчи сессии 15 (порядок применения):**
+1. `feat(compliance): Patient Notice on all service pages + curated /glossary page` (Этапы 1/4).
+2. `feat(nav): surface Glossary link in footer Quick Links + contextual link` (ссылки).
+3. (этот) `docs(handoff): session 15 final` — заменяет ранний черновой doc-патч сессии 15.
+
+---
+
 ## Сессия 14 — drill-down меню + ревью-пакет (01.06.26)
 
 **Состояние:** билд = **24 страницы** (11 specialty + 7 блог + 6 статик: about/blog/contact/index/privacy/terms). Все патчи доставлены и задеплоены, кроме самого последнего (`exomind-banner-link` — отдан в конце сессии).
