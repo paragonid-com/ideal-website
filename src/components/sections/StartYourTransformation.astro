@@ -35,15 +35,22 @@ const address = {
   city: 'Aventura, FL 33180',
   phone: '(305) 650-1884',
 };
+
+// Ссылки «открыть в картах» — строятся из адреса клиники.
+const mapQuery = encodeURIComponent(
+  `${address.name}, ${address.street}, ${address.city}`
+);
+const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
 ---
 
 {showForm && (
 <section
-  class="w-full bg-cream py-24"
+  class="w-full bg-cream py-28"
   data-section="start-transformation-form"
 >
   <Container>
-    <div class="grid grid-cols-1 gap-12 md:grid-cols-2">
+    <div class="grid grid-cols-1 items-start gap-x-16 gap-y-12 md:grid-cols-[1.1fr_1fr]">
       <div>
         <h2 class="font-heading text-h1 uppercase leading-tight text-gold">
           Start Your<br />
@@ -53,7 +60,7 @@ const address = {
       </div>
 
       <form
-        class="grid grid-cols-1 gap-x-8 gap-y-6 md:grid-cols-2"
+        class="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2"
         data-todo="form-submission-endpoint"
       >
         <label class="block">
@@ -151,8 +158,8 @@ const address = {
   class="relative w-full"
   data-section="start-transformation-cta"
 >
-  {/* Фото здания — слева на весь блок */}
-  <div class="grid grid-cols-1 lg:grid-cols-2">
+  {/* Фото здания — слева, у́же текстовой панели (Figma: фото 42% / панель 58%) */}
+  <div class="grid grid-cols-1 lg:grid-cols-[42fr_58fr]">
     <div class="relative aspect-[802/707] lg:aspect-auto">
       <img
       width="2124"
@@ -200,17 +207,54 @@ const address = {
         heart of Aventura, Florida
       </p>
 
-      <address class="mt-8 not-italic font-sans text-[18px] leading-relaxed text-gold">
-        <p class="font-heading text-[24px] uppercase">Address</p>
-        <p class="mt-2">{address.name}</p>
-        <p>{address.street}</p>
-        <p>{address.city}</p>
-        <p class="mt-4">
-          <a href={`tel:${address.phone.replace(/[^\d+]/g, '')}`} class="hover:underline">
-            {address.phone}
+      <div class="mt-8 flex flex-wrap items-end justify-between gap-8">
+        <address class="not-italic font-sans text-[18px] leading-relaxed text-gold">
+          <p class="font-heading text-[24px] uppercase">Address</p>
+          <p class="mt-2">{address.name}</p>
+          <p>{address.street}</p>
+          <p>{address.city}</p>
+          <p class="mt-4">
+            <a href={`tel:${address.phone.replace(/[^\d+]/g, '')}`} class="hover:underline">
+              {address.phone}
+            </a>
+          </p>
+        </address>
+
+        {/* Ссылки на карты (Figma узел 1:267, Image 108). Иконки на белом фоне —
+            убираем фон через mix-blend-multiply на кремовой панели. */}
+        <div class="flex items-end gap-4">
+          <a
+            href={googleMapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open location in Google Maps"
+          >
+            <img
+              src="/assets/images/google-maps-icon.png"
+              alt="Google Maps"
+              width="170"
+              height="169"
+              class="h-12 w-auto mix-blend-multiply transition-transform hover:scale-105"
+              loading="lazy"
+            />
           </a>
-        </p>
-      </address>
+          <a
+            href={appleMapsUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Open location in Apple Maps"
+          >
+            <img
+              src="/assets/images/apple-maps-icon.png"
+              alt="Apple Maps"
+              width="157"
+              height="156"
+              class="h-12 w-auto mix-blend-multiply transition-transform hover:scale-105"
+              loading="lazy"
+            />
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -223,7 +267,7 @@ const address = {
       )}&output=embed`}
       width="100%"
       height="100%"
-      style="border:0;"
+      style="border:0; filter: sepia(0.55) saturate(1.35) hue-rotate(-12deg) brightness(1.04) contrast(0.9);"
       loading="lazy"
       referrerpolicy="no-referrer-when-downgrade"
     ></iframe>
