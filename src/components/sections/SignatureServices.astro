@@ -183,10 +183,11 @@ const services: Service[] = [
                   loading="lazy"
                 />
               )}
-              {/* Плашка "Discover" — оверлей в левом нижнем углу фото (как в Figma).
+              {/* Полоса "Discover" во всю ширину низа фото (как в Figma):
+                  светлое золото #dbba5f + тёмно-золотой текст Marcellus.
                   Скрыта по умолчанию, проявляется при наведении на карточку. */}
-              <div class="absolute bottom-0 left-0 flex h-[48px] items-center bg-gold pl-4 pr-8 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                <span class="font-sans text-[14px] uppercase tracking-[0.15em] text-cream">
+              <div class="absolute inset-x-0 bottom-0 flex h-[52px] items-center bg-[#dbba5f] pl-4 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                <span class="font-heading text-[22px] uppercase tracking-[0.1em] text-gold">
                   Discover
                 </span>
               </div>

@@ -50,8 +50,7 @@ const treatments = [
 ---
 
 <section
-  class="w-full py-24"
-  style="background: linear-gradient(180deg, #e7d9bc 0%, #ddcfae 100%);"
+  class="w-full bg-[#f4f1e8] py-24"
   data-section="advanced-treatments"
 >
   <Container>
@@ -85,8 +84,11 @@ const treatments = [
             class="group block"
             data-trademark="btl"
           >
-            <p class="font-sans text-[14px] uppercase tracking-wider text-gold">
-              {t.category}
+            {/* Подпись — двухстрочная, шрифтом-заголовком (как в Signature
+                Services). Figma: Optima/Marcellus 33px, gold. Все категории —
+                из двух слов, делим по первому пробелу. */}
+            <p class="font-heading text-[24px] uppercase leading-tight text-gold xl:text-[30px]">
+              {t.category.split(' ')[0]}<br />{t.category.split(' ').slice(1).join(' ')}
             </p>
             <div class="relative mt-4 aspect-[400/600] overflow-hidden bg-gold/10">
               <img
@@ -95,19 +97,22 @@ const treatments = [
                 class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
               />
-              {/* Плашка "Discover" — оверлей в левом нижнем углу фото (как в Figma).
-                  Скрыта по умолчанию, проявляется при наведении на карточку. */}
-              <span class="absolute bottom-0 left-0 bg-gold px-3 py-1 font-sans text-[12px] uppercase tracking-wider text-cream opacity-0 transition-opacity duration-200 group-hover:opacity-100">
-                Discover
-              </span>
+              {/* Полоса "Discover" во всю ширину низа фото (как в Figma):
+                  светлое золото #dbba5f + тёмно-золотой текст Marcellus.
+                  Скрыта, проявляется при наведении на карточку. */}
+              <div class="absolute inset-x-0 bottom-0 flex h-[52px] items-center bg-[#dbba5f] pl-4 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                <span class="font-heading text-[22px] uppercase tracking-[0.1em] text-gold">
+                  Discover
+                </span>
+              </div>
             </div>
             <h3
-              class="mt-4 font-heading text-[28px] uppercase text-gold"
+              class="mt-4 font-heading text-[30px] uppercase text-gold xl:text-[33px]"
               data-todo={t.todo}
             >
               {t.brand}
             </h3>
-            <p class="mt-2 font-sans text-[16px] leading-relaxed text-gold">
+            <p class="mt-2 font-sans text-[18px] leading-relaxed text-gold">
               {t.description}
             </p>
           </a>
