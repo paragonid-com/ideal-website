@@ -1,6 +1,6 @@
 ---
 /**
- * Hero — главная секция домашней страницы.
+ * Hero — главная секция домашней страницы. Реальный слайдер.
  *
  * Источник в Figma:
  *   file: jmzQqLFWpZXSII6xTkgCgu
@@ -11,79 +11,172 @@
  *   - Body : Manrope Regular, 21px, #8d7431 (узел 1:104)
  *   - Btn  : Manrope Regular, 22px, #eae4d2 на #8d7431, 195×45 (узлы 1:207–1:209)
  *   - BG   : фото DNA (узел 1:65), 2193×1379, обрезано до 1920×1079
+ *   - Индикатор слайдера: правый нижний угол hero.
  *
- * Координаты в Figma (контейнер 1920×1079):
- *   H1     x=145, y=208,  width=645
- *   Body   x=145, y=375,  width=493
- *   Button x=145, y=595,  width=195, height=45
+ * Координаты в Figma (контейнер 1920×1079): H1 x=145 y=208; Body x=145 y=375;
+ * Button x=145 y=595. Левый отступ ≈ 145/1920 = 7.55%.
  *
- * Это даёт левый отступ ≈ 145 / 1920 = 7.55%
+ * ⚠️ СЛАЙДЫ ПОКА ИДЕНТИЧНЫ (плейсхолдер). Логика слайдера полностью рабочая
+ * (автосмена 7с, клик по сегментам, пауза при hover/focus, prefers-reduced-motion).
+ * Чтобы сделать слайды разными — отредактируйте массив `slides` ниже
+ * (своя картинка/заголовок/текст/CTA на каждый слайд). H1 на странице один —
+ * только у первого слайда; остальные используют стилизованный <p>.
  */
+
+const bookHref =
+  'https://www.joinblvd.com/b/ideal-medical-and-wellness/widget#/visit-type';
+
+interface Slide {
+  headingLines: [string, string];
+  body: string;
+  image: string;
+  cta: { href: string; label: string };
+}
+
+// Пока 3 одинаковых слайда — каркас под будущий разный контент.
+const baseSlide: Slide = {
+  headingLines: ['Live Better, Longer,', 'and Happier.'],
+  body:
+    'Concierge medical and wellness care in Aventura — built around your ' +
+    'bloodwork and your goals, not a one-size protocol. Hormone optimization, ' +
+    'medical weight loss, peptide therapy, and advanced aesthetics, all under one roof.',
+  image: '/assets/images/hero-dna.webp',
+  cta: { href: bookHref, label: 'BOOK NOW' },
+};
+const slides: Slide[] = [baseSlide, baseSlide, baseSlide];
 ---
 
-<section class="relative h-[1079px] w-full overflow-hidden bg-white">
-  {/* Фон. Использую <img>, а не background-image, чтобы можно было
-      добавить srcset/sizes под адаптив без перевёрстки CSS. */}
-  <img
-    src="/assets/images/hero-dna.webp"
-    alt=""
-    class="absolute inset-0 h-full w-full object-cover"
-    width="2193"
-    height="1379"
-    loading="eager"
-    decoding="async"
-  />
-
-  {/* Контент. Не лезу в position:absolute, использую обычный flow внутри
-      контейнера. Левый отступ 7.55% = paddings-left: ~145px при ширине 1920px. */}
-  <div class="relative z-10 mx-auto h-full max-w-design px-[7.55%]">
-    <div class="flex h-full flex-col justify-start pt-[208px]">
-      <h1 class="font-heading text-h1 uppercase text-gold">
-        Live Better, Longer,<br />
-        and Happier.
-      </h1>
-
-      <p class="mt-[27px] max-w-[493px] font-sans text-body-lg text-gold">
-        Concierge medical and wellness care in Aventura &mdash; built
-        around your bloodwork and your goals, not a one-size protocol.
-        Hormone optimization, medical weight loss, peptide therapy,
-        and advanced aesthetics, all under one roof.
-      </p>
-
-      {/* Звезда из Figma (узел 1:218) — между параграфом и кнопкой.
-          Figma-координаты: x=145, y=481 (контейнер 1920×1079);
-          параграф заканчивается ~ y=460, кнопка на y=595. */}
+<section
+  class="group relative h-[1079px] w-full overflow-hidden bg-white"
+  data-hero
+  aria-roledescription="carousel"
+  aria-label="Hero"
+>
+  {slides.map((s, i) => (
+    <div
+      data-slide
+      data-index={i}
+      aria-hidden={i === 0 ? 'false' : 'true'}
+      class={`absolute inset-0 transition-opacity duration-700 ${
+        i === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'
+      }`}
+    >
+      {/* Фон. <img>, а не background-image — чтобы при адаптиве можно было
+          добавить srcset/sizes без перевёрстки. */}
       <img
-        src="/assets/images/star-sign.svg"
+        src={s.image}
         alt=""
-        width="43"
-        height="50"
-        class="mt-[21px] h-[50px] w-[43px]"
-        aria-hidden="true"
+        class="absolute inset-0 h-full w-full object-cover"
+        width="2193"
+        height="1379"
+        loading={i === 0 ? 'eager' : 'lazy'}
+        decoding="async"
       />
 
-      <a
-        href="https://www.joinblvd.com/b/ideal-medical-and-wellness/widget#/visit-type"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="btn-gold mt-[64px] w-[195px] h-[45px]"
-      >
-        BOOK NOW
-      </a>
-    </div>
-  </div>
+      <div class="relative z-10 mx-auto h-full max-w-design px-[7.55%]">
+        <div class="flex h-full flex-col justify-start pt-[208px]">
+          {i === 0 ? (
+            <h1 class="font-heading text-h1 uppercase text-gold">
+              {s.headingLines[0]}<br />{s.headingLines[1]}
+            </h1>
+          ) : (
+            <p class="font-heading text-h1 uppercase text-gold">
+              {s.headingLines[0]}<br />{s.headingLines[1]}
+            </p>
+          )}
 
-  {/* Индикатор слайдера из Figma (узел в правом нижнем углу hero) — 4 сегмента.
-      Декоративный: текущий hero одно-слайдовый, поэтому индикатор статичен
-      (первый сегмент активен). Если понадобится реальная карусель из
-      нескольких слайдов — добавим слайды и логику отдельно. */}
+          <p class="mt-[27px] max-w-[493px] font-sans text-body-lg text-gold">
+            {s.body}
+          </p>
+
+          {/* Звезда из Figma (узел 1:218) — между параграфом и кнопкой. */}
+          <img
+            src="/assets/images/star-sign.svg"
+            alt=""
+            width="43"
+            height="50"
+            class="mt-[21px] h-[50px] w-[43px]"
+            aria-hidden="true"
+          />
+
+          <a
+            href={s.cta.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn-gold mt-[64px] w-[195px] h-[45px]"
+          >
+            {s.cta.label}
+          </a>
+        </div>
+      </div>
+    </div>
+  ))}
+
+  {/* Индикатор слайдера из Figma — 4 сегмента в макете; здесь по одному на
+      слайд (3). Кликабельные. */}
   <div
-    class="absolute bottom-[40px] right-[7.55%] z-10 flex gap-3"
-    aria-hidden="true"
+    class="absolute bottom-[40px] right-[7.55%] z-20 flex gap-3"
+    role="tablist"
+    aria-label="Choose hero slide"
   >
-    <span class="h-[3px] w-[36px] bg-gold"></span>
-    <span class="h-[3px] w-[36px] bg-gold/30"></span>
-    <span class="h-[3px] w-[36px] bg-gold/30"></span>
-    <span class="h-[3px] w-[36px] bg-gold/30"></span>
+    {slides.map((_, i) => (
+      <button
+        type="button"
+        data-hero-dot
+        data-index={i}
+        role="tab"
+        aria-label={`Show slide ${i + 1} of ${slides.length}`}
+        aria-selected={i === 0 ? 'true' : 'false'}
+        class="h-[3px] w-[36px] bg-gold/30 transition-colors aria-selected:bg-gold"
+      ></button>
+    ))}
   </div>
 </section>
+
+<script>
+  document.querySelectorAll('[data-hero]').forEach((root) => {
+    const slides = Array.from(root.querySelectorAll('[data-slide]'));
+    const dots = Array.from(root.querySelectorAll('[data-hero-dot]'));
+    if (slides.length <= 1) return;
+
+    let current = 0;
+    let timer: number | undefined;
+    const INTERVAL = 7000;
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function show(next: number) {
+      const n = ((next % slides.length) + slides.length) % slides.length;
+      slides.forEach((sl, i) => {
+        const active = i === n;
+        sl.classList.toggle('opacity-100', active);
+        sl.classList.toggle('opacity-0', !active);
+        sl.classList.toggle('pointer-events-none', !active);
+        sl.setAttribute('aria-hidden', active ? 'false' : 'true');
+      });
+      dots.forEach((d, i) => d.setAttribute('aria-selected', i === n ? 'true' : 'false'));
+      current = n;
+    }
+    function start() {
+      if (reduceMotion) return;
+      stop();
+      timer = window.setInterval(() => show(current + 1), INTERVAL);
+    }
+    function stop() {
+      if (timer) window.clearInterval(timer);
+    }
+
+    dots.forEach((dot, i) =>
+      dot.addEventListener('click', () => {
+        show(i);
+        start();
+      })
+    );
+
+    root.addEventListener('mouseenter', stop);
+    root.addEventListener('mouseleave', start);
+    root.addEventListener('focusin', stop);
+    root.addEventListener('focusout', start);
+
+    start();
+  });
+</script>
