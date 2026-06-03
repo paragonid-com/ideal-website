@@ -76,7 +76,10 @@ const treatments = [
       </p>
     </div>
 
-    <ul class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
+    {/* Карточки центрированы; ширина изображения ≈ как в Signature Services
+        (4 колонки в ряду шириной max-w-[1300px] → ~307px, как 5 колонок
+        Signature в полной ширине). */}
+    <ul class="mx-auto mt-16 grid max-w-[1300px] grid-cols-1 gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
       {treatments.map((t) => (
         <li>
           <a

@@ -56,7 +56,11 @@ const aboutText = `Ideal Medical & Wellness is a physician-supervised medical an
         выровнены влево с отступом ~40px, ряд НЕ растягивается на всю ширину
         контейнера. Это убирает апскейл низкого разрешения (kenneth/laudin
         исходники ~274px) и искажение. */}
-    <ul class="mt-16 grid max-w-[1273px] grid-cols-1 gap-x-10 gap-y-12 md:grid-cols-3">
+    {/* Портреты: ширина ряда — фиксированная доля контента (как в Figma:
+        3×400px + отступы ≈ 78% при 1920). Задаём долей, чтобы фото
+        масштабировались пропорционально вьюпорту и не были крупнее, чем в
+        макете, на ноутбучных экранах. Чуть меньше — по просьбе. */}
+    <ul class="mt-16 grid w-full grid-cols-1 gap-x-10 gap-y-12 md:w-[72%] md:grid-cols-3">
       {team.map((member) => (
         <li>
           <div class="aspect-[400/600] overflow-hidden bg-gold/10">
