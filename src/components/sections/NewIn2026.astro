@@ -12,7 +12,8 @@ import Container from '../Container.astro';
 ---
 
 <section
-  class="group relative w-full overflow-hidden bg-[#101a3a] min-h-[248px] flex items-center"
+  class="group relative w-full overflow-hidden min-h-[248px] flex items-center"
+  style="background: linear-gradient(90deg, #15111a 0%, #281c13 48%, #3a2718 100%);"
   data-section="new-in-2026"
 >
   {/* Фоновое изображение (тёмно-синий с золотом) — справа */}
@@ -24,13 +25,15 @@ import Container from '../Container.astro';
     class="pointer-events-none absolute inset-y-0 right-0 h-full w-[60%] object-cover opacity-90"
     aria-hidden="true"
   />
-  {/* Полупрозрачное изображение мозга-головы поверх — правый край */}
+  {/* Изображение мозга-головы — правый край. Чёрный фон картинки убирается
+      через mix-blend-screen, остаётся свечение нейросети (как в Figma).
+      Крупнее и ярче прежнего варианта. */}
   <img
       width="3000"
       height="3236"
     src="/assets/images/new2026-brain.webp"
     alt=""
-    class="pointer-events-none absolute right-[5%] top-1/2 h-[80%] w-auto -translate-y-1/2 object-contain opacity-60"
+    class="pointer-events-none absolute right-[1%] top-1/2 h-[150%] w-auto -translate-y-1/2 object-contain opacity-95 mix-blend-screen"
     aria-hidden="true"
   />
 

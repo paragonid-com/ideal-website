@@ -49,13 +49,14 @@ const treatments = [
 ];
 ---
 
-<section class="w-full bg-cream py-24" data-section="advanced-treatments">
+<section
+  class="w-full py-24"
+  style="background: linear-gradient(180deg, #e7d9bc 0%, #ddcfae 100%);"
+  data-section="advanced-treatments"
+>
   <Container>
     <div class="text-center">
-      <p class="font-sans text-[18px] uppercase tracking-wider text-gold">
-        Now offered at Ideal Medical
-      </p>
-      <h2 class="mt-4 font-heading text-h1 uppercase leading-tight text-gold">
+      <h2 class="font-heading text-h1 uppercase leading-tight text-gold">
         Advanced<br />
         <span class="relative inline-block">
           Non &ndash; Invasive Treatments
@@ -71,6 +72,9 @@ const treatments = [
           />
         </span>
       </h2>
+      <p class="mt-4 font-sans text-[18px] uppercase tracking-wider text-gold">
+        Now offered at Ideal Medical
+      </p>
     </div>
 
     <ul class="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
@@ -84,17 +88,19 @@ const treatments = [
             <p class="font-sans text-[14px] uppercase tracking-wider text-gold">
               {t.category}
             </p>
-            <div class="mt-4 aspect-[400/600] overflow-hidden bg-gold/10">
+            <div class="relative mt-4 aspect-[400/600] overflow-hidden bg-gold/10">
               <img
                 src={t.photo}
                 alt={`${t.brand} — ${t.category}`}
                 class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"
               />
+              {/* Плашка "Discover" — оверлей в левом нижнем углу фото (как в Figma).
+                  Скрыта по умолчанию, проявляется при наведении на карточку. */}
+              <span class="absolute bottom-0 left-0 bg-gold px-3 py-1 font-sans text-[12px] uppercase tracking-wider text-cream opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                Discover
+              </span>
             </div>
-            <span class="mt-2 inline-block bg-gold px-3 py-1 font-sans text-[12px] uppercase tracking-wider text-cream">
-              Discover
-            </span>
             <h3
               class="mt-4 font-heading text-[28px] uppercase text-gold"
               data-todo={t.todo}

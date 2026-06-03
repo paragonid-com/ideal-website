@@ -123,7 +123,11 @@ const services: Service[] = [
 ];
 ---
 
-<section class="w-full bg-cream py-24" data-section="signature-services">
+<section
+  class="w-full py-24"
+  style="background: radial-gradient(ellipse 130% 95% at 50% 16%, #ece4d1 0%, #d8c7a6 50%, #bd9f76 100%);"
+  data-section="signature-services"
+>
   <Container>
     <div class="relative text-center">
       <div class="relative inline-block">
@@ -179,12 +183,13 @@ const services: Service[] = [
                   loading="lazy"
                 />
               )}
-            </div>
-
-            <div class="flex h-[48px] w-full items-center bg-gold pl-4 transition-opacity group-hover:opacity-80">
-              <span class="font-sans text-[14px] uppercase tracking-[0.15em] text-cream">
-                Discover
-              </span>
+              {/* Плашка "Discover" — оверлей в левом нижнем углу фото (как в Figma).
+                  Скрыта по умолчанию, проявляется при наведении на карточку. */}
+              <div class="absolute bottom-0 left-0 flex h-[48px] items-center bg-gold pl-4 pr-8 opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                <span class="font-sans text-[14px] uppercase tracking-[0.15em] text-cream">
+                  Discover
+                </span>
+              </div>
             </div>
           </a>
         </li>

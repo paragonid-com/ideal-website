@@ -72,4 +72,18 @@
       </a>
     </div>
   </div>
+
+  {/* Индикатор слайдера из Figma (узел в правом нижнем углу hero) — 4 сегмента.
+      Декоративный: текущий hero одно-слайдовый, поэтому индикатор статичен
+      (первый сегмент активен). Если понадобится реальная карусель из
+      нескольких слайдов — добавим слайды и логику отдельно. */}
+  <div
+    class="absolute bottom-[40px] right-[7.55%] z-10 flex gap-3"
+    aria-hidden="true"
+  >
+    <span class="h-[3px] w-[36px] bg-gold"></span>
+    <span class="h-[3px] w-[36px] bg-gold/30"></span>
+    <span class="h-[3px] w-[36px] bg-gold/30"></span>
+    <span class="h-[3px] w-[36px] bg-gold/30"></span>
+  </div>
 </section>
