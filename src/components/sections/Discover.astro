@@ -12,41 +12,41 @@
   class="relative w-full bg-cream"
   data-section="discover"
 >
-  <div class="mx-auto grid w-full max-w-design grid-cols-1 lg:grid-cols-2 items-center">
-    {/* Левая колонка — фото. Аспект исходника (2054×1368 ≈ 3:2) на всех
-        брейкпоинтах, чтобы object-cover не срезал людей по краям (раньше
-        колонка была квадратной из-за h-full и обрезала мужчину слева и
-        женщину справа). */}
-    <div class="relative w-full aspect-[2054/1368]">
+  <div class="mx-auto grid w-full max-w-design grid-cols-1 lg:grid-cols-[52fr_48fr] lg:items-stretch">
+    {/* Левая колонка — фото. В Figma фото ≈52% ширины и задаёт высоту всей
+        секции (секция начинается с верха фото и заканчивается его низом).
+        На lg фото тянется на всю высоту ряда (object-cover, лёгкая боковая
+        обрезка). На мобиле — собственный аспект 3:2. */}
+    <div class="relative aspect-[2054/1368] w-full lg:aspect-auto">
       <img
         src="/assets/images/team-reception.webp"
         alt="The IDEAL Medical and Wellness team at our Aventura reception"
         width="2054"
         height="1368"
-        class="block h-full w-full object-cover"
+        class="absolute inset-0 block h-full w-full object-cover"
         loading="lazy"
       />
     </div>
 
-    {/* Правая колонка — текст с внутренним padding'ом */}
-    <div class="relative px-[7.55%] py-24">
-      <h2 class="font-heading text-h1 uppercase leading-tight text-gold">
-        Discover<br />
-        Personalized<br />
-        Excellence<br />
-        in Wellness
-      </h2>
-
-      {/* Звезда из Figma (узел 1:224) — справа на верхней линии H2.
-          Figma-координаты: x=1738, y=1425, размер 42.57×50. */}
-      <img
-        src="/assets/images/star-sign.svg"
-        alt=""
-        width="43"
-        height="50"
-        class="absolute right-[7.55%] top-24 h-[50px] w-[43px]"
-        aria-hidden="true"
-      />
+    {/* Правая колонка (≈48%) — текст, вертикально центрирован в высоте фото */}
+    <div class="relative flex flex-col justify-center px-[7.55%] py-16">
+      <div class="relative">
+        {/* Звезда из Figma (узел 1:224) — верх-право заголовка. */}
+        <img
+          src="/assets/images/star-sign.svg"
+          alt=""
+          width="43"
+          height="50"
+          class="absolute right-0 top-1 h-[50px] w-[43px]"
+          aria-hidden="true"
+        />
+        <h2 class="font-heading text-h1 uppercase leading-tight text-gold">
+          Discover<br />
+          Personalized<br />
+          Excellence<br />
+          in Wellness
+        </h2>
+      </div>
 
       <p class="mt-12 max-w-[523px] font-sans text-body-lg leading-relaxed text-gold">
         At Ideal Medical &amp; Wellness, care is concierge by design:
@@ -56,5 +56,6 @@
         adjust as your labs and progress tell us what is working.
       </p>
     </div>
+  </div>
   </div>
 </section>
