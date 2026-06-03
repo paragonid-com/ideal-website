@@ -9,7 +9,7 @@ import Container from '../Container.astro';
 
 const team = [
   {
-    name: 'Ksenia Petrushkina, PA-C, MPAS',
+    name: 'Ksenia Petrushkina',
     title: 'Owner & Director of Operations',
     photo: '/assets/images/team-ksenia.webp',
   },
@@ -29,7 +29,7 @@ const aboutText = `Ideal Medical & Wellness is a physician-supervised medical an
 ---
 
 <section
-  class="w-full bg-cream py-24"
+  class="w-full bg-cream pt-24 pb-10"
   data-section="who-we-are"
 >
   <Container>
@@ -71,11 +71,11 @@ const aboutText = `Ideal Medical & Wellness is a physician-supervised medical an
               loading="lazy"
             />
           </div>
-          <h3 class="mt-6 font-heading text-[32px] uppercase text-gold">
+          <h3 class="mt-6 font-heading text-[30px] uppercase text-gold">
             {member.name}
           </h3>
           <p
-            class="mt-1 font-sans text-[18px] uppercase tracking-wider text-gold"
+            class="mt-1 whitespace-nowrap font-sans text-[15px] uppercase tracking-[0.04em] text-gold"
           >
             {member.title}
           </p>

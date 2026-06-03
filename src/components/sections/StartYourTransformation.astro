@@ -46,11 +46,11 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
 
 {showForm && (
 <section
-  class="w-full bg-cream py-28"
+  class="w-full bg-cream py-8"
   data-section="start-transformation-form"
 >
   <Container>
-    <div class="grid grid-cols-1 items-start gap-x-16 gap-y-12 lg:grid-cols-[42fr_58fr]">
+    <div class="grid grid-cols-1 items-start gap-x-16 gap-y-8 lg:grid-cols-[42fr_58fr]">
       <div>
         <h2 class="font-heading text-h1 uppercase leading-tight text-gold">
           Start Your<br />
@@ -60,7 +60,7 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
       </div>
 
       <form
-        class="grid grid-cols-1 gap-x-8 gap-y-10 md:grid-cols-2"
+        class="grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2"
         data-todo="form-submission-endpoint"
       >
         <label class="block">
@@ -132,7 +132,7 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
            с этой формой. ⚠️ Черновик: финальную формулировку должен утвердить
            юрист клиники под её privacy-политику и применимое право (TCPA и др.). */}
         <p
-          class="md:col-span-2 font-sans text-[14px] leading-relaxed text-gold/70"
+          class="md:col-span-2 font-sans text-[13px] leading-snug text-gold/70"
           data-todo="confirm-consent-disclaimer-text"
         >
           By submitting this form, you consent to be contacted by Ideal Medical
@@ -172,7 +172,7 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
     </div>
 
     <div
-      class="relative flex flex-col justify-center bg-[#f4f1e8] px-[7.55%] py-16"
+      class="relative flex flex-col justify-center bg-[#f4f1e8] px-[7.55%] py-10"
     >
       <h2 class="font-heading text-h1 uppercase leading-tight text-gold">
         <span class="relative inline-block">
@@ -197,17 +197,17 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
         href={bookingCta.href}
         target="_blank"
         rel="noopener noreferrer"
-        class="btn-gold mt-8 w-fit min-w-[270px] self-start whitespace-nowrap"
+        class="btn-gold mt-6 w-fit min-w-[270px] self-start whitespace-nowrap"
       >
         BOOK APPOINTMENT
       </a>
 
-      <p class="mt-12 font-heading text-[26px] md:text-[36px] uppercase leading-tight text-gold">
+      <p class="mt-8 font-heading text-[26px] md:text-[36px] uppercase leading-tight text-gold">
         We are located in the<br />
         heart of Aventura, Florida
       </p>
 
-      <div class="mt-8 flex flex-wrap items-end justify-between gap-8">
+      <div class="mt-6 flex flex-wrap items-end justify-between gap-8">
         <address class="not-italic font-sans text-[18px] leading-relaxed text-gold">
           <p class="font-heading text-[24px] uppercase">Address</p>
           <p class="mt-2">{address.name}</p>
