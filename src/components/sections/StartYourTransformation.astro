@@ -120,15 +120,25 @@ const address = {
           <button type="submit" class="btn-gold w-[195px]">SUBMIT</button>
         </div>
 
-        {/* Согласие на обработку/связь. Текст нейтральный — заказчику нужно
-           утвердить финальную формулировку под свою privacy-политику. */}
+        {/* Согласие на обработку/связь, включая автоматизированные и
+           AI-инструменты. Единый источник — применяется на всех страницах
+           с этой формой. ⚠️ Черновик: финальную формулировку должен утвердить
+           юрист клиники под её privacy-политику и применимое право (TCPA и др.). */}
         <p
           class="md:col-span-2 font-sans text-[14px] leading-relaxed text-gold/70"
           data-todo="confirm-consent-disclaimer-text"
         >
-          By submitting this form, you agree to be contacted by Ideal Medical
-          and Wellness regarding your inquiry. We respect your privacy and will
-          never share your information with third parties.
+          By submitting this form, you consent to be contacted by Ideal Medical
+          and Wellness by phone, text message (SMS), and email regarding your
+          inquiry, including through automated technology and AI-assisted tools
+          used to schedule, respond to, and follow up on your request. Consent
+          is not a condition of purchasing any goods or services. Message and
+          data rates may apply and message frequency may vary; reply STOP to
+          opt out at any time. AI-assisted communications are reviewed under the
+          supervision of our clinical team and do not constitute medical advice.
+          We respect your privacy, handle your information in accordance with
+          our Privacy Policy, and will never sell your information to third
+          parties.
         </p>
       </form>
     </div>
@@ -155,8 +165,7 @@ const address = {
     </div>
 
     <div
-      class="relative flex flex-col justify-center px-[7.55%] py-16"
-      style="background: linear-gradient(to bottom right, #d4c3a3, #b5946a);"
+      class="relative flex flex-col justify-center bg-[#f4f1e8] px-[7.55%] py-16"
     >
       <h2 class="font-heading text-h1 uppercase leading-tight text-gold">
         <span class="relative inline-block">
