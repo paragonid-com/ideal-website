@@ -13,18 +13,9 @@ import Container from '../Container.astro';
 
 <section
   class="group relative w-full overflow-hidden min-h-[248px] flex items-center"
-  style="background: linear-gradient(90deg, #15111a 0%, #281c13 48%, #3a2718 100%);"
+  style="background: linear-gradient(90deg, #1a141f 0%, #2c1f15 55%, #3d2918 100%);"
   data-section="new-in-2026"
 >
-  {/* Фоновое изображение (тёмно-синий с золотом) — справа */}
-  <img
-      width="3318"
-      height="1868"
-    src="/assets/images/new2026-bg.webp"
-    alt=""
-    class="pointer-events-none absolute inset-y-0 right-0 h-full w-[60%] object-cover opacity-90"
-    aria-hidden="true"
-  />
   {/* Изображение мозга-головы — правый край. Чёрный фон картинки убирается
       через mix-blend-screen, остаётся свечение нейросети (как в Figma).
       Крупнее и ярче прежнего варианта. */}
@@ -50,13 +41,16 @@ import Container from '../Container.astro';
       <p class="font-heading text-[40px] uppercase tracking-wider text-cream">
         New in 2026
       </p>
+      {/* EXOMIND — брендовый wordmark (геометрический sans): EXO тонким,
+          MIND жирным. В Figma это вектор; ближайший доступный шрифт — Manrope. */}
       <h2
-        class="font-heading text-[48px] font-bold uppercase text-cream"
+        class="text-[48px] uppercase leading-none text-cream"
         data-trademark="btl"
       >
-        EXOMIND
+        <span class="font-sans font-light tracking-wide">Exo</span><span class="font-sans font-bold tracking-wide">Mind</span>
       </h2>
-      <p class="font-sans text-[28px] italic text-cream">
+      {/* Strengthen Your Mind — Optima/Marcellus (как в Figma), не курсив. */}
+      <p class="font-heading text-[30px] not-italic text-cream">
         Strengthen Your Mind
       </p>
     </div>
