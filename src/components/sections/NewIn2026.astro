@@ -13,12 +13,20 @@ import Container from '../Container.astro';
 
 <section
   class="group relative w-full overflow-hidden min-h-[248px] flex items-center"
-  style="background: linear-gradient(90deg, #141524 0%, #20191f 18%, #3c2c23 40%, #57432f 55%, #67472e 66%, #43301f 85%, #34241a 100%);"
   data-section="new-in-2026"
 >
+  {/* Фон полосы — точное изображение из Figma (узел 1:9): тёмно-синяя
+      DNA-текстура слева, бронзово-золотая диагональ справа. */}
+  <img
+    width="1920"
+    height="248"
+    src="/assets/images/new2026-bg.webp"
+    alt=""
+    class="pointer-events-none absolute inset-0 h-full w-full object-cover"
+    aria-hidden="true"
+  />
   {/* Изображение мозга-головы — правый край. Чёрный фон картинки убирается
-      через mix-blend-screen, остаётся свечение нейросети (как в Figma).
-      Крупнее и ярче прежнего варианта. */}
+      через mix-blend-screen, остаётся свечение нейросети (как в Figma). */}
   <img
       width="3000"
       height="3236"
