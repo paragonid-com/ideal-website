@@ -20,14 +20,12 @@ export type NavGroup = {
 
 export const mainNav: NavGroup[] = [
   {
+    // Wellness Services — все «медицинские/велнес» услуги.
     label: 'Wellness Services',
     items: [
       { label: 'Medical Weight Loss', href: '/services/weight-loss' },
       { label: 'Hormone Optimization', href: '/services/hormone' },
       { label: 'Peptide Therapy', href: '/services/peptide' },
-      { label: 'Emsella', href: '/services/emsella' },
-      { label: 'Emsculpt Neo', href: '/services/emsculpt' },
-      { label: 'Exomind', href: '/services/exomind' },
       { label: 'IV Therapy', href: '/services/ivtherapy' },
       { label: 'Blood Work', href: '/services/bloodwork' },
       { label: 'PRP & Allograft', href: '/services/regenerative' },
@@ -35,12 +33,15 @@ export const mainNav: NavGroup[] = [
     ],
   },
   {
+    // Aesthetic Services — линейка BTL-аппаратов (эстетика/устройства).
+    // Решение клиента (сессия 16): четыре устройства живут ТОЛЬКО здесь;
+    // прежнее дублирование Emsculpt Neo в Wellness Services убрано.
     label: 'Aesthetic Services',
     items: [
-      // Emsculpt Neo сознательно дублируется тут и в Wellness Services
-      // (одна страница, два пути в меню — по решению заказчика).
-      { label: 'Emsculpt Neo', href: '/services/emsculpt' },
       { label: 'Emface', href: '/services/emface' },
+      { label: 'Emsculpt Neo', href: '/services/emsculpt' },
+      { label: 'Exomind', href: '/services/exomind' },
+      { label: 'Emsella', href: '/services/emsella' },
     ],
   },
   {
@@ -62,8 +63,6 @@ export const bookingCta = {
   href: 'https://www.joinblvd.com/b/ideal-medical-and-wellness/widget#/visit-type',
 };
 
-/** Известные страницы, которые есть в Figma, но НЕ выведены в меню.
- *  Не используются в Header, но перечислены для sitemap / справки. */
 /** Известные страницы из Figma, не выведенные в меню.
- *  Сейчас пусто: Sexual Health (1:7461) выведена в Wellness Services. */
+ *  Сейчас пусто: все страницы услуг выведены либо в Wellness, либо в Aesthetic. */
 export const orphanPages: NavItem[] = [];

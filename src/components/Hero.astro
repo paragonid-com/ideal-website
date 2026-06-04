@@ -37,9 +37,9 @@ interface Slide {
 const baseSlide: Slide = {
   headingLines: ['Live Better, Longer,', 'and Happier.'],
   body:
-    'Concierge medical and wellness care in Aventura — built around your ' +
-    'bloodwork and your goals, not a one-size protocol. Hormone optimization, ' +
-    'medical weight loss, peptide therapy, and advanced aesthetics, all under one roof.',
+    'Concierge medical and wellness care in Aventura, built around your ' +
+    'bloodwork and your goals. Hormone optimization, medical weight loss, ' +
+    'peptide therapy, and advanced aesthetics — all under one roof.',
   image: '/assets/images/hero-dna.webp',
   cta: { href: bookHref, label: 'BOOK NOW' },
 };
@@ -73,19 +73,32 @@ const slides: Slide[] = [baseSlide, baseSlide, baseSlide];
         decoding="async"
       />
 
+      {/* Скрим читабельности: мягко высветляет левую часть, где лежит текст.
+          Золотой текст на кремово-золотой DNA-текстуре сам по себе проседает
+          по контрасту (gold↔cream ниже WCAG AA) — лёгкий белый градиент слева
+          поднимает локальный фон к белому и делает заголовок/копию читаемыми,
+          не затрагивая полноэкранность картинки справа. */}
+      <div
+        class="pointer-events-none absolute inset-0"
+        style="background: linear-gradient(90deg, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.34) 30%, rgba(255,255,255,0) 60%);"
+        aria-hidden="true"
+      ></div>
+
       <div class="relative z-10 mx-auto h-full max-w-design px-[7.55%]">
-        <div class="flex h-full flex-col justify-start pt-[19vh]">
+        <div class="flex h-full flex-col justify-center pb-[6vh] pt-[88px]">
           {i === 0 ? (
-            <h1 class="font-heading text-h1 uppercase text-gold">
+            <h1 class="font-heading text-h1 uppercase text-gold [text-shadow:0_1px_0_rgba(255,255,255,0.45)]">
               {s.headingLines[0]}<br />{s.headingLines[1]}
             </h1>
           ) : (
-            <p class="font-heading text-h1 uppercase text-gold">
+            <p class="font-heading text-h1 uppercase text-gold [text-shadow:0_1px_0_rgba(255,255,255,0.45)]">
               {s.headingLines[0]}<br />{s.headingLines[1]}
             </p>
           )}
 
-          <p class="mt-[27px] max-w-[493px] font-sans text-body-lg text-gold">
+          {/* Тело: тёплый тёмный тон (#5a4f33, как в утверждённом макете) вместо
+              золотого — гарантирует читаемость мелкого текста на светлом фоне. */}
+          <p class="mt-[27px] max-w-[540px] font-sans text-body-lg leading-relaxed text-[#5a4f33]">
             {s.body}
           </p>
 

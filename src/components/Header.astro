@@ -3,54 +3,33 @@
  * Header — единый компонент для всех страниц сайта.
  *
  * Состоит из трёх частей:
- *   1. Top bar — лого слева + иконка-burger справа.
- *      Лежит поверх контента страницы (absolute, не fixed),
- *      так как на Hero контент сам отрисовывает фон под шапкой.
- *   2. Overlay-меню (#overlay-menu) — ДЕСКТОПНОЕ (`lg+`), full-screen.
- *      Внутри: лого, X-кнопка закрытия, 3 раскрывающихся раздела,
- *      CTA-кнопка BOOK APPOINTMENT, нижний блок Address/Quick Links/Subscribe.
- *      На мобиле force-hidden (`max-lg:!hidden`) — НЕ показывается.
- *   3. Mobile-меню (#mobile-menu) — МОБИЛЬНОЕ (`< lg`), двухуровневый
- *      drill-down (Вариант C): L1 = 3 категории, тап → L2 выезжает справа
- *      со списком пунктов раздела. CTA закреплён на обоих уровнях.
- *      На десктопе force-hidden (`lg:!hidden`).
- *      Бургер один; openMenu/closeMenu открывают/закрывают ОБА overlay,
- *      видимость решает CSS-гейт по брейкпоинту (без JS-детекта вьюпорта).
+ *   1. Mobile top-bar (<header>, `< lg`) — лого слева + burger справа.
+ *      Лежит поверх контента (absolute), на десктопе скрыт (`lg:hidden`),
+ *      т.к. на `lg+` навигацию несёт постоянная панель ниже.
+ *   2. Desktop nav bar (#desktop-nav, `lg+`) — ПОСТОЯННАЯ горизонтальная
+ *      панель: лого слева, 3 категории-триггера с hover/click мега-меню,
+ *      CTA «BOOK APPOINTMENT» справа. Sticky + auto-hide: прячется при
+ *      скролле вниз, появляется при скролле вверх, всегда видна у самого
+ *      верха. Фон — сплошной белый (контраст gold-на-white ≈ AA 4.5:1;
+ *      любая прозрачность под текстом уронила бы контраст ниже AA).
+ *   3. Mobile menu (#mobile-menu, `< lg`) — двухуровневый drill-down
+ *      (Вариант C, сессия 14). НЕ ТРОГАЕТСЯ. На десктопе force-hidden.
  *
- * Источник в Figma:
- *   menu-1 (1:1963), menu-2 (1:2012), menu-3 (1:3813), menu-4 (1:3757)
- *   лого    — узел 1:268 (Group 321)
- *   burger  — узел 1:144 (Group 6)
+ * Источник в Figma (мобильное меню / лого / burger):
+ *   menu-1 (1:1963) … лого 1:268, burger 1:144.
+ * Десктоп-панель — по handoff-спеке «Desktop Navigation Redesign».
  *
- * Поведение подменю (см. JS-блок ниже):
- *   - При открытии overlay показывается раздел активной страницы;
- *     если её нет (главная) — первый раздел (Wellness Services) как fallback,
- *     чтобы UI не выглядел сломанным. Это отклонение от Figma menu-1
- *     (где справа пусто), сделано из-за UX (см. HANDOFF).
- *   - Hover на заголовок (desktop) — временный preview, mouseleave
- *     возвращает к "sticky" (последнее click'нутое или server default).
- *   - Click на заголовок (touch и desktop) — меняет sticky.
- *     Touch-friendly: на iPad/телефонах нет hover, работает только click.
- *   - Орнамент-цветочек возле раскрытого раздела (узел Figma 1:1983).
- *
- * Sub-навигация (отдельная фича поверх Figma): внутри подменю текущий
- * пункт помечен `aria-current="page"` + `font-semibold`. Применяется
- * к любой странице, которая есть в навигации.
+ * Доступность десктоп-меню: disclosure-паттерн (триггеры = <button>
+ * с aria-haspopup/aria-expanded/aria-controls; пункты = обычные ссылки,
+ * НЕ role="menu"). Открытие по hover (с задержкой закрытия) И по
+ * click/Enter/Space (touch + клавиатура). Esc закрывает и возвращает
+ * фокус на триггер; клик/фокус снаружи закрывает; выбор пункта уводит
+ * на страницу. prefers-reduced-motion — без transition.
  */
 
 import { mainNav, bookingCta, type NavGroup } from '../data/navigation.ts';
-import FooterBlock from './FooterBlock.astro';
 
-// Определяем, какой раздел и пункт меню соответствуют текущей странице.
-// Используется для sub-навигации:
-//   - При открытии меню автоматически раскрывается секция, содержащая
-//     текущую страницу.
-//   - Возле заголовка раздела показывается орнамент-индикатор.
-//   - Текущий пункт в подменю помечается как "current"
-//     (визуально жирнее + aria-current="page").
-//
-// Нормализуем pathname: убираем trailing slash, чтобы '/services/weight-loss'
-// и '/services/weight-loss/' считались одной страницей.
+// Нормализуем pathname: '/x' и '/x/' — одна страница.
 const rawPath = Astro.url.pathname;
 const currentPath = rawPath.length > 1 && rawPath.endsWith('/')
   ? rawPath.slice(0, -1)
@@ -62,35 +41,18 @@ function isItemCurrent(href: string): boolean {
 }
 
 function isGroupActive(group: NavGroup): boolean {
-  // Раздел активен, если содержит пункт-current,
-  // ИЛИ если сам раздел является ссылкой на текущую страницу.
   if (group.href && isItemCurrent(group.href)) return true;
   return Boolean(group.items?.some((item) => isItemCurrent(item.href)));
 }
 
-// Состояние навигации использует две разные концепции:
-//
-// activeGroupLabel — раздел, **реально содержащий текущую страницу**.
-//   Используется для sub-навигации: орнамент-индикатор и aria-current="page"
-//   на конкретной ссылке внутри подменю. Если страница не в меню (`/`,
-//   /aboutus и т.п.) — undefined, орнамент не показываем.
-//
-// defaultOpenLabel — какой подменю-список открыть при открытии overlay.
-//   Если есть реальная активная страница — открываем её раздел. Если нет
-//   (домашняя) — fallback на первый раздел (Wellness Services), чтобы
-//   справа не пустовало. Это отклонение от Figma menu-1 (там в дефолте
-//   пусто), но без него UX сломан. См. HANDOFF.
-//
-// data-nav-active атрибут используется JS для возврата к default state
-// после mouseleave с nav — поэтому ставится по defaultOpenLabel.
-// aria-current="true" и орнамент — только по activeGroupLabel.
+// Раздел, реально содержащий текущую страницу (для подсветки активной
+// категории в десктоп-панели и current-page в мобильном меню).
 const activeGroupLabel = mainNav.find(isGroupActive)?.label;
-const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
 ---
 
-{/* === TOP BAR (на каждой странице) === */}
+{/* === MOBILE TOP BAR (< lg) === лого + burger, поверх контента. */}
 <header
-  class="absolute inset-x-0 top-0 z-40 mx-auto flex max-w-design items-center justify-between px-[7.55%] pt-8"
+  class="absolute inset-x-0 top-0 z-40 mx-auto flex max-w-design items-center justify-between px-[7.55%] pt-8 lg:hidden"
 >
   <a href="/" class="block" aria-label="IDEAL Medical and Wellness — home">
     <img
@@ -107,13 +69,10 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
     type="button"
     class="block rounded-full bg-black/35 p-3 text-white backdrop-blur-sm transition-colors hover:bg-black/50 [filter:drop-shadow(0_2px_4px_rgba(0,0,0,0.3))]"
     aria-label="Open menu"
-    aria-controls="overlay-menu mobile-menu"
+    aria-controls="mobile-menu"
     aria-expanded="false"
   >
-    {/* Burger из 4 линий — нестандартный (3 — обычный), взято 1:1 из Figma узел 1:144.
-        Цвет в оригинале золотой, но на cream-DNA hero главной он становится
-        невидим. Чтобы гарантировать контраст на любом фоне (cream/white/dark),
-        burger белый, помещён в полупрозрачную тёмную круглую подложку. */}
+    {/* Burger из 4 линий — 1:1 из Figma (узел 1:144). */}
     <svg
       width="32"
       height="38"
@@ -130,154 +89,115 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
   </button>
 </header>
 
-{/* === OVERLAY MENU (ДЕСКТОП, lg+) ===
-   max-lg:!hidden — на мобиле не показывается никогда (даже когда JS вешает
-   `flex` при открытии): !important перекрывает .flex. Мобильный путь — ниже,
-   отдельный #mobile-menu. */}
+{/* === DESKTOP NAV BAR (lg+) === постоянная sticky-панель с мега-меню. */}
 <div
-  id="overlay-menu"
-  class="fixed inset-0 z-50 hidden flex-col overflow-y-auto bg-cream max-lg:!hidden"
-  style="background: radial-gradient(ellipse 70% 90% at 20% 35%, #f0eadc 0%, #ddc8a0 70%, #c9b187 100%); background-attachment: local;"
-  aria-hidden="true"
+  id="desktop-nav"
+  class="fixed inset-x-0 top-0 z-40 hidden border-b border-gold/15 bg-white lg:block"
 >
-  {/* Фон-градиент задан на самом скролл-контейнере (с background-attachment:
-     local — фон прокручивается вместе с контентом и покрывает всю высоту).
-     Раньше был absolute inset-0 — покрывал только вьюпорт, и при прокрутке
-     длинного меню снизу проступала страница/футер. */}
-  <div class="relative z-10 flex min-h-full flex-col">
-    {/* Верх overlay: лого + крестик */}
-    <div class="flex items-start justify-between px-[7.55%] pt-8">
-      <a href="/" class="block" aria-label="IDEAL Medical and Wellness — home">
+  <div class="mx-auto max-w-design px-[7.55%]">
+    {/* relative — якорь для абсолютных мега-панелей (top-full под баром). */}
+    <div class="relative flex h-[88px] items-center">
+      {/* Лого. Явные width/height (ratio 194:62 ≈ 3.14) — SVG имеет
+          preserveAspectRatio="none", без фикс. размера тянется. */}
+      <a href="/" class="block shrink-0" aria-label="IDEAL Medical and Wellness — home">
         <img
           src="/assets/images/logo-ideal.svg"
           alt="IDEAL Medical and Wellness"
-          width="194"
-          height="62"
-          class="h-auto w-[194px]"
+          width="144"
+          height="46"
+          class="block h-[46px] w-[144px]"
         />
       </a>
-      <button
-        id="menu-close"
-        type="button"
-        class="block text-gold-bright transition-opacity hover:opacity-70"
-        aria-label="Close menu"
-      >
-        <svg width="42" height="42" viewBox="0 0 42 42" fill="none" aria-hidden="true">
-          <path d="M2 2 L40 40 M40 2 L2 40" stroke="currentColor" stroke-width="2" />
-        </svg>
-      </button>
-    </div>
 
-    {/* Центр overlay: основные пункты + подменю + CTA.
-        Маркер data-nav-hover-zone — это горячая зона для hover: пока мышь
-        внутри этого контейнера (на заголовках ИЛИ внутри подменю, ИЛИ в
-        пустом пространстве между ними), временный hover-preview сохраняется.
-        Выход за пределы возвращает к sticky состоянию. */}
-    <div class="flex flex-1 items-start px-[7.55%] pt-[120px] max-lg:pt-10">
-      <div class="flex w-full max-w-content gap-12 max-lg:flex-col max-lg:gap-6" data-nav-hover-zone>
-        {/* Основные пункты */}
-        <nav class="flex flex-col gap-1" aria-label="Main navigation">
-          <ul class="flex flex-col gap-1">
-            {mainNav.map((group: NavGroup) => {
-              const isActive = group.label === activeGroupLabel;
-              const isDefaultOpen = group.label === defaultOpenLabel;
-              return (
-                <li class="group/item" data-nav-group={group.label}>
-                  <button
-                    type="button"
-                    class="inline-flex items-center gap-4 font-heading text-[34px] md:text-[44px] lg:text-[64px] uppercase leading-tight text-gold transition-opacity hover:opacity-70 [text-shadow:0_1px_0_rgba(255,255,255,0.4)]"
-                    data-nav-target={group.label}
-                    data-nav-active={isDefaultOpen ? 'true' : undefined}
-                    aria-current={isActive ? 'true' : undefined}
+      {/* Триггеры категорий */}
+      <nav class="ml-16 flex h-full items-stretch" aria-label="Primary">
+        <ul class="flex h-full items-stretch gap-[46px]">
+          {mainNav.map((group: NavGroup, idx: number) => {
+            const isActive = group.label === activeGroupLabel;
+            const panelId = `megapanel-${idx}`;
+            const twoCols = (group.items?.length ?? 0) > 6;
+            return (
+              <li class="relative flex h-full items-center" data-mega-group={group.label}>
+                <button
+                  type="button"
+                  class="mega-trigger inline-flex items-center gap-1.5 whitespace-nowrap py-2 font-sans text-[14px] font-semibold uppercase tracking-[0.09em] text-gold outline-none transition-colors focus-visible:ring-2 focus-visible:ring-gold-bright/60"
+                  data-mega-trigger={group.label}
+                  data-active={isActive ? 'true' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded="false"
+                  aria-controls={panelId}
+                >
+                  <span>{group.label}</span>
+                  <svg
+                    class="mega-caret h-2.5 w-2.5 text-gold-bright transition-transform"
+                    viewBox="0 0 10 6"
+                    fill="none"
+                    aria-hidden="true"
                   >
-                    <span>{group.label}</span>
-                    {/* Орнамент-индикатор активного раздела (узел Figma 1:1983).
-                        Показывается только для реально активной страницы
-                        (sub-навигация). На главной — не показываем ни для одного
-                        раздела, хотя defaultOpenLabel = Wellness Services
-                        (чтобы юзер не думал, будто он на странице Wellness).
-                        JS ниже переключает opacity при hover. */}
+                    <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                  </svg>
+                </button>
+
+                {/* Мега-панель: открывается под баром, левый край = левому
+                    краю триггера. Белая, 3px gold-bright сверху, мягкая тень. */}
+                <div
+                  id={panelId}
+                  data-mega-panel={group.label}
+                  class={`absolute left-0 top-full z-50 hidden border-t-[3px] border-gold-bright bg-white p-7 pt-6 shadow-[0_22px_44px_rgba(40,34,20,0.16)] [border-radius:0_0_6px_6px] ${twoCols ? 'min-w-[480px]' : 'min-w-[260px]'}`}
+                  role="region"
+                  aria-label={`${group.label} menu`}
+                >
+                  <div class="mb-4 flex items-center justify-between gap-8">
+                    <span class="whitespace-nowrap font-heading text-[18px] uppercase tracking-[0.06em] text-gold">
+                      {group.label}
+                    </span>
                     <img
                       src="/assets/images/star-sign.svg"
                       alt=""
-                      width="33"
-                      height="39"
-                      class={`h-[39px] w-[33px] flex-shrink-0 ${isActive ? 'opacity-100' : 'opacity-0'}`}
-                      data-nav-ornament={group.label}
+                      width="26"
+                      height="30"
+                      class="h-[26px] w-auto opacity-80"
                       aria-hidden="true"
                     />
-                  </button>
-                </li>
-              );
-            })}
-          </ul>
-
-          {/* CTA BOOK APPOINTMENT. min-w чтобы соответствовать ширине в Figma
-              (282px по узлу 1:2010), но позволить расти если нужно. */}
-          <a
-            href={bookingCta.href}
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-gold mt-12 self-start lg:min-w-[282px] max-lg:w-full max-lg:mt-8 whitespace-nowrap"
-          >
-            {bookingCta.label}
-          </a>
-        </nav>
-
-        {/* Подменю справа от пунктов. Открыто по умолчанию для defaultOpenLabel
-            (= активный раздел текущей страницы, либо первый раздел как fallback
-            для главной). При hover/click на другом разделе — переключается.
-
-            min-h-[489px] — высота вертикальной линии-разделителя из Figma
-            (узел 1:3785, Line 1 = 1×489). Совпадает с высотой подменю
-            Wellness Services (9 items × 42px line-height + 8 × gap-2). Без этого
-            при переключении с 9-пунктового Wellness на 2-3-пунктовые Aesthetic/
-            About контейнер сжимается, линия укорачивается, и нижний футер
-            "прыгает" вверх на 30+px. */}
-        <div class="flex-1 lg:border-l lg:border-gold/40 lg:pl-12 lg:min-h-[489px]">
-          {mainNav.map((group: NavGroup) => {
-            const isDefaultOpen = group.label === defaultOpenLabel;
-            return (
-              <ul
-                class={`flex-col gap-2 ${isDefaultOpen ? 'flex' : 'hidden'}`}
-                data-nav-panel={group.label}
-              >
-                {group.items?.map((item) => {
-                  const current = isItemCurrent(item.href);
-                  return (
-                    <li>
-                      <a
-                        href={item.href}
-                        class={`font-sans text-[20px] lg:text-[28px] transition-opacity hover:opacity-70
-                                ${current ? 'text-gold font-semibold' : 'text-gold'}`}
-                        aria-current={current ? 'page' : undefined}
-                      >
-                        {item.label}
-                      </a>
-                    </li>
-                  );
-                })}
-              </ul>
+                  </div>
+                  <ul class={`grid gap-y-0.5 ${twoCols ? 'grid-cols-[max-content_max-content] gap-x-12' : 'grid-cols-1'}`}>
+                    {group.items?.map((item) => {
+                      const current = isItemCurrent(item.href);
+                      return (
+                        <li>
+                          <a
+                            href={item.href}
+                            class={`block whitespace-nowrap rounded px-2.5 py-2 font-sans text-[15px] text-[#26221a] outline-none transition-colors hover:bg-cream hover:text-gold focus-visible:bg-cream focus-visible:text-gold ${current ? 'font-semibold text-gold' : ''}`}
+                            aria-current={current ? 'page' : undefined}
+                          >
+                            {item.label}
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              </li>
             );
           })}
-        </div>
-      </div>
-    </div>
+        </ul>
+      </nav>
 
-    {/* Низ overlay: компактный футер */}
-    <div class="px-[7.55%] pb-12 pt-16">
-      <FooterBlock variant="compact" />
+      {/* CTA — прижат вправо */}
+      <a
+        href={bookingCta.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-gold ml-auto shrink-0 whitespace-nowrap text-[14px] tracking-[0.1em]"
+      >
+        {bookingCta.label}
+      </a>
     </div>
   </div>
 </div>
 
 {/* === MOBILE MENU (< lg) — двухуровневый drill-down (Вариант C) ===
-   Два уровня — состояние ОДНОГО overlay (URL не меняется):
-     L1 (data-mobile-panel="l1") — 3 категории, тап → drill-in.
-     L2 (data-mobile-panel="l2") — метка раздела + пункты, выезжает справа.
-   У каждой панели свой НЕПРОЗРАЧНЫЙ градиент-фон, иначе при slide
-   просвечивают друг через друга (словлено на прототипе).
-   lg:!hidden — на десктопе не показывается (там #overlay-menu выше). */}
+   НЕ ИЗМЕНЯЛОСЬ относительно сессии 14. lg:!hidden — на десктопе скрыто. */}
 <div
   id="mobile-menu"
   class="fixed inset-0 z-50 hidden flex-col overflow-hidden bg-cream lg:!hidden"
@@ -430,33 +350,60 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
   </div>
 </div>
 
-<script>
-  // Управление overlay-меню — minimal vanilla JS, без зависимостей.
-  const toggle = document.getElementById('menu-toggle');
-  const close = document.getElementById('menu-close');
-  const overlay = document.getElementById('overlay-menu');       // десктоп (lg+)
-  const mobileMenu = document.getElementById('mobile-menu');     // мобильный drill-down (< lg)
-
-  // Текущее "запомненное" состояние подменю. Изначально = серверный default
-  // (data-nav-active="true" на одном из заголовков). При hover временно
-  // показываем другой раздел, на mouseleave возвращаемся к запомненному.
-  // При click — меняем запомненное на новое.
-  function getServerDefault(): string | undefined {
-    const el = document.querySelector<HTMLElement>('[data-nav-target][data-nav-active="true"]');
-    return el?.dataset.navTarget;
+<style>
+  /* --- Desktop nav: sticky + auto-hide + scrolled shadow --- */
+  #desktop-nav {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform;
   }
-  let stickySection: string | undefined = getServerDefault();
+  #desktop-nav.is-hidden {
+    transform: translateY(-100%);
+  }
+  #desktop-nav.is-scrolled {
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+  }
+  /* Подчёркивание-индикатор: для открытого И для активной категории. */
+  .mega-trigger::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 14px;
+    bottom: -2px;
+    height: 2px;
+    background: var(--mega-underline, #d1a42b);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.18s ease;
+  }
+  .mega-trigger[data-open]::after,
+  .mega-trigger[data-active]::after {
+    transform: scaleX(1);
+  }
+  .mega-trigger[data-open],
+  .mega-trigger[data-active] {
+    color: #d1a42b;
+  }
+  .mega-trigger[data-open] .mega-caret {
+    transform: rotate(180deg);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #desktop-nav,
+    .mega-trigger::after,
+    .mega-caret {
+      transition: none;
+    }
+  }
+</style>
 
-  // --- Открытие/закрытие управляет ОБОИМИ overlay (#overlay-menu для lg+,
-  //     #mobile-menu для < lg). Видимость решает CSS-гейт по брейкпоинту,
-  //     поэтому JS-детект вьюпорта не нужен — открываем оба, видно нужный. ---
-  // Сохранённая позиция скролла для iOS-safe блокировки.
+<script>
+  // ===== Открытие/закрытие МОБИЛЬНОГО меню (burger) =====
+  const toggle = document.getElementById('menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+
   let savedScrollY = 0;
 
   function lockScroll() {
-    // body{overflow:hidden} НЕ блокирует скролл в iOS Safari — страница
-    // остаётся прокрученной под overlay, из-за чего внизу проступает футер.
-    // Надёжно: фиксируем body со сдвигом на текущий скролл.
+    // body{overflow:hidden} не блокирует iOS Safari — фиксируем body со сдвигом.
     savedScrollY = window.scrollY || window.pageYOffset || 0;
     document.body.style.position = 'fixed';
     document.body.style.top = `-${savedScrollY}px`;
@@ -473,84 +420,51 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
     document.body.style.right = '';
     document.body.style.width = '';
     document.body.style.overflow = '';
-    window.scrollTo(0, savedScrollY); // вернуть пользователя туда, где был
+    window.scrollTo(0, savedScrollY);
   }
 
   function openMenu() {
-    if (!toggle) return;
+    if (!toggle || !mobileMenu) return;
     toggle.setAttribute('aria-expanded', 'true');
     lockScroll();
-
-    if (overlay) {
-      overlay.classList.remove('hidden');
-      overlay.classList.add('flex');
-      overlay.setAttribute('aria-hidden', 'false');
-      // Десктоп: показываем sticky (последнее выбранное или server default).
-      showPanel(stickySection);
-    }
-    if (mobileMenu) {
-      mobileMenu.classList.remove('hidden');
-      mobileMenu.classList.add('flex');
-      mobileMenu.setAttribute('aria-hidden', 'false');
-      setMobileLevel(null); // всегда с корня (L1) — последний раздел не запоминаем
-    }
+    mobileMenu.classList.remove('hidden');
+    mobileMenu.classList.add('flex');
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    setMobileLevel(null); // всегда с корня (L1)
   }
 
   function closeMenu() {
-    if (!toggle) return;
-    // Снять фокус с элемента внутри overlay перед aria-hidden=true
-    // (иначе браузер ругается на aria-hidden у предка фокуса).
+    if (!toggle || !mobileMenu) return;
     const active = document.activeElement;
-    if (
-      active instanceof HTMLElement &&
-      (overlay?.contains(active) || mobileMenu?.contains(active))
-    ) {
+    if (active instanceof HTMLElement && mobileMenu.contains(active)) {
       active.blur();
     }
     toggle.setAttribute('aria-expanded', 'false');
     unlockScroll();
     toggle.focus({ preventScroll: true });
-
-    if (overlay) {
-      overlay.classList.add('hidden');
-      overlay.classList.remove('flex');
-      overlay.setAttribute('aria-hidden', 'true');
-    }
-    if (mobileMenu) {
-      mobileMenu.classList.add('hidden');
-      mobileMenu.classList.remove('flex');
-      mobileMenu.setAttribute('aria-hidden', 'true');
-      setMobileLevel(null); // сброс на L1 для следующего открытия
-    }
+    mobileMenu.classList.add('hidden');
+    mobileMenu.classList.remove('flex');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    setMobileLevel(null);
   }
 
   toggle?.addEventListener('click', openMenu);
-  close?.addEventListener('click', closeMenu);
 
-  // Esc — закрыть (любой из overlay открыт). На L2 Esc закрывает целиком
-  // (не Back) — по утверждённой спеке.
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
-    const open =
-      overlay?.getAttribute('aria-hidden') === 'false' ||
-      mobileMenu?.getAttribute('aria-hidden') === 'false';
-    if (open) closeMenu();
+    if (mobileMenu?.getAttribute('aria-hidden') === 'false') closeMenu();
   });
 
-  // ===== МОБИЛЬНЫЙ drill-down (< lg) =====
+  // ===== МОБИЛЬНЫЙ drill-down (< lg) — без изменений =====
   const mPanelL1 = mobileMenu?.querySelector<HTMLElement>('[data-mobile-panel="l1"]');
   const mPanelL2 = mobileMenu?.querySelector<HTMLElement>('[data-mobile-panel="l2"]');
-  let activeCategory: string | null = null;     // null = L1, иначе ярлык раздела (L2)
-  let lastDrillBtn: HTMLElement | null = null;   // категория-источник (фокус при Back)
+  let activeCategory: string | null = null;
+  let lastDrillBtn: HTMLElement | null = null;
 
-  // Переключение уровня: null → L1, иначе → L2 выбранного раздела.
   function setMobileLevel(category: string | null) {
     activeCategory = category;
     const atL2 = category !== null;
 
-    // Сначала готовим контент L2: показываем нужный раздел и сбрасываем скролл
-    // в начало — ДО запуска slide, чтобы панель выезжала уже с правильным
-    // содержимым и с верха (иначе мелькание прошлого раздела и прыжок скролла).
     mobileMenu?.querySelectorAll<HTMLElement>('[data-mobile-cat]').forEach((block) => {
       block.classList.toggle('hidden', block.dataset.mobileCat !== category);
     });
@@ -560,13 +474,10 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
     }
 
     if (mPanelL1 && mPanelL2) {
-      // L1 — лёгкий параллакс влево; L2 — выезжает справа.
       mPanelL1.classList.toggle('-translate-x-1/4', atL2);
       mPanelL1.classList.toggle('translate-x-0', !atL2);
       mPanelL2.classList.toggle('translate-x-0', atL2);
       mPanelL2.classList.toggle('translate-x-full', !atL2);
-      // Фокус-разделение: неактивная панель inert (вне tab-порядка и от AT) —
-      // иначе её фокусируемые элементы остаются в обходе Tab, хоть и за экраном.
       mPanelL1.toggleAttribute('inert', atL2);
       mPanelL2.toggleAttribute('inert', !atL2);
     }
@@ -575,9 +486,6 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
   function mobileDrillIn(category: string, sourceBtn: HTMLElement) {
     lastDrillBtn = sourceBtn;
     setMobileLevel(category);
-    // Фокус → некликабельная метка раздела (tabindex=-1, принимает focus().
-    // preventScroll: иначе браузер проматывает скролл-контейнер L2 к метке
-    // прямо во время slide-анимации → визуальный рывок.
     const label = mobileMenu?.querySelector<HTMLElement>(
       `[data-mobile-cat="${category}"] [data-mobile-label]`
     );
@@ -586,26 +494,22 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
 
   function mobileBack() {
     setMobileLevel(null);
-    lastDrillBtn?.focus({ preventScroll: true }); // фокус → категория-источник
+    lastDrillBtn?.focus({ preventScroll: true });
   }
 
-  // L1: тап категории → drill-in
   mobileMenu?.querySelectorAll<HTMLElement>('[data-mobile-drill]').forEach((btn) => {
     btn.addEventListener('click', () => {
       const cat = btn.dataset.mobileDrill;
       if (cat) mobileDrillIn(cat, btn);
     });
   });
-  // L2: ‹ Back → обратно на L1
   mobileMenu?.querySelectorAll<HTMLElement>('[data-mobile-back]').forEach((btn) => {
     btn.addEventListener('click', mobileBack);
   });
-  // ✕ (оба уровня) → закрыть
   mobileMenu?.querySelectorAll<HTMLElement>('[data-mobile-close]').forEach((btn) => {
     btn.addEventListener('click', closeMenu);
   });
 
-  // Свайп вправо в зоне списка L2 = Back (v1). Порог 60px, горизонталь > вертикали.
   const swipeZone = mobileMenu?.querySelector<HTMLElement>('[data-mobile-swipe]');
   let touchStartX = 0;
   let touchStartY = 0;
@@ -634,8 +538,6 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
     { passive: true }
   );
 
-  // Focus-trap внутри мобильного меню (Tab по кругу). Неактивная панель inert,
-  // поэтому в обход попадают только видимые фокусируемые элементы активной.
   mobileMenu?.addEventListener('keydown', (e) => {
     if (e.key !== 'Tab' || !mobileMenu) return;
     const focusables = Array.from(
@@ -655,46 +557,107 @@ const defaultOpenLabel = activeGroupLabel ?? mainNav[0].label;
     }
   });
 
-  // Hover/focus/click по главному пункту → показать соответствующий подменю-список
-  // + показать орнамент рядом с этим пунктом.
-  // - hover/focus: временный show (mouseleave возвращает к sticky)
-  // - click: сохранить новый sticky (touch-friendly — на iPad/телефонах нет hover)
-  document.querySelectorAll<HTMLElement>('[data-nav-target]').forEach((btn) => {
-    const target = btn.dataset.navTarget;
-    btn.addEventListener('mouseenter', () => showPanel(target));
-    btn.addEventListener('focus', () => showPanel(target));
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      stickySection = target;
-      showPanel(target);
+  // ===== ДЕСКТОП-панель: мега-меню (hover + click + клавиатура) =====
+  const desktopNav = document.getElementById('desktop-nav');
+  let openLabel: string | null = null;
+  let hoverTimer: number | undefined;
+  const CLOSE_DELAY = 140;
+
+  function setTrigger(label: string, open: boolean) {
+    const trigger = desktopNav?.querySelector<HTMLElement>(`[data-mega-trigger="${label}"]`);
+    const panel = desktopNav?.querySelector<HTMLElement>(`[data-mega-panel="${label}"]`);
+    if (!trigger || !panel) return;
+    trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    if (open) trigger.setAttribute('data-open', 'true');
+    else trigger.removeAttribute('data-open');
+    panel.classList.toggle('hidden', !open);
+  }
+
+  function openPanel(label: string) {
+    if (openLabel && openLabel !== label) setTrigger(openLabel, false);
+    setTrigger(label, true);
+    openLabel = label;
+  }
+
+  function closeAllPanels() {
+    if (!openLabel) return;
+    setTrigger(openLabel, false);
+    openLabel = null;
+  }
+
+  desktopNav?.querySelectorAll<HTMLElement>('[data-mega-group]').forEach((group) => {
+    const label = group.dataset.megaGroup!;
+    const trigger = group.querySelector<HTMLElement>('[data-mega-trigger]');
+
+    // Hover: вход в зону (триггер ИЛИ панель) открывает; выход — закрывает с задержкой.
+    group.addEventListener('mouseenter', () => {
+      window.clearTimeout(hoverTimer);
+      openPanel(label);
+    });
+    group.addEventListener('mouseleave', () => {
+      window.clearTimeout(hoverTimer);
+      hoverTimer = window.setTimeout(closeAllPanels, CLOSE_DELAY);
+    });
+
+    // Click/Enter/Space — toggle (touch + клавиатура).
+    trigger?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (openLabel === label) closeAllPanels();
+      else openPanel(label);
     });
   });
 
-  // При уходе курсора из hover-zone (= общий контейнер заголовков + подменю)
-  // возвращаемся к sticky выбору. Слушаем именно общий контейнер, а не <nav>,
-  // потому что юзер часто двигает мышь от заголовка к пунктам подменю,
-  // пересекая визуально пустое пространство (вертикальную линию + padding).
-  // Если слушать <nav>, mouseleave срабатывает в этой пустой зоне и сбрасывает
-  // подменю до того, как мышь успеет дойти до пунктов.
-  // На touch-устройствах mouseleave обычно не срабатывает — sticky уже обновлён
-  // в click handler выше, и подменю остаётся в выбранном состоянии.
-  const hoverZone = document.querySelector<HTMLElement>('[data-nav-hover-zone]');
-  hoverZone?.addEventListener('mouseleave', () => showPanel(stickySection));
+  // Клик снаружи панели — закрыть.
+  document.addEventListener('click', (e) => {
+    if (!openLabel || !desktopNav) return;
+    if (!desktopNav.contains(e.target as Node)) closeAllPanels();
+  });
 
-  function showPanel(name?: string) {
-    // Панели
-    document.querySelectorAll<HTMLElement>('[data-nav-panel]').forEach((p) => {
-      const match = !!name && p.dataset.navPanel === name;
-      p.classList.toggle('flex', match);
-      p.classList.toggle('hidden', !match);
-    });
-    // Орнамент — показываем при hover/click на любой раздел.
-    // SSR-орнамент (для реально активной страницы) остаётся постоянно.
-    // На главной activeGroupLabel = undefined, орнамент при hover тоже временный.
-    document.querySelectorAll<HTMLElement>('[data-nav-ornament]').forEach((o) => {
-      const match = !!name && o.dataset.navOrnament === name;
-      o.classList.toggle('opacity-100', match);
-      o.classList.toggle('opacity-0', !match);
-    });
+  // Фокус ушёл из открытой группы — закрыть (Tab за пределы панели).
+  document.addEventListener('focusin', (e) => {
+    if (!openLabel || !desktopNav) return;
+    const grp = desktopNav.querySelector<HTMLElement>(`[data-mega-group="${openLabel}"]`);
+    if (grp && !grp.contains(e.target as Node)) closeAllPanels();
+  });
+
+  // Esc — закрыть и вернуть фокус на триггер.
+  document.addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape' || !openLabel || !desktopNav) return;
+    const trigger = desktopNav.querySelector<HTMLElement>(`[data-mega-trigger="${openLabel}"]`);
+    closeAllPanels();
+    trigger?.focus();
+  });
+
+  // ===== ДЕСКТОП-панель: sticky + auto-hide при скролле =====
+  let lastY = window.scrollY;
+  let ticking = false;
+  const TOP_ZONE = 8;     // у самого верха всегда видна
+  const HIDE_AFTER = 140; // прячем только глубже этого порога
+
+  function onScroll() {
+    const y = window.scrollY;
+    desktopNav?.classList.toggle('is-scrolled', y > TOP_ZONE);
+    if (y <= TOP_ZONE) {
+      desktopNav?.classList.remove('is-hidden');
+    } else if (y > lastY + 4 && y > HIDE_AFTER) {
+      // скролл вниз → спрятать (и закрыть открытую панель)
+      desktopNav?.classList.add('is-hidden');
+      closeAllPanels();
+    } else if (y < lastY - 4) {
+      // скролл вверх → показать
+      desktopNav?.classList.remove('is-hidden');
+    }
+    lastY = y;
+    ticking = false;
   }
+  window.addEventListener(
+    'scroll',
+    () => {
+      if (!ticking) {
+        window.requestAnimationFrame(onScroll);
+        ticking = true;
+      }
+    },
+    { passive: true }
+  );
 </script>
