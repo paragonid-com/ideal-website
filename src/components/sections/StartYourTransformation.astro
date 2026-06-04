@@ -19,6 +19,30 @@
  */
 import Container from '../Container.astro';
 import { bookingCta } from '../../data/navigation.ts';
+import { SITE } from '../../data/site';
+
+// --- Часы работы (тот же источник и формат, что в LocationBlock на /about) ---
+function fmtHour(t: string): string {
+  const [h, m] = t.split(':').map(Number);
+  const period = h >= 12 ? 'PM' : 'AM';
+  const hr = h % 12 === 0 ? 12 : h % 12;
+  return m === 0 ? `${hr} ${period}` : `${hr}:${String(m).padStart(2, '0')} ${period}`;
+}
+const HOURS_ABBR: Record<string, string> = {
+  Monday: 'Mon', Tuesday: 'Tue', Wednesday: 'Wed', Thursday: 'Thu',
+  Friday: 'Fri', Saturday: 'Sat', Sunday: 'Sun',
+};
+function hoursDayRange(days: readonly string[]): string {
+  if (days.length === 1) return HOURS_ABBR[days[0]];
+  return `${HOURS_ABBR[days[0]]} – ${HOURS_ABBR[days[days.length - 1]]}`;
+}
+const HOURS_ALL_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+const hoursOpenDays = new Set(SITE.openingHours.flatMap((h) => h.days as readonly string[]));
+const hoursClosedDays = HOURS_ALL_DAYS.filter((d) => !hoursOpenDays.has(d));
+const hoursRows = [
+  ...SITE.openingHours.map((h) => ({ label: hoursDayRange(h.days), value: `${fmtHour(h.opens)} – ${fmtHour(h.closes)}` })),
+  ...(hoursClosedDays.length ? [{ label: hoursDayRange(hoursClosedDays), value: 'Closed' }] : []),
+];
 
 interface Props {
   /** Какие части показывать: обе, только форму, или только CTA-баннер.
@@ -160,7 +184,7 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
 >
   {/* Фото здания — слева, у́же текстовой панели (Figma: фото 42% / панель 58%) */}
   <div class="grid grid-cols-1 lg:grid-cols-[42fr_58fr]">
-    <div class="relative aspect-[802/707] lg:aspect-square">
+    <div class="relative aspect-[802/707] lg:aspect-auto lg:min-h-[420px]">
       <img
       width="2124"
       height="1414"
@@ -207,7 +231,8 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
         heart of Aventura, Florida
       </p>
 
-      <div class="mt-6 flex flex-wrap items-end justify-between gap-8">
+      <div class="mt-6 flex flex-wrap items-end justify-between gap-x-8 gap-y-6">
+        <div class="grid grid-cols-1 gap-x-12 gap-y-6 sm:grid-cols-2">
         <address class="not-italic font-sans text-[18px] leading-relaxed text-gold">
           <p class="font-heading text-[24px] uppercase">Address</p>
           <p class="mt-2">{address.name}</p>
@@ -219,6 +244,19 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
             </a>
           </p>
         </address>
+
+        <div class="font-sans text-[18px] leading-relaxed text-gold">
+          <p class="font-heading text-[24px] uppercase">Hours</p>
+          <dl class="mt-2 space-y-1">
+            {hoursRows.map((row) => (
+              <div class="flex justify-between gap-4">
+                <dt class="whitespace-nowrap">{row.label}</dt>
+                <dd class="text-right">{row.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+        </div>
 
         {/* Ссылки на карты (Figma узел 1:267, Image 108). Иконки на белом фоне —
             убираем фон через mix-blend-multiply на кремовой панели. */}
