@@ -6,6 +6,9 @@ heroTitle: "AVENTURA\nBIOIDENTICAL HORMONE\nREPLACEMENT THERAPY"
 heroLead: "ANTI-AGING MEDICINE\nLab-tested, physician-supervised BHRT and pellet therapy in Aventura — built around your bloodwork, not a template. Book a consultation today."
 heroImage: "/assets/images/services/hormone/hero.webp"
 heroImageAlt: "Doctor reviewing patient hormone test results in Aventura clinic"
+# Мобайл: фото баннером сверху (зум аут, доктор и планшет видны), текст снизу.
+heroMobileStacked: true
+heroMobileImagePosition: "object-[52%_center]"
 
 # === "What is X?" — Weight Loss-style формат: фото слева + многоабзацный текст справа.
 # Заголовок длинный (5 строк), как в Figma узлы 1:3251-1:3256.
@@ -18,6 +21,7 @@ whatIsImageAlt: "Bioidentical hormone vials and pellets — Ideal Medical clinic
 whatIsHeight: "lg:aspect-[100/44]"
 whatIsGridCols: "lg:grid-cols-[44fr_56fr]"
 whatIsAlign: "items-stretch"
+whatIsMobileTextFirst: true
 whatIsHeadingClass: "text-[clamp(24px,3.23vw,62px)] leading-[1.05]"
 whatIsBodyClass: "text-[clamp(14px,1.09vw,21px)] leading-[1.2]"
 whatIsBody: |
@@ -97,7 +101,7 @@ whyTrust:
   imageAlt: "Ideal Medical and Wellness team — Aventura, FL"
 
 # === Gold pull-quote banner — узел Figma 1:3467.
-goldBanner: "We don't just want to treat you; we want to be your\nlong-term partner in this regenerative journey."
+goldBanner: "We don't just want to treat you;\nwe want to be your long-term\npartner in this regenerative journey."
 
 # === Experience block — узлы Figma 1:3389 (DNA), 1:3479-1:3492 (text), 1:3483 (phone).
 experience:

@@ -37,6 +37,8 @@ interface Props {
    *  vw-масштабируемый `text-[clamp(16px,1.09vw,21px)]`, чтобы и текст
    *  масштабировался пропорционально и блок держал пропорцию Figma. */
   bodyClass?: string;
+  /** На мобайле показать сначала текст, потом фото (Default — фото сверху). */
+  mobileTextFirst?: boolean;
 }
 
 const {
@@ -46,7 +48,11 @@ const {
   align = 'items-center',
   headingClass = 'text-h1 leading-tight',
   bodyClass = 'text-body-lg leading-relaxed',
+  mobileTextFirst = false,
 } = Astro.props;
+// На мобайле меняем порядок колонок (текст сверху), на lg — как в DOM (фото слева).
+const imgOrder = mobileTextFirst ? 'max-lg:order-2' : '';
+const textOrder = mobileTextFirst ? 'max-lg:order-1' : '';
 const lines = title.split('\n');
 // Разбиваем body на абзацы
 const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
@@ -58,7 +64,7 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
 >
   <div class={`mx-auto max-w-design grid grid-cols-1 ${gridColsClass} ${align} ${sectionHeight}`}>
     {/* Левая колонка — фото на всю высоту секции */}
-    <div class="relative h-[320px] md:h-[480px] lg:h-full lg:min-h-0">
+    <div class={`relative h-[320px] md:h-[480px] lg:h-full lg:min-h-0 ${imgOrder}`}>
       <img
         src={image}
         alt={imageAlt}
@@ -69,7 +75,7 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
 
     {/* Правая колонка — текст. При align=items-stretch (hormone) колонка
         тянется на всю высоту, текст ложится сверху — как в Figma. */}
-    <div class="relative px-[7.55%] py-16">
+    <div class={`relative px-[7.55%] py-16 ${textOrder}`}>
       <h2 class={`font-heading ${headingClass} uppercase text-gold`}>
         {lines.map((line, i) => (
           <>

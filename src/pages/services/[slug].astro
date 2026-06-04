@@ -171,6 +171,8 @@ const goldBanner = normalizeBanner(data.goldBanner);
     image={data.heroImage}
     imageAlt={data.heroImageAlt}
     showStar={data.stars?.hero}
+    mobileStacked={data.heroMobileStacked}
+    mobileImagePosition={data.heroMobileImagePosition}
   />
 
   {!data.suppressDefaultCtas && <ServiceCTABand />}
@@ -194,6 +196,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
         align={data.whatIsAlign}
         headingClass={data.whatIsHeadingClass}
         bodyClass={data.whatIsBodyClass}
+        mobileTextFirst={data.whatIsMobileTextFirst}
       />
       {/* CTA после what-is — кроме emsella, где следом идёт two-col
          'after-whatis' со своим завершающим CTA (иначе двойной баннер). */}

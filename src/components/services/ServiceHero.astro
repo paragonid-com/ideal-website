@@ -2,57 +2,69 @@
 /**
  * ServiceHero — Hero страницы услуги.
  *
- * Структура (узлы Figma 1:1485-1:1509 для Weight Loss):
- *  - Полноширинное фото (1920×814 в Figma)
- *  - Текст слева:
- *      * H1, 2 строки, font-heading, 62px, x=145 y=224
- *      * Подзаголовок-параграф, x=145 y=389 width=632
- *      * (на главной тут была кнопка BOOK NOW — на странице услуги кнопки нет,
- *         CTA-band идёт ниже отдельным компонентом)
+ * Десктоп (lg+): полноширинное фото-фон (1920×814 Figma) + текст-оверлей слева.
  *
- * Высота 814px (меньше чем главная — 1079px).
+ * Мобайл: по умолчанию — тот же оверлей (короче). Опция `mobileStacked` (hormone):
+ * на мобайле фото показывается отдельным баннером сверху (object-cover,
+ * фокус на докторе через `mobileImagePosition`) — зум аут, доктор и что он делает
+ * видны целиком, — а текст идёт ПОД фото на cream-фоне и хорошо читается.
  */
 
 interface Props {
-  /** Заголовок — поддерживает \n для переноса */
   title: string;
-  /** Лид-параграф */
   lead: string;
-  /** Путь к фото в /public/ (большое фоновое) */
   image: string;
-  /** Alt для фото */
   imageAlt: string;
-  /** Показать gold-звезду под lead (specialty-страницы, Figma) */
   showStar?: boolean;
+  /** Мобайл: фото баннером сверху, текст снизу (вместо оверлея). Default false. */
+  mobileStacked?: boolean;
+  /** object-position фото в мобильном баннере (фокус на докторе). Default object-center. */
+  mobileImagePosition?: string;
 }
 
-const { title, lead, image, imageAlt, showStar = false } = Astro.props;
-// Разбиваем title на строки по \n чтобы отрисовать через <br/>
+const {
+  title, lead, image, imageAlt, showStar = false,
+  mobileStacked = false,
+  mobileImagePosition = 'object-center',
+} = Astro.props;
 const lines = title.split('\n');
+
+const sectionClass = mobileStacked
+  ? 'relative w-full overflow-hidden bg-cream lg:h-[814px]'
+  : 'relative h-[600px] sm:h-[640px] lg:h-[814px] w-full overflow-hidden bg-white';
+
+const imgClass = mobileStacked
+  ? `block w-full h-[300px] sm:h-[380px] object-cover ${mobileImagePosition} lg:absolute lg:inset-0 lg:h-full lg:object-right`
+  : 'absolute inset-0 h-full w-full object-cover object-right';
+
+const scrimClass = mobileStacked
+  ? 'hidden lg:block absolute inset-0 z-[1] bg-gradient-to-r from-cream/55 via-cream/10 to-transparent'
+  : 'absolute inset-0 z-[1] bg-gradient-to-r from-cream/85 via-cream/45 to-transparent lg:from-cream/55 lg:via-cream/10';
+
+const wrapClass = mobileStacked
+  ? 'relative z-10 mx-auto max-w-design px-[7.55%] lg:h-full'
+  : 'relative z-10 mx-auto h-full max-w-design px-[7.55%]';
+
+const innerClass = mobileStacked
+  ? 'flex flex-col justify-center py-12 lg:py-0 lg:h-full'
+  : 'flex h-full flex-col justify-center pt-[80px] lg:pt-0';
 ---
 
-<section
-  class="relative h-[600px] sm:h-[640px] lg:h-[814px] w-full overflow-hidden bg-white"
-  data-section="service-hero"
->
+<section class={sectionClass} data-section="service-hero">
   <img
     src={image}
     alt={imageAlt}
-    class="absolute inset-0 h-full w-full object-cover object-right"
+    class={imgClass}
     loading="eager"
     decoding="async"
   />
 
-  {/* Скрим под текстом: на мобиле фото короче и текст ложится на детальную
-      часть кадра — кремовый градиент слева повышает контраст золотого текста.
-      На десктопе слабее (текст и так лежит на спокойной зоне слева). */}
-  <div
-    class="absolute inset-0 z-[1] bg-gradient-to-r from-cream/85 via-cream/45 to-transparent lg:from-cream/55 lg:via-cream/10"
-    aria-hidden="true"
-  ></div>
+  {/* Скрим под текстом (на оверлее). В stacked-режиме на мобайле не нужен —
+      текст лежит на cream-фоне ниже фото. */}
+  <div class={scrimClass} aria-hidden="true"></div>
 
-  <div class="relative z-10 mx-auto h-full max-w-design px-[7.55%]">
-    <div class="flex h-full flex-col justify-center pt-[80px] lg:pt-0">
+  <div class={wrapClass}>
+    <div class={innerClass}>
       <h1 class="font-heading text-h1 uppercase text-gold leading-tight">
         {lines.map((line, i) => (
           <>

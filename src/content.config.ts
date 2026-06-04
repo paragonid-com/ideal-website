@@ -83,6 +83,10 @@ const services = defineCollection({
       heroImage: z.string(),
       /** Alt для hero image */
       heroImageAlt: z.string(),
+      /** Мобайл-hero: фото баннером сверху + текст снизу (вместо оверлея). */
+      heroMobileStacked: z.boolean().optional(),
+      /** object-position фото в мобильном hero-баннере (напр. `object-[52%_center]`). */
+      heroMobileImagePosition: z.string().optional(),
 
       // ===== "What is X?" (Weight Loss формат) =====
       whatIsTitle: z.string().optional(),
@@ -106,6 +110,8 @@ const services = defineCollection({
       /** Класс размера body-текста What-Is (vw-масштабируемый для hormone).
        *  Default — `text-body-lg`. */
       whatIsBodyClass: z.string().optional(),
+      /** На мобайле What-Is: текст сверху, фото снизу. */
+      whatIsMobileTextFirst: z.boolean().optional(),
 
       // ===== "What is X?" короткий вариант БЕЗ фото (emsculpt) =====
       simpleWhatIs: z
