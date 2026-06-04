@@ -30,16 +30,21 @@ const lines = text.split('\n');
 ---
 
 <section
-  class="w-full bg-gold py-20"
+  class:list={[
+    'w-full bg-gold',
+    // hormone pull-quote (без CTA) — точная высота Figma 294px (Rect 102),
+    // текст по центру на 2 строки. exomind-баннеры (с CTA) — прежний py-20.
+    ctaLabel ? 'py-20' : 'py-14 lg:py-0 lg:h-[294px] lg:flex lg:items-center',
+  ]}
   data-section="service-gold-banner"
 >
-  <div class="mx-auto max-w-design px-[7.55%] text-center">
+  <div class="mx-auto w-full max-w-design px-[7.55%] text-center">
     <p
       class:list={[
         'font-heading text-cream',
         // exomind-баннеры (с CTA) — крупный h1-стиль uppercase как в Figma;
         // hormone pull-quote (без CTA) — Optima ~62px (Figma 1:3467), sentence-case.
-        ctaLabel ? 'text-h1 uppercase leading-tight' : 'text-h1 leading-snug',
+        ctaLabel ? 'text-h1 uppercase leading-tight' : 'text-h1 leading-[1.15]',
       ]}
     >
       {lines.map((line, i) => (

@@ -90,6 +90,10 @@ const services = defineCollection({
       whatIsImageAlt: z.string().optional(),
       /** Длинный текстовый блок справа. Многоабзацный (\n\n). */
       whatIsBody: z.string().optional(),
+      /** Класс высоты секции What-Is на lg (напр. `lg:h-[1083px]` для hormone,
+       *  точная высота из Figma). Если не задан — ServiceWhatIs использует
+       *  дефолт `lg:min-h-[940px]` (другие страницы не затронуты). */
+      whatIsHeight: z.string().optional(),
 
       // ===== "What is X?" короткий вариант БЕЗ фото (emsculpt) =====
       simpleWhatIs: z
