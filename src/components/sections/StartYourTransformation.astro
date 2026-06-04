@@ -20,29 +20,7 @@
 import Container from '../Container.astro';
 import { bookingCta } from '../../data/navigation.ts';
 import { SITE } from '../../data/site';
-
-// --- Часы работы (тот же источник и формат, что в LocationBlock на /about) ---
-function fmtHour(t: string): string {
-  const [h, m] = t.split(':').map(Number);
-  const period = h >= 12 ? 'PM' : 'AM';
-  const hr = h % 12 === 0 ? 12 : h % 12;
-  return m === 0 ? `${hr} ${period}` : `${hr}:${String(m).padStart(2, '0')} ${period}`;
-}
-const HOURS_ABBR: Record<string, string> = {
-  Monday: 'Mon', Tuesday: 'Tue', Wednesday: 'Wed', Thursday: 'Thu',
-  Friday: 'Fri', Saturday: 'Sat', Sunday: 'Sun',
-};
-function hoursDayRange(days: readonly string[]): string {
-  if (days.length === 1) return HOURS_ABBR[days[0]];
-  return `${HOURS_ABBR[days[0]]} – ${HOURS_ABBR[days[days.length - 1]]}`;
-}
-const HOURS_ALL_DAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-const hoursOpenDays = new Set(SITE.openingHours.flatMap((h) => h.days as readonly string[]));
-const hoursClosedDays = HOURS_ALL_DAYS.filter((d) => !hoursOpenDays.has(d));
-const hoursRows = [
-  ...SITE.openingHours.map((h) => ({ label: hoursDayRange(h.days), value: `${fmtHour(h.opens)} – ${fmtHour(h.closes)}` })),
-  ...(hoursClosedDays.length ? [{ label: hoursDayRange(hoursClosedDays), value: 'Closed' }] : []),
-];
+import HoursWidget from '../HoursWidget.astro';
 
 interface Props {
   /** Какие части показывать: обе, только форму, или только CTA-баннер.
@@ -54,15 +32,16 @@ const showForm = show === 'both' || show === 'form';
 const showCta = show === 'both' || show === 'cta';
 
 const address = {
-  name: 'Ideal Medical and Wellness',
-  street: '2999 NE 191 Street',
-  city: 'Aventura, FL 33180',
-  phone: '(305) 650-1884',
+  name: SITE.legalName,
+  street: SITE.address.street,
+  suite: SITE.address.suite,
+  city: `${SITE.address.city}, ${SITE.address.region} ${SITE.address.postalCode}`,
+  phone: SITE.phoneDisplay,
 };
 
 // Ссылки «открыть в картах» — строятся из адреса клиники.
 const mapQuery = encodeURIComponent(
-  `${address.name}, ${address.street}, ${address.city}`
+  `${address.name}, ${address.street}, ${address.suite}, ${address.city}`
 );
 const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
 const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
@@ -236,9 +215,10 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
       <div class="mt-6 flex flex-wrap items-end justify-between gap-x-8 gap-y-6">
         <div class="grid grid-cols-1 gap-x-12 gap-y-6 sm:grid-cols-2">
         <address class="not-italic font-sans text-[18px] leading-relaxed text-[#5a4f33]">
-          <p class="font-heading text-[24px] uppercase">Address</p>
+          <p class="font-heading text-[24px] uppercase text-gold">Address</p>
           <p class="mt-2">{address.name}</p>
           <p>{address.street}</p>
+          <p>{address.suite}</p>
           <p>{address.city}</p>
           <p class="mt-4">
             <a href={`tel:${address.phone.replace(/[^\d+]/g, '')}`} class="hover:underline">
@@ -247,17 +227,7 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
           </p>
         </address>
 
-        <div class="font-sans text-[18px] leading-relaxed text-[#5a4f33]">
-          <p class="font-heading text-[24px] uppercase">Hours</p>
-          <dl class="mt-2 space-y-1">
-            {hoursRows.map((row) => (
-              <div class="flex justify-between gap-4">
-                <dt class="whitespace-nowrap">{row.label}</dt>
-                <dd class="text-right">{row.value}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
+        <HoursWidget />
         </div>
 
         {/* Ссылки на карты (Figma узел 1:267, Image 108). Иконки на белом фоне —

@@ -13,35 +13,13 @@
  *    Business Profile при финализации site.ts.
  */
 import { SITE } from '../data/site';
+import HoursWidget from './HoursWidget.astro';
 
-const { street, city, region, postalCode } = SITE.address;
-const fullAddress = `${street}, ${city}, ${region} ${postalCode}`;
+const { street, suite, city, region, postalCode } = SITE.address;
+const fullAddress = `${street}, ${suite}, ${city}, ${region} ${postalCode}`;
 const mapEmbed = `https://www.google.com/maps?q=${encodeURIComponent(
   `${SITE.legalName}, ${fullAddress}`
 )}&output=embed`;
-
-// --- Часы работы (перенесено из ContactInfo) ---
-function fmt(t: string): string {
-  const [h, m] = t.split(':').map(Number);
-  const period = h >= 12 ? 'PM' : 'AM';
-  const hr = h % 12 === 0 ? 12 : h % 12;
-  return m === 0 ? `${hr} ${period}` : `${hr}:${String(m).padStart(2, '0')} ${period}`;
-}
-const ABBR: Record<string, string> = {
-  Monday: 'Mon', Tuesday: 'Tue', Wednesday: 'Wed', Thursday: 'Thu',
-  Friday: 'Fri', Saturday: 'Sat', Sunday: 'Sun',
-};
-function dayRange(days: readonly string[]): string {
-  if (days.length === 1) return ABBR[days[0]];
-  return `${ABBR[days[0]]} – ${ABBR[days[days.length - 1]]}`;
-}
-const allDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-const openDays = new Set(SITE.openingHours.flatMap((h) => h.days as readonly string[]));
-const closedDays = allDays.filter((d) => !openDays.has(d));
-const hoursRows = [
-  ...SITE.openingHours.map((h) => ({ label: dayRange(h.days), value: `${fmt(h.opens)} – ${fmt(h.closes)}` })),
-  ...(closedDays.length ? [{ label: dayRange(closedDays), value: 'Closed' }] : []),
-];
 ---
 
 <section class="relative w-full" data-section="location-block">
@@ -73,6 +51,7 @@ const hoursRows = [
           <p class="font-heading text-[24px] uppercase">Address</p>
           <p class="mt-2">{SITE.legalName}</p>
           <p>{street}</p>
+          <p>{suite}</p>
           <p>{city}, {region} {postalCode}</p>
           <p class="mt-4">
             <a href={`tel:${SITE.telephone}`} class="hover:underline">
@@ -81,17 +60,7 @@ const hoursRows = [
           </p>
         </address>
 
-        <div class="font-sans text-[18px] leading-relaxed text-gold">
-          <p class="font-heading text-[24px] uppercase">Hours</p>
-          <dl class="mt-2 space-y-1">
-            {hoursRows.map((row) => (
-              <div class="flex justify-between gap-4">
-                <dt class="whitespace-nowrap">{row.label}</dt>
-                <dd class="text-right">{row.value}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
+        <HoursWidget />
       </div>
     </div>
   </div>

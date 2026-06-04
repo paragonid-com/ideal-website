@@ -12,7 +12,7 @@
  *   <SchemaOrg faq={data.faq} />               — + FAQ-сниппеты
  *   <SchemaOrg type="article" article={...} /> — статья блога
  */
-import { SITE, socialUrls } from '../data/site';
+import { SITE, socialUrls, openingHoursSpec } from '../data/site';
 
 interface FaqItem {
   question: string;
@@ -59,7 +59,7 @@ const org: Record<string, unknown> = {
   image: abs(SITE.ogImage),
   address: {
     '@type': 'PostalAddress',
-    streetAddress: SITE.address.street,
+    streetAddress: `${SITE.address.street}, ${SITE.address.suite}`,
     addressLocality: SITE.address.city,
     addressRegion: SITE.address.region,
     postalCode: SITE.address.postalCode,
@@ -70,7 +70,7 @@ const org: Record<string, unknown> = {
     latitude: SITE.geo.latitude,
     longitude: SITE.geo.longitude,
   },
-  openingHoursSpecification: SITE.openingHours.map((h) => ({
+  openingHoursSpecification: openingHoursSpec().map((h) => ({
     '@type': 'OpeningHoursSpecification',
     dayOfWeek: h.days,
     opens: h.opens,

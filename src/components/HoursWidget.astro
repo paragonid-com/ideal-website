@@ -1,0 +1,111 @@
+---
+/**
+ * HoursWidget — часы работы в виде сворачиваемого виджета (как на дизайне).
+ *
+ * По умолчанию (с JS) показывает одну строку: «Open today HH:MM am – HH:MM pm»
+ * (или «Closed today») + каретка; по клику разворачивается полный список по
+ * дням недели. Без JS (прогрессивное улучшение) показывается сразу полный
+ * список — сводка скрыта.
+ *
+ * «Сегодня» вычисляется по времени КЛИНИКИ (America/New_York), а не посетителя.
+ * Данные — из src/data/site.ts (единый источник, совпадает со schema/футером).
+ */
+import { SITE, dayValue, dayStatus } from '../data/site';
+
+interface Props {
+  /** Заголовок над виджетом (по умолчанию «Hours»). */
+  heading?: string;
+}
+const { heading = 'Hours' } = Astro.props;
+
+const rows = SITE.hours.map((h) => ({
+  day: h.day,
+  value: dayValue(h),
+  status: dayStatus(h),
+}));
+
+// Уникальный id для aria-controls (на странице может быть несколько виджетов).
+const uid = `hours-${Math.random().toString(36).slice(2, 8)}`;
+---
+
+<div class="font-sans text-[18px] leading-relaxed" data-hours-widget>
+  <p class="font-heading text-[24px] uppercase text-gold">{heading}</p>
+
+  {/* Сводка «Open today …» — показывается только с JS (свёрнутое состояние). */}
+  <button
+    type="button"
+    hidden
+    class="mt-2 flex flex-wrap items-center gap-x-2 gap-y-0.5 text-left"
+    aria-expanded="false"
+    aria-controls={uid}
+    data-hours-summary
+  >
+    <span class="whitespace-nowrap text-[#5a4f33]" data-hours-status>Open today</span>
+    <span class="inline-flex items-center gap-2">
+      <span class="whitespace-nowrap font-medium text-gold" data-hours-value></span>
+      <svg
+        class="h-2.5 w-2.5 shrink-0 text-gold transition-transform duration-200"
+        data-hours-caret
+        viewBox="0 0 12 8"
+        fill="none"
+        aria-hidden="true"
+      >
+        <path d="M1 1.5 6 6.5 11 1.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+    </span>
+  </button>
+
+  {/* Полный список по дням — виден без JS; с JS сворачивается под сводку. */}
+  <dl id={uid} class="mt-2 space-y-1" data-hours-list>
+    {rows.map((r) => (
+      <div class="flex justify-between gap-6" data-day={r.day} data-status={r.status} data-value={r.value}>
+        <dt class="whitespace-nowrap text-[#5a4f33]">{r.day}</dt>
+        <dd class="text-right text-gold">{r.value}</dd>
+      </div>
+    ))}
+  </dl>
+</div>
+
+<style>
+  @media (prefers-reduced-motion: reduce) {
+    [data-hours-caret] {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('[data-hours-widget]').forEach((root) => {
+    const summary = root.querySelector<HTMLButtonElement>('[data-hours-summary]');
+    const list = root.querySelector<HTMLElement>('[data-hours-list]');
+    const statusEl = root.querySelector<HTMLElement>('[data-hours-status]');
+    const valueEl = root.querySelector<HTMLElement>('[data-hours-value]');
+    const caret = root.querySelector<SVGElement>('[data-hours-caret]');
+    if (!summary || !list || !statusEl || !valueEl) return;
+
+    // Сегодняшний день по времени клиники (Eastern), не посетителя.
+    const today = new Intl.DateTimeFormat('en-US', {
+      timeZone: 'America/New_York',
+      weekday: 'long',
+    }).format(new Date());
+
+    const row = list.querySelector<HTMLElement>(`[data-day="${today}"]`);
+    const status = row?.getAttribute('data-status') ?? 'closed';
+    const value = row?.getAttribute('data-value') ?? '';
+
+    statusEl.textContent = status === 'closed' ? 'Closed today' : 'Open today';
+    valueEl.textContent = status === 'closed' ? '' : value;
+    row?.classList.add('font-semibold');
+
+    // Свернуть список, показать сводку.
+    summary.hidden = false;
+    list.style.display = 'none';
+    let open = false;
+    summary.addEventListener('click', () => {
+      open = !open;
+      list.style.display = open ? '' : 'none';
+      summary.setAttribute('aria-expanded', String(open));
+      if (caret) caret.style.transform = open ? 'rotate(180deg)' : '';
+    });
+  });
+</script>
