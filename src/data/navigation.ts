@@ -28,7 +28,7 @@ export const mainNav: NavGroup[] = [
       { label: 'Peptide Therapy', href: '/services/peptide' },
       { label: 'IV Therapy', href: '/services/ivtherapy' },
       { label: 'Blood Work', href: '/services/bloodwork' },
-      { label: 'PRP & Allograft', href: '/services/regenerative' },
+      { label: 'Regenerative Medicine', href: '/services/regenerative' },
       { label: 'Sexual Health', href: '/services/sexualhealth' },
     ],
   },
