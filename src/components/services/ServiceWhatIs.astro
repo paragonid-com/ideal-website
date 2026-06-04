@@ -19,12 +19,34 @@ interface Props {
   body: string;
   /** Показать gold-звезду справа от заголовка (Figma Peptide узел 1:3865). */
   showStar?: boolean;
-  /** Класс высоты секции на lg. Default — прежнее поведение (min-h-940).
-   *  hormone передаёт точную высоту Figma `lg:h-[1083px]` (узлы 814→1897). */
+  /** Класс высоты/пропорции секции на lg. Default — прежнее поведение
+   *  (min-h-940). hormone передаёт `lg:aspect-[1920/1083]` (узлы 814→1897),
+   *  чтобы высота блока всегда была пропорциональна ширине как в Figma. */
   sectionHeight?: string;
+  /** Класс раскладки колонок на lg. Default `lg:grid-cols-2` (50/50).
+   *  hormone сужает фото: `lg:grid-cols-[44fr_56fr]`. */
+  gridColsClass?: string;
+  /** Вертикальное выравнивание колонок. Default `items-center`.
+   *  hormone — `items-stretch` (фото на всю высоту, текст сверху как в Figma). */
+  align?: string;
+  /** Класс размера заголовка. Default `text-h1`. hormone передаёт
+   *  vw-масштабируемый `text-[clamp(28px,3.23vw,62px)]`, чтобы заголовок всегда
+   *  умещался в 5 строк и блок держал пропорцию Figma на любой ширине. */
+  headingClass?: string;
+  /** Класс размера body-текста. Default `text-body-lg`. hormone передаёт
+   *  vw-масштабируемый `text-[clamp(16px,1.09vw,21px)]`, чтобы и текст
+   *  масштабировался пропорционально и блок держал пропорцию Figma. */
+  bodyClass?: string;
 }
 
-const { title, image, imageAlt, body, showStar = false, sectionHeight = 'lg:min-h-[940px]' } = Astro.props;
+const {
+  title, image, imageAlt, body, showStar = false,
+  sectionHeight = 'lg:min-h-[940px]',
+  gridColsClass = 'lg:grid-cols-2',
+  align = 'items-center',
+  headingClass = 'text-h1',
+  bodyClass = 'text-body-lg',
+} = Astro.props;
 const lines = title.split('\n');
 // Разбиваем body на абзацы
 const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
@@ -34,9 +56,9 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
   class="w-full bg-cream"
   data-section="service-what-is"
 >
-  <div class={`mx-auto max-w-design grid grid-cols-1 lg:grid-cols-2 items-center ${sectionHeight}`}>
+  <div class={`mx-auto max-w-design grid grid-cols-1 ${gridColsClass} ${align} ${sectionHeight}`}>
     {/* Левая колонка — фото на всю высоту секции */}
-    <div class="relative h-[320px] md:h-[480px] lg:h-full">
+    <div class="relative h-[320px] md:h-[480px] lg:h-full lg:min-h-0">
       <img
         src={image}
         alt={imageAlt}
@@ -45,9 +67,10 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
       />
     </div>
 
-    {/* Правая колонка — текст */}
+    {/* Правая колонка — текст. При align=items-stretch (hormone) колонка
+        тянется на всю высоту, текст ложится сверху — как в Figma. */}
     <div class="relative px-[7.55%] py-16">
-      <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
+      <h2 class={`font-heading ${headingClass} uppercase text-gold leading-tight`}>
         {lines.map((line, i) => (
           <>
             {line}
@@ -66,7 +89,7 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
         />
       )}
 
-      <div class="mt-12 space-y-6 max-w-[693px] font-sans text-body-lg text-[#5a4f33] leading-relaxed">
+      <div class={`mt-12 space-y-6 max-w-[693px] font-sans ${bodyClass} text-[#5a4f33] leading-relaxed`}>
         {paragraphs.map((p) => {
           const innerLines = p.split('\n');
           // Если все строки абзаца начинаются с "_ " — это буллет-список

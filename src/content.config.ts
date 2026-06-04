@@ -90,10 +90,22 @@ const services = defineCollection({
       whatIsImageAlt: z.string().optional(),
       /** Длинный текстовый блок справа. Многоабзацный (\n\n). */
       whatIsBody: z.string().optional(),
-      /** Класс высоты секции What-Is на lg (напр. `lg:h-[1083px]` для hormone,
-       *  точная высота из Figma). Если не задан — ServiceWhatIs использует
-       *  дефолт `lg:min-h-[940px]` (другие страницы не затронуты). */
+      /** Класс высоты/пропорции секции What-Is на lg (напр. `lg:aspect-[1920/1083]`
+       *  для hormone — высота пропорциональна ширине как в Figma). Если не задан —
+       *  ServiceWhatIs использует `lg:min-h-[940px]` (другие страницы не затронуты). */
       whatIsHeight: z.string().optional(),
+      /** Класс раскладки колонок What-Is на lg (напр. `lg:grid-cols-[44fr_56fr]`,
+       *  чтобы сузить фото). Default в компоненте — `lg:grid-cols-2`. */
+      whatIsGridCols: z.string().optional(),
+      /** Выравнивание колонок What-Is (напр. `items-stretch` для hormone —
+       *  текст сверху как в Figma). Default в компоненте — `items-center`. */
+      whatIsAlign: z.string().optional(),
+      /** Класс размера заголовка What-Is (напр. vw-масштабируемый
+       *  `text-[clamp(28px,3.23vw,62px)]` для hormone). Default — `text-h1`. */
+      whatIsHeadingClass: z.string().optional(),
+      /** Класс размера body-текста What-Is (vw-масштабируемый для hormone).
+       *  Default — `text-body-lg`. */
+      whatIsBodyClass: z.string().optional(),
 
       // ===== "What is X?" короткий вариант БЕЗ фото (emsculpt) =====
       simpleWhatIs: z
