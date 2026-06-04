@@ -2,25 +2,20 @@
 /**
  * Hero — главная секция домашней страницы. Реальный слайдер.
  *
- * Источник в Figma:
- *   file: jmzQqLFWpZXSII6xTkgCgu
- *   nodeId: 1:3 (HOME)
+ * Источник в Figma: file jmzQqLFWpZXSII6xTkgCgu, nodeId 1:3 (HOME).
+ * Токены: H1 Optima 62px #8d7431; Body Manrope 21px; Btn 195×45 #eae4d2/#8d7431.
+ * Левый отступ ≈ 145/1920 = 7.55%.
  *
- * Извлечённые токены:
- *   - H1   : Optima Regular, 62px, #8d7431 (узел 1:76)
- *   - Body : Manrope Regular, 21px, #8d7431 (узел 1:104)
- *   - Btn  : Manrope Regular, 22px, #eae4d2 на #8d7431, 195×45 (узлы 1:207–1:209)
- *   - BG   : фото DNA (узел 1:65), 2193×1379, обрезано до 1920×1079
- *   - Индикатор слайдера: правый нижний угол hero.
+ * СЛАЙДЫ (эксперимент): 1) текущее фото DNA, 2) новое фото (рассвет/йога),
+ * 3) видео (пара на закате). Новое фото и видео отгрейдены под тёплую
+ * золотисто-кремовую тональность сайта (как hero-dna): тёплый баланс,
+ * понижена насыщенность, поднята яркость, кремово-золотой wash.
+ * ⚠️ Фото hero-sunrise-v1 — comp Stocksy с ВИДИМЫМ вотермарком: только для
+ *    превью, требует лицензии/замены. Видео без вотермарка.
  *
- * Координаты в Figma (контейнер 1920×1079): H1 x=145 y=208; Body x=145 y=375;
- * Button x=145 y=595. Левый отступ ≈ 145/1920 = 7.55%.
- *
- * ⚠️ СЛАЙДЫ ПОКА ИДЕНТИЧНЫ (плейсхолдер). Логика слайдера полностью рабочая
- * (автосмена 7с, клик по сегментам, пауза при hover/focus, prefers-reduced-motion).
- * Чтобы сделать слайды разными — отредактируйте массив `slides` ниже
- * (своя картинка/заголовок/текст/CTA на каждый слайд). H1 на странице один —
- * только у первого слайда; остальные используют стилизованный <p>.
+ * Логика слайдера: автосмена (фото 7с, видео дольше), клик по сегментам,
+ * пауза при hover/focus, prefers-reduced-motion. Видео играет только когда
+ * его слайд активен (иначе pause), muted+loop+playsinline.
  */
 
 const bookHref =
@@ -29,21 +24,31 @@ const bookHref =
 interface Slide {
   headingLines: [string, string];
   body: string;
-  image: string;
   cta: { href: string; label: string };
+  image?: string;       // фон-картинка (или poster для видео)
+  video?: string;       // если задано — рендерим <video>
+  durationMs?: number;  // время показа слайда (по умолчанию 7000)
 }
 
-// Пока 3 одинаковых слайда — каркас под будущий разный контент.
-const baseSlide: Slide = {
-  headingLines: ['Live Better, Longer,', 'and Happier.'],
+const content = {
+  headingLines: ['Live Better, Longer,', 'and Happier.'] as [string, string],
   body:
     'Concierge medical and wellness care in Aventura, built around your ' +
     'bloodwork and your goals. Hormone optimization, medical weight loss, ' +
     'peptide therapy, and advanced aesthetics — all under one roof.',
-  image: '/assets/images/hero-dna.webp',
   cta: { href: bookHref, label: 'BOOK NOW' },
 };
-const slides: Slide[] = [baseSlide, baseSlide, baseSlide];
+
+const slides: Slide[] = [
+  { ...content, image: '/assets/images/hero-dna.webp' },
+  { ...content, image: '/assets/images/hero-sunrise-v1.webp' },
+  {
+    ...content,
+    video: '/assets/video/hero-couple-v1.mp4',
+    image: '/assets/images/hero-couple-v1-poster.webp',
+    durationMs: 13000,
+  },
+];
 ---
 
 <section
@@ -56,28 +61,39 @@ const slides: Slide[] = [baseSlide, baseSlide, baseSlide];
     <div
       data-slide
       data-index={i}
+      data-duration={s.durationMs ?? 7000}
       aria-hidden={i === 0 ? 'false' : 'true'}
       class={`absolute inset-0 transition-opacity duration-700 ${
         i === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'
       }`}
     >
-      {/* Фон. <img>, а не background-image — чтобы при адаптиве можно было
-          добавить srcset/sizes без перевёрстки. */}
-      <img
-        src={s.image}
-        alt=""
-        class="absolute inset-0 h-full w-full object-cover"
-        width="2193"
-        height="1379"
-        loading={i === 0 ? 'eager' : 'lazy'}
-        decoding="async"
-      />
+      {/* Фон: видео или картинка. object-cover — на весь экран. */}
+      {s.video ? (
+        <video
+          data-hero-video
+          class="absolute inset-0 h-full w-full object-cover"
+          src={s.video}
+          poster={s.image}
+          muted
+          loop
+          playsinline
+          preload="auto"
+          aria-hidden="true"
+          tabindex="-1"
+        ></video>
+      ) : (
+        <img
+          src={s.image}
+          alt=""
+          class="absolute inset-0 h-full w-full object-cover"
+          width="1920"
+          height="1080"
+          loading={i === 0 ? 'eager' : 'lazy'}
+          decoding="async"
+        />
+      )}
 
-      {/* Скрим читабельности: мягко высветляет левую часть, где лежит текст.
-          Золотой текст на кремово-золотой DNA-текстуре сам по себе проседает
-          по контрасту (gold↔cream ниже WCAG AA) — лёгкий белый градиент слева
-          поднимает локальный фон к белому и делает заголовок/копию читаемыми,
-          не затрагивая полноэкранность картинки справа. */}
+      {/* Скрим читабельности: высветляет левую часть под текстом. */}
       <div
         class="pointer-events-none absolute inset-0"
         style="background: linear-gradient(90deg, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.34) 30%, rgba(255,255,255,0) 60%);"
@@ -96,13 +112,10 @@ const slides: Slide[] = [baseSlide, baseSlide, baseSlide];
             </p>
           )}
 
-          {/* Тело: тёплый тёмный тон (#5a4f33, как в утверждённом макете) вместо
-              золотого — гарантирует читаемость мелкого текста на светлом фоне. */}
           <p class="mt-[27px] max-w-[540px] font-sans text-body-lg leading-relaxed text-[#5a4f33]">
             {s.body}
           </p>
 
-          {/* Звезда из Figma (узел 1:218) — между параграфом и кнопкой. */}
           <img
             src="/assets/images/star-sign.svg"
             alt=""
@@ -125,8 +138,7 @@ const slides: Slide[] = [baseSlide, baseSlide, baseSlide];
     </div>
   ))}
 
-  {/* Индикатор слайдера из Figma — 4 сегмента в макете; здесь по одному на
-      слайд (3). Кликабельные. */}
+  {/* Индикатор слайдера — по сегменту на слайд. Кликабельные. */}
   <div
     class="absolute bottom-[40px] right-[7.55%] z-20 flex gap-3"
     role="tablist"
@@ -152,10 +164,24 @@ const slides: Slide[] = [baseSlide, baseSlide, baseSlide];
     const dots = Array.from(root.querySelectorAll('[data-hero-dot]'));
     if (slides.length <= 1) return;
 
+    const durations = slides.map(
+      (sl) => parseInt(sl.getAttribute('data-duration') || '7000', 10)
+    );
     let current = 0;
     let timer: number | undefined;
-    const INTERVAL = 7000;
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function syncVideo(n: number) {
+      slides.forEach((sl, i) => {
+        const v = sl.querySelector('video') as HTMLVideoElement | null;
+        if (!v) return;
+        if (i === n) {
+          try { v.currentTime = 0; const p = v.play(); if (p) p.catch(() => {}); } catch {}
+        } else {
+          v.pause();
+        }
+      });
+    }
 
     function show(next: number) {
       const n = ((next % slides.length) + slides.length) % slides.length;
@@ -168,28 +194,33 @@ const slides: Slide[] = [baseSlide, baseSlide, baseSlide];
       });
       dots.forEach((d, i) => d.setAttribute('aria-selected', i === n ? 'true' : 'false'));
       current = n;
+      syncVideo(n);
     }
-    function start() {
-      if (reduceMotion) return;
+    function scheduleNext() {
       stop();
-      timer = window.setInterval(() => show(current + 1), INTERVAL);
+      if (reduceMotion) return;
+      timer = window.setTimeout(() => {
+        show(current + 1);
+        scheduleNext();
+      }, durations[current]);
     }
     function stop() {
-      if (timer) window.clearInterval(timer);
+      if (timer) window.clearTimeout(timer);
     }
 
     dots.forEach((dot, i) =>
       dot.addEventListener('click', () => {
         show(i);
-        start();
+        scheduleNext();
       })
     );
 
     root.addEventListener('mouseenter', stop);
-    root.addEventListener('mouseleave', start);
+    root.addEventListener('mouseleave', scheduleNext);
     root.addEventListener('focusin', stop);
-    root.addEventListener('focusout', start);
+    root.addEventListener('focusout', scheduleNext);
 
-    start();
+    syncVideo(0);
+    scheduleNext();
   });
 </script>
