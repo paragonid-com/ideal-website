@@ -63,7 +63,7 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
         />
       )}
 
-      <div class="mt-12 space-y-6 max-w-[693px] font-sans text-body-lg text-gold leading-relaxed">
+      <div class="mt-12 space-y-6 max-w-[693px] font-sans text-body-lg text-[#5a4f33] leading-relaxed">
         {paragraphs.map((p) => {
           const innerLines = p.split('\n');
           // Если все строки абзаца начинаются с "_ " — это буллет-список

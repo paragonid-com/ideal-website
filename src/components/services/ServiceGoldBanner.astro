@@ -37,9 +37,9 @@ const lines = text.split('\n');
     <p
       class:list={[
         'font-heading text-cream',
-        // exomind-баннеры (с CTA) — крупный h1-стиль как в Figma;
-        // hormone pull-quote (без CTA) — прежний более мелкий размер.
-        ctaLabel ? 'text-h1 uppercase leading-tight' : 'text-[38px] md:text-[44px] leading-snug',
+        // exomind-баннеры (с CTA) — крупный h1-стиль uppercase как в Figma;
+        // hormone pull-quote (без CTA) — Optima ~62px (Figma 1:3467), sentence-case.
+        ctaLabel ? 'text-h1 uppercase leading-tight' : 'text-h1 leading-snug',
       ]}
     >
       {lines.map((line, i) => (

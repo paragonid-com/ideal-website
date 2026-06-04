@@ -45,7 +45,7 @@ const telHref = phone ? `tel:+1${phone.replace(/\D/g, '')}` : undefined;
   class="w-full bg-cream"
   data-section="service-experience"
 >
-  <div class="mx-auto max-w-design grid grid-cols-1 lg:grid-cols-2 items-stretch min-h-[800px]">
+  <div class="mx-auto max-w-design grid grid-cols-1 lg:grid-cols-2 items-stretch lg:min-h-[973px]">
     {/* Левая колонка — фото на тёмном фоне */}
     <div class="relative h-full min-h-[600px] bg-[#1a1410]">
       <img
@@ -78,7 +78,7 @@ const telHref = phone ? `tel:+1${phone.replace(/\D/g, '')}` : undefined;
         )}
       </div>
 
-      <div class="mt-10 max-w-[644px] space-y-6 font-sans text-body-lg text-gold leading-relaxed">
+      <div class="mt-10 max-w-[644px] space-y-6 font-sans text-body-lg text-[#5a4f33] leading-relaxed">
         {paragraphs.map((p) => <p>{p}</p>)}
       </div>
 
@@ -95,7 +95,7 @@ const telHref = phone ? `tel:+1${phone.replace(/\D/g, '')}` : undefined;
         href={bookingCta.href}
         target="_blank"
         rel="noopener noreferrer"
-        class="mt-8 inline-flex items-center justify-center bg-gold text-cream font-sans uppercase tracking-wider px-12 py-4 max-w-[488px] hover:bg-gold-bright transition-colors"
+        class="mt-8 self-start inline-flex items-center justify-center bg-[#dbba5f] text-[#8d7431] font-sans font-bold uppercase tracking-wider rounded-full px-12 py-4 shadow-sm hover:brightness-[0.97] transition"
       >
         {bookingCta.label}
       </a>

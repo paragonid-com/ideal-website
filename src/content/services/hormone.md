@@ -113,7 +113,18 @@ stars:
   whyTrust: true
   experience: true
 
-# CTA между gold pull-quote и Experience (Figma band y6891, перед EXPERIENCE)
+# === CTA-band: только 4 шва из Figma, все в straddle-варианте ===
+# suppressDefaultCtas глушит дефолтные after-hero/after-whatis/after-benefits;
+# затем явно возвращаем ровно те швы, что есть в дизайне:
+#   1) Hero / WhatIs            → ctaAfterHero
+#   2) Reclaiming / CommonSigns → ctaBeforeCommonSigns
+#   3) Full-width img / Roadmap → всегда-CTA в блоке commonSigns (overlap)
+#   4) GoldBanner / Experience  → ctaAfterGoldBanner
+# overlapCtas=true делает все 4 пилюлями #dbba5f/#8d7431 по центру шва.
+suppressDefaultCtas: true
+overlapCtas: true
+ctaAfterHero: true
+ctaBeforeCommonSigns: true
 ctaAfterGoldBanner: true
 
 draft: false

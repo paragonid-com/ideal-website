@@ -297,6 +297,19 @@ const services = defineCollection({
       /** CTA «BOOK APPOINTMENT» между gold-pull-quote и Experience (hormone,
        *  Figma 1:3467→Experience: band на y6891). Default false. */
       ctaAfterGoldBanner: z.boolean().default(false),
+      /** Если true — ВСЕ CTA-band на странице рендерятся в «straddle»-варианте:
+       *  пилюля #dbba5f / текст #8d7431, нулевая собственная высота, центр
+       *  ровно на шве между секциями (половина в каждой), как в Figma hormone.
+       *  Default false → прежний центрированный band (другие страницы не тронуты). */
+      overlapCtas: z.boolean().default(false),
+      /** CTA «BOOK APPOINTMENT» сразу после Hero как opt-in (не зависит от
+       *  suppressDefaultCtas). Нужен hormone: suppressDefaultCtas=true глушит
+       *  дефолтные after-hero/after-whatis, а этот возвращает только шов Hero/WhatIs.
+       *  Default false. */
+      ctaAfterHero: z.boolean().default(false),
+      /** CTA «BOOK APPOINTMENT» между блоками before-common-signs (Reclaiming)
+       *  и секцией Common Signs (hormone, Figma шов y≈2799). Default false. */
+      ctaBeforeCommonSigns: z.boolean().default(false),
 
       // ===== Categories Grid (emsculpt): 3-колонная сетка фото+заголовок+опционально-текст =====
       // Используется дважды на странице emsculpt — поэтому в frontmatter массив таких блоков.

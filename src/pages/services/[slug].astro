@@ -175,6 +175,11 @@ const goldBanner = normalizeBanner(data.goldBanner);
 
   {!data.suppressDefaultCtas && <ServiceCTABand />}
 
+  {/* Opt-in straddle CTA сразу после Hero (hormone шов Hero/WhatIs y≈814).
+     Независим от suppressDefaultCtas: hormone глушит дефолты и возвращает
+     только нужные швы. Default false → другие страницы не затронуты. */}
+  {data.ctaAfterHero && <ServiceCTABand overlap={data.overlapCtas} />}
+
   {/* Long-form "What is X?" (Weight Loss формат: фото + многоабзацный текст) */}
   {data.whatIsTitle && data.whatIsImage && data.whatIsBody && (
     <>
@@ -238,6 +243,9 @@ const goldBanner = normalizeBanner(data.goldBanner);
     />
   ))}
 
+  {/* Opt-in straddle CTA между Reclaiming и Common Signs (hormone шов y≈2799). */}
+  {data.ctaBeforeCommonSigns && <ServiceCTABand overlap={data.overlapCtas} />}
+
   {/* Сетка преимуществ (Weight Loss: icon+title+desc; Peptide: icon+title 3x3) */}
   {data.benefitsTitle && data.benefits && (
     <>
@@ -265,7 +273,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       {fullWidthAfterCommonSigns.map((b) => (
         <ServiceFullWidthImage image={b.image} imageAlt={b.imageAlt} todo={b.todo} />
       ))}
-      <ServiceCTABand />
+      <ServiceCTABand overlap={data.overlapCtas} />
     </>
   )}
 
@@ -488,7 +496,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
   )}
 
   {/* CTA между gold pull-quote и Experience (hormone, Figma band y6891) — opt-in */}
-  {data.ctaAfterGoldBanner && <ServiceCTABand />}
+  {data.ctaAfterGoldBanner && <ServiceCTABand overlap={data.overlapCtas} />}
 
   {/* Experience (hormone — DNA фото + текст + телефон + CTA) */}
   {data.experience && (
