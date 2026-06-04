@@ -44,8 +44,8 @@ const {
   sectionHeight = 'lg:min-h-[940px]',
   gridColsClass = 'lg:grid-cols-2',
   align = 'items-center',
-  headingClass = 'text-h1',
-  bodyClass = 'text-body-lg',
+  headingClass = 'text-h1 leading-tight',
+  bodyClass = 'text-body-lg leading-relaxed',
 } = Astro.props;
 const lines = title.split('\n');
 // Разбиваем body на абзацы
@@ -70,7 +70,7 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
     {/* Правая колонка — текст. При align=items-stretch (hormone) колонка
         тянется на всю высоту, текст ложится сверху — как в Figma. */}
     <div class="relative px-[7.55%] py-16">
-      <h2 class={`font-heading ${headingClass} uppercase text-gold leading-tight`}>
+      <h2 class={`font-heading ${headingClass} uppercase text-gold`}>
         {lines.map((line, i) => (
           <>
             {line}
@@ -89,7 +89,7 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
         />
       )}
 
-      <div class={`mt-12 space-y-6 max-w-[693px] font-sans ${bodyClass} text-[#5a4f33] leading-relaxed`}>
+      <div class={`mt-12 space-y-6 max-w-[693px] font-sans ${bodyClass} text-[#5a4f33]`}>
         {paragraphs.map((p) => {
           const innerLines = p.split('\n');
           // Если все строки абзаца начинаются с "_ " — это буллет-список

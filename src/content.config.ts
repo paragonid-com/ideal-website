@@ -195,6 +195,14 @@ const services = defineCollection({
             tail: z.string().optional(),
             /** Показать gold-звезду top-right у заголовка блока (per-block) */
             star: z.boolean().default(false).optional(),
+            /** Класс высоты/пропорции секции (напр. `lg:aspect-[2/1]` — фото квадрат). */
+            sectionHeight: z.string().optional(),
+            /** Выравнивание колонок (`items-stretch` для квадрат-фото). */
+            align: z.string().optional(),
+            /** Класс размера заголовка (+leading), vw-адаптивный для hormone. */
+            headingClass: z.string().optional(),
+            /** Класс размера body (+leading), vw-адаптивный для hormone. */
+            bodyClass: z.string().optional(),
             /** В каком месте шаблона показать блок.
              *  'before-common-signs' — между whatIs и commonSigns
              *  'after-roadmap'        — после roadmap, перед whyTrust
