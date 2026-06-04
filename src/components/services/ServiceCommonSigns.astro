@@ -39,7 +39,7 @@ const titleLines = title.split('\n');
 ---
 
 <section
-  class="relative w-full overflow-hidden py-16 lg:py-10 lg:min-h-[1071px] lg:flex lg:items-center"
+  class="relative w-full py-16 lg:py-0 lg:aspect-[1920/1071] lg:grid lg:items-center"
   data-section="service-common-signs"
   style="background: radial-gradient(ellipse 130% 110% at 50% 22%, #f8f4e8 0%, #ece0c2 44%, #ddc88f 78%, #d2b974 100%);"
 >
@@ -54,7 +54,7 @@ const titleLines = title.split('\n');
           class="mx-auto mb-6 h-[50px] w-[43px]"
         />
       )}
-      <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
+      <h2 class="font-heading text-[clamp(28px,3.23vw,62px)] uppercase text-gold leading-[1.1]">
         {titleLines.map((line, i) => (
           <>
             {line}
@@ -63,7 +63,7 @@ const titleLines = title.split('\n');
         ))}
       </h2>
 
-      <p class="mx-auto mt-6 max-w-[830px] font-sans text-body-lg text-[#5a4f33] leading-relaxed">
+      <p class="mx-auto mt-[clamp(16px,1.25vw,24px)] max-w-[830px] font-sans text-[clamp(16px,1.09vw,21px)] text-[#5a4f33] leading-[1.4]">
         {intro}
       </p>
     </div>
@@ -71,9 +71,9 @@ const titleLines = title.split('\n');
     {/* 2 колонки на десктопе, 1 на мобильных. Между элементами — большие
        вертикальные отступы (gap-y-12) и горизонтальные (gap-x-16),
        чтобы соответствовать макету Figma. */}
-    <ul class="mt-14 grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-10 max-w-[1760px] mx-auto">
+    <ul class="mt-[clamp(24px,2.9vw,56px)] grid grid-cols-1 lg:grid-cols-2 gap-x-16 gap-y-[clamp(16px,2.1vw,40px)] max-w-[1760px] mx-auto">
       {items.map((item) => (
-        <li class="font-sans text-body-lg text-[#5a4f33] leading-relaxed">
+        <li class="font-sans text-[clamp(16px,1.09vw,21px)] text-[#5a4f33] leading-[1.35]">
           <h3 class="font-sans font-semibold uppercase tracking-wide text-gold">
             {item.title}
           </h3>
