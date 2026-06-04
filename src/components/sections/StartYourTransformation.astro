@@ -160,7 +160,7 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
 >
   {/* Фото здания — слева, у́же текстовой панели (Figma: фото 42% / панель 58%) */}
   <div class="grid grid-cols-1 lg:grid-cols-[42fr_58fr]">
-    <div class="relative aspect-[802/707] lg:aspect-auto">
+    <div class="relative aspect-[802/707] lg:aspect-square">
       <img
       width="2124"
       height="1414"
@@ -174,7 +174,7 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
     <div
       class="relative flex flex-col justify-center bg-[#f4f1e8] px-[7.55%] py-10"
     >
-      <h2 class="font-heading text-h1 uppercase leading-tight text-gold">
+      <h2 class="font-heading text-[40px] xl:text-[52px] uppercase leading-tight text-gold">
         <span class="relative inline-block">
           Ready to Start Your
           {/* Звезда из Figma (узел 1:258) — inline в конце первой строки H2.
