@@ -3,9 +3,13 @@
  * Header — единый компонент для всех страниц сайта.
  *
  * Состоит из трёх частей:
- *   1. Mobile top-bar (<header>, `< lg`) — лого слева + burger справа.
- *      Лежит поверх контента (absolute), на десктопе скрыт (`lg:hidden`),
- *      т.к. на `lg+` навигацию несёт постоянная панель ниже.
+ *   1. Mobile top-bar (#mobile-bar, `< lg`) — лого слева + burger справа.
+ *      Sticky (fixed) + auto-hide: прячется при скролле вниз, появляется при
+ *      скролле вверх, всегда видна у самого верха — та же логика, что у
+ *      десктоп-панели (общий наблюдатель скролла). Над hero фон прозрачный
+ *      (премиум-вид), при скролле — белый фон + лёгкая тень; burger над hero —
+ *      тёмный глянцевый кружок, на белом баре — чистая золотая иконка.
+ *      На десктопе скрыт (`lg:hidden`).
  *   2. Desktop nav bar (#desktop-nav, `lg+`) — ПОСТОЯННАЯ горизонтальная
  *      панель: лого слева, 3 категории-триггера с hover/click мега-меню,
  *      CTA «BOOK APPOINTMENT» справа. Sticky + auto-hide: прячется при
@@ -50,9 +54,10 @@ function isGroupActive(group: NavGroup): boolean {
 const activeGroupLabel = mainNav.find(isGroupActive)?.label;
 ---
 
-{/* === MOBILE TOP BAR (< lg) === лого + burger, поверх контента. */}
+{/* === MOBILE TOP BAR (< lg) === лого + burger. Sticky + auto-hide. */}
 <header
-  class="absolute inset-x-0 top-0 z-40 mx-auto flex max-w-design items-center justify-between px-[7.55%] pt-8 lg:hidden"
+  id="mobile-bar"
+  class="fixed inset-x-0 top-0 z-40 mx-auto flex max-w-design items-center justify-between px-[7.55%] pt-8 pb-4 lg:hidden"
 >
   <a href="/" class="block" aria-label="IDEAL Medical and Wellness — home">
     <img
@@ -362,6 +367,29 @@ const activeGroupLabel = mainNav.find(isGroupActive)?.label;
   #desktop-nav.is-scrolled {
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
   }
+  /* --- Mobile top-bar: те же sticky + auto-hide, но «красивее» ---
+     над hero фон прозрачный; при скролле появляется белый фон + тень. */
+  #mobile-bar {
+    transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+    will-change: transform;
+    background-color: transparent;
+  }
+  #mobile-bar.is-hidden {
+    transform: translateY(-100%);
+  }
+  #mobile-bar.is-scrolled {
+    background-color: #fff;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.06);
+  }
+  /* Burger меняет вид под фоном: над hero — тёмный глянцевый кружок (как было);
+     на белом баре — чистая золотая иконка без подложки/тени. */
+  #mobile-bar.is-scrolled #menu-toggle,
+  #mobile-bar.is-scrolled #menu-toggle:hover {
+    background-color: transparent;
+    color: #8d7431;
+    backdrop-filter: none;
+    filter: none;
+  }
   /* Подчёркивание-индикатор: для открытого И для активной категории. */
   .mega-trigger::after {
     content: "";
@@ -388,6 +416,7 @@ const activeGroupLabel = mainNav.find(isGroupActive)?.label;
   }
   @media (prefers-reduced-motion: reduce) {
     #desktop-nav,
+    #mobile-bar,
     .mega-trigger::after,
     .mega-caret {
       transition: none;
@@ -628,7 +657,8 @@ const activeGroupLabel = mainNav.find(isGroupActive)?.label;
     trigger?.focus();
   });
 
-  // ===== ДЕСКТОП-панель: sticky + auto-hide при скролле =====
+  // ===== Sticky + auto-hide при скролле: десктоп-панель И мобильный top-bar =====
+  const mobileBar = document.getElementById('mobile-bar');
   let lastY = window.scrollY;
   let ticking = false;
   const TOP_ZONE = 8;     // у самого верха всегда видна
@@ -636,16 +666,22 @@ const activeGroupLabel = mainNav.find(isGroupActive)?.label;
 
   function onScroll() {
     const y = window.scrollY;
-    desktopNav?.classList.toggle('is-scrolled', y > TOP_ZONE);
+    const scrolled = y > TOP_ZONE;
+    desktopNav?.classList.toggle('is-scrolled', scrolled);
+    mobileBar?.classList.toggle('is-scrolled', scrolled);
     if (y <= TOP_ZONE) {
+      // у самого верха — обе панели видны
       desktopNav?.classList.remove('is-hidden');
+      mobileBar?.classList.remove('is-hidden');
     } else if (y > lastY + 4 && y > HIDE_AFTER) {
-      // скролл вниз → спрятать (и закрыть открытую панель)
+      // скролл вниз → спрятать (и закрыть открытую десктоп-панель)
       desktopNav?.classList.add('is-hidden');
+      mobileBar?.classList.add('is-hidden');
       closeAllPanels();
     } else if (y < lastY - 4) {
       // скролл вверх → показать
       desktopNav?.classList.remove('is-hidden');
+      mobileBar?.classList.remove('is-hidden');
     }
     lastY = y;
     ticking = false;
@@ -660,4 +696,6 @@ const activeGroupLabel = mainNav.find(isGroupActive)?.label;
     },
     { passive: true }
   );
+  // Синхронизировать состояние сразу (на случай загрузки уже прокрученной страницы).
+  onScroll();
 </script>
