@@ -16,6 +16,7 @@
  * оверлей заменён десктоп-баром в сессии 16. Компонент рендерит только подвал.
  */
 import { mainNav, bookingCta } from '../data/navigation';
+import { SITE } from '../data/site';
 
 interface Props {
   /** Совместимость со старым вызовом; футер всегда рендерит полный лейаут. */
@@ -25,10 +26,10 @@ interface Props {
 const { variant: _variant = 'full' } = Astro.props;
 
 const address = {
-  name: 'Ideal Medical and Wellness',
-  street: '2999 NE 191 Street',
-  city: 'Aventura, FL 33180',
-  phone: '(305) 650-1884',
+  name: SITE.legalName,
+  street: `${SITE.address.street}, ${SITE.address.suite}`,
+  city: `${SITE.address.city}, ${SITE.address.region} ${SITE.address.postalCode}`,
+  phone: SITE.phoneDisplay,
 };
 const tel = `tel:${address.phone.replace(/[^\d+]/g, '')}`;
 
@@ -42,11 +43,11 @@ const legal = [
   { label: 'Privacy', href: '/privacy' },
 ];
 
-// Соцсети (Figma). Реальные URL уточнить — placeholder '#' с data-todo.
+// Соцсети — реальные URL из site.ts (единый источник, совпадает со schema sameAs).
 const socials = [
-  { label: 'Facebook', href: '#' },
-  { label: 'Instagram', href: '#' },
-  { label: 'YouTube', href: '#' },
+  { label: 'Facebook', href: SITE.socials.facebook },
+  { label: 'Instagram', href: SITE.socials.instagram },
+  { label: 'YouTube', href: SITE.socials.youtube },
 ];
 
 const year = new Date().getFullYear();
@@ -73,12 +74,14 @@ const year = new Date().getFullYear();
           {address.phone}
         </a>
       </address>
-      <ul class="flex flex-row gap-3" data-todo="social-url">
+      <ul class="flex flex-row gap-3">
         {
           socials.map((s) => (
             <li>
               <a
                 href={s.href}
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label={s.label}
                 class="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-gold text-cream transition-opacity hover:opacity-80"
               >
@@ -171,6 +174,14 @@ const year = new Date().getFullYear();
         class="btn-gold mt-4 inline-block"
       >
         {bookingCta.label}
+      </a>
+      <a
+        href={SITE.financing.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="mt-4 block font-sans text-[14px] font-semibold text-[#6f5a24] underline-offset-2 hover:underline"
+      >
+        {SITE.financing.label} — flexible monthly payments &rarr;
       </a>
     </div>
   </div>
