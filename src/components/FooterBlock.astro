@@ -1,21 +1,28 @@
 ---
 /**
- * FooterBlock — переиспользуемый компонент с тремя колонками:
- * Address / Quick Links / Subscribe + копирайт.
+ * FooterBlock — содержимое подвала страницы (полный лейаут).
  *
- * Использует variant prop:
- *   - 'compact' — внутри overlay-меню (без декоративного фонового фото)
- *   - 'full'    — в подвале страницы (с фоновой плашкой, лого, итд)
+ * Колонки услуг берутся НАПРЯМУЮ из navigation.ts (mainNav) — единый источник:
+ *   - Wellness Services (7)
+ *   - Aesthetic Services (4 BTL-устройства)
+ *   - About Us → колонка «Company»
+ * Группировка nav после сессии 16 уже совпадает с дизайном подвала, поэтому
+ * перегруппировка не нужна.
  *
- * Источник: на главной — узлы 1:1444 (адрес), 1:1450 (links), 1:1456 (subscribe),
- *           1:1460 (копирайт), 1:1463 (кнопка JOIN NOW)
+ * Фон-градиент задаётся обёрткой Footer.astro. NAP (адрес/телефон) — в брендовой
+ * колонке для локального SEO/доверия. Соцсети — placeholder-URL (data-todo).
+ *
+ * Примечание: вариант 'compact' (старое overlay-меню) больше не используется —
+ * оверлей заменён десктоп-баром в сессии 16. Компонент рендерит только подвал.
  */
+import { mainNav, bookingCta } from '../data/navigation';
 
 interface Props {
+  /** Совместимость со старым вызовом; футер всегда рендерит полный лейаут. */
   variant?: 'compact' | 'full';
 }
-
-const { variant = 'full' } = Astro.props;
+// eslint-disable-next-line no-unused-vars
+const { variant: _variant = 'full' } = Astro.props;
 
 const address = {
   name: 'Ideal Medical and Wellness',
@@ -23,18 +30,19 @@ const address = {
   city: 'Aventura, FL 33180',
   phone: '(305) 650-1884',
 };
+const tel = `tel:${address.phone.replace(/[^\d+]/g, '')}`;
 
-const quickLinks = [
-  { label: 'Glossary', href: '/glossary' },
+const group = (label: string) => mainNav.find((g) => g.label === label)?.items ?? [];
+const wellness = group('Wellness Services');
+const aesthetic = group('Aesthetic Services');
+const company = group('About Us');
+
+const legal = [
   { label: 'Terms', href: '/terms' },
   { label: 'Privacy', href: '/privacy' },
-  // Cherry Financing / Care Credit Financing — есть в Figma, но ИСКЛЮЧЕНЫ
-  // из проекта по решению клиента (сессия 7). Намеренно не добавляем.
 ];
 
-// Соцсети (Figma — ряд иконок в колонке Address). Реальные URL уточнить
-// у клиента — пока placeholder '#' с data-todo. По решению клиента
-// (сессия 7): Facebook, Instagram, YouTube (НЕ X/Twitter).
+// Соцсети (Figma). Реальные URL уточнить — placeholder '#' с data-todo.
 const socials = [
   { label: 'Facebook', href: '#' },
   { label: 'Instagram', href: '#' },
@@ -42,118 +50,142 @@ const socials = [
 ];
 
 const year = new Date().getFullYear();
-const isFull = variant === 'full';
 ---
 
-<div class="relative w-full">
-  {isFull && (
-    <div
-      class="absolute inset-x-0 top-0 -z-10 h-[390px]"
-      style="background: linear-gradient(to bottom, #d4c3a3, #b5946a);"
-      aria-hidden="true"
-    ></div>
-  )}
-
-  <div class="grid grid-cols-1 gap-12 md:grid-cols-4 md:gap-8">
-    {isFull && (
-      <div>
-        <img
-          src="/assets/images/logo-ideal.svg"
-          alt="IDEAL Medical and Wellness"
-          width="194"
-          height="62"
-          class="h-auto w-[194px]"
-        />
-        {/* Gold star-sign орнамент под лого (Figma). Декоративный. */}
-        <img
-          src="/assets/images/star-sign.svg"
-          alt=""
-          width="43"
-          height="50"
-          class="mt-12 h-[50px] w-[43px]"
-        />
-      </div>
-    )}
-
-    <div>
-      <h3 class="font-heading text-[28px] text-gold">Address</h3>
-      <address class="mt-6 not-italic font-sans text-[21px] leading-relaxed text-gold">
-        {address.name}<br />
-        {address.street}<br />
-        {address.city}<br />
+<div>
+  <div class="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1.3fr] lg:gap-12">
+    {/* Brand + address + socials */}
+    <div class="flex flex-col gap-5">
+      <img
+        src="/assets/images/logo-ideal.svg"
+        alt="IDEAL Medical and Wellness"
+        width="194"
+        height="62"
+        class="h-auto w-[194px]"
+      />
+      <img src="/assets/images/star-sign.svg" alt="" width="43" height="50" class="h-[50px] w-[43px]" />
+      <address class="not-italic font-sans text-[14px] leading-relaxed text-[#2e2a20]">
+        {address.name}
         <br />
-        <a href={`tel:${address.phone.replace(/[^\d+]/g, '')}`} class="hover:underline">
+        {address.street}, {address.city}
+        <br />
+        <a href={tel} class="mt-2 inline-block font-semibold text-[#6f5a24] hover:underline">
           {address.phone}
         </a>
       </address>
-
-      {/* Соцсети — ряд иконок в gold-кружках (Figma, подвал). placeholder-URL.
-          Только в full-варианте (подвал); в compact overlay-меню не показываем. */}
-      {isFull && (
-      <ul class="mt-8 flex gap-4" data-todo="social-url">
-        {socials.map((s) => (
-          <li>
-            <a
-              href={s.href}
-              aria-label={s.label}
-              class="flex h-[44px] w-[44px] items-center justify-center rounded-full bg-gold text-cream transition-opacity hover:opacity-80"
-            >
-              {s.label === 'Facebook' && (
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07c0 6.02 4.39 11.01 10.13 11.93v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.24 2.69.24v2.97h-1.52c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.08 24 18.09 24 12.07Z"/>
-                </svg>
-              )}
-              {s.label === 'Instagram' && (
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23C2.17 15.58 2.16 15.2 2.16 12s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16Zm0 1.94c-3.14 0-3.51.01-4.75.07-1.15.05-1.77.24-2.18.4-.55.21-.94.47-1.35.88-.41.41-.67.8-.88 1.35-.16.41-.35 1.03-.4 2.18-.06 1.24-.07 1.61-.07 4.75s.01 3.51.07 4.75c.05 1.15.24 1.77.4 2.18.21.55.47.94.88 1.35.41.41.8.67 1.35.88.41.16 1.03.35 2.18.4 1.24.06 1.61.07 4.75.07s3.51-.01 4.75-.07c1.15-.05 1.77-.24 2.18-.4.55-.21.94-.47 1.35-.88.41-.41.67-.8.88-1.35.16-.41.35-1.03.4-2.18.06-1.24.07-1.61.07-4.75s-.01-3.51-.07-4.75c-.05-1.15-.24-1.77-.4-2.18a3.6 3.6 0 0 0-.88-1.35 3.6 3.6 0 0 0-1.35-.88c-.41-.16-1.03-.35-2.18-.4-1.24-.06-1.61-.07-4.75-.07Zm0 3.31a4.59 4.59 0 1 0 0 9.18 4.59 4.59 0 0 0 0-9.18Zm0 7.57a2.98 2.98 0 1 1 0-5.96 2.98 2.98 0 0 1 0 5.96Zm5.84-7.77a1.07 1.07 0 1 1-2.14 0 1.07 1.07 0 0 1 2.14 0Z"/>
-                </svg>
-              )}
-              {s.label === 'YouTube' && (
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                  <path d="M23.5 6.2a3 3 0 0 0-2.12-2.12C19.5 3.57 12 3.57 12 3.57s-7.5 0-9.38.51A3 3 0 0 0 .5 6.2C0 8.07 0 12 0 12s0 3.93.5 5.8a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51a3 3 0 0 0 2.12-2.12C24 15.93 24 12 24 12s0-3.93-.5-5.8ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z"/>
-                </svg>
-              )}
-            </a>
-          </li>
-        ))}
-      </ul>
-      )}
-    </div>
-
-    <div>
-      <h3 class="font-heading text-[28px] text-gold">Quick Links</h3>
-      <ul class="mt-6 flex flex-col gap-2 font-sans text-[21px] text-gold">
-        {quickLinks.map((link) => (
-          <li>
-            <a href={link.href} class="hover:underline">
-              {link.label}
-            </a>
-          </li>
-        ))}
+      <ul class="flex flex-row gap-3" data-todo="social-url">
+        {
+          socials.map((s) => (
+            <li>
+              <a
+                href={s.href}
+                aria-label={s.label}
+                class="flex h-[42px] w-[42px] items-center justify-center rounded-full bg-gold text-cream transition-opacity hover:opacity-80"
+              >
+                {s.label === 'Facebook' && (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07c0 6.02 4.39 11.01 10.13 11.93v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.24 2.69.24v2.97h-1.52c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.08 24 18.09 24 12.07Z" />
+                  </svg>
+                )}
+                {s.label === 'Instagram' && (
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2.16c3.2 0 3.58.01 4.85.07 1.17.05 1.8.25 2.23.41.56.22.96.48 1.38.9.42.42.68.82.9 1.38.16.42.36 1.06.41 2.23.06 1.27.07 1.65.07 4.85s-.01 3.58-.07 4.85c-.05 1.17-.25 1.8-.41 2.23-.22.56-.48.96-.9 1.38-.42.42-.82.68-1.38.9-.42.16-1.06.36-2.23.41-1.27.06-1.65.07-4.85.07s-3.58-.01-4.85-.07c-1.17-.05-1.8-.25-2.23-.41a3.7 3.7 0 0 1-1.38-.9 3.7 3.7 0 0 1-.9-1.38c-.16-.42-.36-1.06-.41-2.23-.06-1.27-.07-1.65-.07-4.85s.01-3.58.07-4.85c.05-1.17.25-1.8.41-2.23.22-.56.48-.96.9-1.38.42-.42.82-.68 1.38-.9.42-.16 1.06-.36 2.23-.41C8.42 2.17 8.8 2.16 12 2.16Zm0 3.31a4.59 4.59 0 1 0 0 9.18 4.59 4.59 0 0 0 0-9.18Zm0 7.57a2.98 2.98 0 1 1 0-5.96 2.98 2.98 0 0 1 0 5.96Zm5.84-7.77a1.07 1.07 0 1 1-2.14 0 1.07 1.07 0 0 1 2.14 0Z" />
+                  </svg>
+                )}
+                {s.label === 'YouTube' && (
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M23.5 6.2a3 3 0 0 0-2.12-2.12C19.5 3.57 12 3.57 12 3.57s-7.5 0-9.38.51A3 3 0 0 0 .5 6.2C0 8.07 0 12 0 12s0 3.93.5 5.8a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51a3 3 0 0 0 2.12-2.12C24 15.93 24 12 24 12s0-3.93-.5-5.8ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z" />
+                  </svg>
+                )}
+              </a>
+            </li>
+          ))
+        }
       </ul>
     </div>
 
+    {/* Wellness Services */}
+    <nav aria-label="Wellness Services">
+      <h3 class="font-heading text-[20px] uppercase tracking-[0.04em] text-[#6f5a24]">Wellness Services</h3>
+      <ul class="mt-5 flex flex-col gap-[9px]">
+        {
+          wellness.map((l) => (
+            <li>
+              <a href={l.href} class="font-sans text-[15px] text-[#2e2a20] hover:text-[#6f5a24] hover:underline">
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    {/* Aesthetic Services + Company */}
+    <nav aria-label="Aesthetic Services and company">
+      <h3 class="font-heading text-[20px] uppercase tracking-[0.04em] text-[#6f5a24]">Aesthetic Services</h3>
+      <ul class="mt-5 flex flex-col gap-[9px]">
+        {
+          aesthetic.map((l) => (
+            <li>
+              <a href={l.href} class="font-sans text-[15px] text-[#2e2a20] hover:text-[#6f5a24] hover:underline">
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <h3 class="mt-7 font-heading text-[20px] uppercase tracking-[0.04em] text-[#6f5a24]">Company</h3>
+      <ul class="mt-5 flex flex-col gap-[9px]">
+        {
+          company.map((l) => (
+            <li>
+              <a href={l.href} class="font-sans text-[15px] text-[#2e2a20] hover:text-[#6f5a24] hover:underline">
+                {l.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    {/* Stay in touch */}
     <div>
-      <h3 class="font-heading text-[28px] text-gold">Subscribe</h3>
-      <p class="mt-6 font-sans text-[18px] lg:text-[16px] leading-relaxed text-gold">
-        Join our newsletter to stay up to date on features and releases.
+      <h3 class="font-heading text-[20px] uppercase tracking-[0.04em] text-[#6f5a24]">Stay in Touch</h3>
+      <p class="mt-5 font-sans text-[14px] leading-relaxed text-[#2e2a20]">
+        Join our newsletter for updates and offers.
       </p>
-      {/* В Figma поля email НЕТ — только кнопка. Добавлено для UX. */}
-      <form class="mt-6 flex flex-col gap-3" data-todo="newsletter-integration">
+      <form class="mt-4 flex flex-col gap-3" data-todo="newsletter-integration">
         <input
           type="email"
           name="email"
           required
           placeholder="your@email.com"
-          class="border-b border-gold bg-transparent py-2 font-sans text-gold placeholder:text-gold/50 focus:outline-none"
+          class="border-b border-[#6f5a24] bg-transparent py-2 font-sans text-[#2e2a20] placeholder:text-[#2e2a20]/50 focus:outline-none"
         />
-        <button type="submit" class="btn-gold w-[195px]">JOIN NOW</button>
+        <button type="submit" class="btn-gold w-fit">JOIN NOW</button>
       </form>
+      <a
+        href={bookingCta.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-gold mt-4 inline-block"
+      >
+        {bookingCta.label}
+      </a>
     </div>
   </div>
 
-  <div class="mt-12 text-right font-sans text-[14px] text-gold">
-    ©{year} Ideal Medical and Wellness.<br />
-    All rights reserved.
+  {/* Bottom bar */}
+  <div class="mt-12 flex flex-col gap-3 border-t border-[#6f5a24]/30 pt-6 font-sans text-[13px] text-[#5a4f33] sm:flex-row sm:items-center sm:justify-between">
+    <span>©{year} Ideal Medical and Wellness. All rights reserved.</span>
+    <span class="flex gap-5">
+      {
+        legal.map((l) => (
+          <a href={l.href} class="hover:text-[#6f5a24] hover:underline">
+            {l.label}
+          </a>
+        ))
+      }
+    </span>
   </div>
 </div>
