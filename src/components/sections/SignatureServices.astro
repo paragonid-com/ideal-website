@@ -1,6 +1,9 @@
 ---
 /**
- * Our Signature Services — заголовок + ряд из 5 карточек услуг.
+ * Our Signature Services — заголовок + ряд карточек услуг.
+ * 5 карточек на десктопе (lg, как в Figma); на мобильном/планшете (`<lg`)
+ * добавляется 6-я карточка PRP & Allograft (→ /services/regenerative),
+ * чтобы 2-/3-колоночная сетка не оставляла «сироту» в последнем ряду.
  *
  * Source в Figma (file jmzQqLFWpZXSII6xTkgCgu):
  *   - Заголовок секции: 1:149 (h2), 1:155 (lead), 1:230 (орнамент справа)
@@ -57,31 +60,30 @@ interface Service {
         задавать абсолютные left/width — пусть растягивается по height, центрируется сама. */
     autoCenterX?: boolean;
   };
+  /**
+   * Если true — карточка показывается ТОЛЬКО на мобильном/планшете (`<lg`) и
+   * скрыта на десктопе (`lg:hidden`). Десктопный ряд из 5 карточек = дизайн
+   * Figma; шестая карточка на lg дала бы «сироту» во втором ряду, тогда как на
+   * мобильном (2 кол.) / планшете (3 кол.) она наоборот балансирует сетку.
+   */
+  mobileOnly?: boolean;
 }
 
 const services: Service[] = [
   {
     titleLines: ['Medical', 'Weight Loss'],
     href: '/services/weight-loss',
+    // Кадрировано из services/weight-loss/hero.webp — торс уже по центру
+    // карточки, поэтому zoom/position не нужны.
     image: '/assets/images/service-weight-loss.webp',
-    // webp уже содержит фигуру целиком в правильном aspect — нужен лишь
-    // лёгкий зум, чтобы не было пустых полей по бокам. Top-anchor чтобы
-    // голову не подрезало.
-    imageScale: 1.05,
-    imagePosition: 'center top',
   },
   {
     titleLines: ['Hormone', 'Optimization'],
     href: '/services/hormone',
+    // Заменено на реальное фото флаконов из services/hormone/what-is.webp.
+    // Прежний предметный overlay убран — новое фото само является предметным
+    // кадром, накладывать поверх ещё один набор флаконов смысла нет.
     image: '/assets/images/service-hormone.webp',
-    overlay: {
-      src: '/assets/images/service-hormone-overlay.webp',
-      alt: 'Estrogen Cream and Testosterone vials',
-      top: '21.5%',
-      left: '1.2%',
-      width: '99%',
-      height: '55.7%',
-    },
   },
   {
     titleLines: ['Peptide', 'Therapy'],
@@ -99,11 +101,9 @@ const services: Service[] = [
   {
     titleLines: ['Sexual', 'Health'],
     href: '/services/sexualhealth',
+    // Кадрировано из services/sexualhealth/hero.webp — лицо/плечи мужчины уже
+    // по центру кадра карточки, zoom/position не нужны.
     image: '/assets/images/service-sexual-health.webp',
-    // В исходном webp лицо смещено правее центра — небольшой zoom
-    // + position 75% выводит лицо примерно в центр кадра карточки.
-    imageScale: 1.3,
-    imagePosition: '75% center',
   },
   {
     titleLines: ['IV', 'Therapy'],
@@ -119,6 +119,13 @@ const services: Service[] = [
       height: '70%',
       autoCenterX: true,
     },
+  },
+  {
+    titleLines: ['PRP &', 'Allograft'],
+    href: '/services/regenerative',
+    // Кадрировано из services/regenerative/hero.webp (пипетка → флакон).
+    image: '/assets/images/service-prp-allograft.webp',
+    mobileOnly: true,
   },
 ];
 ---
@@ -156,7 +163,7 @@ const services: Service[] = [
 
     <ul class="mt-16 grid grid-cols-2 gap-x-6 gap-y-12 md:grid-cols-3 lg:grid-cols-5">
       {services.map((s) => (
-        <li class="flex flex-col">
+        <li class:list={['flex flex-col', s.mobileOnly && 'lg:hidden']}>
           <a href={s.href} class="group flex h-full flex-col">
             <h3 class="mb-4 min-h-[58px] md:h-[68px] font-heading text-[18px] md:text-[24px] uppercase leading-[24px] md:leading-[34px] text-gold tracking-wide">
               {s.titleLines[0]}<br />{s.titleLines[1]}
