@@ -88,59 +88,59 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
         data-todo="form-submission-endpoint"
       >
         <label class="block">
-          <span class="font-sans text-[18px] text-gold">First Name (Required)</span>
+          <span class="font-sans text-[18px] text-[#5a4f33]">First Name (Required)</span>
           <input
             type="text"
             name="firstName"
             required
-            class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-gold focus:outline-none"
+            class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-[#5a4f33] focus:outline-none"
           />
         </label>
         <label class="block">
-          <span class="font-sans text-[18px] text-gold">Last Name (Required)</span>
+          <span class="font-sans text-[18px] text-[#5a4f33]">Last Name (Required)</span>
           <input
             type="text"
             name="lastName"
             required
-            class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-gold focus:outline-none"
+            class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-[#5a4f33] focus:outline-none"
           />
         </label>
         {/* Email и Phone — full-width в Figma (узлы 1:1793, 1:1794: линии w=914) */}
         <label class="block md:col-span-2">
-          <span class="font-sans text-[18px] text-gold">Email (Required)</span>
+          <span class="font-sans text-[18px] text-[#5a4f33]">Email (Required)</span>
           <input
             type="email"
             name="email"
             required
-            class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-gold focus:outline-none"
+            class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-[#5a4f33] focus:outline-none"
           />
         </label>
         <label class="block md:col-span-2">
-          <span class="font-sans text-[18px] text-gold">Phone (Required)</span>
+          <span class="font-sans text-[18px] text-[#5a4f33]">Phone (Required)</span>
           <input
             type="tel"
             name="phone"
             required
-            class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-gold focus:outline-none"
+            class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-[#5a4f33] focus:outline-none"
           />
         </label>
         <label class="block">
-          <span class="font-sans text-[18px] text-gold">Date of Birth (Required)</span>
+          <span class="font-sans text-[18px] text-[#5a4f33]">Date of Birth (Required)</span>
           <input
             type="date"
             name="dob"
             required
-            class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-gold focus:outline-none"
+            class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-[#5a4f33] focus:outline-none"
           />
         </label>
         <fieldset class="block">
-          <legend class="font-sans text-[18px] text-gold">Contact Preferences</legend>
+          <legend class="font-sans text-[18px] text-[#5a4f33]">Contact Preferences</legend>
           <div class="mt-3 flex gap-6">
-            <label class="flex items-center gap-2 font-sans text-[18px] text-gold">
+            <label class="flex items-center gap-2 font-sans text-[18px] text-[#5a4f33]">
               <input type="checkbox" name="contactPref" value="sms" />
               SMS
             </label>
-            <label class="flex items-center gap-2 font-sans text-[18px] text-gold">
+            <label class="flex items-center gap-2 font-sans text-[18px] text-[#5a4f33]">
               <input type="checkbox" name="contactPref" value="email" />
               Email
             </label>
@@ -156,7 +156,7 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
            с этой формой. ⚠️ Черновик: финальную формулировку должен утвердить
            юрист клиники под её privacy-политику и применимое право (TCPA и др.). */}
         <p
-          class="md:col-span-2 font-sans text-[13px] leading-snug text-gold/70"
+          class="md:col-span-2 font-sans text-[13px] leading-snug text-[#5a4f33]/70"
           data-todo="confirm-consent-disclaimer-text"
         >
           By submitting this form, you consent to be contacted by Ideal Medical
@@ -233,7 +233,7 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
 
       <div class="mt-6 flex flex-wrap items-end justify-between gap-x-8 gap-y-6">
         <div class="grid grid-cols-1 gap-x-12 gap-y-6 sm:grid-cols-2">
-        <address class="not-italic font-sans text-[18px] leading-relaxed text-gold">
+        <address class="not-italic font-sans text-[18px] leading-relaxed text-[#5a4f33]">
           <p class="font-heading text-[24px] uppercase">Address</p>
           <p class="mt-2">{address.name}</p>
           <p>{address.street}</p>
@@ -245,7 +245,7 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
           </p>
         </address>
 
-        <div class="font-sans text-[18px] leading-relaxed text-gold">
+        <div class="font-sans text-[18px] leading-relaxed text-[#5a4f33]">
           <p class="font-heading text-[24px] uppercase">Hours</p>
           <dl class="mt-2 space-y-1">
             {hoursRows.map((row) => (
