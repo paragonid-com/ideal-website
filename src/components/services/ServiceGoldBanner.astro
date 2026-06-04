@@ -34,7 +34,7 @@ const lines = text.split('\n');
     'w-full bg-gold',
     // hormone pull-quote (без CTA) — точная высота Figma 294px (Rect 102),
     // текст по центру на 2 строки. exomind-баннеры (с CTA) — прежний py-20.
-    ctaLabel ? 'py-20' : 'py-14 lg:py-0 lg:h-[294px] lg:flex lg:items-center',
+    ctaLabel ? 'py-20' : 'py-14 lg:py-10 lg:min-h-[294px] lg:flex lg:items-center',
   ]}
   data-section="service-gold-banner"
 >
@@ -43,8 +43,10 @@ const lines = text.split('\n');
       class:list={[
         'font-heading text-cream',
         // exomind-баннеры (с CTA) — крупный h1-стиль uppercase как в Figma;
-        // hormone pull-quote (без CTA) — Optima ~62px (Figma 1:3467), sentence-case.
-        ctaLabel ? 'text-h1 uppercase leading-tight' : 'text-h1 leading-[1.15]',
+        // hormone pull-quote (без CTA): размер масштабируется от ширины вьюпорта
+        // (3.28vw → 63px на 1920 как в Figma, узел 1:3467), чтобы строка всегда
+        // умещалась в 2 строки и НЕ переносилась в 3 на более узких экранах.
+        ctaLabel ? 'text-h1 uppercase leading-tight' : 'text-[clamp(20px,3.28vw,72px)] leading-[1.15]',
       ]}
     >
       {lines.map((line, i) => (

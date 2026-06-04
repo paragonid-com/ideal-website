@@ -12,8 +12,8 @@ heroImageAlt: "Doctor reviewing patient hormone test results in Aventura clinic"
 whatIsTitle: "UNDERSTANDING\nBIOIDENTICAL HORMONE\nREPLACEMENT THERAPY:\nTHE FUTURE OF HEALTHY\nAGING IN AVENTURA, FL"
 whatIsImage: "/assets/images/services/hormone/what-is.webp"
 whatIsImageAlt: "Bioidentical hormone vials and pellets — Ideal Medical clinic"
-# Точная высота секции из Figma (узлы 814→1897 = 1083px)
-whatIsHeight: "lg:h-[1083px]"
+# Высота секции из Figma (узлы 814→1897 = 1083px) — min-h (растёт, не наезжает)
+whatIsHeight: "lg:min-h-[1083px]"
 whatIsBody: |
   You have probably heard about hormone optimization from friends or your own research, and now you are asking the practical question: what is Bioidentical Hormone Replacement Therapy (BHRT), and would it actually help me? BHRT uses plant-derived hormones with the same molecular structure as the ones your body produces — estradiol, estriol, progesterone, and testosterone — to correct a documented hormonal imbalance.
 
