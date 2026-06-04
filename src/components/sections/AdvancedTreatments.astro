@@ -43,7 +43,12 @@ const treatments = [
     brand: 'EMSELLA',
     description:
       'Non invasive pelvic floor strengthening to improve bladder control, core stability, and intimate wellness.',
-    photo: '/assets/images/treatment-emsella.webp',
+    // Перекадрировано (v2): в исходнике устройство сидело в нижней части кадра
+    // с большим пустым верхом. Кроп убирает пустоту, устройство заполняет/
+    // центрирует кадр как у остальных 3 карточек. Новое имя файла = заодно
+    // обход CDN-кэша. Исходник широкий, поэтому крайние кромки подлокотников
+    // слегка подрезаны (компромисс ради вертикального центрирования).
+    photo: '/assets/images/treatment-emsella-v2.webp',
     href: '/services/sexualhealth',
   },
 ];
