@@ -74,8 +74,10 @@ const {
   bodyClass = 'text-body-lg leading-relaxed',
   imageZoomOut = false,
 } = Astro.props;
-const imgFit = imageZoomOut ? 'object-contain p-[6%]' : 'object-cover';
-const imgBg = imageZoomOut ? 'bg-cream' : '';
+// Мобайл: фото на всю ширину без полей (object-cover edge-to-edge).
+// Десктоп: зум-аут (object-contain + cream-поле).
+const imgFit = imageZoomOut ? 'object-cover lg:object-contain lg:p-[6%]' : 'object-cover';
+const imgBg = imageZoomOut ? 'lg:bg-cream' : '';
 const titleLines = title.split('\n');
 const paragraphs = body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
 const tailParas = (tail ?? '').split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
@@ -90,7 +92,7 @@ const imageOrderClass = imageSide === 'left' ? 'lg:order-1' : 'lg:order-2';
 >
   <div class={`mx-auto max-w-design grid grid-cols-1 lg:grid-cols-2 ${align} ${sectionHeight}`}>
     {/* Текст */}
-    <div class={`px-[7.55%] py-24 ${textOrderClass}`}>
+    <div class={`px-[7.55%] pt-16 pb-8 lg:py-24 ${textOrderClass}`}>
       <div class="flex items-start justify-between gap-4">
         <h2 class={`font-heading ${headingClass} uppercase text-gold`}>
           {titleLines.map((line, i) => (

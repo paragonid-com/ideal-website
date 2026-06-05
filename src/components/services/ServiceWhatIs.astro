@@ -61,8 +61,10 @@ const {
 // на мобайле опционально текст сверху через mobileTextFirst.
 const imgOrder = imageSide === 'right' ? 'order-2' : (mobileTextFirst ? 'max-lg:order-2' : '');
 const textOrder = imageSide === 'right' ? 'order-1' : (mobileTextFirst ? 'max-lg:order-1' : '');
-const imgFit = imageZoomOut ? 'object-contain p-[6%]' : 'object-cover';
-const imgBg = imageZoomOut ? 'bg-cream' : '';
+// Мобайл: фото на всю ширину без полей (object-cover edge-to-edge).
+// Десктоп: зум-аут (object-contain + cream-поле).
+const imgFit = imageZoomOut ? 'object-cover lg:object-contain lg:p-[6%]' : 'object-cover';
+const imgBg = imageZoomOut ? 'lg:bg-cream' : '';
 const lines = title.split('\n');
 // Разбиваем body на абзацы
 const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
