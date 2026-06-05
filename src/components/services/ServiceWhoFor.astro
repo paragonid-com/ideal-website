@@ -88,14 +88,16 @@ const imageColClass = imageAspectClass
         {leadParas.map((p) => <p>{p}</p>)}
       </div>
 
-      <ul class={`mt-8 space-y-6 max-w-[685px] font-sans ${bodyClass} text-gold`}>
-        {bullets.map((b) => (
-          <li class="flex gap-4">
-            <span aria-hidden="true" class="select-none text-[24px] leading-[1.2]">•</span>
-            <span>{b}</span>
-          </li>
-        ))}
-      </ul>
+      {bullets.length > 0 && (
+        <ul class={`mt-8 space-y-6 max-w-[685px] font-sans ${bodyClass} text-gold`}>
+          {bullets.map((b) => (
+            <li class="flex gap-4">
+              <span aria-hidden="true" class="select-none text-[24px] leading-[1.2]">•</span>
+              <span>{b}</span>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
 
     {/* Правая колонка — фото */}

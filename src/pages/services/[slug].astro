@@ -173,6 +173,8 @@ const goldBanner = normalizeBanner(data.goldBanner);
     showStar={data.stars?.hero}
     mobileStacked={data.heroMobileStacked}
     mobileImagePosition={data.heroMobileImagePosition}
+    ctaLabel={data.heroCtaLabel}
+    ctaHref={data.heroCtaHref}
   />
 
   {!data.suppressDefaultCtas && <ServiceCTABand overlap={data.overlapCtas} />}
@@ -425,14 +427,15 @@ const goldBanner = normalizeBanner(data.goldBanner);
     </>
   )}
 
-  {/* Who is For (Weight Loss) */}
-  {data.whoForTitle && data.whoForImage && data.whoForLead && data.whoForBullets && (
+  {/* Who is For (Weight Loss). Буллеты опциональны: peptide в Figma идёт
+     сплошными абзацами без списка (узлы 1:3887). */}
+  {data.whoForTitle && data.whoForImage && data.whoForLead && (
     <ServiceWhoFor
       title={data.whoForTitle}
       image={data.whoForImage}
       imageAlt={data.whoForImageAlt || ''}
       lead={data.whoForLead}
-      bullets={data.whoForBullets}
+      bullets={data.whoForBullets ?? []}
       showStar={data.stars?.whoFor}
       sectionHeight={data.whoForHeight}
       gridColsClass={data.whoForGridCols}

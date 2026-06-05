@@ -10,6 +10,8 @@
  * видны целиком, — а текст идёт ПОД фото на cream-фоне и хорошо читается.
  */
 
+import { bookingCta } from '../../data/navigation.ts';
+
 interface Props {
   title: string;
   lead: string;
@@ -20,12 +22,20 @@ interface Props {
   mobileStacked?: boolean;
   /** object-position фото в мобильном баннере (фокус на докторе). Default object-center. */
   mobileImagePosition?: string;
+  /** Opt-in: текст кнопки CTA внутри hero (Figma peptide узел 1:3906 «BOOK NOW»).
+   *  Если не задан — кнопка не рендерится (weight-loss/hormone не затронуты:
+   *  у них CTA идёт отдельным straddle-band на шве). */
+  ctaLabel?: string;
+  /** Ссылка кнопки. Default — bookingCta.href (централизованный Boulevard-URL). */
+  ctaHref?: string;
 }
 
 const {
   title, lead, image, imageAlt, showStar = false,
   mobileStacked = false,
   mobileImagePosition = 'object-center',
+  ctaLabel,
+  ctaHref = bookingCta.href,
 } = Astro.props;
 const lines = title.split('\n');
 
@@ -86,6 +96,17 @@ const innerClass = mobileStacked
           height="50"
           class="mt-[21px] h-[50px] w-[43px]"
         />
+      )}
+
+      {ctaLabel && (
+        <a
+          href={ctaHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-gold mt-8 self-start min-w-[195px]"
+        >
+          {ctaLabel}
+        </a>
       )}
     </div>
   </div>
