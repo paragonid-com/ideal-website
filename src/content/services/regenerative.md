@@ -6,11 +6,27 @@ heroTitle: "PRP &\nALLOGRAFT"
 heroLead: "Regenerative medicine continually stands out among all the evolving areas in medicine that bridge aesthetics and function. This cutting-edge field focuses on repairing, replacing, or regenerating damaged tissues and organs, helping to restore normal function via techniques such as stem cell therapy, tissue engineering, and gene editing."
 heroImage: "/assets/images/services/regenerative/hero.webp"
 heroImageAlt: "Regenerative medicine and PRP therapy at Ideal Medical & Wellness, Aventura"
+# hero.webp = full-bleed Unsplash (cdc-IFpQtennlj8) — тёмный кадр (пипетка/флакон).
+# Тёмная тема: gold-заголовок + светлый lead + тёмный скрим на десктоп-оверлее
+# (в Figma текст светлый на тёмном). Mobile: фото баннером сверху, текст на cream.
+heroMobileStacked: true
+heroMobileImagePosition: "object-[60%_center]"
+heroCtaLabel: "BOOK NOW"
+heroTheme: "dark"
 
 # === "What is Regenerative Medicine?" — узлы Figma 1:2038 + 1:2048 + 1:2197 (фото слева, julia-koblitz Unsplash)
 whatIsTitle: "WHAT IS REGENERATIVE MEDICINE?"
 whatIsImage: "/assets/images/services/regenerative/what-is.webp"
 whatIsImageAlt: "Laboratory preparation of platelet-rich plasma for regenerative treatment"
+# Геометрия Figma: секция y 814→2216 = 1402 (длинный body). Фото слева — узел 1:2193
+# = слот 923×1219 (portrait, выше обычного), left-bleed, cream-поля. vw-clamp.
+whatIsHeight: "lg:aspect-[1920/1402]"
+whatIsGridCols: "lg:grid-cols-[48fr_52fr]"
+whatIsAlign: "items-center"
+whatIsImageSide: "left"
+whatIsImageAspect: "lg:aspect-[923/1219]"
+whatIsHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
+whatIsBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
 whatIsBody: |
   Regenerative medicine is a specialized approach to using reparative and healing treatments to help restore balance, harmony, and normal functionality to diseased and damaged tissues and organs. Although regenerative medicine initially began with stem cell therapy, it has advanced to include treatments like platelet-rich plasma (PRP) for injuries, skin rejuvenation, and hair loss, as well as allograft injections to assist in injury recovery. Still, one of its most significant benefits is for improved sexual health and penile and vaginal rejuvenation. PRP and liquid allograft injections are particularly effective for treating erectile dysfunction.
 
@@ -32,6 +48,11 @@ textWithPhotoBlocks:
     imageSide: "right"
     star: true
     position: "before-common-signs"
+    # Геометрия Figma: секция y 2216→3209 ≈ 993; фото справа слот 996×993 (узел 1:2161).
+    sectionHeight: "lg:aspect-[1920/993]"
+    align: "items-center"
+    headingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
+    bodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
     body: |
       Regenerative medicine works for a wide range of people. PRP injections can improve male and female hair loss by preventing hair from continuing to shed and thin while promoting new hair growth. They are also useful in treating male pattern baldness and amplifying the results of hair transplant surgeries.
 
@@ -42,6 +63,11 @@ textWithPhotoBlocks:
     imageSide: "right"
     star: true
     position: "before-conditions"
+    # Геометрия Figma: секция y 4686→5679 = 993; фото справа слот 996×993 (узел 1:2156).
+    sectionHeight: "lg:aspect-[1920/993]"
+    align: "items-center"
+    headingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
+    bodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
     body: |
       Regenerative medicine works for a wide range of people. PRP injections can improve male and female hair loss by preventing hair from continuing to shed and thin while promoting new hair growth. They are also useful in treating male pattern baldness and amplifying the results of hair transplant surgeries.
 
