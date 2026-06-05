@@ -6,11 +6,29 @@ heroTitle: "EMSELLA™\nin Aventura"
 heroLead: "Emsella is a non-invasive treatment that uses high-intensity focused electromagnetic (HIFEM) technology to strengthen pelvic floor muscles and improve bladder control by simulating kegels. Emsella is now also FDA approved for sexual wellness."
 heroImage: "/assets/images/services/emsella/hero.webp"
 heroImageAlt: "Two clients seated on Emsella treatment chairs"
+# Мобайл: фото баннером сверху, текст снизу на cream (фокус на сидящей клиентке справа).
+heroMobileStacked: true
+heroMobileImagePosition: "object-[70%_center]"
+# В hero есть собственная кнопка BOOK NOW (Figma 1:5070, x=144 y=680), отдельно от
+# straddle-пилюли на шве hero/whatIs. href наследует централизованный bookingCta.
+heroCtaLabel: "BOOK NOW"
 
 # ---------- What is EMSELLA? (photo left + body + bullets) ----------
+# Геометрия Figma (узлы 1:5401 фото 776×1034 портрет @ x=147; заголовок 1:5091
+# одной строкой + gold-звезда 1:5065 справа; body 1:5035). Фото — скруглённая
+# карточка с отступом слева (как у текста), вверху секции; текст справа vw-адаптивный.
 whatIsTitle: "WHAT IS EMSELLA™?"
 whatIsImage: "/assets/images/services/emsella/what-is.webp"
 whatIsImageAlt: "Clients seated on Emsella chairs"
+whatIsGridCols: "lg:grid-cols-[48fr_52fr]"
+whatIsAlign: "items-start"
+whatIsHeight: "lg:min-h-0"
+whatIsImageSide: "left"
+whatIsImageAspect: "lg:aspect-[776/1034]"
+whatIsImagePadded: true
+whatIsImageRounded: true
+whatIsHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
+whatIsBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
 whatIsBody: |
   Emsella is an FDA-cleared, non-invasive chair treatment that uses high-intensity focused electromagnetic (HIFEM) energy to stimulate and strengthen pelvic floor muscles. Each 30-minute session delivers thousands of supramaximal contractions — the equivalent of doing 11,000 Kegels — without any effort on your part.
 
@@ -27,6 +45,7 @@ twoColumnSections:
     background: "cream"
     left:
       title: "WHAT TO EXPECT\nFROM YOUR\nEMSELLA™ SESSION"
+      bulletStyle: "plain"
       bullets:
         - "Non-invasive: You remain fully clothed during treatment"
         - "Comfortable: Simply sit back and relax in the Emsella chair"
@@ -40,6 +59,7 @@ twoColumnSections:
   - position: "after-categories-grid"
     background: "cream"
     heading: "EMSELLA FOR SEXUAL WELLNESS"
+    headingClass: "text-[clamp(24px,1.88vw,36px)] leading-[1.1]"
     left:
       title: "WOMAN"
       image: "/assets/images/services/emsella/sexual-wellness-woman.webp"
@@ -66,7 +86,9 @@ twoColumnSections:
 # ---------- What EMSELLA Is for? — incontinence types grid (gold, 3 items) ----------
 categoriesGrids:
   - title: "WHAT EMSELLA™ IS FOR?"
+    titleClass: "text-[clamp(24px,1.88vw,36px)] leading-tight text-left"
     background: "gold"
+    imageAspectClass: "aspect-square"
     items:
       - title: "STRESS INCONTINENCE"
         body: "Stress incontinence is the involuntary leakage of urine during physical activities such as coughing, sneezing, laughing, or exercising due to weakened pelvic floor muscles or urethral support."
@@ -86,7 +108,13 @@ categoriesGrids:
 # (data-todo='video-from-client' проставит компонент при пустом url). ----------
 videoEmbed:
   position: "after-first-grid"
+  # Подтверждено web-проверкой: официальный ролик BTL «BTL EMSELLA® — Mechanism
+  # of action» (канал BTL Aesthetics), узел Figma 1:5400.
+  url: "https://www.youtube.com/watch?v=2HLEVkT1LUU"
   posterAlt: "BTL Emsella — Mechanism of action"
+  # Figma 1:5400 — видео край-в-край (x=0, w=1921), без боковых полей и без скругления.
+  flush: true
+  fullBleed: true
 
 # ---------- FAQ (content pending from client) ----------
 faq:
@@ -103,6 +131,7 @@ faq:
 
 stars:
   hero: true
+  whatIs: true
 
 draft: false
 category:
