@@ -8,6 +8,12 @@ heroLead: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusm
 # ⚠️ Stock: indra-projects-L1ip8dEWuzE (Unsplash) — лицензия требует проверки (блокер)
 heroImage: "/assets/images/services/bloodwork/hero.webp"
 heroImageAlt: "Blood sample vials in a laboratory — Ideal Medical & Wellness, Aventura"
+# hero.webp = full-bleed Unsplash-фото (лаборант у микроскопа). Desktop: object-right
+# + cream-скрим слева. Mobile: фото баннером сверху, текст ниже на cream.
+heroMobileStacked: true
+heroMobileImagePosition: "object-[48%_center]"
+# Figma (узел внутри hero) содержит кнопку BOOK NOW; mid-CTA подавлены.
+heroCtaLabel: "BOOK NOW"
 
 # === "What is Blood Work Therapy?" — узлы Figma 1:2464 (заголовок) + 1:2473 (body) + 1:2505 (фото слева)
 # Заголовок (с опечаткой) реальный; body Lorem (data-todo="copy").
@@ -15,6 +21,15 @@ whatIsTitle: "WHAT IS BLOOD\nWORK THERAPY?"
 # ⚠️ Stock: istockphoto-2206913658 — лицензия требует проверки (блокер)
 whatIsImage: "/assets/images/services/bloodwork/what-is.webp"
 whatIsImageAlt: "Lab technician analyzing blood work results — Ideal Medical clinic"
+# Геометрия Figma: секция y 814→1913 = 1099. Фото слева (узел 1:2505 в слоте 923×939,
+# left-bleed, cream-поля). object-cover кропит landscape-исходник. vw-clamp.
+whatIsHeight: "lg:aspect-[1920/1099]"
+whatIsGridCols: "lg:grid-cols-[48fr_52fr]"
+whatIsAlign: "items-center"
+whatIsImageSide: "left"
+whatIsImageAspect: "lg:aspect-[923/939]"
+whatIsHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
+whatIsBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
 whatIsBody: |
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
@@ -64,13 +79,20 @@ whoForTitle: "Who is\nBLOOD WORK\nTHERAPY For?"
 # ⚠️ Stock: marco-j-haenssgen-7mlPdAFXyls (Unsplash) — лицензия требует проверки (блокер)
 whoForImage: "/assets/images/services/bloodwork/who-for.webp"
 whoForImageAlt: "Patient having blood drawn for lab testing — Ideal Medical, Aventura"
+# Геометрия Figma: секция y 3404→4397 = 993. Фото справа (узел 1:2637 в слоте 996×993,
+# near-square, right-bleed). object-cover кропит portrait-исходник. Заголовок 3 строки;
+# высоту задаёт ФОТО, текст слева центрируется. В Figma буллетов нет. vw-clamp.
+whoForHeight: ""
+whoForGridCols: "lg:grid-cols-[48fr_52fr]"
+whoForAlign: "items-center"
+whoForHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
+whoForBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
+whoForImageMinH: ""
+whoForImageAspect: "lg:aspect-[996/993]"
 whoForLead: |
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-whoForBullets:
-  - "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-  - "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 
 # === The Results — узлы Figma 1:2541 + 1:2542. Body Lorem (data-todo="copy").
 resultsTitle: "THE RESULTS"
