@@ -93,6 +93,9 @@ const services = defineCollection({
       heroCtaLabel: z.string().optional(),
       /** Ссылка hero-кнопки. Если не задана — bookingCta.href (Boulevard). */
       heroCtaHref: z.string().optional(),
+      /** Тема hero-фото: 'light' (default — светлое фото, тёмный текст, cream-скрим)
+       *  или 'dark' (тёмное фото, напр. regenerative — светлый lead + тёмный скрим). */
+      heroTheme: z.enum(['light', 'dark']).optional(),
 
       // ===== "What is X?" (Weight Loss формат) =====
       whatIsTitle: z.string().optional(),

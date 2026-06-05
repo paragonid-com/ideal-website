@@ -28,6 +28,11 @@ interface Props {
   ctaLabel?: string;
   /** Ссылка кнопки. Default — bookingCta.href (централизованный Boulevard-URL). */
   ctaHref?: string;
+  /** Тема фото-фона: 'light' (светлое фото, тёмный текст + cream-скрим — default,
+   *  как peptide/iv/bloodwork) или 'dark' (тёмное фото, напр. regenerative pipette:
+   *  светлый lead + тёмный скрим на десктоп-оверлее; gold-заголовок работает на обоих).
+   *  В stacked-режиме мобильный текст лежит на cream и остаётся тёмным независимо от темы. */
+  theme?: 'light' | 'dark';
 }
 
 const {
@@ -36,7 +41,9 @@ const {
   mobileImagePosition = 'object-center',
   ctaLabel,
   ctaHref = bookingCta.href,
+  theme = 'light',
 } = Astro.props;
+const isDark = theme === 'dark';
 const lines = title.split('\n');
 
 const sectionClass = mobileStacked
@@ -48,8 +55,18 @@ const imgClass = mobileStacked
   : 'absolute inset-0 h-full w-full object-cover object-right';
 
 const scrimClass = mobileStacked
-  ? 'hidden lg:block absolute inset-0 z-[1] bg-gradient-to-r from-cream/55 via-cream/10 to-transparent'
-  : 'absolute inset-0 z-[1] bg-gradient-to-r from-cream/85 via-cream/45 to-transparent lg:from-cream/55 lg:via-cream/10';
+  ? (isDark
+      ? 'hidden lg:block absolute inset-0 z-[1] bg-gradient-to-r from-black/70 via-black/30 to-transparent'
+      : 'hidden lg:block absolute inset-0 z-[1] bg-gradient-to-r from-cream/55 via-cream/10 to-transparent')
+  : (isDark
+      ? 'absolute inset-0 z-[1] bg-gradient-to-r from-black/75 via-black/40 to-transparent'
+      : 'absolute inset-0 z-[1] bg-gradient-to-r from-cream/85 via-cream/45 to-transparent lg:from-cream/55 lg:via-cream/10');
+
+/* Цвет lead: на тёмной теме — светлый на десктоп-оверлее; в stacked-режиме
+   мобильный текст на cream остаётся тёмным (lg: переключает на светлый). */
+const leadColorClass = isDark
+  ? (mobileStacked ? 'text-[#5a4f33] lg:text-[#efe7d4]' : 'text-[#efe7d4]')
+  : 'text-[#5a4f33]';
 
 const wrapClass = mobileStacked
   ? 'relative z-10 mx-auto max-w-design px-[7.55%] lg:h-full'
@@ -84,7 +101,7 @@ const innerClass = mobileStacked
         ))}
       </h1>
 
-      <p class="mt-[27px] max-w-[632px] font-sans text-body-lg text-[#5a4f33] leading-relaxed">
+      <p class={`mt-[27px] max-w-[632px] font-sans text-body-lg ${leadColorClass} leading-relaxed`}>
         {lead}
       </p>
 
