@@ -43,6 +43,10 @@ interface Props {
   imageSide?: 'left' | 'right';
   /** Зум-аут: показать фото целиком (object-contain) с небольшим cream-полем. */
   imageZoomOut?: boolean;
+  /** Если задан (напр. `lg:aspect-[923/939]`) — фото-колонка держит свою пропорцию
+   *  на lg вместо растягивания на всю высоту. При align=items-center это даёт
+   *  cream-поля сверху/снизу фото, как в Figma (узел 1:1545 923×939 в секции 1099). */
+  imageAspectClass?: string;
 }
 
 const {
@@ -55,6 +59,7 @@ const {
   mobileTextFirst = false,
   imageSide = 'left',
   imageZoomOut = false,
+  imageAspectClass = '',
 } = Astro.props;
 // Порядок колонок. imageSide='right' → текст слева/сверху (order-1), фото справа/снизу
 // (order-2) на всех ширинах. imageSide='left' (default) → DOM-порядок (фото слева),
@@ -65,6 +70,12 @@ const textOrder = imageSide === 'right' ? 'order-1' : (mobileTextFirst ? 'max-lg
 // Десктоп: зум-аут (object-contain + cream-поле).
 const imgFit = imageZoomOut ? 'object-cover lg:object-contain lg:p-[6%]' : 'object-cover';
 const imgBg = imageZoomOut ? 'lg:bg-cream' : '';
+// В aspect-режиме (imageAspectClass задан) фото держит свою пропорцию на lg —
+// при align=items-center это создаёт cream-поля сверху/снизу (как в Figma).
+// Иначе — прежнее поведение (lg:h-full на всю высоту секции).
+const imgColLgClass = imageAspectClass
+  ? `lg:h-auto ${imageAspectClass}`
+  : 'lg:h-full lg:min-h-0';
 const lines = title.split('\n');
 // Разбиваем body на абзацы
 const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
@@ -76,7 +87,7 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
 >
   <div class={`mx-auto max-w-design grid grid-cols-1 ${gridColsClass} ${align} ${sectionHeight}`}>
     {/* Левая колонка — фото на всю высоту секции */}
-    <div class={`relative h-[320px] md:h-[480px] lg:h-full lg:min-h-0 ${imgOrder} ${imgBg}`}>
+    <div class={`relative h-[320px] md:h-[480px] ${imgColLgClass} ${imgOrder} ${imgBg}`}>
       <img
         src={image}
         alt={imageAlt}

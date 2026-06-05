@@ -116,6 +116,9 @@ const services = defineCollection({
       whatIsImageSide: z.enum(['left','right']).optional(),
       /** What-Is: фото целиком с cream-полем (зум аут). */
       whatIsImageZoomOut: z.boolean().optional(),
+      /** Если задан (напр. `lg:aspect-[923/939]`) — фото держит пропорцию на lg
+       *  вместо растягивания; с align=items-center даёт cream-поля сверху/снизу. */
+      whatIsImageAspect: z.string().optional(),
 
       // ===== "What is X?" короткий вариант БЕЗ фото (emsculpt) =====
       simpleWhatIs: z

@@ -28,12 +28,15 @@ whatIsTitle: |
 whatIsImage: "/assets/images/services/weight-loss/what-is.webp"
 whatIsImageAlt: "Close-up of a person self-administering a weight loss injection"
 # Пропорция блока = Figma-секция (y 814→1913 = 1099 при ширине 1920). Фото слева
-# ~48% (узел 1:1545 = 923/1920), текст справа ~52% (узел 1:1500/1:1510 x=1002).
-# items-stretch → фото на всю высоту блока; vw-clamp шрифты масштабируются с блоком.
+# ~48% (узел 1:1545 = 923/1920). В Figma фото НЕ на всю высоту: clip 923×939 при
+# y=895..1834 → ~80px cream сверху и снизу. Поэтому items-center + whatIsImageAspect
+# lg:aspect-[923/939]: фото держит near-square пропорцию и центрируется по высоте
+# блока, давая поля сверху/снизу как в Figma. vw-clamp шрифты масштабируются с блоком.
 whatIsHeight: "lg:aspect-[1920/1099]"
 whatIsGridCols: "lg:grid-cols-[48fr_52fr]"
-whatIsAlign: "items-stretch"
+whatIsAlign: "items-center"
 whatIsImageSide: "left"
+whatIsImageAspect: "lg:aspect-[923/939]"
 whatIsHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
 whatIsBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
 whatIsBody: |
