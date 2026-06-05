@@ -313,6 +313,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       url={data.videoEmbed.url}
       posterImage={data.videoEmbed.posterImage}
       posterAlt={data.videoEmbed.posterAlt}
+      flush={data.videoEmbed.flush}
     />
   )}
 
@@ -339,6 +340,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       url={data.videoEmbed.url}
       posterImage={data.videoEmbed.posterImage}
       posterAlt={data.videoEmbed.posterAlt}
+      flush={data.videoEmbed.flush}
     />
   )}
 
@@ -425,7 +427,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
         title={data.extendedDescription.title}
         body={data.extendedDescription.body}
       />
-      <ServiceCTABand />
+      <ServiceCTABand overlap={data.overlapCtas} />
     </>
   )}
 
@@ -550,8 +552,9 @@ const goldBanner = normalizeBanner(data.goldBanner);
     />
   )}
 
-  {/* CTA прямо перед FAQ (emsculpt Figma 1:5573, emface 1:6327) — opt-in */}
-  {data.ctaBeforeFaq && <ServiceCTABand />}
+  {/* CTA прямо перед FAQ (emsculpt Figma 1:5573, emface 1:6327) — opt-in.
+     overlap управляется overlapCtas (emsculpt=straddle; emface без флага=обычный band). */}
+  {data.ctaBeforeFaq && <ServiceCTABand overlap={data.overlapCtas} />}
 
   {/* FAQ */}
   {data.faq && data.faq.length > 0 && <ServiceFAQ faq={data.faq} />}

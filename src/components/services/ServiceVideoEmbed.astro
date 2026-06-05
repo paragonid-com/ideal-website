@@ -23,9 +23,12 @@ interface Props {
   url?: string;
   posterImage?: string;
   posterAlt?: string;
+  /** Убрать вертикальный padding (py-12) → края iframe вплотную к краям секции
+   *  (emsculpt, Figma 1:5511). Default false — прежнее поведение (py-12). */
+  flush?: boolean;
 }
 
-const { url, posterImage, posterAlt = 'Video preview' } = Astro.props;
+const { url, posterImage, posterAlt = 'Video preview', flush = false } = Astro.props;
 
 /** Извлекаем YouTube video ID из URL. Поддерживает все основные форматы:
  *  - https://www.youtube.com/watch?v=XXXX
@@ -52,7 +55,7 @@ const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}?rel=0` : nu
 ---
 
 <section
-  class="w-full bg-cream py-12"
+  class={`w-full bg-cream ${flush ? '' : 'py-12'}`}
   data-section="service-video-embed"
 >
   <div class="mx-auto max-w-design px-[7.55%]">

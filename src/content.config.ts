@@ -427,6 +427,10 @@ const services = defineCollection({
             .enum(['late', 'after-first-grid'])
             .default('late')
             .optional(),
+          /** Убрать вертикальный padding секции (py-12) → края iframe совпадают
+           *  с началом/концом секции (emsculpt, Figma 1:5511). Default false —
+           *  прочие страницы (emsella/exomind/emface) сохраняют py-12. */
+          flush: z.boolean().default(false),
         })
         .optional(),
 
