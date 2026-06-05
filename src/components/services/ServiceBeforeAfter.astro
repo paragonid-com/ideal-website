@@ -63,7 +63,7 @@ const { title, items, carousel = false } = Astro.props;
     )}
 
     {carousel ? (
-      <div class="relative" data-ba-carousel>
+      <div class="relative max-lg:-mx-[7.55vw]" data-ba-carousel>
         <div
           class="ba-track flex snap-x snap-mandatory overflow-x-auto scroll-smooth gap-6 pb-2"
           data-ba-track
@@ -91,13 +91,13 @@ const { title, items, carousel = false } = Astro.props;
               type="button"
               data-ba-prev
               aria-label="Previous result"
-              class="absolute left-2 top-1/2 -translate-y-1/2 z-10 grid h-11 w-11 place-items-center rounded-full bg-gold text-cream text-2xl leading-none shadow-md transition-colors hover:bg-[#6f5b26]"
+              class="absolute left-2 top-1/2 -translate-y-1/2 z-10 hidden lg:grid h-11 w-11 place-items-center rounded-full bg-gold text-cream text-2xl leading-none shadow-md transition-colors hover:bg-[#6f5b26]"
             >‹</button>
             <button
               type="button"
               data-ba-next
               aria-label="Next result"
-              class="absolute right-2 top-1/2 -translate-y-1/2 z-10 grid h-11 w-11 place-items-center rounded-full bg-gold text-cream text-2xl leading-none shadow-md transition-colors hover:bg-[#6f5b26]"
+              class="absolute right-2 top-1/2 -translate-y-1/2 z-10 hidden lg:grid h-11 w-11 place-items-center rounded-full bg-gold text-cream text-2xl leading-none shadow-md transition-colors hover:bg-[#6f5b26]"
             >›</button>
           </>
         )}
@@ -158,6 +158,7 @@ const { title, items, carousel = false } = Astro.props;
   {carousel && (
     <script is:inline>
       (function () {
+        var mq = window.matchMedia('(max-width: 1023px)');
         document.querySelectorAll('[data-ba-carousel]').forEach(function (root) {
           var track = root.querySelector('[data-ba-track]');
           var prev = root.querySelector('[data-ba-prev]');
@@ -166,6 +167,22 @@ const { title, items, carousel = false } = Astro.props;
           function step(dir) { track.scrollBy({ left: dir * track.clientWidth, behavior: 'smooth' }); }
           if (prev) prev.addEventListener('click', function () { step(-1); });
           if (next) next.addEventListener('click', function () { step(1); });
+
+          // Mobile-only auto-rotation. Native touch-swipe (overflow-x scroll-snap)
+          // stays enabled; auto-rotation pauses on interaction and resumes when idle.
+          var timer = null, resumeT = null;
+          function atEnd() { return track.scrollLeft + track.clientWidth >= track.scrollWidth - 4; }
+          function advance() { if (atEnd()) track.scrollTo({ left: 0, behavior: 'smooth' }); else step(1); }
+          function start() { if (!timer && mq.matches) timer = setInterval(advance, 3500); }
+          function stop() { if (timer) { clearInterval(timer); timer = null; } }
+          function bump() { stop(); clearTimeout(resumeT); resumeT = setTimeout(start, 6000); }
+          ['pointerdown', 'touchstart', 'wheel'].forEach(function (ev) {
+            track.addEventListener(ev, bump, { passive: true });
+          });
+          function sync() { if (mq.matches) start(); else stop(); }
+          if (mq.addEventListener) mq.addEventListener('change', sync);
+          else if (mq.addListener) mq.addListener(sync);
+          sync();
         });
       })();
     </script>
