@@ -23,7 +23,7 @@ whatIsImageAlt: "Practitioner performing an Emsculpt Neo body shaping treatment 
 whatIsHeight: "lg:aspect-[1920/1099]"
 whatIsGridCols: "lg:grid-cols-[48fr_52fr]"
 whatIsAlign: "items-center"
-whatIsImageSide: "left"
+whatIsImageSide: "right"
 whatIsImageAspect: "lg:aspect-[923/766]"
 whatIsHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
 whatIsBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
