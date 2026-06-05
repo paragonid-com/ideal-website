@@ -38,7 +38,7 @@ const lines = text.split('\n');
   ]}
   data-section="service-gold-banner"
 >
-  <div class="mx-auto w-full max-w-design px-[7.55%] text-center">
+  <div class="mx-auto w-full max-w-design px-[4%] lg:px-[7.55%] text-center">
     <p
       class:list={[
         'font-heading text-cream',
@@ -46,7 +46,7 @@ const lines = text.split('\n');
         // hormone pull-quote (без CTA): размер масштабируется от ширины вьюпорта
         // (3.28vw → 63px на 1920 как в Figma, узел 1:3467), чтобы строка всегда
         // умещалась в 2 строки и НЕ переносилась в 3 на более узких экранах.
-        ctaLabel ? 'text-h1 uppercase leading-tight' : 'text-[clamp(16px,3.28vw,72px)] leading-[1.15]',
+        ctaLabel ? 'text-h1 uppercase leading-tight' : 'text-[clamp(19px,3.28vw,72px)] leading-[1.15]',
       ]}
     >
       {lines.map((line, i) => (

@@ -112,6 +112,10 @@ const services = defineCollection({
       whatIsBodyClass: z.string().optional(),
       /** На мобайле What-Is: текст сверху, фото снизу. */
       whatIsMobileTextFirst: z.boolean().optional(),
+      /** Сторона фото What-Is на десктопе: 'left'|'right'. */
+      whatIsImageSide: z.enum(['left','right']).optional(),
+      /** What-Is: фото целиком с cream-полем (зум аут). */
+      whatIsImageZoomOut: z.boolean().optional(),
 
       // ===== "What is X?" короткий вариант БЕЗ фото (emsculpt) =====
       simpleWhatIs: z
@@ -209,6 +213,8 @@ const services = defineCollection({
             headingClass: z.string().optional(),
             /** Класс размера body (+leading), vw-адаптивный для hormone. */
             bodyClass: z.string().optional(),
+            /** Фото целиком с cream-полем (зум аут). */
+            imageZoomOut: z.boolean().optional(),
             /** В каком месте шаблона показать блок.
              *  'before-common-signs' — между whatIs и commonSigns
              *  'after-roadmap'        — после roadmap, перед whyTrust

@@ -39,6 +39,10 @@ interface Props {
   bodyClass?: string;
   /** На мобайле показать сначала текст, потом фото (Default — фото сверху). */
   mobileTextFirst?: boolean;
+  /** Сторона фото на десктопе: 'left' (default) или 'right'. */
+  imageSide?: 'left' | 'right';
+  /** Зум-аут: показать фото целиком (object-contain) с небольшим cream-полем. */
+  imageZoomOut?: boolean;
 }
 
 const {
@@ -49,10 +53,16 @@ const {
   headingClass = 'text-h1 leading-tight',
   bodyClass = 'text-body-lg leading-relaxed',
   mobileTextFirst = false,
+  imageSide = 'left',
+  imageZoomOut = false,
 } = Astro.props;
-// На мобайле меняем порядок колонок (текст сверху), на lg — как в DOM (фото слева).
-const imgOrder = mobileTextFirst ? 'max-lg:order-2' : '';
-const textOrder = mobileTextFirst ? 'max-lg:order-1' : '';
+// Порядок колонок. imageSide='right' → текст слева/сверху (order-1), фото справа/снизу
+// (order-2) на всех ширинах. imageSide='left' (default) → DOM-порядок (фото слева),
+// на мобайле опционально текст сверху через mobileTextFirst.
+const imgOrder = imageSide === 'right' ? 'order-2' : (mobileTextFirst ? 'max-lg:order-2' : '');
+const textOrder = imageSide === 'right' ? 'order-1' : (mobileTextFirst ? 'max-lg:order-1' : '');
+const imgFit = imageZoomOut ? 'object-contain p-[6%]' : 'object-cover';
+const imgBg = imageZoomOut ? 'bg-cream' : '';
 const lines = title.split('\n');
 // Разбиваем body на абзацы
 const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
@@ -64,11 +74,11 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
 >
   <div class={`mx-auto max-w-design grid grid-cols-1 ${gridColsClass} ${align} ${sectionHeight}`}>
     {/* Левая колонка — фото на всю высоту секции */}
-    <div class={`relative h-[320px] md:h-[480px] lg:h-full lg:min-h-0 ${imgOrder}`}>
+    <div class={`relative h-[320px] md:h-[480px] lg:h-full lg:min-h-0 ${imgOrder} ${imgBg}`}>
       <img
         src={image}
         alt={imageAlt}
-        class="block h-full w-full object-cover"
+        class={`block h-full w-full ${imgFit}`}
         loading="lazy"
       />
     </div>

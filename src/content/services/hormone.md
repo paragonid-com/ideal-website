@@ -19,11 +19,13 @@ whatIsImageAlt: "Bioidentical hormone vials and pellets — Ideal Medical clinic
 # поэтому высота блока = 44% ширины → aspect 100/44. Фото уменьшается по высоте
 # и показывается целиком (зум аут). Текст не выходит за нижнюю границу фото.
 whatIsHeight: "lg:aspect-[100/44]"
-whatIsGridCols: "lg:grid-cols-[44fr_56fr]"
+whatIsGridCols: "lg:grid-cols-[56fr_44fr]"
 whatIsAlign: "items-stretch"
-whatIsMobileTextFirst: true
+whatIsMobileTextFirst: false
+whatIsImageSide: "right"
+whatIsImageZoomOut: true
 whatIsHeadingClass: "text-[clamp(24px,3.23vw,62px)] leading-[1.05]"
-whatIsBodyClass: "text-[clamp(14px,1.09vw,21px)] leading-[1.2]"
+whatIsBodyClass: "text-[clamp(14px,1.09vw,21px)] leading-[1.5]"
 whatIsBody: |
   You have probably heard about hormone optimization from friends or your own research, and now you are asking the practical question: what is Bioidentical Hormone Replacement Therapy (BHRT), and would it actually help me? BHRT uses plant-derived hormones with the same molecular structure as the ones your body produces — estradiol, estriol, progesterone, and testosterone — to correct a documented hormonal imbalance.
 
@@ -37,7 +39,7 @@ textWithPhotoBlocks:
     body: "Most people do not arrive because of one dramatic symptom. They arrive because energy, focus, sleep, and body composition have all drifted in the wrong direction at once, and willpower is no longer closing the gap. Rather than treating each complaint in isolation, we look at the endocrine and metabolic systems together and identify what is actually driving the decline — then we use hormone optimization to address the cause, with your follow-up labs telling us whether the plan is working."
     image: "/assets/images/services/hormone/reclaiming-yourself.webp"
     imageAlt: "Man considering hormone optimization journey"
-    imageSide: "right"
+    imageSide: "left"
     position: "before-common-signs"
     star: true
     # Фото квадратное (50% ширины → высота блока = ширине фото), зум аут;
@@ -45,7 +47,8 @@ textWithPhotoBlocks:
     sectionHeight: "lg:aspect-[2/1]"
     align: "items-stretch"
     headingClass: "text-[clamp(24px,3.23vw,62px)] leading-[1.05]"
-    bodyClass: "text-[clamp(14px,1.09vw,21px)] leading-[1.2]"
+    bodyClass: "text-[clamp(14px,1.09vw,21px)] leading-[1.5]"
+    imageZoomOut: true
 
 # === Common Signs grid — узлы Figma 1:3236, 1:3305, 1:3316, 1:3345.
 commonSigns:

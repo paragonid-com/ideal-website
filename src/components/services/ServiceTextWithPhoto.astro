@@ -54,6 +54,8 @@ interface Props {
   headingClass?: string;
   /** Класс размера body (+ leading). Default `text-body-lg leading-relaxed`. */
   bodyClass?: string;
+  /** Зум-аут: фото целиком (object-contain) с небольшим cream-полем. */
+  imageZoomOut?: boolean;
 }
 
 const {
@@ -70,7 +72,10 @@ const {
   align = 'items-center',
   headingClass = 'text-h1 leading-tight',
   bodyClass = 'text-body-lg leading-relaxed',
+  imageZoomOut = false,
 } = Astro.props;
+const imgFit = imageZoomOut ? 'object-contain p-[6%]' : 'object-cover';
+const imgBg = imageZoomOut ? 'bg-cream' : '';
 const titleLines = title.split('\n');
 const paragraphs = body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
 const tailParas = (tail ?? '').split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
@@ -127,11 +132,11 @@ const imageOrderClass = imageSide === 'left' ? 'lg:order-1' : 'lg:order-2';
     </div>
 
     {/* Фото */}
-    <div class={`relative h-full min-h-[600px] lg:min-h-0 ${imageOrderClass}`}>
+    <div class={`relative h-full min-h-[600px] lg:min-h-0 ${imageOrderClass} ${imgBg}`}>
       <img
         src={image}
         alt={imageAlt}
-        class="block h-full w-full object-cover"
+        class={`block h-full w-full ${imgFit}`}
         loading="lazy"
       />
     </div>
