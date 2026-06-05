@@ -38,7 +38,7 @@ categoriesGrids:
         image: "/assets/images/services/emsculpt/applicator-large.webp"
         imageAlt: "Large Emsculpt Neo applicator"
       - title: "EDGE APPLICATOR"
-        body: "Targets large body areas such as abdomen, buttock, thighs and back."
+        body: "Treats four fat spots and oblique muscles in 30 minutes."
         image: "/assets/images/services/emsculpt/applicator-edge.webp"
         imageAlt: "Edge Emsculpt Neo applicator"
       - title: "SMALL APPLICATOR"
@@ -46,10 +46,9 @@ categoriesGrids:
         image: "/assets/images/services/emsculpt/applicator-small.webp"
         imageAlt: "Small Emsculpt Neo applicator"
 
-# === YouTube видео — placeholder, ждём URL от клиента.
-# Узел Figma 1:5511 Image 83 — реальный постер кадра видео (с baked YouTube UI).
+# === YouTube видео — узел Figma 1:5511 (постер). URL клиента (live idealmedical.com/emsculpt-neo).
 videoEmbed:
-  url: ""
+  url: "https://youtu.be/emRdWYIOuYc"
   posterImage: "/assets/images/services/emsculpt/video-poster.webp"
   posterAlt: "Emsculpt Neo treatment video"
 
@@ -63,13 +62,26 @@ extendedDescription:
 
     Perfect for men and women of all fitness levels, Emsculpt Neo helps you achieve a stronger, leaner, and more confident body—quickly, safely, and effectively.
 
-# === Before / After — узел Figma 1:5559 Image 90.
-# Один композит-кадр: BEFORE | AFTER EMSCULPT NEO + caption «3 months after…»
-# уже впечатаны в саму картинку → режим `image` (без накладных бейджей/caption).
+# === Before / After — карусель (Figma 1:5559 + стрелки 1:5505/1:5506).
+# Источник: live idealmedical.com/emsculpt-neo, секция «Real Patients Real Results» —
+# официальные BTL composite-карточки (BEFORE | AFTER + caption впечатаны в картинку),
+# поэтому режим `image`. Горизонтальный scroll-snap + gold-стрелки (carousel: true).
 beforeAfter:
+  title: "REAL PATIENTS, REAL RESULTS"
+  carousel: true
   items:
-    - image: "/assets/images/services/emsculpt/before-after.webp"
-      alt: "Patient abdomen before and after Emsculpt Neo — 3 months after last treatment, courtesy of Suzanne Kilmer, M.D."
+    - image: "/assets/images/services/emsculpt/ba-female-abdomen.webp"
+      alt: "Female abdomen before and after Emsculpt Neo — courtesy of Barry DiBernardo, M.D."
+    - image: "/assets/images/services/emsculpt/ba-male-abdomen.webp"
+      alt: "Male abdomen before and after Emsculpt Neo — courtesy of David Kent, M.D."
+    - image: "/assets/images/services/emsculpt/ba-female-buttock.webp"
+      alt: "Female buttock before and after Emsculpt Neo — courtesy of Bruce E. Katz, M.D."
+    - image: "/assets/images/services/emsculpt/ba-male-buttock.webp"
+      alt: "Male buttock before and after Emsculpt Neo — courtesy of JD McCoy, N.M.D."
+    - image: "/assets/images/services/emsculpt/ba-female-arms.webp"
+      alt: "Female arms before and after Emsculpt Neo — courtesy of Robert Weiss, M.D."
+    - image: "/assets/images/services/emsculpt/ba-female-thighs.webp"
+      alt: "Female outer thighs before and after Emsculpt Neo"
 
 # === FAQ — Lorem ipsum placeholder в Figma (узлы 1:5493-1:5497)
 faq:
