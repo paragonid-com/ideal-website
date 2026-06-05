@@ -128,6 +128,13 @@ const services = defineCollection({
       /** Если задан (напр. `lg:aspect-[923/939]`) — фото держит пропорцию на lg
        *  вместо растягивания; с align=items-center даёт cream-поля сверху/снизу. */
       whatIsImageAspect: z.string().optional(),
+      /** На lg фото-колонка получает левый отступ 7.55% (как у текста), т.е. фото
+       *  не встык к краю, а внутри контент-поля (emsella, Figma 1:5401 x=147).
+       *  На мобайле без эффекта (фото остаётся как было). Default false. */
+      whatIsImagePadded: z.boolean().optional(),
+      /** На lg у фото скруглённые углы (emsella — rounded-rectangle 1:5401).
+       *  На мобайле без эффекта. Default false. */
+      whatIsImageRounded: z.boolean().optional(),
 
       // ===== "What is X?" короткий вариант БЕЗ фото (emsculpt) =====
       simpleWhatIs: z
@@ -302,12 +309,20 @@ const services = defineCollection({
           z.object({
             /** Опциональный общий заголовок над обеими колонками */
             heading: z.string().optional(),
+            /** Класс размера общего заголовка (напр. меньше text-h1 — emsella
+             *  «EMSELLA FOR SEXUAL WELLNESS» ~36px, Figma 1:5162). Default в
+             *  компоненте — text-h1 (другие страницы не затронуты). */
+            headingClass: z.string().optional(),
             background: z.enum(['cream', 'gold']).default('cream'),
             position: z.enum(['after-whatis', 'after-categories-grid']),
             left: z.object({
               title: z.string(),
               body: z.string().optional(),
               bullets: z.array(z.string()).optional(),
+              /** Стиль буллетов: 'dash' (— маркер, default) или 'plain'
+               *  (без маркера, лейбл до «:» жирным — emsella What to Expect,
+               *  Figma 1:5102). */
+              bulletStyle: z.enum(['dash', 'plain']).optional(),
               tail: z.string().optional(),
               /** Опц. фото над колонкой (emsella Sexual Wellness) */
               image: z.string().optional(),
@@ -317,6 +332,7 @@ const services = defineCollection({
               title: z.string(),
               body: z.string().optional(),
               bullets: z.array(z.string()).optional(),
+              bulletStyle: z.enum(['dash', 'plain']).optional(),
               tail: z.string().optional(),
               image: z.string().optional(),
               imageAlt: z.string().optional(),
@@ -392,8 +408,15 @@ const services = defineCollection({
           z.object({
             /** Опциональный заголовок над сеткой ("WHAT EMSCULPT NEO IS FOR" / "CUSTOMIZE YOUR TREATMENT") */
             title: z.string().optional(),
+            /** Класс заголовка сетки (размер+выравнивание). Default в компоненте —
+             *  `text-h1 leading-tight text-center` (emsculpt). emsella передаёт
+             *  меньший + text-left (Figma 1:5161 ~36px слева). */
+            titleClass: z.string().optional(),
             /** Фон: cream (default) или gold */
             background: z.enum(['cream', 'gold']).default('cream'),
+            /** Класс пропорции фото-плашек. Default в компоненте — `aspect-[409/216]`
+             *  (emsculpt landscape). emsella передаёт `aspect-square` (Figma 488×488). */
+            imageAspectClass: z.string().optional(),
             items: z
               .array(
                 z.object({
@@ -431,6 +454,11 @@ const services = defineCollection({
            *  с началом/концом секции (emsculpt, Figma 1:5511). Default false —
            *  прочие страницы (emsella/exomind/emface) сохраняют py-12. */
           flush: z.boolean().default(false),
+          /** Видео край-в-край по всей ширине вьюпорта на ВСЕХ размерах (без
+           *  боковых полей и скругления, и на десктопе тоже) — emsella Figma
+           *  1:5400 (x=0, w=1921). Default false → прежнее поведение (контент-
+           *  ширина с полями на десктопе). */
+          fullBleed: z.boolean().default(false),
         })
         .optional(),
 

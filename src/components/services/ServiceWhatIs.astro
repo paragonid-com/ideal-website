@@ -47,6 +47,13 @@ interface Props {
    *  на lg вместо растягивания на всю высоту. При align=items-center это даёт
    *  cream-поля сверху/снизу фото, как в Figma (узел 1:1545 923×939 в секции 1099). */
   imageAspectClass?: string;
+  /** На lg фото-колонка получает левый отступ 7.55% (фото внутри контент-поля,
+   *  а не встык к краю — emsella, Figma 1:5401 x=147). В этом режиме aspect
+   *  применяется к самому <img>, чтобы padding не искажал пропорцию. Default false. */
+  imagePadded?: boolean;
+  /** На lg у фото скруглённые углы (emsella rounded-rectangle 1:5401).
+   *  На мобайле фото остаётся full-bleed без скругления. Default false. */
+  imageRounded?: boolean;
 }
 
 const {
@@ -60,6 +67,8 @@ const {
   imageSide = 'left',
   imageZoomOut = false,
   imageAspectClass = '',
+  imagePadded = false,
+  imageRounded = false,
 } = Astro.props;
 // Порядок колонок. imageSide='right' → текст слева/сверху (order-1), фото справа/снизу
 // (order-2) на всех ширинах. imageSide='left' (default) → DOM-порядок (фото слева),
@@ -73,9 +82,21 @@ const imgBg = imageZoomOut ? 'lg:bg-cream' : '';
 // В aspect-режиме (imageAspectClass задан) фото держит свою пропорцию на lg —
 // при align=items-center это создаёт cream-поля сверху/снизу (как в Figma).
 // Иначе — прежнее поведение (lg:h-full на всю высоту секции).
-const imgColLgClass = imageAspectClass
+// imagePadded (emsella): aspect переносится на сам <img> (см. ниже), а колонка
+// получает левый отступ 7.55% и авто-высоту → padding не искажает пропорцию.
+const imgPadCls = imagePadded ? 'lg:pl-[7.55%]' : '';
+const imgColLgClass = imagePadded
+  ? 'lg:h-auto'
+  : imageAspectClass
+    ? `lg:h-auto ${imageAspectClass}`
+    : 'lg:h-full lg:min-h-0';
+// Высота/пропорция самого <img>: на мобайле всегда h-full (колонка задаёт высоту);
+// на lg — при imagePadded переключаемся на h-auto + aspect (фото портретной
+// карточкой), иначе h-full. Скругление — только на lg (мобайл full-bleed sharp).
+const imgLgSize = imagePadded
   ? `lg:h-auto ${imageAspectClass}`
-  : 'lg:h-full lg:min-h-0';
+  : 'lg:h-full';
+const imgRoundCls = imageRounded ? 'lg:rounded-[20px]' : '';
 const lines = title.split('\n');
 // Разбиваем body на абзацы
 const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
@@ -87,11 +108,11 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
 >
   <div class={`mx-auto max-w-design grid grid-cols-1 ${gridColsClass} ${align} ${sectionHeight}`}>
     {/* Левая колонка — фото на всю высоту секции */}
-    <div class={`relative h-[320px] md:h-[480px] ${imgColLgClass} ${imgOrder} ${imgBg}`}>
+    <div class={`relative h-[320px] md:h-[480px] ${imgColLgClass} ${imgOrder} ${imgBg} ${imgPadCls}`}>
       <img
         src={image}
         alt={imageAlt}
-        class={`block h-full w-full ${imgFit}`}
+        class={`block h-full w-full ${imgLgSize} ${imgFit} ${imgRoundCls}`}
         loading="lazy"
       />
     </div>

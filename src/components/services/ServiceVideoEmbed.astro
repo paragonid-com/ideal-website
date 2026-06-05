@@ -28,9 +28,12 @@ interface Props {
    *  padding → iframe edge-to-edge на всю ширину вьюпорта (square corners).
    *  Default false — прежнее поведение (py-12, padded на всех ширинах). */
   flush?: boolean;
+  /** Видео край-в-край на ВСЕХ размерах (десктоп тоже): без max-w-design, без
+   *  бокового padding и скругления (emsella, Figma 1:5400 x=0 w=1921). Default false. */
+  fullBleed?: boolean;
 }
 
-const { url, posterImage, posterAlt = 'Video preview', flush = false } = Astro.props;
+const { url, posterImage, posterAlt = 'Video preview', flush = false, fullBleed = false } = Astro.props;
 
 /** Извлекаем YouTube video ID из URL. Поддерживает все основные форматы:
  *  - https://www.youtube.com/watch?v=XXXX
@@ -57,12 +60,16 @@ const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}?rel=0` : nu
 ---
 
 <section
-  class={`w-full bg-cream ${flush ? '' : 'py-12'}`}
+  class={`w-full bg-cream ${(flush || fullBleed) ? '' : 'py-12'}`}
   data-section="service-video-embed"
 >
-  <div class="mx-auto max-w-design px-[7.55%]">
+  <div class={fullBleed ? 'w-full' : 'mx-auto max-w-design px-[7.55%]'}>
     <div
-      class={`relative aspect-video w-full overflow-hidden rounded-md bg-gold/30 ${flush ? 'max-lg:w-auto max-lg:rounded-none max-lg:-mx-[7.55vw]' : ''}`}
+      class={`relative aspect-video w-full overflow-hidden bg-gold/30 ${
+        fullBleed
+          ? ''
+          : `rounded-md ${flush ? 'max-lg:w-auto max-lg:rounded-none max-lg:-mx-[7.55vw]' : ''}`
+      }`}
       data-todo={!url ? 'video-from-client' : undefined}
     >
       {embedUrl ? (

@@ -17,6 +17,8 @@ interface ColumnData {
   title: string;
   body?: string;
   bullets?: string[];
+  /** 'dash' (— маркер, default) или 'plain' (без маркера, лейбл до «:» жирным). */
+  bulletStyle?: 'dash' | 'plain';
   tail?: string;
   /** Опц. фото над колонкой (emsella Sexual Wellness) */
   image?: string;
@@ -28,11 +30,21 @@ interface Props {
   right: ColumnData;
   /** Опц. общий заголовок над обеими колонками (emsella Sexual Wellness) */
   heading?: string;
+  /** Класс размера общего заголовка. Default `text-h1 leading-tight`.
+   *  emsella «EMSELLA FOR SEXUAL WELLNESS» — меньше (~36px, Figma 1:5162). */
+  headingClass?: string;
   /** Фон секции: cream (default) или gold */
   background?: 'cream' | 'gold';
 }
 
-const { left, right, heading, background = 'cream' } = Astro.props;
+const { left, right, heading, headingClass = 'text-h1 leading-tight', background = 'cream' } = Astro.props;
+
+/** Для bulletStyle='plain': лейбл до первого «:» рендерим жирным. */
+function splitLabel(b: string): { label: string | null; rest: string } {
+  const idx = b.indexOf(':');
+  if (idx === -1) return { label: null, rest: b };
+  return { label: b.slice(0, idx + 1), rest: b.slice(idx + 1).replace(/^\s+/, '') };
+}
 
 const bgStyle =
   background === 'gold'
@@ -56,7 +68,7 @@ const rightTail = paras(right.tail);
 >
   <div class="mx-auto max-w-design px-[7.55%]">
     {heading && (
-      <h2 class="font-heading text-h1 uppercase text-gold leading-tight mb-12">
+      <h2 class={`font-heading uppercase text-gold mb-12 ${headingClass}`}>
         {heading}
       </h2>
     )}
@@ -94,14 +106,25 @@ const rightTail = paras(right.tail);
           </p>
         ))}
         {left.bullets && left.bullets.length > 0 && (
-          <ul class="mt-4 space-y-3">
-            {left.bullets.map((b) => (
-              <li class="flex gap-3">
-                <span aria-hidden="true" class="select-none flex-shrink-0">—</span>
-                <span>{b}</span>
-              </li>
-            ))}
-          </ul>
+          left.bulletStyle === 'plain' ? (
+            <div class="mt-4 space-y-4">
+              {left.bullets.map((b) => {
+                const { label, rest } = splitLabel(b);
+                return (
+                  <p>{label && <strong class="font-semibold">{label} </strong>}{rest}</p>
+                );
+              })}
+            </div>
+          ) : (
+            <ul class="mt-4 space-y-3">
+              {left.bullets.map((b) => (
+                <li class="flex gap-3">
+                  <span aria-hidden="true" class="select-none flex-shrink-0">—</span>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          )
         )}
         {leftTail.map((p) => <p>{p}</p>)}
       </div>
@@ -140,14 +163,25 @@ const rightTail = paras(right.tail);
           </p>
         ))}
         {right.bullets && right.bullets.length > 0 && (
-          <ul class="mt-4 space-y-3">
-            {right.bullets.map((b) => (
-              <li class="flex gap-3">
-                <span aria-hidden="true" class="select-none flex-shrink-0">—</span>
-                <span>{b}</span>
-              </li>
-            ))}
-          </ul>
+          right.bulletStyle === 'plain' ? (
+            <div class="mt-4 space-y-4">
+              {right.bullets.map((b) => {
+                const { label, rest } = splitLabel(b);
+                return (
+                  <p>{label && <strong class="font-semibold">{label} </strong>}{rest}</p>
+                );
+              })}
+            </div>
+          ) : (
+            <ul class="mt-4 space-y-3">
+              {right.bullets.map((b) => (
+                <li class="flex gap-3">
+                  <span aria-hidden="true" class="select-none flex-shrink-0">—</span>
+                  <span>{b}</span>
+                </li>
+              ))}
+            </ul>
+          )
         )}
         {rightTail.map((p) => <p>{p}</p>)}
       </div>

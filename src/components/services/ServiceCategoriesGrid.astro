@@ -41,9 +41,21 @@ interface Props {
   title?: string;
   background?: 'cream' | 'gold';
   items: CategoryItem[];
+  /** Класс пропорции фото-плашек. Default `aspect-[409/216]` (emsculpt landscape).
+   *  emsella передаёт `aspect-square` (Figma incontinence 488×488). */
+  imageAspectClass?: string;
+  /** Класс заголовка сетки. Default `text-h1 leading-tight text-center` (emsculpt).
+   *  emsella — меньший + text-left (Figma 1:5161). */
+  titleClass?: string;
 }
 
-const { title, background = 'cream', items } = Astro.props;
+const {
+  title,
+  background = 'cream',
+  items,
+  imageAspectClass = 'aspect-[409/216]',
+  titleClass = 'text-h1 leading-tight text-center',
+} = Astro.props;
 
 const bgStyle =
   background === 'gold'
@@ -63,7 +75,7 @@ const colsClass =
 >
   <div class="mx-auto max-w-design px-[7.55%]">
     {title && (
-      <h2 class="font-heading text-h1 uppercase text-gold leading-tight text-center">
+      <h2 class={`font-heading uppercase text-gold ${titleClass}`}>
         {title}
       </h2>
     )}
@@ -77,8 +89,8 @@ const colsClass =
     >
       {items.map((item) => (
         <li class="flex flex-col">
-          {/* Фото 16:8 примерно (409×216 в Figma) — относительные пропорции */}
-          <div class="aspect-[409/216] w-full overflow-hidden rounded-md">
+          {/* Пропорция фото — opt-in (default 409/216 landscape, emsella aspect-square) */}
+          <div class={`${imageAspectClass} w-full overflow-hidden rounded-md`}>
             <img
               src={item.image}
               alt={item.imageAlt}

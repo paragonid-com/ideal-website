@@ -203,6 +203,8 @@ const goldBanner = normalizeBanner(data.goldBanner);
         imageSide={data.whatIsImageSide}
         imageZoomOut={data.whatIsImageZoomOut}
         imageAspectClass={data.whatIsImageAspect}
+        imagePadded={data.whatIsImagePadded}
+        imageRounded={data.whatIsImageRounded}
       />
       {/* CTA после what-is — кроме emsella, где следом идёт two-col
          'after-whatis' со своим завершающим CTA (иначе двойной баннер). */}
@@ -234,6 +236,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
     <>
       <ServiceTwoColumnText
         heading={s.heading}
+        headingClass={s.headingClass}
         background={s.background}
         left={s.left}
         right={s.right}
@@ -301,8 +304,10 @@ const goldBanner = normalizeBanner(data.goldBanner);
   {firstCategoriesGrid && (
     <ServiceCategoriesGrid
       title={firstCategoriesGrid.title}
+      titleClass={firstCategoriesGrid.titleClass}
       background={firstCategoriesGrid.background}
       items={firstCategoriesGrid.items}
+      imageAspectClass={firstCategoriesGrid.imageAspectClass}
     />
   )}
 
@@ -314,6 +319,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       posterImage={data.videoEmbed.posterImage}
       posterAlt={data.videoEmbed.posterAlt}
       flush={data.videoEmbed.flush}
+      fullBleed={data.videoEmbed.fullBleed}
     />
   )}
 
@@ -326,6 +332,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
     <>
       <ServiceTwoColumnText
         heading={s.heading}
+        headingClass={s.headingClass}
         background={s.background}
         left={s.left}
         right={s.right}
@@ -341,6 +348,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       posterImage={data.videoEmbed.posterImage}
       posterAlt={data.videoEmbed.posterAlt}
       flush={data.videoEmbed.flush}
+      fullBleed={data.videoEmbed.fullBleed}
     />
   )}
 
@@ -485,8 +493,10 @@ const goldBanner = normalizeBanner(data.goldBanner);
   {secondCategoriesGrid && (
     <ServiceCategoriesGrid
       title={secondCategoriesGrid.title}
+      titleClass={secondCategoriesGrid.titleClass}
       background={secondCategoriesGrid.background}
       items={secondCategoriesGrid.items}
+      imageAspectClass={secondCategoriesGrid.imageAspectClass}
     />
   )}
 
