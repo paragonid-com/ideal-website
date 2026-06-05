@@ -454,6 +454,9 @@ const services = defineCollection({
            *    'late' (default) — emsculpt: после secondGrid (текущее поведение)
            *    'after-video-1'  — emface: сразу после videoEmbed, перед treatments-grid */
           position: z.enum(['late', 'after-video-1']).default('late'),
+          /** Горизонтальная карусель (scroll-snap + стрелки) вместо вертикального
+           *  стека. emsculpt: набор live BTL BEFORE|AFTER композит-карточек. */
+          carousel: z.boolean().optional(),
           items: z
             .array(
               z.object({
