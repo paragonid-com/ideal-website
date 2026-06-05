@@ -478,6 +478,9 @@ const services = defineCollection({
           position: z
             .enum(['before-second-grid', 'after-second-grid'])
             .default('before-second-grid'),
+          /** Те же опции, что у videoEmbed (exomind video #2 — full-bleed). */
+          flush: z.boolean().default(false),
+          fullBleed: z.boolean().default(false),
         })
         .optional(),
 

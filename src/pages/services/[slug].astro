@@ -368,8 +368,12 @@ const goldBanner = normalizeBanner(data.goldBanner);
       text={midGoldBanner1.text}
       ctaLabel={midGoldBanner1.ctaLabel}
       ctaHref={midGoldBanner1.ctaHref}
+      variant="cream"
     />
   )}
+
+  {/* Straddle CTA на шве gold-banner-1 / device image (exomind, Figma 1:3161) */}
+  {midGoldBanner1 && <ServiceCTABand overlap={data.overlapCtas} />}
 
   {/* Full-width image после первого gold banner (exomind: фото устройства) */}
   {fullWidthAfterGoldBanner1.map((b) => (
@@ -414,6 +418,8 @@ const goldBanner = normalizeBanner(data.goldBanner);
       url={videoEmbed2BeforeGrid.url}
       posterImage={videoEmbed2BeforeGrid.posterImage}
       posterAlt={videoEmbed2BeforeGrid.posterAlt}
+      flush={videoEmbed2BeforeGrid.flush}
+      fullBleed={videoEmbed2BeforeGrid.fullBleed}
     />
   )}
 
@@ -426,8 +432,12 @@ const goldBanner = normalizeBanner(data.goldBanner);
       text={midGoldBanner2.text}
       ctaLabel={midGoldBanner2.ctaLabel}
       ctaHref={midGoldBanner2.ctaHref}
+      variant="cream"
     />
   )}
+
+  {/* Straddle CTA на шве gold-banner-2 / FAQ (exomind, Figma 1:2910) */}
+  {midGoldBanner2 && <ServiceCTABand overlap={data.overlapCtas} />}
 
   {/* Extended description (emsculpt "MORE FOR LESS IN BODY SHAPING") */}
   {data.extendedDescription && (
@@ -507,6 +517,8 @@ const goldBanner = normalizeBanner(data.goldBanner);
       url={videoEmbed2AfterGrid.url}
       posterImage={videoEmbed2AfterGrid.posterImage}
       posterAlt={videoEmbed2AfterGrid.posterAlt}
+      flush={videoEmbed2AfterGrid.flush}
+      fullBleed={videoEmbed2AfterGrid.fullBleed}
     />
   )}
 

@@ -1,52 +1,51 @@
 ---
 /**
- * ServiceGoldBanner — full-width баннер с pull-quote на gold-фоне.
+ * ServiceGoldBanner — full-width баннер с заголовком (pull-quote).
  *
- * Используется на:
- *  - hormone (узлы Figma 1:3245 Rectangle 102 + 1:3467 text):
- *      Фон gold (1920×294), центрированный текст, ~38-44px font-heading.
- *  - exomind (узлы Figma 1:3155 заголовок + 1:2904 CTA-кнопка):
- *      То же + кнопка BOOK APPOINTMENT внутри/под текстом.
+ * variant='gold' (DEFAULT — прежнее поведение, байт-в-байт):
+ *   фон gold, текст cream. hormone pull-quote (1:3245/1:3467) и любые баннеры
+ *   с кремовой кнопкой-CTA.
+ * variant='cream' (exomind midGoldBanner1/2, Figma 1:3155/1:3158):
+ *   фон cream, центрированный ЗОЛОТОЙ заголовок (text-[clamp] uppercase).
+ *   CTA у exomind-баннеров рендерится ОТДЕЛЬНЫМ ServiceCTABand (#dbba5f
+ *   straddle) в [slug].astro, поэтому здесь ctaLabel для cream обычно не задаётся.
  *
- * Контент-модель:
- *   - text: строка (поддерживает \n для переноса) — обязательное
- *   - ctaLabel, ctaHref: опциональная кнопка под текстом
+ * Контент: text (с \n), опц. ctaLabel/ctaHref (кремовая кнопка — только gold).
  */
-
 interface Props {
   text: string;
-  /** Опционально: текст кнопки под баннером */
   ctaLabel?: string;
-  /** Опционально: куда ведёт кнопка (default — booking-виджет Boulevard) */
   ctaHref?: string;
+  /** 'gold' (default) | 'cream' (exomind — фон cream, золотой заголовок). */
+  variant?: 'gold' | 'cream';
 }
 
 const {
   text,
   ctaLabel,
   ctaHref = 'https://www.joinblvd.com/b/ideal-medical-and-wellness/widget#/visit-type',
+  variant = 'gold',
 } = Astro.props;
 const lines = text.split('\n');
+const isCream = variant === 'cream';
 ---
 
 <section
   class:list={[
-    'w-full bg-gold',
-    // hormone pull-quote (без CTA) — точная высота Figma 294px (Rect 102),
-    // текст по центру на 2 строки. exomind-баннеры (с CTA) — прежний py-20.
-    ctaLabel ? 'py-20' : 'py-14 lg:py-10 lg:min-h-[294px] lg:flex lg:items-center',
+    isCream ? 'w-full bg-cream' : 'w-full bg-gold',
+    isCream
+      ? 'py-16 lg:py-24'
+      : (ctaLabel ? 'py-20' : 'py-14 lg:py-10 lg:min-h-[294px] lg:flex lg:items-center'),
   ]}
   data-section="service-gold-banner"
 >
   <div class="mx-auto w-full max-w-design px-[4%] lg:px-[7.55%] text-center">
     <p
       class:list={[
-        'font-heading text-cream',
-        // exomind-баннеры (с CTA) — крупный h1-стиль uppercase как в Figma;
-        // hormone pull-quote (без CTA): размер масштабируется от ширины вьюпорта
-        // (3.28vw → 63px на 1920 как в Figma, узел 1:3467), чтобы строка всегда
-        // умещалась в 2 строки и НЕ переносилась в 3 на более узких экранах.
-        ctaLabel ? 'text-h1 uppercase leading-tight' : 'text-[clamp(19px,3.28vw,72px)] leading-[1.15]',
+        isCream ? 'font-heading text-gold' : 'font-heading text-cream',
+        isCream
+          ? 'text-[clamp(26px,3.23vw,62px)] uppercase leading-tight'
+          : (ctaLabel ? 'text-h1 uppercase leading-tight' : 'text-[clamp(19px,3.28vw,72px)] leading-[1.15]'),
       ]}
     >
       {lines.map((line, i) => (

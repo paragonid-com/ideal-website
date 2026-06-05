@@ -6,6 +6,15 @@ heroTitle: "ExoMind™\nin Aventura"
 heroLead: "At Ideal Medical & Wellness, we offer Exomind therapy, a cutting-edge, non-invasive treatment designed to enhance mental clarity, improve mood, and support overall brain health. Whether you're struggling with stress, brain fog, or low motivation, ExoMind provides a safe and effective way to reset and optimize your mind."
 heroImage: "/assets/images/services/exomind/hero.webp"
 heroImageAlt: "Client seated in the ExoMind treatment chair during a session"
+heroMobileStacked: true
+# In-hero BOOK NOW (Figma 1:2867). На мобайле скрываем — сразу под hero идёт
+# straddle BOOK APPOINTMENT, и на стопке кнопки дублируются.
+heroCtaLabel: "BOOK NOW"
+heroCtaHideOnMobile: true
+
+# Все CTA-band на странице — overlap/straddle (пилюля #dbba5f / текст #8d7431),
+# по центру шва между секциями, как в Figma (узлы 1:2904/3161/2907/2913/2910).
+overlapCtas: true
 
 # ---------- "What is" + "Who is a good candidate" two-column block ----------
 twoColumnText:
@@ -28,15 +37,17 @@ twoColumnText:
 
 # ---------- Video #1: "What is #EXOMIND?" educational ----------
 videoEmbed:
-  url: ""                  # TODO from client — exact YouTube URL
+  url: "https://www.youtube.com/watch?v=k4lEDTVCb0U"   # клиент: BTL «What is #EXOMIND?» explainer
   posterImage: "/assets/images/services/exomind/video-1-poster.webp"
   posterAlt: "ExoMind explainer video poster — silhouette with brain visualization"
+  # Figma 1:3142 — видео край-в-край (x=0, w=1921), как на emsella.
+  flush: true
+  fullBleed: true
 
 # ---------- Gold Banner #1: ADVANCED BRAIN WELLNESS with CTA ----------
 midGoldBanner1:
   text: "ADVANCED BRAIN WELLNESS\n& MENTAL PERFORMANCE OPTIMIZATION"
-  ctaLabel: "BOOK APPOINTMENT"
-  ctaHref: "https://www.joinblvd.com/b/ideal-medical-and-wellness/widget#/visit-type"
+  # CTA — отдельный #dbba5f straddle ServiceCTABand после баннера (Figma 1:3161).
 
 # ---------- Full-width image: TMS device close-up ----------
 fullWidthImages:
@@ -90,15 +101,17 @@ conditionsList:
 
 # ---------- Video #2: Patient testimonial ----------
 videoEmbed2:
-  url: ""                  # TODO from client — exact YouTube URL for Emily's testimonial
+  url: "https://www.youtube.com/watch?v=MDqu9rPsk2o"   # клиент: пациентский отзыв (Emily)
   posterImage: "/assets/images/services/exomind/video-2-poster.webp"
   posterAlt: "ExoMind patient testimonial video poster — Emily from New York City, NY"
+  # Figma 1:3143 — видео край-в-край (x=0, w=1921).
+  flush: true
+  fullBleed: true
 
 # ---------- Gold Banner #2: repeats the ADVANCED BRAIN WELLNESS message ----------
 midGoldBanner2:
   text: "ADVANCED BRAIN WELLNESS\n& MENTAL PERFORMANCE OPTIMIZATION"
-  ctaLabel: "BOOK APPOINTMENT"
-  ctaHref: "https://www.joinblvd.com/b/ideal-medical-and-wellness/widget#/visit-type"
+  # CTA — отдельный #dbba5f straddle ServiceCTABand после баннера (Figma 1:2910).
 
 # ---------- FAQ (placeholders — text from client pending) ----------
 faq:
