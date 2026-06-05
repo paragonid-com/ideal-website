@@ -7,10 +7,27 @@ heroLead: "Non-invasive body shaping treatment that combines radiofrequency and 
 heroImage: "/assets/images/services/emsculpt/hero.webp"
 heroImageAlt: "Patient wearing Emsculpt Neo applicator — body shaping treatment"
 
-# === Короткий "What is X?" — узел Figma 1:5512 + body 1:5533. БЕЗ фото.
-simpleWhatIs:
-  title: "EMSCULPT\nNEO™"
-  body: "Emsculpt Neo is the first and only non-invasive body shaping treatment that combines radiofrequency and high-intensity focused electromagnetic (HIFEM) technology to simultaneously burn fat and build muscle in just 30 minutes."
+# 4 кнопки BOOK APPOINTMENT в Figma стоят straddle-пилюлями ровно на швах секций
+# (узлы 1:5564 Hero/WhatIs y≈814; 1:5567 WhatIs/Grid1 y≈1815; 1:5570 ExtendedDesc/
+# Grid2 y≈4445; 1:5573 BeforeAfter/FAQ y≈6154) — как на weight-loss/hormone.
+overlapCtas: true
+
+# === "What is X?" с ЛЕВЫМ фото — узел Figma 1:5512 (заголовок) + 1:5533 (body),
+#     фото слева — узел 1:5473/1:5477 «Emsculpt-outer-thighs», слот 923×766.
+#     Секция «EMSCULPT NEO» y 814→1913 = 1099px при ширине 1920 → aspect-[1920/1099].
+#     Фото-колонка ~48% (923/1920) держит near-square пропорцию 923/766 и центрируется
+#     по высоте (items-center) → cream-поля сверху/снизу как в Figma. vw-clamp шрифты.
+whatIsTitle: "EMSCULPT\nNEO™"
+whatIsImage: "/assets/images/services/emsculpt/what-is.webp"
+whatIsImageAlt: "Practitioner performing an Emsculpt Neo body shaping treatment with the large applicator"
+whatIsHeight: "lg:aspect-[1920/1099]"
+whatIsGridCols: "lg:grid-cols-[48fr_52fr]"
+whatIsAlign: "items-center"
+whatIsImageSide: "left"
+whatIsImageAspect: "lg:aspect-[923/766]"
+whatIsHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
+whatIsBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
+whatIsBody: "Emsculpt Neo is the first and only non-invasive body shaping treatment that combines radiofrequency and high-intensity focused electromagnetic (HIFEM) technology to simultaneously burn fat and build muscle in just 30 minutes."
 
 # === Две Categories Grid:
 #   1) "WHAT EMSCULPT NEO IS FOR" (узел 1:5542) — gold backdrop (1:5484 GOLD BACK),
@@ -47,10 +64,12 @@ categoriesGrids:
         imageAlt: "Small Emsculpt Neo applicator"
 
 # === YouTube видео — узел Figma 1:5511 (постер). URL клиента (live idealmedical.com/emsculpt-neo).
+# flush: убираем вертикальный padding секции → края iframe совпадают с началом/концом секции (Figma).
 videoEmbed:
   url: "https://youtu.be/emRdWYIOuYc"
   posterImage: "/assets/images/services/emsculpt/video-poster.webp"
   posterAlt: "Emsculpt Neo treatment video"
+  flush: true
 
 # === Extended Description — узлы Figma 1:5451, 1:5454.
 extendedDescription:
