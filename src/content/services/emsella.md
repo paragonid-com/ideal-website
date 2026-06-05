@@ -12,6 +12,9 @@ heroMobileImagePosition: "object-[70%_center]"
 # В hero есть собственная кнопка BOOK NOW (Figma 1:5070, x=144 y=680), отдельно от
 # straddle-пилюли на шве hero/whatIs. href наследует централизованный bookingCta.
 heroCtaLabel: "BOOK NOW"
+# На мобайле скрываем in-hero BOOK NOW — сразу под hero идёт straddle
+# BOOK APPOINTMENT, и на стопке две кнопки дублируют друг друга.
+heroCtaHideOnMobile: true
 # Все CTA-band на странице — overlap/straddle (пилюля #dbba5f / текст #8d7431),
 # по центру шва между секциями, как в Figma (узлы 1:5163/5166/5169/5172).
 overlapCtas: true
@@ -29,7 +32,6 @@ whatIsHeight: "lg:min-h-0"
 whatIsImageSide: "left"
 whatIsImageAspect: "lg:aspect-[776/1034]"
 whatIsImagePadded: true
-whatIsImageRounded: true
 whatIsHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
 whatIsBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
 whatIsBody: |

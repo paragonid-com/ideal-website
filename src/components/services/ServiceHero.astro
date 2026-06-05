@@ -28,6 +28,10 @@ interface Props {
   ctaLabel?: string;
   /** Ссылка кнопки. Default — bookingCta.href (централизованный Boulevard-URL). */
   ctaHref?: string;
+  /** Скрыть in-hero CTA на мобайле (< lg). Нужно когда сразу после hero идёт
+   *  straddle BOOK APPOINTMENT и на стопке две кнопки дублируются (emsella).
+   *  Default false — десктоп всегда показывает кнопку. */
+  ctaHideOnMobile?: boolean;
   /** Тема фото-фона: 'light' (светлое фото, тёмный текст + cream-скрим — default,
    *  как peptide/iv/bloodwork) или 'dark' (тёмное фото, напр. regenerative pipette:
    *  светлый lead + тёмный скрим на десктоп-оверлее; gold-заголовок работает на обоих).
@@ -41,6 +45,7 @@ const {
   mobileImagePosition = 'object-center',
   ctaLabel,
   ctaHref = bookingCta.href,
+  ctaHideOnMobile = false,
   theme = 'light',
 } = Astro.props;
 const isDark = theme === 'dark';
@@ -120,7 +125,7 @@ const innerClass = mobileStacked
           href={ctaHref}
           target="_blank"
           rel="noopener noreferrer"
-          class="btn-gold mt-8 self-start min-w-[195px]"
+          class={['btn-gold mt-8 self-start min-w-[195px]', ctaHideOnMobile && 'max-lg:hidden'].filter(Boolean).join(' ')}
         >
           {ctaLabel}
         </a>

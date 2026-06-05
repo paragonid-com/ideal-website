@@ -93,6 +93,9 @@ const services = defineCollection({
       heroCtaLabel: z.string().optional(),
       /** Ссылка hero-кнопки. Если не задана — bookingCta.href (Boulevard). */
       heroCtaHref: z.string().optional(),
+      /** Скрыть in-hero CTA на мобайле (< lg) — когда сразу после hero идёт
+       *  straddle BOOK APPOINTMENT и на стопке кнопки дублируются (emsella). */
+      heroCtaHideOnMobile: z.boolean().optional(),
       /** Тема hero-фото: 'light' (default — светлое фото, тёмный текст, cream-скрим)
        *  или 'dark' (тёмное фото, напр. regenerative — светлый lead + тёмный скрим). */
       heroTheme: z.enum(['light', 'dark']).optional(),
