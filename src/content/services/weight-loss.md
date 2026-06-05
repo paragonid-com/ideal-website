@@ -13,12 +13,29 @@ heroLead: >-
   loss treatments continue to grow in popularity.
 heroImage: "/assets/images/services/weight-loss/hero.webp"
 heroImageAlt: "Cropped slim female torso illustrating healthy body composition"
+# Мобайл: фото баннером сверху, текст снизу на cream (у этого фото левая часть —
+# пустая стена, при оверлее текст лёг бы поверх торса справа → плохо читается).
+heroMobileStacked: true
+heroMobileImagePosition: "object-[60%_center]"
+
+# CTA-баны Weight Loss идут straddle-пилюлями ровно на швах секций (Figma узлы
+# 1:1685 / 1:1688 / 1:1691 — центр на y≈814 / 1913 / 3404), как на hormone.
+overlapCtas: true
 
 whatIsTitle: |
   What is Medical
   Weight Loss?
 whatIsImage: "/assets/images/services/weight-loss/what-is.webp"
 whatIsImageAlt: "Close-up of a person self-administering a weight loss injection"
+# Пропорция блока = Figma-секция (y 814→1913 = 1099 при ширине 1920). Фото слева
+# ~48% (узел 1:1545 = 923/1920), текст справа ~52% (узел 1:1500/1:1510 x=1002).
+# items-stretch → фото на всю высоту блока; vw-clamp шрифты масштабируются с блоком.
+whatIsHeight: "lg:aspect-[1920/1099]"
+whatIsGridCols: "lg:grid-cols-[48fr_52fr]"
+whatIsAlign: "items-stretch"
+whatIsImageSide: "left"
+whatIsHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
+whatIsBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
 whatIsBody: |
   Medical weight loss entails a variety of medically administered interventions to help you lose weight. The primary goal of any weight loss plan is to achieve healthy weight reduction. Additionally, improving your nutrition and exercise routines, you can optimize physical, mental, and emotional wellness to lead a more balanced lifestyle.
 
@@ -29,6 +46,9 @@ whatIsBody: |
 benefitsTitle: |
   What Are the Benefits of
   Medical Weight Loss?
+# Figma раскладка карточек — 2 сверху / 3 снизу (узлы 1:1600/1:1609 верх; 1:1603/
+# 1:1612/1:1606 низ). topRowCount: 2 → два центрированных ряда.
+benefitsTopRowCount: 2
 benefitsIntro: >-
   The main benefit of medical weight loss is weight loss, especially if getting
   to your ideal weight has been challenging. However, medical weight loss
@@ -84,6 +104,18 @@ whoForTitle: |
   Weight Loss For?
 whoForImage: "/assets/images/services/weight-loss/who-is-for.webp"
 whoForImageAlt: "Person consulting with medical professional about weight loss program"
+# Пропорция блока = Figma-секция (y 3404→4397 = 993 при ширине 1920, aspect ≈1.93).
+# Высоту задаёт ФОТО: whoForImageAspect lg:aspect-[996/993] (узел 1:1647 = 996×993,
+# near-square) — object-cover кропит портрет в квадрат, и это надёжно держит
+# пропорцию на любой ширине (текст короче фото). items-center центрирует текст
+# по высоте фото; vw-clamp шрифты. whoForHeight '' — без min-h/aspect на гриде.
+whoForHeight: ""
+whoForGridCols: "lg:grid-cols-[48fr_52fr]"
+whoForAlign: "items-center"
+whoForHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
+whoForBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
+whoForImageMinH: ""
+whoForImageAspect: "lg:aspect-[996/993]"
 whoForLead: |
   Medical weight loss is best for those who are serious about losing weight and getting healthy. It may be right for you if you struggle with losing weight.
 
