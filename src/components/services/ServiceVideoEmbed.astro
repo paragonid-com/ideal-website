@@ -24,7 +24,9 @@ interface Props {
   posterImage?: string;
   posterAlt?: string;
   /** Убрать вертикальный padding (py-12) → края iframe вплотную к краям секции
-   *  (emsculpt, Figma 1:5511). Default false — прежнее поведение (py-12). */
+   *  (emsculpt, Figma 1:5511). На мобайле (<lg) дополнительно убирает горизонтальный
+   *  padding → iframe edge-to-edge на всю ширину вьюпорта (square corners).
+   *  Default false — прежнее поведение (py-12, padded на всех ширинах). */
   flush?: boolean;
 }
 
@@ -60,7 +62,7 @@ const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}?rel=0` : nu
 >
   <div class="mx-auto max-w-design px-[7.55%]">
     <div
-      class="relative aspect-video w-full overflow-hidden rounded-md bg-gold/30"
+      class={`relative aspect-video w-full overflow-hidden rounded-md bg-gold/30 ${flush ? 'max-lg:w-auto max-lg:rounded-none max-lg:-mx-[7.55vw]' : ''}`}
       data-todo={!url ? 'video-from-client' : undefined}
     >
       {embedUrl ? (
