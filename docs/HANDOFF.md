@@ -1,33 +1,75 @@
-# HANDOFF — состояние проекта на конец сессии «выравнивание главной по Figma»
+# HANDOFF — состояние проекта на конец сессии «emsculpt: реальное фото + мобильный edge-to-edge»
 
 Этот документ — точка входа для **следующей сессии работы с Claude**.
 Прочитав его, новая сессия сможет продолжить работу без необходимости
 переспрашивать решения, которые уже приняты.
 
-> **ПОСЛЕДНЯЯ СЕССИЯ ЗАВЕРШЕНА (Сессия 19, 05.06.26): страница `weight-loss` доведена до Figma 1:1 — desktop + mobile — + раунд правок клиента.**
-> Вторая страница, доведённая по ПЛЕЙБУКУ (после `hormone`). Сделаны переиспользуемые
-> opt-in пропсы в общих компонентах (НЕ ломают другие страницы): straddle-CTA на швах
-> (`overlapCtas`), Benefits «2 сверху / 3 снизу» (`benefitsTopRowCount`), Who-For
-> раскладка + **фото-aspect** (`whoForImageAspect`), What-Is **фото-aspect**
-> (`whatIsImageAspect`). Раунд правок клиента: **THE RESULTS** — золотой фон исправлен
-> (общий `ServiceResults`, теперь = золото Benefits, по реальной текстуре Figma);
-> **What is …?** — фото уменьшено до Figma-пропорции (923×939) с cream-полями сверху/снизу.
-> Подробности — раздел **«Сессия 19»** ниже.
-> Эталон-предшественник (Сессия 18): `hormone` доведён до Figma 1:1 (desktop+mobile).
-> Сессия 17: данные клиники (Suite 345 везде, часы, соцсети, Cherry Financing, нейминг
-> Regenerative). Сессии 16/13/14: десктоп-навигация + мобильный адаптив + drill-down меню.
+> **ПОСЛЕДНЯЯ СЕССИЯ ЗАВЕРШЕНА (Сессия 20, 05.06.26): страница `emsculpt` — раунд полировки.**
+> Секция 1 «EMSCULPT NEO»: вставлено реальное фото (BTL outer-thighs, прислал клиент;
+> `1846×1532` = ровно 2× слота `923×766`, кроп не нужен), раскладка перевёрнута на
+> **текст-слева / фото-справа** (`whatIsImageSide: "right"`, как у hormone — `ServiceWhatIs` не трогали).
+> Before/After на мобайле — **edge-to-edge** карусель (стрелки скрыты, автопрокрутка 3.5с с петлёй +
+> нативный свайп; десктоп без изменений). YouTube на мобайле — **edge-to-edge** (привязано к пропу
+> `flush`, поэтому только emsculpt; остальные видео-страницы не тронуты). Текст секции 1 уже совпадал
+> с Figma дословно — не меняли. Подробности — раздел **«Сессия 20»** ниже.
+> Эталоны Figma 1:1 (desktop+mobile): `hormone` (Сессия 18), `weight-loss` (Сессия 19).
 >
-> `origin/main` = **`1e6bd30`** (Сессия 19, раунд 1: opt-in пропсы + weight-loss Figma 1:1
-> — применены/запушены Юрием). **Раунд 2 (правки клиента: Results gold + What-Is фото) и
-> этот HANDOFF — патчи отданы, но ещё НЕ запушены на момент написания** → перед стартом
-> сделай `git fetch` и сверь реальный `origin/main` (см. «⚠️ Синхронизация с origin» в промпте).
+> `origin/main` = **`60e9200`** (три патча emsculpt этой сессии — реальное фото+флип, before/after
+> mobile, video mobile — **применены и запушены Юрием**; проверено `git ls-remote`). Этот HANDOFF —
+> отдан патчом отдельно. Перед стартом всё равно сделай `git ls-remote --heads … main` / `git fetch`
+> и сверь реальный `origin/main` (хэши после `git am` другие — сверяйся по содержимому, не по хэшам).
 >
-> **ФОКУС СЛЕДУЮЩЕЙ СЕССИИ: продолжить очередь сервисных страниц по ПЛЕЙБУКУ.**
-> Методология — раздел **«ПЛЕЙБУК: как мы делаем/обновляем сервисные страницы»** ниже
-> (эталоны — «Сессия 18» hormone и «Сессия 19» weight-loss). **Очередь (осталось):
-> peptide → emsculpt → exomind → emface → emsella → ivtherapy → bloodwork → regenerative →
-> sexualhealth.** Готовый промпт — в конце файла. Прочие направления (формы→backend,
-> комплаенс/копирайт LegitScript, лицензии фото, домен-миграция, локальный SEO) — в бэклоге.
+> **ФОКУС СЛЕДУЮЩЕЙ СЕССИИ: страница `emsella` по ПЛЕЙБУКУ.** Конкретная вводная клиента:
+> **YouTube для секции видео — `https://www.youtube.com/watch?v=2HLEVkT1LUU`** (узел Figma 1:5400
+> «BTL EMSELLA® — Mechanism of action»; в `emsella.md` у `videoEmbed` ещё нет `url` → вписать его;
+> по аналогии с emsculpt можно сделать видео `flush` + edge-to-edge на мобайле). Методология —
+> раздел **«ПЛЕЙБУК…»** ниже. **Очередь (осталось): emsella (следующая) → peptide → exomind →
+> emface → ivtherapy → bloodwork → regenerative → sexualhealth.** Готовый промпт — в конце файла.
+> Прочие направления (формы→backend, комплаенс/копирайт LegitScript, лицензии фото, домен-миграция,
+> локальный SEO) — в бэклоге.
+
+---
+
+## Сессия 20 — emsculpt: реальное фото секции 1 + мобильный edge-to-edge (05.06.26)
+
+Раунд полировки `emsculpt` поверх Phase-1. Три коммита, все применены и запушены
+Юрием (`origin/main` = `60e9200`; хэши ниже — из контейнера, у Юри после `git am` другие):
+
+```
+95bf455  feat(emsculpt): restore whatIs left photo, straddle all 4 CTAs, flush video  (Phase-1, ранее)
+18ad883  feat(emsculpt): real outer-thighs photo (section one) + flip text-left/image-right
+85690c4  feat(before-after): mobile edge-to-edge carousel — no arrows, auto-rotate, swipe
+60e9200  feat(video): mobile edge-to-edge YouTube on flush embeds (emsculpt)
+```
+
+**Что сделано:**
+- **Секция 1 (whatIs).** Реальное BTL «outer-thighs» фото (прислал клиент, `1846×1532` = ровно
+  2× слота `923×766` → WebP без кропа, q88). Флип `whatIsImageSide: "left" → "right"`
+  (десктоп текст-слева/фото-справа; мобайл текст-первым — как hormone, который тоже `right`;
+  `ServiceWhatIs` НЕ трогали → backward-compat). Текст (Figma 1:5512 / 1:5533) совпадал дословно.
+- **Before/After, только мобайл (`<lg`).** Карусель (carousel-режим — только emsculpt): edge-to-edge
+  (`max-lg:-mx-[7.55vw]` на контейнере карусели; заголовок и не-карусельный стек emface сохраняют
+  поля), стрелки `hidden lg:grid`, автопрокрутка 3.5с с петлёй + пауза на pointer/touch/wheel и
+  возврат через 6с idle; нативный свайп (overflow-x scroll-snap) остаётся. Десктоп без изменений.
+- **Видео, только мобайл.** `ServiceVideoEmbed`: при `flush` (только emsculpt) на `<lg` iframe
+  edge-to-edge (`max-lg:-mx-[7.55vw]` + `max-lg:rounded-none`). emsella/exomind/emface — без изменений.
+
+**Сага с CMYK-фото (урок):** фото секции 1 (image-fill hash `88f15…`, `2048×1080`, профиль Coated
+FOGRA39) **не растеризуется НИ одним путём Figma MCP** — asset-URL → прозрачный PNG; `get_screenshot`
+клипа/неклипа/всего фрейма → белое; `exportAsync` вектора и чистого прямоугольника с этим fill → белое
+(позитив-контроль с другим хэшем рендерится). Причина — **CMYK JPEG**: рендер Figma в этом окружении
+CMYK не декодирует (PIL декодирует). Сырые байты достаются (`getImageByHash().getBytesAsync()` =
+2.17 МБ), но вывод инструмента режется ~20 КБ/вызов, а entropy-scan = 1.5 МБ → ~100 кусков base64
+(нереально; стрип ICC/метаданных не спасает — scan и так 1.5 МБ). EXIF-thumbnail (159×84) извлекается
+и годится для сверки контента. **Вывод:** если image-fill пустой во ВСЕХ путях Figma — почти наверняка
+CMYK; не жечь вызовы на выгрузку, сразу просить файл у клиента (или искать RGB-версию в вебе со
+сверкой по EXIF-thumbnail).
+
+**Готча full-bleed:** см. §6 «Мобильные паттерны» — рецепт `-mx-[7.55vw]` + обязательный
+`max-lg:w-auto`, если у элемента стоит `w-full`.
+
+**Остаточный долг emsculpt:** аудит CTA (известный пропуск `1:5573`) на этой сессии НЕ делали —
+остаётся (см. §8 и «ПРИОРИТЕТ №1»).
 
 ---
 
@@ -274,6 +316,15 @@ ace4f1c  Свап колонок 1–2 секций + body line-height 1.5 (~22.
 - **Gold-баннер / pull-quote:** перенос на N строк через `\n` (`<br>` на всех
   ширинах); floor шрифта подбирать так, чтобы строки влезали на 360–390px; при
   нужде уменьшать боковые поля на мобайле (`px-4% lg:px-[7.55%]`).
+- **Full-bleed на мобайле (edge-to-edge, проверено на emsculpt С.20):** у родителя
+  `mx-auto max-w-design px-[7.55%]` → ребёнку `max-lg:-mx-[7.55vw]` (7.55% вьюпорта = 7.55vw;
+  отрицательный margin гасит ровно в 100vw, без горизонтального переполнения; десктоп не меняется).
+  Для медиа с радиусом добавить `max-lg:rounded-none`. **ГОТЧА:** если у элемента стоит `w-full`
+  (width:100%) — отрицательные margin его НЕ расширяют (ширина фиксирована); добавь `max-lg:w-auto`,
+  тогда ширина станет auto и margin'ы растянут блок до 100vw (поймано на видео: было 331px вместо
+  390; у before/after `w-full` не было — сработало сразу). Применять ТОЧЕЧНО к элементу, который
+  должен «вылезти» (карусель/iframe), НЕ к общей обёртке (иначе заголовок/соседние секции тоже
+  потеряют поля).
 
 ### 7. Воркфлоу патча (как отдаём)
 - Свежий клон каждый раунд: `git clone … .`; сразу `git rev-parse --short HEAD`
@@ -316,15 +367,21 @@ ace4f1c  Свап колонок 1–2 секций + body line-height 1.5 (~22.
 ### 9. План по очереди страниц
 1. **Готово (эталоны):** hormone (Сессия 18) и weight-loss (Сессия 19) — все секции,
    desktop + mobile. Оба содержат полный набор opt-in пропсов для повторения паттернов.
+   **emsculpt** — раунд полировки (Сессия 20): реальное фото секции 1 + флип + мобильный
+   edge-to-edge before/after и видео (остаточный долг — аудит CTA `1:5573`, не закрыт).
 2. **Очередь (осталось)** (каждую: §5 геометрия → §3–4 desktop → §6 mobile → §8 аудит CTA →
    §4 реальные ассеты → §7 верификация+патч):
-   **peptide → emsculpt → exomind → emface → emsella → ivtherapy → bloodwork →
+   **emsella → peptide → exomind → emface → ivtherapy → bloodwork →
    regenerative → sexualhealth.**
-3. Следующая по порядку — **peptide**. Перед стартом: глянь, какие opt-in пропсы уже
-   есть (Сессия 19), чтобы не дублировать — многое настраивается только через `<slug>.md`.
+3. Следующая по порядку — **emsella** (по запросу клиента). Вводная: YouTube для секции видео —
+   `https://www.youtube.com/watch?v=2HLEVkT1LUU` (узел Figma 1:5400; вписать `url` в `videoEmbed`
+   в `emsella.md`; по аналогии с emsculpt — `flush` + мобильный edge-to-edge). Страница уже собрана
+   (hero, whatIs, two-column ×2, сетка incontinence, sexual-wellness, плашка videoEmbed, FAQ-Lorem);
+   ассеты на диске есть (`public/assets/images/services/emsella/`). nodeId страницы = 1:5436. Перед
+   стартом глянь opt-in пропсы (Сессии 19–20), чтобы не дублировать — многое только через `<slug>.md`.
 4. Параллельные блокеры (не блокируют вёрстку, но держать в голове): Lorem-копирайт
-   на peptide/iv/bloodwork/sexualhealth + FAQ везде; лицензии stock-фото
-   (iv/bloodwork); видео-URL (emsculpt/exomind/emface/emsella).
+   на peptide/iv/bloodwork/sexualhealth + FAQ везде (вкл. emsella); лицензии stock-фото
+   (iv/bloodwork); видео-URL (exomind/emface; emsculpt и emsella — получены).
 
 ---
 
@@ -2071,15 +2128,15 @@ Playwright + headless Chromium и сравнивался с `Figma:get_screensho
 >
 > Путь к проекту локально: /Users/yuris/Documents/Claude-Projects/ideal-website (macOS). Все bash-команды для меня — с этим путём.
 >
-> Состояние проекта описано в `docs/HANDOFF.md` — прочитай его перед тем как что-то делать. Особенно верхний callout, разделы **«Сессия 19»** (weight-loss доведён до Figma 1:1, desktop+mobile) и **«Сессия 18»** (hormone), и **«ПЛЕЙБУК: как мы делаем/обновляем сервисные страницы»** — по нему работаем дальше.
+> Состояние проекта описано в `docs/HANDOFF.md` — прочитай его перед тем как что-то делать. Особенно верхний callout, разделы **«Сессия 20»** (emsculpt: реальное фото секции 1 + мобильный edge-to-edge), **«Сессия 19»** (weight-loss Figma 1:1) и **«Сессия 18»** (hormone), и **«ПЛЕЙБУК: как мы делаем/обновляем сервисные страницы»** — по нему работаем дальше.
 >
-> **ФОКУС ЭТОЙ СЕССИИ: продолжаем очередь сервисных страниц по ПЛЕЙБУКУ** (раздел в `docs/HANDOFF.md`). Эталоны — `hormone` и `weight-loss` (оба доведены до Figma 1:1, desktop+mobile, со всеми opt-in пропсами). **Следующая по очереди — `peptide`**, затем emsculpt, exomind, emface, emsella, ivtherapy, bloodwork, regenerative, sexualhealth. Можешь начать с peptide или предложить иной порядок. Для КАЖДОЙ страницы: сними геометрию секций из Figma → desktop (`lg:aspect-[W/H]` + vw-clamp шрифты; **высоту секции «текст+фото» обычно задаёт ФОТО через `imageAspectClass` на фото-колонке — см. уроки Сессии 19**) → mobile (stacked hero, full-bleed фото, body font floor 16, порядок секций, зазоры) → аудит CTA против Figma → реальные ассеты (curl) → верификация Playwright + патч. ⚠️ Многое уже настраивается ТОЛЬКО через `<slug>.md` (opt-in пропсы Benefits/WhoFor/WhatIs/CTA из Сессии 19) — глянь их, прежде чем добавлять новые. Прочие направления (формы→backend, комплаенс, лицензии, домен, SEO) — в бэклоге, только если я попрошу.
+> **ФОКУС ЭТОЙ СЕССИИ: продолжаем очередь сервисных страниц по ПЛЕЙБУКУ** (раздел в `docs/HANDOFF.md`). Эталоны — `hormone` и `weight-loss` (оба доведены до Figma 1:1, desktop+mobile, со всеми opt-in пропсами). **Следующая по очереди — `emsella`** (по запросу клиента), затем peptide, exomind, emface, ivtherapy, bloodwork, regenerative, sexualhealth. **Вводная клиента для emsella: YouTube для секции видео — `https://www.youtube.com/watch?v=2HLEVkT1LUU`** (узел Figma 1:5400 «BTL EMSELLA® — Mechanism of action»; вписать `url` в `videoEmbed` в `emsella.md`; по аналогии с emsculpt можно сделать видео `flush` + edge-to-edge на мобайле). Страница `emsella` уже собрана (hero, whatIs, two-column ×2, сетка incontinence, sexual-wellness, плашка видео, FAQ-Lorem), ассеты на диске есть — это полировка/аудит против Figma (nodeId 1:5436), не сборка с нуля. Для КАЖДОЙ страницы: сними геометрию секций из Figma → desktop (`lg:aspect-[W/H]` + vw-clamp шрифты; **высоту секции «текст+фото» обычно задаёт ФОТО через `imageAspectClass` на фото-колонке — см. уроки Сессии 19**) → mobile (stacked hero, full-bleed фото, body font floor 16, порядок секций, зазоры) → аудит CTA против Figma → реальные ассеты (curl) → верификация Playwright + патч. ⚠️ Многое уже настраивается ТОЛЬКО через `<slug>.md` (opt-in пропсы Benefits/WhoFor/WhatIs/CTA из Сессии 19) — глянь их, прежде чем добавлять новые. Прочие направления (формы→backend, комплаенс, лицензии, домен, SEO) — в бэклоге, только если я попрошу.
 >
 > Мелкие незакрытые флаги (если зайдёт речь): заголовок «We are located…» в `LocationBlock` (About/Contact) всё ещё капс-Marcellus (на главной уже Manrope по Figma); `heroTitle` страницы regenerative = «PRP & ALLOGRAFT» (меню/футер уже «Regenerative Medicine»); опечатка Figma «BOOD WORK» на bloodwork — ждёт подтверждения клиента (флагуем, не правим молча).
 >
 > Контекст меню: источник навигации — `src/data/navigation.ts` (3 группы: Wellness Services 10, Aesthetic Services 2, About Us 4 + `bookingCta`; единый источник и для Header, и для sitemap). Вёрстка/логика — `src/components/Header.astro`: десктоп-панель `#desktop-nav` (`lg+`) + мобильное drill-down меню «Вариант C» (`< lg`). Менять СТРУКТУРУ — в `navigation.ts`; менять ВИД/ПОВЕДЕНИЕ — в `Header.astro` (аккуратно с обоими брейкпоинтами).
 >
-> ⚠️ **Синхронизация с origin:** работа через git-патчи, которые я применяю локально (`git am --3way`) и пушу сам. **`git am` пересоздаёт хэши коммитов — у меня на origin они ДРУГИЕ, чем в твоём контейнере; сверяйся по содержимому файлов, не по хэшам.** Перед стартом: `git fetch` + `git log --oneline -5 origin/main`, сверь реальный `origin/main`. На момент написания этого HANDOFF: round 1 Сессии 19 (opt-in пропсы + weight-loss Figma 1:1) запушен (`origin/main` ≈ `1e6bd30`); round 2 (правки клиента: Results gold + What-Is фото) и сам HANDOFF — отданы патчами, но могли быть ещё не запушены. Генерируй новые патчи против РЕАЛЬНОГО `origin/main`; в контейнере задай git identity (`claude@anthropic.local` / `Claude`).
+> ⚠️ **Синхронизация с origin:** работа через git-патчи, которые я применяю локально (`git am --3way`) и пушу сам. **`git am` пересоздаёт хэши коммитов — у меня на origin они ДРУГИЕ, чем в твоём контейнере; сверяйся по содержимому файлов, не по хэшам.** Перед стартом: `git fetch` + `git log --oneline -5 origin/main`, сверь реальный `origin/main`. На момент написания этого HANDOFF: все три патча Сессии 20 emsculpt (реальное фото+флип, before/after mobile, video mobile) **применены и запушены** (`origin/main` ≈ `60e9200`, проверено `git ls-remote`); сам HANDOFF — отдан патчом отдельно (мог быть ещё не запушен). Генерируй новые патчи против РЕАЛЬНОГО `origin/main`; в контейнере задай git identity (`claude@anthropic.local` / `Claude`).
 >
 > ⚠️ **Окружение (урок Сессии 19): комбинированный вызов `npm run preview` + Playwright в одном bash-вызове падает с rc=−1 и пустым stdout** (киллится до завершения). Рабочий приём: запусти весь конвейер как **detached-скрипт** (`setsid script.sh </dev/null >/dev/null 2>&1 &`), который сам поднимает preview, ждёт HTTP 200, гоняет Playwright со скроллом (для lazy-load), пишет результаты в `/tmp/*.txt` + флаг завершения, убивает preview; затем в ОТДЕЛЬНОМ вызове опрашивай флаг и читай файл.
 >
@@ -2098,7 +2155,7 @@ Playwright + headless Chromium и сравнивался с `Figma:get_screensho
 > **Требует клиента (нельзя завершить без данных):**
 > - Body-тексты **Peptide / IV Therapy / Blood Work** — Lorem с `data-todo="copy"` (заголовки и 9 benefit-названий уже реальные).
 > - FAQ-тексты (везде Lorem ipsum) — все specialty + Weight Loss.
-> - YouTube URL: emsculpt (`videoEmbed.url` — постер уже реальный), exomind (2 видео-постера реальные)/emface (`videoEmbed*.url`), **emsella (`videoEmbed.url`)** — пустые, плашка «Video coming soon».
+> - YouTube URL: **emsella — получен от клиента: `https://www.youtube.com/watch?v=2HLEVkT1LUU`** (вписать в `videoEmbed.url` в `emsella.md`). exomind (2 видео-постера реальные) / emface (`videoEmbed*.url`) — ещё пустые, плашка «Video coming soon». (emsculpt `videoEmbed.url` — уже реальное видео, Сессия 20.)
 > - Реальные фото там, где ещё placeholder: **emface** (emsculpt/exomind заменены в сессии 11). ⚠️ Фото ivtherapy/bloodwork — stock (istock/Unsplash), лицензии под вопросом. URL соцсетей в футере (`data-todo="social-url"`).
 > - **Блог: ✅ сделан** (сессия 11, параллельно) — коллекция `posts`, 7 статей, `/blog` + `/blog/[slug]`. Остаётся проверить лицензии блог-изображений.
 > - Booking / Form / Newsletter интеграции.
