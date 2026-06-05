@@ -8,6 +8,12 @@ heroLead: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusm
 # ⚠️ Stock: istockphoto-1312587753 (тот же кадр, что Blog Hero) — лицензия требует проверки (блокер #3)
 heroImage: "/assets/images/services/ivtherapy/hero.webp"
 heroImageAlt: "IV therapy drip bag in a clinical setting — Ideal Medical & Wellness, Aventura"
+# hero.webp = full-bleed сток-фото (женщина с капельницей, левая ~40% пустая под текст).
+# Desktop: object-right + cream-скрим слева. Mobile: фото баннером сверху, текст ниже на cream.
+heroMobileStacked: true
+heroMobileImagePosition: "object-[62%_center]"
+# Figma (узел 1:5892) внутри hero содержит кнопку BOOK NOW; mid-CTA подавлены.
+heroCtaLabel: "BOOK NOW"
 
 # === "What is Medical IV Therapy?" — узлы Figma 1:5819 (заголовок) + 1:5828 (body) + 1:5860 (фото слева)
 # Заголовок реальный; body Lorem (data-todo="copy"), ждём от клиента.
@@ -15,6 +21,15 @@ whatIsTitle: "WHAT IS MEDICAL\nIV THERAPY?"
 # ⚠️ Stock: istockphoto-2206913658 — лицензия требует проверки (блокер)
 whatIsImage: "/assets/images/services/ivtherapy/what-is.webp"
 whatIsImageAlt: "Patient receiving an IV therapy infusion — Ideal Medical clinic"
+# Геометрия Figma: секция y 814→1913 = 1099. Фото слева (узел 1:5856 = 923×939,
+# left-bleed, cream-поля ~80px). object-cover кропит landscape-исходник в near-square.
+whatIsHeight: "lg:aspect-[1920/1099]"
+whatIsGridCols: "lg:grid-cols-[48fr_52fr]"
+whatIsAlign: "items-center"
+whatIsImageSide: "left"
+whatIsImageAspect: "lg:aspect-[923/939]"
+whatIsHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
+whatIsBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
 whatIsBody: |
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
 
@@ -64,13 +79,20 @@ whoForTitle: "Who is IV\nTHERAPY For?"
 # ⚠️ Stock: istockphoto-1270488580 — лицензия требует проверки (блокер)
 whoForImage: "/assets/images/services/ivtherapy/who-for.webp"
 whoForImageAlt: "Patient considering IV therapy — Ideal Medical, Aventura"
+# Геометрия Figma: секция y 3404→4397 = 993. Фото справа (узел 1:5887 = 996×993,
+# near-square, right-bleed, на всю высоту). object-cover кропит portrait-исходник.
+# Высоту задаёт ФОТО; текст слева центрируется. В Figma (1:5873) буллетов нет.
+whoForHeight: ""
+whoForGridCols: "lg:grid-cols-[48fr_52fr]"
+whoForAlign: "items-center"
+whoForHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
+whoForBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
+whoForImageMinH: ""
+whoForImageAspect: "lg:aspect-[996/993]"
 whoForLead: |
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
 
   Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-whoForBullets:
-  - "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-  - "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
 
 # === The Results — узлы Figma 1:5900 + 1:5901. Body Lorem (data-todo="copy").
 resultsTitle: "THE RESULTS"
