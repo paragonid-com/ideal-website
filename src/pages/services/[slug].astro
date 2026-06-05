@@ -175,7 +175,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
     mobileImagePosition={data.heroMobileImagePosition}
   />
 
-  {!data.suppressDefaultCtas && <ServiceCTABand />}
+  {!data.suppressDefaultCtas && <ServiceCTABand overlap={data.overlapCtas} />}
 
   {/* Opt-in straddle CTA сразу после Hero (hormone шов Hero/WhatIs y≈814).
      Независим от suppressDefaultCtas: hormone глушит дефолты и возвращает
@@ -202,7 +202,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       />
       {/* CTA после what-is — кроме emsella, где следом идёт two-col
          'after-whatis' со своим завершающим CTA (иначе двойной баннер). */}
-      {twoColAfterWhatIs.length === 0 && !data.suppressDefaultCtas && <ServiceCTABand />}
+      {twoColAfterWhatIs.length === 0 && !data.suppressDefaultCtas && <ServiceCTABand overlap={data.overlapCtas} />}
     </>
   )}
 
@@ -269,9 +269,10 @@ const goldBanner = normalizeBanner(data.goldBanner);
         intro={data.benefitsIntro}
         benefits={data.benefits}
         iconOnly={data.benefitsIconOnly}
+        topRowCount={data.benefitsTopRowCount}
         showStar={data.stars?.benefits}
       />
-      {!data.suppressDefaultCtas && <ServiceCTABand />}
+      {!data.suppressDefaultCtas && <ServiceCTABand overlap={data.overlapCtas} />}
     </>
   )}
 
@@ -432,6 +433,13 @@ const goldBanner = normalizeBanner(data.goldBanner);
       lead={data.whoForLead}
       bullets={data.whoForBullets}
       showStar={data.stars?.whoFor}
+      sectionHeight={data.whoForHeight}
+      gridColsClass={data.whoForGridCols}
+      align={data.whoForAlign}
+      headingClass={data.whoForHeadingClass}
+      bodyClass={data.whoForBodyClass}
+      imageMinH={data.whoForImageMinH}
+      imageAspectClass={data.whoForImageAspect}
     />
   )}
 

@@ -41,10 +41,19 @@ interface Props {
   iconOnly?: boolean;
   /** Показать gold-звезду над заголовком (Figma Peptide узел 1:3878). */
   showStar?: boolean;
+  /** Разбить карточки на два центрированных ряда: первые N сверху, остальные снизу
+   *  (Weight Loss Figma — 2 сверху / 3 снизу). Не задано → один flex-wrap ряд. */
+  topRowCount?: number;
 }
 
-const { title, intro, benefits, iconOnly = false, showStar = false } = Astro.props;
+const { title, intro, benefits, iconOnly = false, showStar = false, topRowCount } = Astro.props;
 const titleLines = title.split('\n');
+// Разбивка на ряды: при заданном topRowCount (и если он меньше числа карточек)
+// — два центрированных ряда; иначе прежнее поведение (один ряд flex-wrap).
+const rows =
+  topRowCount && topRowCount < benefits.length
+    ? [benefits.slice(0, topRowCount), benefits.slice(topRowCount)]
+    : [benefits];
 ---
 
 <section
@@ -80,29 +89,32 @@ const titleLines = title.split('\n');
       )}
     </div>
 
-    {/* flex flex-wrap с justify-center: 3+3 (6), 3+2 (5), 3+3+3 (9 icon-only). */}
-    <ul class={`flex flex-wrap justify-center ${iconOnly ? 'mt-16 gap-x-8 gap-y-20' : 'mt-20 gap-x-8 gap-y-16'}`}>
-      {benefits.map((b) => (
-        <li class="flex flex-col items-center text-center w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.34rem)] max-w-[400px]">
-          <div class={iconOnly ? 'h-[112px] w-[112px] flex items-center justify-center' : 'h-[104px] w-[104px] flex items-center justify-center'}>
-            <Image
-              src={b.icon}
-              alt={b.iconAlt || b.title}
-              width={iconOnly ? 112 : 104}
-              height={iconOnly ? 112 : 104}
-              class="h-full w-full object-contain"
-            />
-          </div>
-          <h3 class={`font-heading uppercase text-gold leading-tight ${iconOnly ? 'mt-6 text-[22px] max-w-[300px]' : 'mt-6 text-[28px]'}`}>
-            {b.title}
-          </h3>
-          {!iconOnly && b.description && (
-            <p class="mt-4 font-sans text-[18px] text-gold leading-relaxed">
-              {b.description}
-            </p>
-          )}
-        </li>
-      ))}
-    </ul>
+    {/* flex flex-wrap justify-center. Один ряд (default) ИЛИ два ряда при
+        topRowCount (Weight Loss: 2 сверху / 3 снизу). */}
+    {rows.map((row, ri) => (
+      <ul class={`flex flex-wrap justify-center gap-x-8 ${iconOnly ? 'gap-y-20' : 'gap-y-16'} ${ri === 0 ? (iconOnly ? 'mt-16' : 'mt-20') : 'mt-16'}`}>
+        {row.map((b) => (
+          <li class="flex flex-col items-center text-center w-full sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1.34rem)] max-w-[400px]">
+            <div class={iconOnly ? 'h-[112px] w-[112px] flex items-center justify-center' : 'h-[104px] w-[104px] flex items-center justify-center'}>
+              <Image
+                src={b.icon}
+                alt={b.iconAlt || b.title}
+                width={iconOnly ? 112 : 104}
+                height={iconOnly ? 112 : 104}
+                class="h-full w-full object-contain"
+              />
+            </div>
+            <h3 class={`font-heading uppercase text-gold leading-tight ${iconOnly ? 'mt-6 text-[22px] max-w-[300px]' : 'mt-6 text-[28px]'}`}>
+              {b.title}
+            </h3>
+            {!iconOnly && b.description && (
+              <p class="mt-4 font-sans text-[18px] text-gold leading-relaxed">
+                {b.description}
+              </p>
+            )}
+          </li>
+        ))}
+      </ul>
+    ))}
   </div>
 </section>

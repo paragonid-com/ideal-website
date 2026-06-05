@@ -20,21 +20,52 @@ interface Props {
   bullets: string[];
   /** Показать gold-звезду справа от заголовка (Figma Peptide узел 1:3900). */
   showStar?: boolean;
+  /** Класс высоты/пропорции секции на lg. Default — прежнее min-h-[1000px].
+   *  weight-loss передаёт '' — высоту задаёт фото-колонка (см. imageAspectClass). */
+  sectionHeight?: string;
+  /** Класс раскладки колонок на lg. Default `lg:grid-cols-2`. */
+  gridColsClass?: string;
+  /** Вертикальное выравнивание колонок. Default `items-center`. */
+  align?: string;
+  /** Класс размера заголовка. Default `text-h1 leading-tight`. */
+  headingClass?: string;
+  /** Класс размера lead/буллетов. Default `text-body-lg leading-relaxed`. */
+  bodyClass?: string;
+  /** Класс min-h фото-колонки. Default `lg:min-h-[700px]`. В aspect-режиме — ''. */
+  imageMinH?: string;
+  /** Если задан (напр. `lg:aspect-[996/993]`) — фото-колонка держит свою пропорцию
+   *  на lg (object-cover кропит исходник), и ИМЕННО фото задаёт высоту секции.
+   *  Это надёжно держит Figma-пропорцию на всех ширинах. Заменяет `lg:h-full`. */
+  imageAspectClass?: string;
 }
 
-const { title, image, imageAlt, lead, bullets, showStar = false } = Astro.props;
+const {
+  title, image, imageAlt, lead, bullets, showStar = false,
+  sectionHeight = 'lg:min-h-[1000px]',
+  gridColsClass = 'lg:grid-cols-2',
+  align = 'items-center',
+  headingClass = 'text-h1 leading-tight',
+  bodyClass = 'text-body-lg leading-relaxed',
+  imageMinH = 'lg:min-h-[700px]',
+  imageAspectClass = '',
+} = Astro.props;
 const titleLines = title.split('\n');
 const leadParas = lead.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
+/* В aspect-режиме (imageAspectClass задан) фото-колонка держит свою пропорцию и
+ * сама задаёт высоту секции; иначе — прежнее поведение (lg:h-full + min-h). */
+const imageColClass = imageAspectClass
+  ? `relative h-[320px] md:h-[480px] lg:h-auto ${imageAspectClass}`
+  : `relative h-[320px] md:h-[480px] lg:h-full ${imageMinH}`;
 ---
 
 <section
   class="w-full bg-cream"
   data-section="service-who-for"
 >
-  <div class="mx-auto max-w-design grid grid-cols-1 lg:grid-cols-2 items-center lg:min-h-[1000px]">
+  <div class={`mx-auto max-w-design grid grid-cols-1 ${gridColsClass} ${align} ${sectionHeight}`}>
     {/* Левая колонка — заголовок, lead, буллеты */}
     <div class="relative px-[7.55%] py-24">
-      <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
+      <h2 class={`font-heading ${headingClass} uppercase text-gold`}>
         {titleLines.map((line, i) => (
           <>
             {line}
@@ -53,11 +84,11 @@ const leadParas = lead.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
         />
       )}
 
-      <div class="mt-12 max-w-[685px] space-y-6 font-sans text-body-lg text-gold leading-relaxed">
+      <div class={`mt-12 max-w-[685px] space-y-6 font-sans ${bodyClass} text-gold`}>
         {leadParas.map((p) => <p>{p}</p>)}
       </div>
 
-      <ul class="mt-8 space-y-6 max-w-[685px] font-sans text-body-lg text-gold leading-relaxed">
+      <ul class={`mt-8 space-y-6 max-w-[685px] font-sans ${bodyClass} text-gold`}>
         {bullets.map((b) => (
           <li class="flex gap-4">
             <span aria-hidden="true" class="select-none text-[24px] leading-[1.2]">•</span>
@@ -68,7 +99,7 @@ const leadParas = lead.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
     </div>
 
     {/* Правая колонка — фото */}
-    <div class="relative h-[320px] md:h-[480px] lg:h-full lg:min-h-[700px]">
+    <div class={imageColClass}>
       <img
         src={image}
         alt={imageAlt}

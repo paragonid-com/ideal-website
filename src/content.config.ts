@@ -146,6 +146,10 @@ const services = defineCollection({
       benefitsIntro: z.string().optional(),
       /** true → режим Peptide: icon + title (без description), сетка 3x3. */
       benefitsIconOnly: z.boolean().default(false).optional(),
+      /** Разбить карточки на два центрированных ряда: первые N сверху, остальные
+       *  снизу. Эталон Weight Loss в Figma — «2 сверху / 3 снизу» (benefitsTopRowCount: 2).
+       *  Не задано → прежнее поведение (один flex-wrap ряд). */
+      benefitsTopRowCount: z.number().int().positive().optional(),
       benefits: z
         .array(
           z.object({
@@ -165,6 +169,28 @@ const services = defineCollection({
       whoForImageAlt: z.string().optional(),
       whoForLead: z.string().optional(),
       whoForBullets: z.array(z.string()).min(2).max(8).optional(),
+      /** Класс высоты/пропорции секции на lg. Default — прежнее поведение
+       *  (lg:min-h-[1000px]). weight-loss передаёт '' — высоту секции задаёт
+       *  фото-колонка через whoForImageAspect (надёжно на любой ширине). */
+      whoForHeight: z.string().optional(),
+      /** Раскладка колонок на lg. Default `lg:grid-cols-2`. weight-loss —
+       *  `lg:grid-cols-[48fr_52fr]` (фото справа 996/1920 ≈ 52%). */
+      whoForGridCols: z.string().optional(),
+      /** Вертикальное выравнивание колонок. Default `items-center`.
+       *  weight-loss — `items-center` (текст центрируется по высоте фото). */
+      whoForAlign: z.string().optional(),
+      /** Класс размера заголовка. Default `text-h1 leading-tight`.
+       *  weight-loss — vw-clamp `text-[clamp(28px,3.23vw,62px)] leading-[1.05]`. */
+      whoForHeadingClass: z.string().optional(),
+      /** Класс размера lead/буллетов. Default `text-body-lg leading-relaxed`.
+       *  weight-loss — vw-clamp `text-[clamp(16px,1.09vw,21px)] leading-[1.5]`. */
+      whoForBodyClass: z.string().optional(),
+      /** Класс min-h фото-колонки. Default `lg:min-h-[700px]`. При aspect-режиме
+       *  передаётся '' (пусто), чтобы фото следовало пропорции блока. */
+      whoForImageMinH: z.string().optional(),
+      /** Если задан (напр. `lg:aspect-[996/993]`) — фото-колонка держит пропорцию
+       *  на lg и сама задаёт высоту секции (object-cover кропит исходник). */
+      whoForImageAspect: z.string().optional(),
 
       // ===== Common Signs grid (hormone): 2x3 с заголовком + текстом =====
       commonSigns: z
