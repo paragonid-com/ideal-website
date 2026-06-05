@@ -219,7 +219,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
         title={data.simpleWhatIs.title}
         body={data.simpleWhatIs.body}
       />
-      <ServiceCTABand />
+      <ServiceCTABand overlap={data.overlapCtas} />
     </>
   )}
 
@@ -241,7 +241,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
         left={s.left}
         right={s.right}
       />
-      <ServiceCTABand />
+      <ServiceCTABand overlap={data.overlapCtas} />
     </>
   ))}
 
@@ -325,7 +325,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
 
   {/* CTA после первой grid — только когда дальше идёт after-categories-grid
      two-col (паттерн emsella, Figma 1:5169). emface/emsculpt не затрагиваются. */}
-  {firstCategoriesGrid && twoColAfterGrid.length > 0 && <ServiceCTABand />}
+  {firstCategoriesGrid && twoColAfterGrid.length > 0 && <ServiceCTABand overlap={data.overlapCtas} />}
 
   {/* Two-column секции 'after-categories-grid' (emsella: Sexual Wellness — heading + фото) */}
   {twoColAfterGrid.map((s) => (
@@ -337,7 +337,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
         left={s.left}
         right={s.right}
       />
-      <ServiceCTABand />
+      <ServiceCTABand overlap={data.overlapCtas} />
     </>
   ))}
 
@@ -397,7 +397,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
   ))}
 
   {/* CTA перед conditions list (exomind, Figma 1:2907) — opt-in флагом */}
-  {data.ctaBeforeConditionsList && <ServiceCTABand />}
+  {data.ctaBeforeConditionsList && <ServiceCTABand overlap={data.overlapCtas} />}
 
   {/* Conditions list (exomind: WHAT CAN EXOMIND IMPROVE?) */}
   {data.conditionsList && (
@@ -417,7 +417,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
   )}
 
   {/* CTA после видео #2, перед gold banner #2 (exomind, Figma 1:2913) — opt-in */}
-  {data.ctaAfterVideo2 && <ServiceCTABand />}
+  {data.ctaAfterVideo2 && <ServiceCTABand overlap={data.overlapCtas} />}
 
   {/* Gold banner #2 в центре (exomind — повторный с CTA) */}
   {midGoldBanner2 && (

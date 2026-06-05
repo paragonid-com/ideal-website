@@ -12,6 +12,9 @@ heroMobileImagePosition: "object-[70%_center]"
 # В hero есть собственная кнопка BOOK NOW (Figma 1:5070, x=144 y=680), отдельно от
 # straddle-пилюли на шве hero/whatIs. href наследует централизованный bookingCta.
 heroCtaLabel: "BOOK NOW"
+# Все CTA-band на странице — overlap/straddle (пилюля #dbba5f / текст #8d7431),
+# по центру шва между секциями, как в Figma (узлы 1:5163/5166/5169/5172).
+overlapCtas: true
 
 # ---------- What is EMSELLA? (photo left + body + bullets) ----------
 # Геометрия Figma (узлы 1:5401 фото 776×1034 портрет @ x=147; заголовок 1:5091

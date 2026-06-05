@@ -16,7 +16,7 @@
 >
 > `origin/main` на старте сессии = **`4fc71a9`** (HANDOFF-патч С.20). Патчи этой сессии — отдаются Юрием через `git am --3way` и пушатся им. **`git am` пересоздаёт хэши — на origin они ДРУГИЕ; сверяйся по содержимому, не по хэшам.** Перед стартом: `git fetch` + `git log --oneline origin/main`.
 >
-> **ФОКУС СЛЕДУЮЩЕЙ СЕССИИ: `peptide` по ПЛЕЙБУКУ** (раздел ниже). **Очередь (осталось): peptide (следующая) → exomind → emface → ivtherapy → bloodwork → regenerative → sexualhealth.** Готовый промпт — в конце файла.
+> **ФОКУС СЛЕДУЮЩЕЙ СЕССИИ: `exomind` по ПЛЕЙБУКУ** (видео клиента: video1=`k4lEDTVCb0U`, video2=`MDqu9rPsk2o`). **Очередь (осталось): exomind (следующая) → peptide → emface → ivtherapy → bloodwork → regenerative → sexualhealth.** **СТАНДАРТНЫЕ ПРАВИЛА (обязательно каждый раз, повторяющийся промах): (1) ВСЕ CTA — overlap/straddle, цвета Figma (пилюля `#dbba5f`, текст `#8d7431`); (2) мобильный flow — фото и текст ЧЕРЕДУЮТСЯ, без «пачки текста → пачки фото».** Готовый промпт — в конце файла.
 > Прочие направления (формы→backend, комплаенс/копирайт LegitScript, лицензии фото, домен-миграция, локальный SEO) — в бэклоге.
 
 ---
@@ -38,6 +38,9 @@ feat(emsella):  Figma 1:1 polish pass (emsella.md, + видео URL)
 - **Sexual Wellness.** Общий заголовок «EMSELLA FOR SEXUAL WELLNESS» (1:5162) теперь **~36px** (новый `ServiceTwoColumnText.headingClass`; default остаётся `text-h1`), колоночные WOMAN/MAN — 62px как было. Фото 783/522 (3:2) — без изменений.
 - **What to Expect.** Левые буллеты (1:5102) — **без тире-маркера, лейбл до «:» жирным** (новый per-column `bulletStyle: "plain"` у `ServiceTwoColumnText`; default `dash` сохраняет exomind и emsella-sexual-wellness, где маркеры «_»). Примечание: в Figma первый буллет «Non-invasive:» без жирного, остальные три — жирные; сделал жирными ВСЕ ради единообразия (вероятная неточность макета), тривиально откатывается.
 - **Video (1:5400).** **Full-bleed край-в-край на ВСЕХ ширинах** (новый `videoEmbed.fullBleed`: убирает `max-w-design` + боковой padding + скругление; прежний `flush` = только py + мобайл-edge остаётся для emsculpt). URL вписан: `https://www.youtube.com/watch?v=2HLEVkT1LUU` — web-проверкой подтверждено, что это официальный BTL «BTL EMSELLA® — Mechanism of action» (канал BTL Aesthetics), узел Figma 1:5400.
+
+- **CTA (все 4).** Переведены на **overlap/straddle** стиль с цветами Figma (пилюля `#dbba5f`, текст `#8d7431`): `overlapCtas: true` в `emsella.md` + КАЖДЫЙ `ServiceCTABand` в `[slug].astro` теперь принимает `overlap={data.overlapCtas}` (для emsculpt/exomind, где `overlapCtas` false — вывод не изменился). Узлы Figma 1:5163/5166/5169/5172. Пилюля после full-bleed видео straddle-ит низ ролика — тем же приёмом, что hero-CTA straddle-ит низ фото героя.
+- **Мобильный flow — проверено (Playwright 390px):** фото и текст чередуются (hero, whatIs, incontinence ×3, sexual-wellness ×2 — каждое фото рядом со своим текстом); «пачки текста → пачки фото» нет (текстоёмкий участок whatIs-body/What-to-Expect/Book — секции без фото по дизайну Figma).
 
 **Backward-compat / регресс.** Все новые поля схемы — `.optional()`; дефолты компонентов = прежний вывод. Чистый baseline-билд `origin/main` против нового: HTML 10 остальных сервисных страниц отличается ТОЛЬКО (а) порядком классов в одном и том же наборе и (б) хэшем общего CSS (добавлены Tailwind-утилиты для emsella) + безвредный дублирующий `lg:h-full` на whatIs-`<img>`. Визуальных/структурных изменений нет.
 
@@ -391,17 +394,18 @@ ace4f1c  Свап колонок 1–2 секций + body line-height 1.5 (~22.
    edge-to-edge before/after и видео (остаточный долг — аудит CTA `1:5573`, не закрыт).
 2. **Очередь (осталось)** (каждую: §5 геометрия → §3–4 desktop → §6 mobile → §8 аудит CTA →
    §4 реальные ассеты → §7 верификация+патч):
-   **emsella → peptide → exomind → emface → ivtherapy → bloodwork →
-   regenerative → sexualhealth.**
-3. Следующая по порядку — **emsella** (по запросу клиента). Вводная: YouTube для секции видео —
-   `https://www.youtube.com/watch?v=2HLEVkT1LUU` (узел Figma 1:5400; вписать `url` в `videoEmbed`
-   в `emsella.md`; по аналогии с emsculpt — `flush` + мобильный edge-to-edge). Страница уже собрана
-   (hero, whatIs, two-column ×2, сетка incontinence, sexual-wellness, плашка videoEmbed, FAQ-Lorem);
-   ассеты на диске есть (`public/assets/images/services/emsella/`). nodeId страницы = 1:5436. Перед
-   стартом глянь opt-in пропсы (Сессии 19–20), чтобы не дублировать — многое только через `<slug>.md`.
+   **exomind → peptide → emface → ivtherapy → bloodwork →
+   regenerative → sexualhealth.** (emsella готова — Сессия 21.)
+3. Следующая по порядку — **exomind** (перенесена вперёд peptide по запросу клиента). Вводная: ДВА
+   видео клиента — video1 = `https://www.youtube.com/watch?v=k4lEDTVCb0U`, video2 =
+   `https://www.youtube.com/watch?v=MDqu9rPsk2o` (вписать в `videoEmbed.url` и `videoEmbed2.url`
+   в `exomind.md`; 2 видео-постера exomind уже реальные). nodeId = 1:3218. Перед стартом глянь
+   opt-in пропсы (Сессии 19–21), чтобы не дублировать — многое только через `<slug>.md`.
+   **ОБЯЗАТЕЛЬНО: overlap-CTA `#dbba5f`/`#8d7431` на ВСЕХ band'ах (overlapCtas:true + overlap на
+   каждом ServiceCTABand в [slug].astro) + мобильный flow с чередованием фото/текста (проверять 390px).**
 4. Параллельные блокеры (не блокируют вёрстку, но держать в голове): Lorem-копирайт
    на peptide/iv/bloodwork/sexualhealth + FAQ везде (вкл. emsella); лицензии stock-фото
-   (iv/bloodwork); видео-URL (exomind/emface; emsculpt и emsella — получены).
+   (iv/bloodwork); видео-URL (emface; emsculpt/emsella/exomind — получены).
 
 ---
 
@@ -2150,7 +2154,7 @@ Playwright + headless Chromium и сравнивался с `Figma:get_screensho
 >
 > Состояние проекта описано в `docs/HANDOFF.md` — прочитай его перед тем как что-то делать. Особенно верхний callout, разделы **«Сессия 20»** (emsculpt: реальное фото секции 1 + мобильный edge-to-edge), **«Сессия 19»** (weight-loss Figma 1:1) и **«Сессия 18»** (hormone), и **«ПЛЕЙБУК: как мы делаем/обновляем сервисные страницы»** — по нему работаем дальше.
 >
-> **ФОКУС ЭТОЙ СЕССИИ: продолжаем очередь сервисных страниц по ПЛЕЙБУКУ** (раздел в `docs/HANDOFF.md`). Эталоны — `hormone`, `weight-loss` и `emsella` (все доведены до Figma 1:1, desktop+mobile, со всеми opt-in пропсами). **Следующая по очереди — `peptide`**, затем exomind, emface, ivtherapy, bloodwork, regenerative, sexualhealth. Для КАЖДОЙ страницы: сними геометрию секций из Figma → desktop (`lg:aspect-[W/H]` + vw-clamp шрифты; **высоту секции «текст+фото» обычно задаёт ФОТО через `imageAspectClass`/`whatIsImageAspect` на фото-колонке — см. уроки Сессий 19 и 21; для inset+rounded карточки есть `whatIsImagePadded`/`whatIsImageRounded`**) → mobile (stacked hero, full-bleed фото, body font floor 16, порядок секций, зазоры) → аудит CTA против Figma (в т.ч. **in-hero BOOK NOW** через `heroCtaLabel`, как добавили на emsella) → реальные ассеты (curl) → верификация Playwright + патч. ⚠️ Многое настраивается ТОЛЬКО через `<slug>.md` (opt-in пропсы Hero/WhatIs/Benefits/WhoFor/CTA/CategoriesGrid/TwoColumnText/VideoEmbed) — глянь их, прежде чем добавлять новые. Прочие направления (формы→backend, комплаенс, лицензии, домен, SEO) — в бэклоге, только если я попрошу.
+> **ФОКУС ЭТОЙ СЕССИИ: продолжаем очередь сервисных страниц по ПЛЕЙБУКУ** (раздел в `docs/HANDOFF.md`). Эталоны — `hormone`, `weight-loss` и `emsella` (все доведены до Figma 1:1, desktop+mobile, со всеми opt-in пропсами). **Следующая по очереди — `exomind`** (видео клиента: video1=`k4lEDTVCb0U`, video2=`MDqu9rPsk2o` → `videoEmbed.url`/`videoEmbed2.url`), затем peptide, emface, ivtherapy, bloodwork, regenerative, sexualhealth. ⚠️ **ДВА ОБЯЗАТЕЛЬНЫХ ПРАВИЛА КАЖДЫЙ РАЗ (повторяющийся промах — Юрий просил записать): (1) ВСЕ CTA-band — overlap/straddle с цветами Figma (пилюля `#dbba5f`, текст `#8d7431`): `overlapCtas: true` в `.md` И `overlap={data.overlapCtas}` на КАЖДОМ `ServiceCTABand` в `[slug].astro`; (2) мобильный flow — фото и текст ЧЕРЕДУЮТСЯ (каждое фото рядом со своим текстом), не допускать «несколько текстов подряд, затем пачка фото» — проверять стек на 390px в Playwright.** Для КАЖДОЙ страницы: сними геометрию секций из Figma → desktop (`lg:aspect-[W/H]` + vw-clamp шрифты; **высоту секции «текст+фото» обычно задаёт ФОТО через `imageAspectClass`/`whatIsImageAspect` на фото-колонке — см. уроки Сессий 19 и 21; для inset+rounded карточки есть `whatIsImagePadded`/`whatIsImageRounded`**) → mobile (stacked hero, full-bleed фото, body font floor 16, порядок секций, зазоры) → аудит CTA против Figma (в т.ч. **in-hero BOOK NOW** через `heroCtaLabel`, как добавили на emsella) → реальные ассеты (curl) → верификация Playwright + патч. ⚠️ Многое настраивается ТОЛЬКО через `<slug>.md` (opt-in пропсы Hero/WhatIs/Benefits/WhoFor/CTA/CategoriesGrid/TwoColumnText/VideoEmbed) — глянь их, прежде чем добавлять новые. Прочие направления (формы→backend, комплаенс, лицензии, домен, SEO) — в бэклоге, только если я попрошу.
 >
 > Мелкие незакрытые флаги (если зайдёт речь): заголовок «We are located…» в `LocationBlock` (About/Contact) всё ещё капс-Marcellus (на главной уже Manrope по Figma); `heroTitle` страницы regenerative = «PRP & ALLOGRAFT» (меню/футер уже «Regenerative Medicine»); опечатка Figma «BOOD WORK» на bloodwork — ждёт подтверждения клиента (флагуем, не правим молча).
 >
@@ -2175,7 +2179,7 @@ Playwright + headless Chromium и сравнивался с `Figma:get_screensho
 > **Требует клиента (нельзя завершить без данных):**
 > - Body-тексты **Peptide / IV Therapy / Blood Work** — Lorem с `data-todo="copy"` (заголовки и 9 benefit-названий уже реальные).
 > - FAQ-тексты (везде Lorem ipsum) — все specialty + Weight Loss.
-> - YouTube URL: **emsella — получен от клиента: `https://www.youtube.com/watch?v=2HLEVkT1LUU`** (вписать в `videoEmbed.url` в `emsella.md`). exomind (2 видео-постера реальные) / emface (`videoEmbed*.url`) — ещё пустые, плашка «Video coming soon». (emsculpt `videoEmbed.url` — уже реальное видео, Сессия 20.)
+> - YouTube URL: **emsella — ВПИСАН (Сессия 21): `2HLEVkT1LUU`** (full-bleed). **exomind — получены от клиента (СЛЕДУЮЩАЯ): video1 `k4lEDTVCb0U`, video2 `MDqu9rPsk2o`** → `videoEmbed.url`/`videoEmbed2.url` (2 видео-постера уже реальные). emface (`videoEmbed*.url`) — ещё пустые. (emsculpt — уже реальное видео, Сессия 20.)
 > - Реальные фото там, где ещё placeholder: **emface** (emsculpt/exomind заменены в сессии 11). ⚠️ Фото ivtherapy/bloodwork — stock (istock/Unsplash), лицензии под вопросом. URL соцсетей в футере (`data-todo="social-url"`).
 > - **Блог: ✅ сделан** (сессия 11, параллельно) — коллекция `posts`, 7 статей, `/blog` + `/blog/[slug]`. Остаётся проверить лицензии блог-изображений.
 > - Booking / Form / Newsletter интеграции.
