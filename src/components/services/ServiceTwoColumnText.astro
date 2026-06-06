@@ -35,9 +35,14 @@ interface Props {
   headingClass?: string;
   /** Фон секции: cream (default) или gold */
   background?: 'cream' | 'gold';
+  /** Опц. лид-абзац под заголовком, над колонками (HTML — emsella Intimate
+   *  Wellness compliance-оговорка). */
+  intro?: string;
+  /** Опц. абзац под колонками (HTML — emsella ссылка на Sexual Health). */
+  footer?: string;
 }
 
-const { left, right, heading, headingClass = 'text-h1 leading-tight', background = 'cream' } = Astro.props;
+const { left, right, heading, headingClass = 'text-h1 leading-tight', background = 'cream', intro, footer } = Astro.props;
 
 /** Для bulletStyle='plain': лейбл до первого «:» рендерим жирным. */
 function splitLabel(b: string): { label: string | null; rest: string } {
@@ -71,7 +76,7 @@ const rightTail = paras(right.tail);
       <h2 class={`font-heading uppercase text-gold mb-12 ${headingClass}`}>
         {heading}
       </h2>
-    )}
+    )}{intro && <div class="mb-12 max-w-[1100px] font-sans text-body-lg text-gold leading-relaxed [&_strong]:font-semibold" set:html={intro} />}
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
     {/* Левая колонка */}
     <div>
@@ -186,6 +191,6 @@ const rightTail = paras(right.tail);
         {rightTail.map((p) => <p>{p}</p>)}
       </div>
     </div>
-    </div>
+    </div>{footer && <div class="mt-12 max-w-[1100px] font-sans text-body-lg text-gold leading-relaxed [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:opacity-80" set:html={footer} />}
   </div>
 </section>

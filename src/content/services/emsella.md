@@ -1,9 +1,9 @@
 ---
 seoTitle: "EMSELLA™ in Aventura | Ideal Medical & Wellness"
-seoDescription: "EMSELLA™ in Aventura, Florida — an FDA-cleared, non-invasive chair treatment using HIFEM energy to strengthen pelvic floor muscles and improve bladder control and sexual wellness."
+seoDescription: "EMSELLA™ in Aventura, FL — an FDA-cleared, non-invasive chair treatment using HIFEM energy to strengthen the pelvic floor and improve bladder control. Individual results vary."
 
 heroTitle: "EMSELLA™\nin Aventura"
-heroLead: "Emsella is a non-invasive treatment that uses high-intensity focused electromagnetic (HIFEM) technology to strengthen pelvic floor muscles and improve bladder control by simulating kegels. Emsella is now also FDA approved for sexual wellness."
+heroLead: "Emsella is a non-invasive treatment that uses high-intensity focused electromagnetic (HIFEM) energy to strengthen the pelvic floor and improve bladder control — like doing thousands of Kegels while you sit, fully clothed. It's FDA-cleared for the treatment of urinary incontinence in women and men; individual results vary."
 heroImage: "/assets/images/services/emsella/hero.webp"
 heroImageAlt: "Two clients seated on Emsella treatment chairs"
 # Мобайл: фото баннером сверху, текст снизу на cream (фокус на сидящей клиентке справа).
@@ -35,14 +35,14 @@ whatIsImagePadded: true
 whatIsHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
 whatIsBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
 whatIsBody: |
-  Emsella is an FDA-cleared, non-invasive chair treatment that uses high-intensity focused electromagnetic (HIFEM) energy to stimulate and strengthen pelvic floor muscles. Each 30-minute session delivers thousands of supramaximal contractions — the equivalent of doing 11,000 Kegels — without any effort on your part.
+  Emsella is an FDA-cleared, non-invasive chair treatment that uses HIFEM energy to stimulate and strengthen the pelvic floor. The manufacturer compares a single 30-minute session to roughly 11,000 Kegels — with no effort on your part.
 
-  Emsella is an excellent solution for:
+  Emsella may be a good fit for:
 
-  _ Urinary incontinence (leakage during coughing, laughing, sneezing, or exercise)
-  _ Pelvic floor weakness after childbirth or aging
-  _ Sexual health and wellness improvements
-  _ Both women and men looking for confidence and freedom
+  _ Urinary incontinence — leakage with coughing, laughing, sneezing, or exercise
+  _ Pelvic floor weakness after childbirth or with age
+  _ Intimate-wellness and quality-of-life goals (a wellness use, not an FDA-cleared indication)
+  _ Women and men seeking better pelvic-floor strength and confidence
 
 # ---------- Two-column: What to Expect / Book Your Treatment (after what-is) ----------
 twoColumnSections:
@@ -52,41 +52,41 @@ twoColumnSections:
       title: "WHAT TO EXPECT\nFROM YOUR\nEMSELLA™ SESSION"
       bulletStyle: "plain"
       bullets:
-        - "Non-invasive: You remain fully clothed during treatment"
+        - "Non-invasive: You remain fully clothed"
         - "Comfortable: Simply sit back and relax in the Emsella chair"
-        - "Quick sessions: Only 30 minutes per session"
-        - "No downtime: Resume normal activities immediately"
-      tail: "Most clients see noticeable results after just a few sessions, with improvements continuing over the following weeks."
+        - "Quick: About 30 minutes per session"
+        - "No downtime: Resume your normal activities right away"
+      tail: "Many people notice improvement after a few sessions, with continued progress over the following weeks. Individual results vary."
     right:
       title: "BOOK YOUR\nEMSELLA™\nTREATMENT TODAY"
-      body: "Take the first step toward freedom, confidence, and better pelvic health with Emsella in Aventura. Whether you're struggling with urinary incontinence or simply want to improve your quality of life, our team is here to help."
+      body: "Take a step toward better pelvic-floor health and confidence with Emsella in Aventura. Whether you're dealing with urinary incontinence or simply want to improve your quality of life, our team is here to help."
   # ---------- Two-column: Emsella for Sexual Wellness (after the incontinence grid) ----------
   - position: "after-categories-grid"
     background: "cream"
-    heading: "EMSELLA FOR SEXUAL WELLNESS"
+    heading: "EMSELLA™ FOR INTIMATE WELLNESS"
     headingClass: "text-[clamp(24px,1.88vw,36px)] leading-[1.1]"
+    # Compliance: над колонками — оговорка (не FDA-cleared, не лечение ED).
+    intro: "Beyond bladder control, some people choose Emsella to support intimate wellness by strengthening the pelvic floor. <strong>These uses are not FDA-cleared indications, the evidence is still emerging, and individual results vary. Emsella is not a treatment for erectile dysfunction, sexual dysfunction, or any medical condition.</strong>"
+    # Под колонками — ссылка на программу Sexual Health.
+    footer: 'Considering this for intimate-wellness goals? See our <a href="/services/sexualhealth">Sexual Health</a> program — our team will discuss what''s realistic for you.'
     left:
-      title: "WOMAN"
+      title: "WOMEN"
       image: "/assets/images/services/emsella/sexual-wellness-woman.webp"
       imageAlt: "Woman enjoying improved confidence outdoors"
-      body: "Emsella isn't just for bladder control — it also plays a powerful role in women's sexual health and confidence. By strengthening the pelvic floor muscles and improving circulation in the pelvic region, Emsella can:"
+      body: "By strengthening the pelvic floor and supporting pelvic circulation, some women report:"
       bullets:
-        - "Enhance vaginal tightness and muscle tone"
-        - "Improve sensitivity and sexual response"
-        - "Support stronger, more satisfying orgasms"
-        - "Boost confidence and intimacy"
-      tail: "This non-invasive treatment helps women regain control of their bodies while also experiencing the benefits of improved sexual wellness and overall quality of life."
+        - "Improved pelvic-floor tone"
+        - "A greater sense of comfort and intimate confidence"
+        - "Support for everyday quality of life"
     right:
-      title: "MAN"
+      title: "MEN"
       image: "/assets/images/services/emsella/sexual-wellness-man.webp"
       imageAlt: "Man enjoying renewed confidence outdoors"
-      body: "Emsella is not just for women — it also offers significant benefits for men's sexual health. By strengthening the pelvic floor muscles with powerful electromagnetic stimulation, Emsella helps men:"
+      body: "By strengthening the pelvic floor, some men report:"
       bullets:
-        - "Improve erectile function and performance"
-        - "Increase stamina and sexual confidence"
-        - "Enhance circulation for better sensitivity"
-        - "Support overall pelvic health and control"
-      tail: "This discreet, non-invasive treatment gives men the ability to reclaim confidence, intimacy, and satisfaction."
+        - "Better pelvic-floor strength and control"
+        - "A greater sense of confidence"
+        - "Support for overall pelvic health"
 
 # ---------- What EMSELLA Is for? — incontinence types grid (gold, 3 items) ----------
 categoriesGrids:
@@ -121,18 +121,18 @@ videoEmbed:
   flush: true
   fullBleed: true
 
-# ---------- FAQ (content pending from client) ----------
+# ---------- FAQ — 5 compliant Q&A (client-доку: FDA-cleared vs sexual wellness, противопоказания) ----------
 faq:
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
+  - question: "What is Emsella, and is it FDA-cleared?"
+    answer: "Emsella is an FDA-cleared, non-invasive chair treatment that uses HIFEM energy to strengthen the pelvic floor and treat urinary incontinence in women and men. You sit fully clothed for about 30 minutes while it delivers Kegel-like contractions."
+  - question: "Does it hurt, and is there downtime?"
+    answer: "You'll feel a tingling sensation and pelvic-floor muscle contractions — most people compare it to an intense pelvic workout and find it tolerable. There's no downtime."
+  - question: "How many sessions will I need, and when will I notice results?"
+    answer: "Emsella is typically done as a short series of sessions over a few weeks. Many people notice improvement after a few sessions, with continued progress afterward. Individual results vary, and your provider will recommend a plan."
+  - question: "Can Emsella help with sexual wellness?"
+    answer: "Emsella strengthens the pelvic floor, and some people associate that with intimate-wellness benefits. However, these uses are not FDA-cleared, the evidence is still emerging, and Emsella is not a treatment for erectile dysfunction or sexual dysfunction. We're glad to discuss your goals during a consultation."
+  - question: "Is Emsella safe, and who isn't a candidate?"
+    answer: "Emsella is generally well tolerated, but it isn't for everyone — for example, metal or electronic implants (such as a pacemaker, or certain implants/devices), or pregnancy, may be contraindications. Your provider will screen you before treatment."
 
 stars:
   hero: true

@@ -319,6 +319,10 @@ const services = defineCollection({
              *  «EMSELLA FOR SEXUAL WELLNESS» ~36px, Figma 1:5162). Default в
              *  компоненте — text-h1 (другие страницы не затронуты). */
             headingClass: z.string().optional(),
+            /** Опц. лид-абзац под заголовком (HTML — emsella Intimate Wellness). */
+            intro: z.string().optional(),
+            /** Опц. абзац под колонками (HTML — emsella ссылка на Sexual Health). */
+            footer: z.string().optional(),
             background: z.enum(['cream', 'gold']).default('cream'),
             position: z.enum(['after-whatis', 'after-categories-grid']),
             left: z.object({
