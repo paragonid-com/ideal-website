@@ -1,9 +1,9 @@
 ---
-seoTitle: "ExoMind in Aventura — Advanced Neurostimulation | Ideal Medical & Wellness"
-seoDescription: "ExoMind neurostimulation therapy at Ideal Medical & Wellness in Aventura, FL. Non-invasive treatment for mood, focus, and cognitive performance."
+seoTitle: "ExoMind in Aventura — Non-Invasive Neurostimulation | Ideal Medical & Wellness"
+seoDescription: "ExoMind at Ideal Medical & Wellness in Aventura — a non-invasive, medication-free neurostimulation wellness session, provider-supervised. Book a consultation."
 
 heroTitle: "ExoMind™\nin Aventura"
-heroLead: "At Ideal Medical & Wellness, we offer Exomind therapy, a cutting-edge, non-invasive treatment designed to enhance mental clarity, improve mood, and support overall brain health. Whether you're struggling with stress, brain fog, or low motivation, ExoMind provides a safe and effective way to reset and optimize your mind."
+heroLead: "At Ideal Medical & Wellness, ExoMind is a non-invasive, medication-free neurostimulation session designed to support mental clarity and a calm, focused state of mind. It's a comfortable, in-office wellness experience with no downtime."
 heroImage: "/assets/images/services/exomind/hero.webp"
 heroImageAlt: "Client seated in the ExoMind treatment chair during a session"
 heroMobileStacked: true
@@ -13,7 +13,7 @@ heroCtaLabel: "BOOK NOW"
 heroCtaHideOnMobile: true
 
 # Все CTA-band на странице — overlap/straddle (пилюля #dbba5f / текст #8d7431),
-# по центру шва между секциями, как в Figma (узлы 1:2904/3161/2907/2913/2910).
+# по центру шва между секциями, как в Figma (узлы 1:2904/3161/2907/2910).
 overlapCtas: true
 
 # ---------- "What is" + "Who is a good candidate" two-column block ----------
@@ -21,21 +21,21 @@ twoColumnText:
   left:
     title: "What is ExoMind™?"
     body: |
-      ExoMind is an advanced neurostimulation treatment that uses targeted electromagnetic pulses to stimulate specific areas of the brain responsible for mood, focus, and cognitive function. This innovative technology is inspired by clinically proven therapies used for conditions like anxiety and depression.
+      ExoMind uses ExoTMS — a form of transcranial magnetic stimulation — to deliver gentle magnetic pulses to the dorsolateral prefrontal cortex, a region of the brain involved in focus and mood. It's built on TMS, a non-invasive technology studied in medicine for decades.
 
-      ExoMind helps regulate neural activity, promoting balance and improved mental performance—without medication or downtime.
+      We offer ExoMind as a wellness service to support everyday mental clarity and stress resilience — without medication or downtime. It is not a treatment for any diagnosed condition; individual results vary.
   right:
     title: "Who is a Good\nCandidate for\nExoMind™?"
-    body: "ExoMind is ideal for individuals who:"
+    body: "ExoMind may be a good fit if you:"
     bullets:
-      - "Experience chronic stress or burnout"
-      - "Struggle with anxiety or mild depression"
-      - "Have difficulty focusing or staying productive"
-      - "Want to optimize cognitive performance"
-      - "Prefer a non-medication, non-invasive solution"
-    tail: "Whether you're a busy professional, entrepreneur, or simply looking to feel like your best self again, ExoMind can help."
+      - 'Feel persistently stressed or "switched on" and want to support a calmer state of mind'
+      - "Want to support everyday focus and mental clarity"
+      - "Are optimizing your overall wellness as part of a broader plan"
+      - "Prefer a non-invasive, medication-free option"
+      - "Would like a provider to assess whether it's suitable for you"
+    tail: "Whether you're a busy professional, an entrepreneur, or simply investing in your wellbeing, our team can tell you honestly whether ExoMind fits. If you're seeking care for a diagnosed condition such as depression or anxiety, that calls for evaluation by a qualified professional — we're glad to help point you to the right care."
 
-# ---------- Video #1: "What is #EXOMIND?" educational ----------
+# ---------- Video #1 ----------
 videoEmbed:
   url: "https://www.youtube.com/watch?v=k4lEDTVCb0U"   # клиент: BTL «What is #EXOMIND?» explainer
   posterImage: "/assets/images/services/exomind/video-1-poster.webp"
@@ -44,7 +44,7 @@ videoEmbed:
   flush: true
   fullBleed: true
 
-# ---------- Gold Banner #1: ADVANCED BRAIN WELLNESS with CTA ----------
+# ---------- Gold Banner #1 (cream-вариант: золотой заголовок на cream) ----------
 midGoldBanner1:
   text: "ADVANCED BRAIN WELLNESS\n& MENTAL PERFORMANCE OPTIMIZATION"
   # CTA — отдельный #dbba5f straddle ServiceCTABand после баннера (Figma 1:3161).
@@ -52,54 +52,54 @@ midGoldBanner1:
 # ---------- Full-width image: TMS device close-up ----------
 fullWidthImages:
   - image: "/assets/images/services/exomind/device-showcase.webp"
-    imageAlt: "Close-up of the ExoMind TMS treatment device with illuminated coil"
+    imageAlt: "Close-up of the ExoMind TMS device with illuminated coil"
     todo: "trademark-authorization-from-btl"
     position: "after-gold-banner-1"
 
-# ---------- HOW EXOMIND WORKS + WHY CHOOSE IDEAL (text+photo with bullets) ----------
+# ---------- HOW EXOMIND WORKS + WHY CHOOSE IDEAL (text+photo) ----------
 textWithPhotoBlocks:
   - title: "How ExoMind™\nWorks?"
-    body: "Exomind sessions are comfortable and quick, typically lasting about 20–30 minutes. During treatment:"
+    body: "ExoMind sessions are comfortable and quick, typically about 20–30 minutes. During a session:"
     bullets:
-      - "A specialized device delivers gentle electromagnetic pulses to targeted brain regions"
-      - "These pulses stimulate neural pathways linked to mood and cognition"
-      - "Over a series of sessions, brain activity becomes more balanced and efficient"
+      - "A specialized device delivers gentle magnetic pulses to targeted brain regions."
+      - "The pulses stimulate neural pathways involved in focus and mood."
+      - "Over a series of sessions, the experience is designed to support a more balanced, settled state of mind."
     bulletStyle: "number"
-    tail: "Most clients begin noticing improvements within a few sessions, with optimal results after a full treatment plan."
+    tail: "Experiences vary from person to person, so rather than promising a timeline, your provider will set realistic expectations and check in along the way."
     image: "/assets/images/services/exomind/how-works.webp"
     imageAlt: "Client seated next to the ExoMind device demonstrating treatment positioning"
     imageSide: "left"
+    imagePadded: true
     position: "before-conditions"
     star: true
 
   - title: "Why Choose Ideal\nMedical & Wellness\nfor ExoMind™?"
-    body: "At Ideal Medical & Wellness, we combine advanced technology with personalized care:"
+    body: "At Ideal Medical & Wellness, we combine advanced technology with personalized, honest care:"
     bullets:
-      - "Customized treatment plans tailored to your goals"
-      - "Experienced wellness professionals"
-      - "Comfortable, spa-like environment"
-      - "Holistic approach to mind and body health"
-    tail: "We don't just treat symptoms—we help you feel better, think clearer, and live fully."
+      - "Customized plans tailored to your goals"
+      - "Experienced, supervising wellness professionals"
+      - "A comfortable, spa-like environment"
+      - "A holistic approach to mind-and-body wellbeing"
+    tail: "We'll be straight with you about what ExoMind is and isn't — and how it fits into your broader wellness plan."
     image: "/assets/images/services/exomind/why-choose.webp"
     imageAlt: "Illustration of a human head with the brain highlighted by neural activity"
     imageSide: "right"
+    imagePadded: true
     position: "before-conditions"
 
-# ---------- Conditions list: WHAT CAN EXOMIND IMPROVE? ----------
+# ---------- Conditions list → wellness goals (compliance: no disease claims) ----------
 conditionsList:
-  title: "What can ExoMind™ improve?"
+  title: "What clients come to ExoMind for"
   items:
-    - "MDD"
-    - "ANXIETY"
-    - "DEPRESSION"
-    - "COMPULSIVE DISORDERS"
-    - "ALCOHOL & DRUG ADDICTION"
-    - "SLEEP"
-    - "FOCUS"
-    - "MOOD STABILITY"
-    - "BRAIN FOG"
+    - "Stress & relaxation"
+    - "Everyday focus"
+    - "Mental clarity"
+    - "A calm, settled state of mind"
+    - "Overall wellbeing"
+    - "A medication-free, non-invasive approach"
+  caption: "ExoMind is a wellness service and is not a treatment for any medical condition."
 
-# ---------- Video #2: Patient testimonial ----------
+# ---------- Video #2 ----------
 videoEmbed2:
   url: "https://www.youtube.com/watch?v=MDqu9rPsk2o"   # клиент: пациентский отзыв (Emily)
   posterImage: "/assets/images/services/exomind/video-2-poster.webp"
@@ -108,27 +108,27 @@ videoEmbed2:
   flush: true
   fullBleed: true
 
-# ---------- Gold Banner #2: repeats the ADVANCED BRAIN WELLNESS message ----------
+# ---------- Gold Banner #2 (cream-вариант) ----------
 midGoldBanner2:
   text: "ADVANCED BRAIN WELLNESS\n& MENTAL PERFORMANCE OPTIMIZATION"
   # CTA — отдельный #dbba5f straddle ServiceCTABand после баннера (Figma 1:2910).
 
-# ---------- FAQ (placeholders — text from client pending) ----------
+# ---------- FAQ (compliant set, заменяет Lorem) ----------
 faq:
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
+  - question: "What is ExoMind and how does it work?"
+    answer: "ExoMind uses ExoTMS — a form of transcranial magnetic stimulation — to deliver gentle magnetic pulses to a brain region involved in focus and mood. It's non-invasive, medication-free, and done in-office while you sit comfortably."
+  - question: "Is ExoMind FDA-cleared?"
+    answer: "Yes, ExoMind is an FDA-cleared TMS device. We offer it as a wellness service; it is not a substitute for the medical treatment of depression, anxiety, or any condition. If you're seeking care for a diagnosed condition, we'll help direct you to appropriate medical care."
+  - question: "Does it hurt, and is there downtime?"
+    answer: "ExoMind is non-invasive and generally well tolerated — most people describe a light tapping sensation. Sessions take about 20–30 minutes with no downtime."
+  - question: "Is ExoMind safe, and who isn't a candidate?"
+    answer: "Your provider screens you first. TMS isn't right for everyone — certain implanted metallic or electronic devices, or a history of seizures, may be contraindications. We'll review your history before you begin."
+  - question: "How many sessions will I need?"
+    answer: "ExoMind is typically a series of short sessions. Experiences vary, so your provider will recommend a plan and set realistic expectations rather than promise a specific result. Individual results vary."
 
-# ---------- Standalone CTA-баннеры из Figma 1:3218, которых не было в вёрстке ----------
-ctaBeforeConditionsList: true   # Figma 1:2907 — перед «What can ExoMind improve?»
-ctaAfterVideo2: true            # Figma 1:2913 — после видео #2, перед gold-banner #2
+# ---------- Standalone CTA-баннеры из Figma 1:3218 ----------
+ctaBeforeConditionsList: true   # Figma 1:2907 — перед «What clients come to ExoMind for»
+# ctaAfterVideo2 убран по просьбе клиента (дублировал straddle на gold-banner #2).
 
 stars:
   hero: true

@@ -56,6 +56,10 @@ interface Props {
   bodyClass?: string;
   /** Зум-аут: фото целиком (object-contain) с небольшим cream-полем. */
   imageZoomOut?: boolean;
+  /** exomind How Works / Why Choose (Figma 1:3198 / 1:3209): фото — квадратный
+   *  блок с cream-паддингом (сверху/снизу + внутренний зазор к тексту), flush к
+   *  внешнему краю, вместо растяжки на всю высоту секции. Только на lg. */
+  imagePadded?: boolean;
 }
 
 const {
@@ -73,7 +77,14 @@ const {
   headingClass = 'text-h1 leading-tight',
   bodyClass = 'text-body-lg leading-relaxed',
   imageZoomOut = false,
+  imagePadded = false,
 } = Astro.props;
+// exomind padded mode: квадратное фото с cream-паддингом, flush к внешнему краю.
+// Ведущий пробел внутри переменной → при выключенном режиме класс байт-в-байт.
+const paddedCell = imagePadded
+  ? ` lg:flex lg:items-center lg:py-16 ${imageSide === 'left' ? 'lg:pr-[6%]' : 'lg:pl-[6%]'}`
+  : '';
+const paddedImg = imagePadded ? ' lg:h-auto lg:aspect-square' : '';
 // Мобайл: фото на всю ширину без полей (object-cover edge-to-edge).
 // Десктоп: зум-аут (object-contain + cream-поле).
 const imgFit = imageZoomOut ? 'object-cover lg:object-contain lg:p-[6%]' : 'object-cover';
@@ -134,11 +145,11 @@ const imageOrderClass = imageSide === 'left' ? 'lg:order-1' : 'lg:order-2';
     </div>
 
     {/* Фото */}
-    <div class={`relative h-full min-h-[600px] lg:min-h-0 ${imageOrderClass} ${imgBg}`}>
+    <div class={`relative h-full min-h-[600px] lg:min-h-0 ${imageOrderClass} ${imgBg}${paddedCell}`}>
       <img
         src={image}
         alt={imageAlt}
-        class={`block h-full w-full ${imgFit}`}
+        class={`block h-full w-full ${imgFit}${paddedImg}`}
         loading="lazy"
       />
     </div>

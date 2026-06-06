@@ -263,6 +263,9 @@ const services = defineCollection({
             bodyClass: z.string().optional(),
             /** Фото целиком с cream-полем (зум аут). */
             imageZoomOut: z.boolean().optional(),
+            /** Квадратный блок фото с cream-паддингом, flush к внешнему краю
+             *  (exomind How Works / Why Choose, Figma 1:3198 / 1:3209). */
+            imagePadded: z.boolean().optional(),
             /** В каком месте шаблона показать блок.
              *  'before-common-signs' — между whatIs и commonSigns
              *  'after-roadmap'        — после roadmap, перед whyTrust
@@ -364,6 +367,8 @@ const services = defineCollection({
         .object({
           title: z.string(),
           items: z.array(z.string()).min(2).max(20),
+          /** Опц. подпись под списком (мелкая, по центру — compliance). */
+          caption: z.string().optional(),
         })
         .optional(),
 
