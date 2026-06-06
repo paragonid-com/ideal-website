@@ -45,10 +45,12 @@ interface Props {
   /** Горизонтальная карусель (scroll-snap + стрелки) вместо вертикального стека.
    *  Для emsculpt: набор готовых BEFORE|AFTER композит-карточек (live BTL «BA cards»). */
   carousel?: boolean;
+  /** Опц. подпись под всей галереей (мелкая, по центру — атрибуция/результаты). */
+  caption?: string;
 }
 
 import { imgDim } from '../../data/imageDimensions';
-const { title, items, carousel = false } = Astro.props;
+const { title, items, carousel = false, caption } = Astro.props;
 ---
 
 <section
@@ -152,7 +154,7 @@ const { title, items, carousel = false } = Astro.props;
         </figure>
       ))}
     </div>
-    )}
+    )}{caption && <p class="mt-8 text-center font-sans text-[clamp(13px,0.94vw,16px)] italic text-gold/80 mx-auto max-w-[900px]">{caption}</p>}
   </div>
 
   {carousel && (

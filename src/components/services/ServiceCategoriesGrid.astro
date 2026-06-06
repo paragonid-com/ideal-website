@@ -35,6 +35,8 @@ interface CategoryItem {
   body?: string;
   image: string;
   imageAlt: string;
+  /** Опц. ссылка на заголовке плитки (emsculpt «Core to Floor» → /services/emsella). */
+  href?: string;
 }
 
 interface Props {
@@ -99,7 +101,7 @@ const colsClass =
             />
           </div>
           <h3 class="mt-6 font-heading text-[32px] uppercase text-gold leading-tight">
-            {item.title}
+            {item.href ? <a href={item.href} class="underline-offset-4 hover:underline">{item.title}</a> : item.title}
           </h3>
           {item.body && (
             <p class="mt-3 font-sans text-body-lg text-gold leading-relaxed">

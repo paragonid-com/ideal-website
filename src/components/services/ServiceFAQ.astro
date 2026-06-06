@@ -67,12 +67,19 @@ const { faq } = Astro.props;
                 </svg>
               </div>
             </summary>
-            <div
-              class="pb-6 pr-16 font-sans text-body-lg text-cream leading-relaxed"
-              data-todo={!item.answer.trim() ? 'faq-answer-from-client' : undefined}
-            >
-              {item.answer || '— ответ будет добавлен клиентом —'}
-            </div>
+            {item.answer.includes('<') ? (
+              <div
+                class="pb-6 pr-16 font-sans text-body-lg text-cream leading-relaxed [&_a]:underline [&_a]:underline-offset-2 hover:[&_a]:opacity-80"
+                set:html={item.answer}
+              />
+            ) : (
+              <div
+                class="pb-6 pr-16 font-sans text-body-lg text-cream leading-relaxed"
+                data-todo={!item.answer.trim() ? 'faq-answer-from-client' : undefined}
+              >
+                {item.answer || '— ответ будет добавлен клиентом —'}
+              </div>
+            )}
           </details>
         </li>
       ))}

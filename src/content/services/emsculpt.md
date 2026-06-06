@@ -1,9 +1,9 @@
 ---
 seoTitle: "EMSCULPT NEO® in Aventura, FL | Ideal Medical & Wellness"
-seoDescription: "Get the body you want with EMSCULPT NEO® — non-invasive body shaping at Ideal Medical & Wellness in Aventura. Burn fat and build muscle in just 30 minutes."
+seoDescription: "EMSCULPT NEO® in Aventura — FDA-cleared, non-invasive body shaping that helps reduce fat and build muscle in 30-minute sessions. Individual results vary."
 
 heroTitle: "GET THE BODY\nYOU WANT\nEMSCULPT NEO™"
-heroLead: "Non-invasive body shaping treatment that combines radiofrequency and high-intensity focused electromagnetic technology to simultaneously burn fat and build muscle."
+heroLead: "An FDA-cleared, non-invasive body-shaping treatment that combines radiofrequency and high-intensity focused electromagnetic energy to reduce fat and build muscle at the same time. Individual results vary."
 heroImage: "/assets/images/services/emsculpt/hero.webp"
 heroImageAlt: "Patient wearing Emsculpt Neo applicator — body shaping treatment"
 
@@ -27,7 +27,7 @@ whatIsImageSide: "right"
 whatIsImageAspect: "lg:aspect-[923/766]"
 whatIsHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
 whatIsBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
-whatIsBody: "Emsculpt Neo is the first and only non-invasive body shaping treatment that combines radiofrequency and high-intensity focused electromagnetic (HIFEM) technology to simultaneously burn fat and build muscle in just 30 minutes."
+whatIsBody: "Emsculpt Neo combines radiofrequency and high-intensity focused electromagnetic (HIFEM) technology to reduce fat and build muscle in a single 30-minute session — non-invasively, with no needles and no downtime."
 
 # === Две Categories Grid:
 #   1) "WHAT EMSCULPT NEO IS FOR" (узел 1:5542) — gold backdrop (1:5484 GOLD BACK),
@@ -47,19 +47,20 @@ categoriesGrids:
       - title: "CORE TO FLOOR"
         image: "/assets/images/services/emsculpt/category-core-to-floor.webp"
         imageAlt: "Core to floor treatment area"
+        href: "/services/emsella"   # pelvic-floor pairing (Emsella)
   - title: "CUSTOMIZE YOUR TREATMENT"
     background: "gold"
     items:
       - title: "LARGE APPLICATOR"
-        body: "Targets large body areas such as abdomen, buttock, thighs and back."
+        body: "Targets larger areas such as the abdomen, buttocks, thighs, and back."
         image: "/assets/images/services/emsculpt/applicator-large.webp"
         imageAlt: "Large Emsculpt Neo applicator"
       - title: "EDGE APPLICATOR"
-        body: "Treats four fat spots and oblique muscles in 30 minutes."
+        body: "Treats fat and the oblique muscles around the edges in about 30 minutes."
         image: "/assets/images/services/emsculpt/applicator-edge.webp"
         imageAlt: "Edge Emsculpt Neo applicator"
       - title: "SMALL APPLICATOR"
-        body: "Designed to treat smaller and curved areas such as arms and legs."
+        body: "Designed for smaller, curved areas such as the arms and calves."
         image: "/assets/images/services/emsculpt/applicator-small.webp"
         imageAlt: "Small Emsculpt Neo applicator"
 
@@ -69,24 +70,27 @@ videoEmbed:
   url: "https://youtu.be/emRdWYIOuYc"
   posterImage: "/assets/images/services/emsculpt/video-poster.webp"
   posterAlt: "Emsculpt Neo treatment video"
+  # Видео край-в-край по всей ширине на десктопе (как emsella/exomind).
   flush: true
+  fullBleed: true
 
 # === Extended Description — узлы Figma 1:5451, 1:5454.
 extendedDescription:
   title: "EMSCULPT NEO™\nMORE FOR LESS IN BODY SHAPING"
   body: |
-    Emsculpt Neo delivers powerful energy that heats fat cells to encourage permanent elimination while contracting muscles at a level impossible to achieve with exercise alone.
+    Emsculpt Neo delivers energy that heats fat cells to reduce stubborn fat, while prompting powerful muscle contractions beyond what typical voluntary exercise produces.
 
-    Whether you're looking to sculpt your abs, lift and tone your buttocks, define your arms, or strengthen your thighs, Emsculpt Neo provides noticeable results with no downtime, surgery, or needles. Clinical studies show an average of 30% fat reduction and 25% muscle growth, making it one of the most effective body contouring treatments available today.
+    Whether you want to sculpt your abs, lift and tone your buttocks, define your arms, or strengthen your thighs, Emsculpt Neo offers noticeable results with no downtime, surgery, or needles. In the manufacturer's clinical studies, treatment produced an average of about 30% fat reduction and a 25% increase in muscle — individual results vary.
 
-    Perfect for men and women of all fitness levels, Emsculpt Neo helps you achieve a stronger, leaner, and more confident body—quickly, safely, and effectively.
+    Suitable for men and women across fitness levels, Emsculpt Neo can help you work toward a stronger, leaner, more confident shape.
 
 # === Before / After — карусель (Figma 1:5559 + стрелки 1:5505/1:5506).
 # Источник: live idealmedical.com/emsculpt-neo, секция «Real Patients Real Results» —
 # официальные BTL composite-карточки (BEFORE | AFTER + caption впечатаны в картинку),
 # поэтому режим `image`. Горизонтальный scroll-snap + gold-стрелки (carousel: true).
 beforeAfter:
-  title: "REAL PATIENTS, REAL RESULTS"
+  title: "Before & After"
+  caption: "Representative results, courtesy of the treating physicians noted. Individual results vary."
   carousel: true
   items:
     - image: "/assets/images/services/emsculpt/ba-female-abdomen.webp"
@@ -102,18 +106,19 @@ beforeAfter:
     - image: "/assets/images/services/emsculpt/ba-female-thighs.webp"
       alt: "Female outer thighs before and after Emsculpt Neo"
 
-# === FAQ — Lorem ipsum placeholder в Figma (узлы 1:5493-1:5497)
+# === FAQ — 5 compliant Q&A (client-доку). Вопрос про weight-loss содержит
+#     внутреннюю ссылку (set:html). Узлы Figma 1:5493-1:5497.
 faq:
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
+  - question: "What is Emsculpt Neo, and is it FDA-cleared?"
+    answer: "Emsculpt Neo is an FDA-cleared, non-invasive body-shaping treatment that pairs radiofrequency with HIFEM muscle stimulation to reduce fat and build muscle in about 30 minutes — no needles, no downtime."
+  - question: "Does it hurt, and is there downtime?"
+    answer: "You'll feel warmth along with strong (but tolerable) muscle contractions. Most people compare it to an intense workout, and there's no downtime afterward."
+  - question: "How many sessions will I need, and when will I see results?"
+    answer: "Emsculpt Neo is typically done as a short series of sessions. Many people notice changes in the weeks after completing their treatments, with continued improvement over time. Individual results vary, and your provider will recommend a plan suited to you."
+  - question: "Is Emsculpt Neo a weight-loss treatment?"
+    answer: 'No — it''s a body-shaping (fat-reduction and muscle-building) treatment, best for people near their goal who want to tone and define specific areas. If weight loss is your primary goal, ask about our <a href="/services/weight-loss">medical weight loss</a> program; the two can complement each other.'
+  - question: "Is it safe, and who isn't a candidate?"
+    answer: "Emsculpt Neo is generally well tolerated, but it isn't for everyone — for example, metal or electronic implants in the treatment area, pregnancy, or certain conditions may be contraindications. Your provider will screen you before treatment."
 
 stars:
   hero: true

@@ -433,6 +433,8 @@ const services = defineCollection({
                   body: z.string().optional(),
                   image: z.string(),
                   imageAlt: z.string(),
+                  /** Опц. ссылка на заголовке плитки (Core to Floor → emsella). */
+                  href: z.string().optional(),
                 })
               )
               .min(2)
@@ -493,6 +495,8 @@ const services = defineCollection({
       beforeAfter: z
         .object({
           title: z.string().optional(),
+          /** Опц. подпись под всей галереей (атрибуция/«individual results vary»). */
+          caption: z.string().optional(),
           /** Где рендерить относительно secondCategoriesGrid:
            *    'late' (default) — emsculpt: после secondGrid (текущее поведение)
            *    'after-video-1'  — emface: сразу после videoEmbed, перед treatments-grid */
