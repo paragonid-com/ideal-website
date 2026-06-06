@@ -230,7 +230,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       left={data.twoColumnText.left}
       right={data.twoColumnText.right}
     />
-  )}
+  )}{data.ctaAfterTwoColumnText && <ServiceCTABand overlap={data.overlapCtas} />}
 
   {/* Two-column секции 'after-whatis' (emsella: What to Expect / Book Your Treatment) */}
   {twoColAfterWhatIs.map((s) => (

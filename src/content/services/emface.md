@@ -6,6 +6,19 @@ heroTitle: "EMFACE™\nin Aventura"
 heroLead: "At Ideal Medical & Wellness, we offer Emface, a revolutionary, non-invasive facial treatment designed to lift, tone, and rejuvenate your face—without needles, fillers, or downtime.\n\nIf you're looking for a natural, youthful appearance without invasive procedures, Emface is the future of facial aesthetics."
 heroImage: "/assets/images/services/emface/hero.webp"
 heroImageAlt: "Client receiving an EMFACE treatment with facial applicators"
+# In-hero кнопка BOOK NOW (Figma 1:6208, x=144 y=680). На мобайле скрыта —
+# сразу под hero идёт straddle BOOK APPOINTMENT.
+heroCtaLabel: "BOOK NOW"
+heroCtaHideOnMobile: true
+
+# Все CTA-band — overlap/straddle пилюли (#dbba5f / #8d7431), как в Figma.
+# Figma даёт ровно 3 straddle BOOK APPOINTMENT: hero/whatIs (1:6251 y783),
+# twoCol/areas (1:6324 y3005), before-FAQ (1:6327 y8136). Глушим дефолтные
+# вставки и возвращаем точные швы opt-in флагами.
+overlapCtas: true
+suppressDefaultCtas: true
+ctaAfterHero: true
+ctaAfterTwoColumnText: true
 
 # ---------- What is EMFACE? (photo left + body) ----------
 whatIsTitle: "WHAT IS EMFACE™?"
@@ -53,6 +66,9 @@ twoColumnText:
 categoriesGrids:
   - title: "WHAT AREAS CAN YOU TREAT WITH EMFACE™?"
     background: "gold"
+    # Исходники area-*.webp — 409×500 (портрет); дефолтный landscape-aspect
+    # обрезал их. Ставим родной портретный aspect (≈Figma near-square).
+    imageAspectClass: "aspect-[409/500]"
     items:
       - title: "EYES"
         image: "/assets/images/services/emface/area-eyes.webp"
@@ -74,6 +90,8 @@ categoriesGrids:
         imageAlt: "EMFACE treatment near the TMJ"
   - title: "EMFACE TREATMENTS ADDRESS"
     background: "cream"
+    # Исходники treat-*.webp — 496×248 (Figma 1:6524-6529). 2:1 landscape.
+    imageAspectClass: "aspect-[496/248]"
     items:
       - title: "WRINKLES"
         image: "/assets/images/services/emface/treat-wrinkles.webp"
@@ -96,27 +114,52 @@ categoriesGrids:
 
 # ---------- Video #1: "EMFACE: Put on Your Game Face" ----------
 videoEmbed:
-  url: ""
+  # «EMFACE: Put on Your Game Face» — взято с idealmedical.com/emface.
+  url: "https://www.youtube.com/watch?v=BPYfUe9gYpE"
   posterImage: "/assets/images/services/emface/video-1-poster.webp"
   posterAlt: "EMFACE: Put on Your Game Face — video preview"
+  # Figma Image 83 (1921×844) — видео край-в-край на десктопе.
+  flush: true
+  fullBleed: true
 
 # ---------- Before / After (rendered after video #1, before treatments grid) ----------
 beforeAfter:
   position: "after-video-1"
-  title: "WHAT AREAS CAN YOU TREAT WITH EMFACE™?"
-  # Figma node 1:6522 (Image 121) — единая композит-картинка с впечатанными
-  # подписями BEFORE | AFTER и встроенным caption. Режим single-image:
-  # компонент рендерит одно фото во всю ширину, без накладных бейджей/подписи.
+  # Figma node 1:6522 (Image 121) + стрелки Path 18/19 → карусель.
+  # Заголовок в Figma продублирован копипастом («What areas…»); исправлен.
+  title: "BEFORE & AFTER"
+  carousel: true
+  caption: "Representative before & after images, courtesy of the providers noted. Individual results vary."
+  # Официальные BTL EMFACE before|after композит-карточки (BEFORE | AFTER +
+  # caption впечатаны в картинку) — взяты с idealmedical.com/emface, режим image.
   items:
-    - image: "/assets/images/services/emface/before-after.webp"
-      alt: "EMFACE submental before and after — after 4th treatment, courtesy of Paolini Dermatology"
+    - image: "/assets/images/services/emface/ba-female-submental.webp"
+      alt: "Female submental before and after EMFACE"
+    - image: "/assets/images/services/emface/ba-female-jawline.webp"
+      alt: "Female jawline before and after EMFACE"
+    - image: "/assets/images/services/emface/ba-female-forehead.webp"
+      alt: "Female forehead before and after EMFACE"
+    - image: "/assets/images/services/emface/ba-female-eyes.webp"
+      alt: "Female eye area before and after EMFACE"
+    - image: "/assets/images/services/emface/ba-female-face.webp"
+      alt: "Female full-face before and after EMFACE"
+    - image: "/assets/images/services/emface/ba-male-submental.webp"
+      alt: "Male submental before and after EMFACE"
+    - image: "/assets/images/services/emface/ba-male-jawline.webp"
+      alt: "Male jawline before and after EMFACE"
+    - image: "/assets/images/services/emface/ba-male-forehead.webp"
+      alt: "Male forehead before and after EMFACE"
 
 # ---------- Video #2: "Emface VIDEO Moa Animation" (after treatments grid) ----------
 videoEmbed2:
   position: "after-second-grid"
-  url: ""
+  # «Emface VIDEO Moa Animation» — взято с idealmedical.com/emface.
+  url: "https://www.youtube.com/watch?v=OZYeUAQYogo"
   posterImage: "/assets/images/services/emface/video-2-poster.webp"
   posterAlt: "EMFACE mechanism of action animation — video preview"
+  # Figma Image 128 (1921×844) — видео край-в-край на десктопе.
+  flush: true
+  fullBleed: true
 
 # ---------- FAQ (gold background, content pending from client) ----------
 faq:

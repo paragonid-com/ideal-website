@@ -409,6 +409,9 @@ const services = defineCollection({
        *  дефолтные after-hero/after-whatis, а этот возвращает только шов Hero/WhatIs.
        *  Default false. */
       ctaAfterHero: z.boolean().default(false),
+      /** Straddle CTA после twoColumnText (emface шов How/Benefit ↔ areas
+       *  grid, Figma 1:6324). Default false → exomind не затронут. */
+      ctaAfterTwoColumnText: z.boolean().default(false),
       /** CTA «BOOK APPOINTMENT» между блоками before-common-signs (Reclaiming)
        *  и секцией Common Signs (hormone, Figma шов y≈2799). Default false. */
       ctaBeforeCommonSigns: z.boolean().default(false),
