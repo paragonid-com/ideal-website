@@ -2,95 +2,158 @@
 /**
  * ContactHero — первая секция страницы Contact.
  *
- * Структура (узлы Figma 1:7469-1:7490):
- *  - Светлый cream фон (Rectangle 5: 0,0 / 1920×1093)
- *  - Слева: заголовок "START YOUR WELLNESS TRANSFORMATION" (3 строки) + орнамент
- *  - Справа: форма с 4 полями (Name / Email / Phone / Message)
- *    + кнопка SUBMIT
+ * Левая колонка:
+ *   - H1 "CONTACT US" + короткое интро (+ Florida service-area)
+ *   - "Ways to Reach Us": телефон (tel:), online-booking (Boulevard), адрес
+ *   - орнамент-звезда
+ * Правая колонка:
+ *   - заголовок формы "Start Your Wellness Transformation"
+ *   - форма (Name / Email / Phone / Message + SUBMIT)
+ *   - примечание «не присылайте PHI / 911»
+ *   - consent (SMS/AI) — тот же текст, что и в глобальной форме
  *
- * Поля все full-width (узлы 1:7484-1:7487, линии w=914), как Email/Phone
- * на главной форме.
+ * NAP берётся из единого источника src/data/site.ts (NAP-консистентность).
  *
- * ⚠️ Дубль: ниже на странице (см. /pages/contact.astro) ещё одна форма
- *    "Start Your Wellness Transformation" — это уже стандартный 5-полевой
- *    StartYourTransformation с главной. Дублирование заголовков — open
- *    question для клиента.
+ * ⚠️ data-todo="form-submission" — форма пока не сабмитит (нужен бэкенд, P0-1).
+ * ⚠️ data-todo="confirm-consent-disclaimer-text" — финальную формулировку
+ *    consent утверждает юрист клиники под её privacy-политику.
  */
+import { SITE } from '../../data/site.ts';
+import { bookingCta } from '../../data/navigation.ts';
+
+const telHref = 'tel:' + SITE.telephone.replace(/[^+\d]/g, '');
+const a = SITE.address;
+const addressLine = `${a.street}, ${a.suite}, ${a.city}, ${a.region} ${a.postalCode}`;
 ---
 
 <section
   class="w-full bg-cream"
   data-section="contact-form"
 >
-  <div class="mx-auto max-w-design grid grid-cols-1 lg:grid-cols-2 items-start gap-16 px-[7.55%] pt-[140px] lg:pt-[204px] pb-24 lg:min-h-[1093px]">
-    {/* Левая колонка — заголовок (3 строки) + орнамент */}
+  <div class="mx-auto max-w-design grid grid-cols-1 lg:grid-cols-2 items-start gap-16 px-[7.55%] pt-[140px] lg:pt-[204px] pb-24">
+    {/* Левая колонка — Contact Us + способы связи + орнамент */}
     <div>
       <h1 class="font-heading text-h1 uppercase text-gold leading-tight">
-        Start Your<br />
-        Wellness<br />
-        Transformation
+        Contact Us
       </h1>
+
+      <p class="mt-6 max-w-[480px] font-sans text-body-lg text-gold leading-relaxed">
+        Have a question or ready to book? Reach our Aventura team by phone, book
+        online, or send a message&nbsp;&mdash; we&rsquo;ll follow up promptly.
+        We see patients located in the State of Florida.
+      </p>
+
+      <h2 class="mt-12 font-heading text-[22px] uppercase tracking-[0.02em] text-gold">
+        Ways to Reach Us
+      </h2>
+      <ul class="mt-5 space-y-4 font-sans text-body-lg text-gold">
+        <li>
+          <span class="font-semibold">Call or text:</span>{' '}
+          <a href={telHref} class="underline underline-offset-4 hover:opacity-80">{SITE.phoneDisplay}</a>
+        </li>
+        <li>
+          <span class="font-semibold">Book online:</span>{' '}
+          <a
+            href={bookingCta.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="underline underline-offset-4 hover:opacity-80"
+          >Book an appointment</a>
+        </li>
+        <li>
+          <span class="font-semibold">Visit:</span> {addressLine}
+        </li>
+      </ul>
+
       <img
         src="/assets/images/star-sign.svg"
         alt=""
         width="43"
         height="50"
-        class="mt-8 h-[50px] w-[43px]"
+        class="mt-12 h-[50px] w-[43px]"
         aria-hidden="true"
       />
     </div>
 
     {/* Правая колонка — форма */}
-    <form
-      action="#"
-      method="post"
-      data-todo="form-submission"
-      class="flex flex-col gap-12"
-    >
-      <label class="block">
-        <span class="font-sans text-[18px] text-gold">Name (Required)</span>
-        <input
-          type="text"
-          name="name"
-          required
-          class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-gold focus:outline-none"
-        />
-      </label>
-      <label class="block">
-        <span class="font-sans text-[18px] text-gold">Email (Required)</span>
-        <input
-          type="email"
-          name="email"
-          required
-          class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-gold focus:outline-none"
-        />
-      </label>
-      <label class="block">
-        <span class="font-sans text-[18px] text-gold">Phone (Required)</span>
-        <input
-          type="tel"
-          name="phone"
-          required
-          class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-gold focus:outline-none"
-        />
-      </label>
-      {/* Message — textarea с большой высотой (узел 1:7487 линия y=792 — это
-          нижняя граница большого пустого поля для сообщения) */}
-      <label class="block">
-        <span class="font-sans text-[18px] text-gold">Message</span>
-        <textarea
-          name="message"
-          rows="6"
-          class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-gold focus:outline-none resize-none"
-        ></textarea>
-      </label>
+    <div>
+      <h2 class="font-heading text-[clamp(24px,2.2vw,34px)] uppercase text-gold leading-tight">
+        Start Your Wellness Transformation
+      </h2>
 
-      <button
-        type="submit"
-        class="btn-gold self-start md:min-w-[195px] max-md:w-full max-md:self-stretch"
+      <form
+        action="#"
+        method="post"
+        data-todo="form-submission"
+        class="mt-10 flex flex-col gap-12"
       >
-        SUBMIT
-      </button>
-    </form>
+        <label class="block">
+          <span class="font-sans text-[18px] text-gold">Name (Required)</span>
+          <input
+            type="text"
+            name="name"
+            required
+            class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-gold focus:outline-none"
+          />
+        </label>
+        <label class="block">
+          <span class="font-sans text-[18px] text-gold">Email (Required)</span>
+          <input
+            type="email"
+            name="email"
+            required
+            class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-gold focus:outline-none"
+          />
+        </label>
+        <label class="block">
+          <span class="font-sans text-[18px] text-gold">Phone (Required)</span>
+          <input
+            type="tel"
+            name="phone"
+            required
+            class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-gold focus:outline-none"
+          />
+        </label>
+        <label class="block">
+          <span class="font-sans text-[18px] text-gold">Message</span>
+          <textarea
+            name="message"
+            rows="6"
+            class="mt-2 w-full border-b border-gold bg-transparent py-2 font-sans text-gold focus:outline-none resize-none"
+          ></textarea>
+        </label>
+
+        <button
+          type="submit"
+          class="btn-gold self-start md:min-w-[195px] max-md:w-full max-md:self-stretch"
+        >
+          SUBMIT
+        </button>
+
+        {/* Примечание: не присылать чувствительные мед-данные / 911 */}
+        <p class="font-sans text-[13px] italic leading-snug text-[#5a4f33]/70">
+          Please don&rsquo;t include sensitive medical details in this form. For a
+          medical emergency, call 911.
+        </p>
+
+        {/* Consent (SMS/AI) — тот же текст, что и в глобальной форме */}
+        <p
+          class="font-sans text-[13px] leading-snug text-[#5a4f33]/70"
+          data-todo="confirm-consent-disclaimer-text"
+        >
+          By submitting this form, you consent to be contacted by Ideal Medical
+          and Wellness by phone, text message (SMS), and email regarding your
+          inquiry, including through automated technology and AI-assisted tools
+          used to schedule, respond to, and follow up on your request. Consent
+          is not a condition of purchasing any goods or services. Message and
+          data rates may apply and message frequency may vary; reply STOP to
+          opt out at any time. AI-assisted communications are reviewed under the
+          supervision of our clinical team and do not constitute medical advice.
+          We respect your privacy, handle your information in accordance with
+          our <a href="/privacy" class="underline underline-offset-2 hover:opacity-80">Privacy Policy</a>,
+          and will never sell your information to third parties.
+        </p>
+      </form>
+    </div>
   </div>
 </section>
