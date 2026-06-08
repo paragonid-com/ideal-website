@@ -1,10 +1,10 @@
 ---
 seoTitle: "IV Therapy in Aventura, FL | Ideal Medical & Wellness"
-seoDescription: "Medical IV therapy in Aventura, Florida. Hydration and nutrient infusions to support energy, recovery, and overall wellness at Ideal Medical & Wellness."
+seoDescription: "Medical IV therapy in Aventura, FL — hydration and nutrient infusions to support energy, recovery, and overall wellness. Administered by licensed clinicians; individual results vary."
 
 heroTitle: "IV\nTHERAPY"
-# data-todo="copy" — лид Lorem в Figma (узел 1:5822), ждём текст от клиента
-heroLead: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."
+# Лид — финальный compliance-текст (client-доку ivtherapy rewrite).
+heroLead: "IV therapy delivers fluids, vitamins, and nutrients directly into the bloodstream, which can support hydration and replenish nutrients more directly than oral supplements. At Ideal Medical & Wellness in Aventura, infusions are administered by licensed clinicians after a quick screening. Individual results vary."
 # ⚠️ Stock: istockphoto-1312587753 (тот же кадр, что Blog Hero) — лицензия требует проверки (блокер #3)
 heroImage: "/assets/images/services/ivtherapy/hero.webp"
 heroImageAlt: "IV therapy drip bag in a clinical setting — Ideal Medical & Wellness, Aventura"
@@ -31,46 +31,50 @@ whatIsImageAspect: "lg:aspect-[923/939]"
 whatIsHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
 whatIsBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
 whatIsBody: |
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  IV therapy is the delivery of fluids, vitamins, and nutrients through an intravenous drip. Because it bypasses the digestive tract, it can support more direct absorption of certain nutrients compared with oral supplements.
 
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  At Ideal Medical & Wellness, infusions are administered by licensed clinicians after a brief screening, with blends that can be tailored to goals such as hydration, energy, and recovery. IV therapy is a wellness service — it is not a treatment for any medical condition.
 
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  Sessions are comfortable and typically take about 30–60 minutes in-office. Many people report feeling refreshed afterward; individual results vary.
 
 # === Benefits — узлы Figma 1:5861 (заголовок) + 1:5865 (интро) + 1:5930-5963 (9 icon+title).
 # Icon-only 3x3 (benefitsIconOnly), идентично peptide. Лейблы РЕАЛЬНЫЕ из Figma.
 # Интро — Lorem (data-todo="copy"). Иконки — собственная копия shared-набора.
 benefitsTitle: "What Are the Benefits of\nIV THERAPY?"
-benefitsIntro: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+benefitsIntro: "IV therapy is a convenient way to support hydration and nutrient replenishment as part of your wellness routine:"
 benefitsIconOnly: true
 benefits:
-  - title: "An initiated healing response to rebuild and regenerate tissues"
-    icon: "../../assets/services/ivtherapy/icon-healing-response.png"
-    iconAlt: "Tissue regeneration icon"
-  - title: "Accelerated healing through the aid of growth factors"
+  # Лейблы — IV-appropriate (client-доку). Иконки переназначены по смыслу из
+  # общего placeholder-набора. ⚠️ Арт icon-decreased-pain (сустав) и
+  # icon-scalp-hair (волосы) — PRP-тематика, требуют замены на IV-иконки
+  # (drip/droplet/vitamin) — арт от дизайнера.
+  - title: "Direct hydration and nutrient replenishment"
     icon: "../../assets/services/ivtherapy/icon-accelerated.png"
-    iconAlt: "Accelerated healing icon"
-  - title: "Decreased pain and inflammation"
-    icon: "../../assets/services/ivtherapy/icon-decreased-pain.png"
-    iconAlt: "Decreased pain and inflammation icon"
-  - title: "Quick, easy, and minimally invasive treatments"
-    icon: "../../assets/services/ivtherapy/icon-minimally-invasive.png"
-    iconAlt: "Minimally invasive treatment icon"
-  - title: "Low risk of allergic reactions, as natural healing mechanisms are used"
-    icon: "../../assets/services/ivtherapy/icon-low-risk.png"
-    iconAlt: "Low risk of allergic reactions icon"
-  - title: "Long-lasting results with regular maintenance"
-    icon: "../../assets/services/ivtherapy/icon-long-lasting.png"
-    iconAlt: "Long-lasting results icon"
-  - title: "Enhances scalp and hair health for visible results"
-    icon: "../../assets/services/ivtherapy/icon-scalp-hair.png"
-    iconAlt: "Scalp and hair health icon"
-  - title: "Totally customizable"
+    iconAlt: "Hydration and nutrients icon"
+  - title: "More direct absorption than oral supplements"
+    icon: "../../assets/services/ivtherapy/icon-healing-response.png"
+    iconAlt: "Nutrient absorption icon"
+  - title: "Customizable infusion blends"
     icon: "../../assets/services/ivtherapy/icon-customizable.png"
-    iconAlt: "Totally customizable icon"
-  - title: "Positively improves self-confidence, energy, and wellness"
+    iconAlt: "Customizable blends icon"
+  - title: "Administered by licensed clinicians"
+    icon: "../../assets/services/ivtherapy/icon-low-risk.png"
+    iconAlt: "Clinician-administered icon"
+  - title: "Quick, comfortable in-office sessions"
+    icon: "../../assets/services/ivtherapy/icon-minimally-invasive.png"
+    iconAlt: "Quick in-office session icon"
+  - title: "A convenient complement to your wellness routine"
     icon: "../../assets/services/ivtherapy/icon-self-confidence.png"
-    iconAlt: "Self-confidence and wellness icon"
+    iconAlt: "Wellness routine icon"
+  - title: "Support for everyday energy and recovery goals"
+    icon: "../../assets/services/ivtherapy/icon-long-lasting.png"
+    iconAlt: "Energy and recovery icon"
+  - title: "Screened for safety and suitability"
+    icon: "../../assets/services/ivtherapy/icon-decreased-pain.png"
+    iconAlt: "Safety screening icon"
+  - title: "Tailored to your goals"
+    icon: "../../assets/services/ivtherapy/icon-scalp-hair.png"
+    iconAlt: "Tailored to goals icon"
 
 # === Who is IV Therapy For? — узлы Figma 1:5870 + 1:5873 (body) + 1:5891 (фото справа).
 # Заголовок реальный; lead Lorem (data-todo="copy"). Буллетов в Figma нет —
@@ -90,31 +94,31 @@ whoForBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
 whoForImageMinH: ""
 whoForImageAspect: "lg:aspect-[996/993]"
 whoForLead: |
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  IV therapy may suit people looking to support hydration and nutrient levels — for active lifestyles, recovery, travel, or simply a busy schedule — as a complement to a healthy routine.
 
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  It isn't right for everyone. A clinician screens you first, since certain conditions (for example, kidney or heart conditions, or pregnancy) call for caution. IV therapy is not a substitute for medical care.
 
 # === The Results — узлы Figma 1:5900 + 1:5901. Body Lorem (data-todo="copy").
 resultsTitle: "THE RESULTS"
 resultsBody: |
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  Many people report feeling refreshed or re-energized after a session. Effects vary from person to person and are often short-term, supporting hydration and nutrient levels rather than producing a lasting change on their own.
 
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  IV therapy is not a cure or treatment for any illness; it's a wellness service that supports hydration and nutrition.
 
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  Your clinician can recommend a sensible cadence based on your goals. Individual results vary, and these statements have not been evaluated by the FDA.
 
 # === FAQ — узлы Figma 1:5914-5918 (5 Lorem-вопросов). data-todo="copy" — ждём от клиента.
 faq:
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
+  - question: "What is IV therapy, and what's in the infusions?"
+    answer: "IV therapy delivers fluids along with vitamins and nutrients through a drip. Blends are customizable and selected with a clinician based on your goals — for example, hydration, energy, or recovery support."
+  - question: "Does it hurt, and how long does it take?"
+    answer: "It begins with a quick IV placement (a small pinch), and most sessions take about 30–60 minutes while you relax comfortably in-office."
+  - question: "Is IV therapy safe, and who isn't a candidate?"
+    answer: "Infusions are administered by licensed clinicians after a screening. It isn't right for everyone — conditions such as kidney or heart disease, or pregnancy, may require caution — so your provider will review your history first."
+  - question: "How often should I get IV therapy?"
+    answer: "That depends on your goals; your clinician will recommend a cadence. IV therapy complements — but doesn't replace — good hydration, nutrition, and overall care."
+  - question: 'Can IV therapy cure illness or "boost" my immune system?'
+    answer: "IV therapy supports hydration and nutrient replenishment; it is not a treatment or cure for any illness, and we don't make disease-prevention claims. If you're feeling unwell, please see a medical provider."
 
 # === Star-sign ornaments (Figma: 1:5850 hero, 1:5864 benefits, 1:5886 whoFor, 1:5911 results)
 # WhatIs звезды нет (1:5851 — угловой декор header-зоны, как Image 81 на других страницах).
