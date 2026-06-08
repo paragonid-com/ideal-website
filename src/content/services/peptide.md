@@ -1,10 +1,10 @@
 ---
 seoTitle: "Peptide Therapy in Aventura, FL | Ideal Medical & Wellness"
-seoDescription: "Medical peptide therapy in Aventura, Florida. Regenerative treatments to accelerate healing, reduce inflammation, and improve overall wellness. Book today!"
+seoDescription: "Physician-supervised peptide therapy in Aventura, FL — individualized, medically supervised wellness protocols, prescribed only when appropriate. Individual results vary."
 
 heroTitle: "PEPTIDE\nTHERAPY"
-# data-todo="copy" — лид Lorem в Figma (узел 1:3836), ждём текст от клиента
-heroLead: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate."
+# Лид — финальный compliance-текст (client-доку peptide rewrite).
+heroLead: "Peptides are short chains of amino acids that act as signaling molecules in the body. At Ideal Medical & Wellness in Aventura, peptide therapy is a physician-supervised, individualized wellness option — prescribed only when medically appropriate, after evaluation. Individual results vary."
 heroImage: "/assets/images/services/peptide/hero.webp"
 heroImageAlt: "Two IDEAL peptide injector pens — Ideal Medical & Wellness, Aventura"
 # hero.webp = готовая композиция (золотой градиент + две ручки справа, 1920×814).
@@ -31,46 +31,50 @@ whatIsImageAspect: "lg:aspect-[923/939]"
 whatIsHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
 whatIsBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
 whatIsBody: |
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  Peptides are naturally occurring signaling molecules. In a medical setting, specific peptides may be used within a supervised wellness protocol to support goals such as recovery, energy, or body composition — always individualized to the person.
 
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  Our approach starts with an evaluation and appropriate lab work, then a plan tailored to you, using the lowest effective, individualized dosing and ongoing clinical monitoring. Importantly, many peptides are not FDA-approved; we use them only under the supervision of a licensed provider, and only when appropriate for you.
 
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  We don't sell prescriptions directly — we provide medically supervised programs. Your provider will discuss what peptide therapy can and can't do, so your expectations are realistic from the start.
 
 # === Benefits — узлы Figma 1:3875 (заголовок) + 1:3944-3977 (9 icon+title).
 # Peptide-режим: icon + title БЕЗ description, сетка 3x3 (benefitsIconOnly).
 # Заголовки benefit'ов РЕАЛЬНЫЕ (из Figma). Интро — Lorem (data-todo="copy").
 benefitsTitle: "What Are the Benefits of\nPEPTIDE THERAPY?"
-benefitsIntro: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+benefitsIntro: "Patients consider peptide therapy as part of a broader, provider-guided wellness plan. Our program offers:"
 benefitsIconOnly: true
 benefits:
-  - title: "An initiated healing response to rebuild and regenerate tissues"
-    icon: "../../assets/services/peptide/icon-healing-response.png"
-    iconAlt: "Tissue regeneration icon"
-  - title: "Accelerated healing through the aid of growth factors"
-    icon: "../../assets/services/peptide/icon-accelerated.png"
-    iconAlt: "Accelerated healing icon"
-  - title: "Decreased pain and inflammation"
-    icon: "../../assets/services/peptide/icon-decreased-pain.png"
-    iconAlt: "Decreased pain and inflammation icon"
-  - title: "Quick, easy, and minimally invasive treatments"
+  # Лейблы — peptide-appropriate, non-disease-claim (client-доку). Иконки
+  # переназначены по смыслу из общего placeholder-набора. ⚠️ Арт
+  # icon-decreased-pain (сустав) и icon-scalp-hair (волосы) — PRP-тематика,
+  # требуют замены на нейтральные иконки — арт от дизайнера.
+  - title: "Individualized, physician-supervised protocols"
     icon: "../../assets/services/peptide/icon-minimally-invasive.png"
-    iconAlt: "Minimally invasive treatment icon"
-  - title: "Low risk of allergic reactions, as natural healing mechanisms are used"
-    icon: "../../assets/services/peptide/icon-low-risk.png"
-    iconAlt: "Low risk of allergic reactions icon"
-  - title: "Long-lasting results with regular maintenance"
-    icon: "../../assets/services/peptide/icon-long-lasting.png"
-    iconAlt: "Long-lasting results icon"
-  - title: "Enhances scalp and hair health for visible results"
-    icon: "../../assets/services/peptide/icon-scalp-hair.png"
-    iconAlt: "Scalp and hair health icon"
-  - title: "Totally customizable"
+    iconAlt: "Physician-supervised icon"
+  - title: "Treatment guided by evaluation and lab work"
+    icon: "../../assets/services/peptide/icon-healing-response.png"
+    iconAlt: "Evaluation and lab work icon"
+  - title: "The lowest effective, personalized dosing"
     icon: "../../assets/services/peptide/icon-customizable.png"
-    iconAlt: "Totally customizable icon"
-  - title: "Positively improves self-confidence, energy, and wellness"
+    iconAlt: "Personalized dosing icon"
+  - title: "Ongoing clinical monitoring and support"
+    icon: "../../assets/services/peptide/icon-long-lasting.png"
+    iconAlt: "Ongoing monitoring icon"
+  - title: "A complement to your hormone, weight-loss, or recovery goals"
     icon: "../../assets/services/peptide/icon-self-confidence.png"
-    iconAlt: "Self-confidence and wellness icon"
+    iconAlt: "Complement to wellness goals icon"
+  - title: "Minimally invasive administration"
+    icon: "../../assets/services/peptide/icon-low-risk.png"
+    iconAlt: "Minimally invasive administration icon"
+  - title: "Care from licensed providers"
+    icon: "../../assets/services/peptide/icon-accelerated.png"
+    iconAlt: "Licensed provider care icon"
+  - title: "A plan tailored to your goals"
+    icon: "../../assets/services/peptide/icon-decreased-pain.png"
+    iconAlt: "Tailored plan icon"
+  - title: "Honest guidance on what peptides can — and can't — do"
+    icon: "../../assets/services/peptide/icon-scalp-hair.png"
+    iconAlt: "Honest guidance icon"
 
 # === Who is Peptide Therapy For? — узлы Figma 1:3884 + 1:3887 + 1:3901 (фото).
 # Заголовок реальный; lead Lorem (data-todo="copy"). Буллетов в Figma нет —
@@ -92,31 +96,31 @@ whoForImageAspect: "lg:aspect-[996/993]"
 # В Figma (узлы 1:3887) текст идёт сплошными абзацами БЕЗ буллет-списка —
 # whoForBullets не задаём (буллеты опциональны).
 whoForLead: |
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  Peptide therapy may suit adults pursuing wellness, recovery, or body-composition goals as part of a medically supervised plan. It isn't right for everyone, and it isn't a substitute for treating a diagnosed medical condition.
 
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+  Candidacy is determined by a provider after an evaluation. Some people — for example, those who are pregnant or have certain medical conditions — aren't candidates. We'll be straightforward about whether peptide therapy fits your goals and your health history.
 
 # === The Results — узлы Figma 1:3914 + 1:3915. Body Lorem (data-todo="copy").
 resultsTitle: "THE RESULTS"
 resultsBody: |
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  Results vary from person to person, and nothing is guaranteed. Rather than promising a timeline, your provider sets realistic expectations and a plan suited to you.
 
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  We monitor your response over time and adjust as needed, with peptide therapy used as one part of a broader wellness program — not a stand-alone fix.
 
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  Individual results vary and are not guaranteed. These statements have not been evaluated by the FDA.
 
 # === FAQ — узлы Figma 1:3927-3932 (5 Lorem-вопросов). data-todo="copy" — ждём от клиента.
 faq:
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
+  - question: "What is peptide therapy, and are peptides FDA-approved?"
+    answer: "Peptide therapy uses specific peptides within a supervised wellness protocol. Some peptides are FDA-approved for particular medical uses; many others are not. We use peptides only under the supervision of a licensed provider and only when appropriate for you."
+  - question: "Is peptide therapy safe? What about side effects?"
+    answer: "Your provider screens you first and monitors you throughout. As with any medical treatment, side effects are possible, which your provider will review with you. Treatment is individualized to help manage risk."
+  - question: "How are peptides administered?"
+    answer: "Most peptides are given by small subcutaneous injection, following a provider-guided protocol. We use the lowest effective, individualized dose."
+  - question: "Who isn't a candidate for peptide therapy?"
+    answer: "It isn't right for everyone — for example, pregnancy or certain medical conditions may make it inappropriate. Your provider determines candidacy after an evaluation."
+  - question: 'Is this different from buying "research" peptides online?'
+    answer: 'Yes — significantly. Peptides sold online "for research" are unregulated, unverified, and can be unsafe. We provide medically supervised care: evaluation, appropriate sourcing, individualized dosing, and monitoring.'
 
 # === Star-sign ornaments (Figma узлы 1:3864 hero, 1:3865 whatIs, 1:3878 benefits,
 #     1:3900 whoFor, 1:3925 results)
