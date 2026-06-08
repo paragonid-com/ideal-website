@@ -1,68 +1,34 @@
 ---
 /**
- * BrandStrip — ряд логотипов препаратов на БЕЛОЙ полосе.
- * Между Discover (cream) и Signature Services (cream): белый фон образует
- * отдельную полосу, как в макете.
+ * BrandStrip — row of treatment-category labels on a white band between
+ * Discover (cream) and Signature Services (cream).
  *
- * Источник Figma (HOME): 1:210 Tesamorelin, 1:211 Ozempic,
- * 1:216 NAD+, 1:179 TESTOSTERONE, 1:217 Mounjaro.
- * Логотипы выровнены по близкой визуальной высоте и равномерно распределены.
- *
- * NAD+ и TESTOSTERONE — текст (sans-serif в макете); Tesamorelin, Ozempic,
- * Mounjaro — PNG (обрезаны по контенту, прозрачный фон, читаются и на белом).
- *
- * ⚠️ Ozempic® и Mounjaro® — товарные знаки. Использование требует
- * юридической проверки. См. docs/stock-photo-inventory.md.
+ * Brand Rx logos (Ozempic®, Mounjaro®, Tesamorelin) were removed: trademark
+ * use, off-label implication (Ozempic/Mounjaro are diabetes brands, not the
+ * weight-loss-approved Wegovy/Zepbound), and restricted-drug ad policy.
+ * Replaced with non-branded service categories.
  */
 import Container from '../Container.astro';
 
-// Высоты подобраны под макет так, чтобы визуальная высота начертаний была
-// примерно одинаковой. У двухстрочных логотипов (Ozempic — лого+подпись,
-// Mounjaro — иконка+слово) высота больше, у одностройчного Tesamorelin меньше.
-const logos = [
-  { name: 'Tesamorelin', src: '/assets/images/brand-tesamorelin.png', cls: 'h-[28px] md:h-[32px]' },
-  { name: 'Ozempic',     src: '/assets/images/brand-ozempic.png',     cls: 'h-[46px] md:h-[56px]', trademark: true },
-];
-const logosRight = [
-  { name: 'Mounjaro',    src: '/assets/images/brand-mounjaro.png',    cls: 'h-[56px] md:h-[66px]', trademark: true },
-];
+const labelsLeft = ['GLP-1 Therapy', 'Peptide Therapy'];
+const labelsRight = ['Testosterone', 'IV Therapy'];
+const labelCls =
+  'font-sans text-[22px] md:text-[28px] font-bold uppercase tracking-[0.02em] leading-none text-[#222]';
 ---
 
 <section class="w-full bg-white py-12 md:py-14" data-section="brand-strip">
   <Container>
     <div
-      class="flex flex-wrap items-center justify-center gap-x-10 gap-y-8 md:justify-between md:gap-x-8"
-      data-todo="trademark-review"
+      class="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 md:justify-between md:gap-x-8"
     >
-      {logos.map((b) => (
-        <img
-          src={b.src}
-          alt={b.name}
-          class={`${b.cls} w-auto object-contain`}
-          loading="lazy"
-          data-trademark={b.trademark ? 'yes' : undefined}
-        />
-      ))}
+      {labelsLeft.map((l) => <span class={labelCls}>{l}</span>)}
 
-      {/* NAD+ — bold sans, dark. Плюс слегка приподнят как в макете. */}
+      {/* NAD+ — bold sans, dark, slightly raised plus as in the design. */}
       <span class="font-sans text-[34px] md:text-[42px] font-bold leading-none text-[#222]">
         NAD<sup class="text-[0.62em] top-[-0.45em] relative font-semibold">+</sup>
       </span>
 
-      {/* TESTOSTERONE — bold sans с разрядкой, dark. */}
-      <span class="font-sans text-[26px] md:text-[29px] font-bold tracking-[0.02em] leading-none text-[#222]">
-        TESTOSTERONE
-      </span>
-
-      {logosRight.map((b) => (
-        <img
-          src={b.src}
-          alt={b.name}
-          class={`${b.cls} w-auto object-contain`}
-          loading="lazy"
-          data-trademark={b.trademark ? 'yes' : undefined}
-        />
-      ))}
+      {labelsRight.map((l) => <span class={labelCls}>{l}</span>)}
     </div>
   </Container>
 </section>
