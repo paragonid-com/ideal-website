@@ -3,10 +3,13 @@
  * AboutIntro — основной блок страницы About.
  *
  * Структура (узлы Figma 1:6880 + 1:6855):
- *  - Большой H1 "If you're ready to unlock your full potential..." центрированный,
- *    5 строк, font-heading 62px. В Figma узлы 1:6881-1:6885 показывают
- *    конкретное разбиение строк (но в HTML дадим браузеру решать сам).
- *  - Body text — 3 параграфа, центрированный по странице, max-width ~900px.
+ *  - Большой центрированный H2 (softened): "Personalized, concierge wellness
+ *    and weight-loss care in Aventura — built around you." font-heading 62px.
+ *    (Было: "...unlock your full potential..." — суперлатив снят по compliance.)
+ *  - Body — 2 параграфа (softened: сняты «guarantee/top choice/best
+ *    possible/redefining»; добавлены ссылки на услуги, South Florida,
+ *    individual results vary), центр, max-width ~900px. Команда — отдельной
+ *    секцией <WhoWeAre/> ниже (E-E-A-T).
  *
  * Фон секции — cream (Rectangle 5, узел 1:6853, h=1061).
  */
@@ -19,19 +22,16 @@
   <div class="mx-auto max-w-design px-[7.55%]">
     {/* Большой центрированный заголовок */}
     <h2 class="mx-auto max-w-[1177px] text-center font-heading text-h1 uppercase text-gold leading-tight">
-      If you're ready to unlock your full potential, it's time to discover the unique wellness and weight loss solutions offered by Ideal Medical &amp; Wellness.
+      Personalized, concierge wellness and weight-loss care in Aventura &mdash; built around you.
     </h2>
 
     {/* Body — 3 параграфа, центрированы, max-width 902px (узел 1:6855) */}
     <div class="mx-auto mt-20 max-w-[902px] space-y-6 text-center font-sans text-body-lg text-gold leading-relaxed">
       <p>
-        Our team is dedicated to providing personalized experiences and excellence in wellness. We are redefining healthcare with our concierge services, tailored specifically to your needs, ensuring you receive the highest level of care.
+        Ideal Medical &amp; Wellness is a concierge medical and wellness practice in the heart of Aventura, serving men and women across South Florida. We focus on personalized, provider-supervised care &mdash; taking the time to understand your goals and tailor a plan, rather than offering one-size-fits-all treatment. Our environment is professional, discreet, and confidential.
       </p>
       <p>
-        At Ideal Medical &amp; Wellness, our team is committed to creating a professional, trusting environment. We stay at the forefront of wellness and weight loss innovations to ensure you always feel valued and understood. Discretion is a key pillar of our service, and we guarantee the highest level of confidentiality.
-      </p>
-      <p>
-        The Ideal Medical &amp; Wellness team brings extensive expertise, education, and skills, making us the top choice in medical wellness, especially for professional athletes and patients who are committed to achieving the best possible results. While customization is an integral part of our mission, we also center our treatments around proven and effective ones. Together, we can help you navigate your wellness journey with our signature treatments designed to enhance your well-being.
+        Our team brings real clinical expertise and ongoing education to everything we do, and we favor evidence-informed, individualized treatments. From <a href="/services/weight-loss" class="underline underline-offset-4 hover:opacity-80">medical weight loss</a> and <a href="/services/hormone" class="underline underline-offset-4 hover:opacity-80">hormone optimization</a> to <a href="/services/emface" class="underline underline-offset-4 hover:opacity-80">aesthetic treatments</a>, we&rsquo;ll help you navigate your wellness journey with care designed around you. Individual results vary.
       </p>
     </div>
   </div>
