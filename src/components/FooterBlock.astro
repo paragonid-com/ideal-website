@@ -31,7 +31,7 @@ const address = {
   city: `${SITE.address.city}, ${SITE.address.region} ${SITE.address.postalCode}`,
   phone: SITE.phoneDisplay,
 };
-const tel = `tel:${address.phone.replace(/[^\d+]/g, '')}`;
+const tel = SITE.telHref;
 
 const group = (label: string) => mainNav.find((g) => g.label === label)?.items ?? [];
 const wellness = group('Wellness Services');

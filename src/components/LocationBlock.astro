@@ -54,7 +54,7 @@ const mapEmbed = `https://www.google.com/maps?q=${encodeURIComponent(
           <p>{suite}</p>
           <p>{city}, {region} {postalCode}</p>
           <p class="mt-4">
-            <a href={`tel:${SITE.telephone}`} class="hover:underline">
+            <a href={SITE.telHref} class="hover:underline">
               {SITE.phoneDisplay}
             </a>
           </p>

@@ -21,7 +21,7 @@
 import { SITE } from '../../data/site.ts';
 import { bookingCta } from '../../data/navigation.ts';
 
-const telHref = 'tel:' + SITE.telephone.replace(/[^+\d]/g, '');
+const telHref = SITE.telHref;
 const a = SITE.address;
 const addressLine = `${a.street}, ${a.suite}, ${a.city}, ${a.region} ${a.postalCode}`;
 ---

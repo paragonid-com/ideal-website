@@ -22,6 +22,9 @@ export const SITE = {
   telephone: '+1-305-650-1884',
   // Для tel:-ссылок и человекочитаемого вывода
   phoneDisplay: '(305) 650-1884',
+  // Канонический href для всех tel:-ссылок (E.164). Единый источник —
+  // используется в футере, форме, LocationBlock, ContactHero (NAP-консистентность).
+  telHref: 'tel:+13056501884',
   email: '',
   address: {
     street: '2999 NE 191st Street',
