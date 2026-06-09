@@ -1,10 +1,10 @@
 ---
 seoTitle: "Sexual Health Therapy in Aventura, FL | Ideal Medical & Wellness"
-seoDescription: "Sexual health therapy in Aventura, Florida. Natural, minimally invasive treatments to restore confidence, function, and wellness. Book your appointment today!"
+seoDescription: "Discreet, provider-supervised sexual wellness care in Aventura, FL — individualized options to support intimate wellbeing and confidence. Book a confidential consultation."
 
 # === Hero — узел Figma 1:7094 (H1) + 1:7100 (lead Lorem, data-todo="copy")
 heroTitle: "SEXUAL\nHEALTH"
-heroLead: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris."
+heroLead: "Sexual wellness is part of overall health — and it deserves a discreet, judgment-free conversation. At Ideal Medical & Wellness in Aventura, we offer provider-supervised options that may support intimate wellbeing and confidence, tailored to you after a private consultation. Individual results vary."
 heroImage: "/assets/images/services/sexualhealth/hero.webp"
 heroImageAlt: "Sexual health therapy at Ideal Medical & Wellness, Aventura"
 # hero.webp = full-bleed istock 1266272168 (мужчина справа, светлый нейтральный фон слева).
@@ -29,46 +29,50 @@ whatIsImageAspect: "lg:aspect-[923/939]"
 whatIsHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
 whatIsBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
 whatIsBody: |
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  Our sexual health care is a confidential, provider-led approach to intimate wellness for both men and women. Depending on your needs, options may include PRP-based treatments, pelvic-floor strengthening with Emsella, and hormone or wellness optimization where appropriate.
 
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  Changes in sexual wellness can have many underlying causes — hormonal, vascular, medication-related, or stress — so we begin with an evaluation rather than a one-size-fits-all treatment. Some causes call for a medical work-up. Many of the options in this area are not FDA-approved for sexual dysfunction, and we'll explain what is and isn't established.
 
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+  Care is discreet, individualized, and provider-supervised. It isn't a guaranteed fix, and it isn't a substitute for medical evaluation; together we'll decide what's appropriate for you.
 
 # === Benefits — узлы Figma 1:7139 (заголовок) + 1:7143 (интро Lorem) + 1:7208-7232 (9 icon+title).
 # Режим icon + title без description, сетка 3x3 (benefitsIconOnly). Заголовки benefit'ов
 # реальные из Figma (идентичны peptide/regenerative). Иконки — общий набор (копия из peptide).
 benefitsTitle: "WHAT ARE THE BENEFITS OF\nSEXUAL HEALTH THERAPY?"
-benefitsIntro: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+benefitsIntro: "Patients come to us for discreet, individualized care. Depending on the approach chosen, our options may offer:"
 benefitsIconOnly: true
 benefits:
-  - title: "An initiated healing response to rebuild and regenerate tissues"
-    icon: "../../assets/services/sexualhealth/icon-healing-response.png"
-    iconAlt: "Tissue regeneration icon"
-  - title: "Accelerated healing through the aid of growth factors"
+  # Лейблы — sexual-wellness-appropriate (client-доку). Иконки переназначены
+  # по смыслу из общего placeholder-набора. ⚠️ Арт icon-decreased-pain (сустав)
+  # и icon-scalp-hair (волосы) — PRP-тематика, требуют замены на нейтральные
+  # иконки — арт от дизайнера. Emsella — текстом (компонент не рендерит ссылки).
+  - title: "A discreet, judgment-free, provider-led experience"
     icon: "../../assets/services/sexualhealth/icon-accelerated.png"
-    iconAlt: "Accelerated healing icon"
-  - title: "Decreased pain and inflammation"
-    icon: "../../assets/services/sexualhealth/icon-decreased-pain.png"
-    iconAlt: "Decreased pain and inflammation icon"
-  - title: "Quick, easy, and minimally invasive treatments"
-    icon: "../../assets/services/sexualhealth/icon-minimally-invasive.png"
-    iconAlt: "Minimally invasive treatment icon"
-  - title: "Low risk of allergic reactions, as natural healing mechanisms are used"
-    icon: "../../assets/services/sexualhealth/icon-low-risk.png"
-    iconAlt: "Low risk of allergic reactions icon"
-  - title: "Long-lasting results with regular maintenance"
-    icon: "../../assets/services/sexualhealth/icon-long-lasting.png"
-    iconAlt: "Long-lasting results icon"
-  - title: "Enhances scalp and hair health for visible results"
-    icon: "../../assets/services/sexualhealth/icon-scalp-hair.png"
-    iconAlt: "Scalp and hair health icon"
-  - title: "Totally customizable"
+    iconAlt: "Discreet provider-led care icon"
+  - title: "Individualized treatment options for men and women"
     icon: "../../assets/services/sexualhealth/icon-customizable.png"
-    iconAlt: "Totally customizable icon"
-  - title: "Positively improves self-confidence, energy, and wellness"
+    iconAlt: "Individualized options icon"
+  - title: "Minimally invasive approaches"
+    icon: "../../assets/services/sexualhealth/icon-minimally-invasive.png"
+    iconAlt: "Minimally invasive icon"
+  - title: "Options that use your own PRP (low allergy risk)"
+    icon: "../../assets/services/sexualhealth/icon-low-risk.png"
+    iconAlt: "Low allergy risk icon"
+  - title: "Support for intimate confidence and wellbeing"
     icon: "../../assets/services/sexualhealth/icon-self-confidence.png"
-    iconAlt: "Self-confidence and wellness icon"
+    iconAlt: "Confidence and wellbeing icon"
+  - title: "Coordination with hormone and pelvic-floor (Emsella) options"
+    icon: "../../assets/services/sexualhealth/icon-healing-response.png"
+    iconAlt: "Coordinated care icon"
+  - title: "A plan tailored to your goals"
+    icon: "../../assets/services/sexualhealth/icon-long-lasting.png"
+    iconAlt: "Tailored plan icon"
+  - title: "Honest guidance on what's realistic"
+    icon: "../../assets/services/sexualhealth/icon-decreased-pain.png"
+    iconAlt: "Honest guidance icon"
+  - title: "Ongoing provider support"
+    icon: "../../assets/services/sexualhealth/icon-scalp-hair.png"
+    iconAlt: "Ongoing support icon"
 
 # === Who is Sexual Health Therapy For? — узлы Figma 1:7148 + 1:7151 + 1:7169 (фото справа, istockphoto-2203782670).
 # Заголовок реальный; lead Lorem (data-todo="copy"). Буллетов в Figma нет — текст сплошными
@@ -86,31 +90,33 @@ whoForBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
 whoForImageMinH: ""
 whoForImageAspect: "lg:aspect-[996/993]"
 whoForLead: |
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  Our care is for adults — men and women — who want to address intimate-wellness concerns or simply feel more confident, whether related to age, hormones, or other changes. We keep the experience private and respectful at every step.
 
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  It isn't right for everyone, and it isn't a replacement for medical evaluation. If you have new or sudden symptoms, a work-up matters — for example, erectile changes can sometimes be an early sign of other health conditions. Your provider will determine what's appropriate after a confidential consultation.
 
 # === The Results — узлы Figma 1:7178 + 1:7179. Body Lorem (data-todo="copy").
 resultsTitle: "THE RESULTS"
 resultsBody: |
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  Results vary from person to person. Some patients report improvements in confidence and intimate wellbeing, but outcomes are individual and not guaranteed.
 
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  Many of these options are not FDA-approved for sexual dysfunction, and the evidence varies by approach, so we focus on setting realistic expectations from the start.
 
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+  Your provider monitors your response and tailors the plan to you. Individual results vary, and these statements have not been evaluated by the FDA.
 
-# === FAQ — узлы Figma 1:7192-7196 (5 Lorem-вопросов). data-todo="copy" — ждём от клиента.
+# === FAQ — 5 compliant Q&A (client-доку sexualhealth rewrite). ⚠️ Тема high-risk:
+#     перед публикацией — юридическая/медицинская проверка (PRP-for-sexual-wellness
+#     под активным фокусом FDA/FTC).
 faq:
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
-  - question: "Lorem ipsum dolor sit amet, consectetur adipiscing elit?"
-    answer: ""
+  - question: "What does sexual health care at Ideal Medical involve?"
+    answer: "It starts with a confidential consultation. From there, options may include PRP-based treatments, pelvic-floor strengthening with Emsella, and hormone or wellness optimization where appropriate — chosen with a provider based on your goals and health history."
+  - question: "Is this FDA-approved? Will it cure erectile dysfunction or sexual dysfunction?"
+    answer: "Many sexual-wellness options are not FDA-approved for sexual dysfunction, and they aren't a guaranteed cure. Because sexual changes can have underlying medical causes, we begin with an evaluation and will be honest about what's realistic."
+  - question: "Is the experience discreet and confidential?"
+    answer: "Yes. Consultations are private, and your information is handled in accordance with our Privacy Policy. Discretion is central to how we provide this care."
+  - question: "Does treatment hurt, and is there downtime?"
+    answer: "That depends on the specific option. Most approaches are minimally invasive; your provider will explain exactly what to expect, including any sensation and recovery considerations, before you begin."
+  - question: "Who isn't a candidate?"
+    answer: "Certain conditions may make a given option inappropriate, and new or sudden symptoms should be evaluated medically first. Your provider will screen you and recommend the right path during your consultation."
 
 # === Star-sign ornaments (Figma 1:7128 hero, 1:7129 whatIs, 1:7142 benefits,
 #     1:7164 whoFor, 1:7189 results)
