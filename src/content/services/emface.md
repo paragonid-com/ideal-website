@@ -6,6 +6,8 @@ heroTitle: "EMFACE™\nin Aventura"
 heroLead: "At Ideal Medical & Wellness, we offer Emface — an FDA-cleared, non-invasive facial treatment designed to lift, tone, and smooth your face, without needles, fillers, or downtime.\n\nIf you want a refreshed, natural-looking appearance without invasive procedures, Emface is a modern approach to facial aesthetics. Individual results vary."
 heroImage: "/assets/images/services/emface/hero.webp"
 heroImageAlt: "Client receiving an EMFACE treatment with facial applicators"
+heroMobileStacked: true
+heroMobileImagePosition: "object-[82%_center]"
 # In-hero кнопка BOOK NOW (Figma 1:6208, x=144 y=680). На мобайле скрыта —
 # сразу под hero идёт straddle BOOK APPOINTMENT.
 heroCtaLabel: "BOOK NOW"
