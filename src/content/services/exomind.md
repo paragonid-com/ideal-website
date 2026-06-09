@@ -18,8 +18,9 @@ overlapCtas: true
 
 # ---------- "What is" + "Who is a good candidate" two-column block ----------
 twoColumnText:
+  alignBodies: true
   left:
-    title: "What is ExoMind™?"
+    title: "What is\nExoMind™?"
     body: |
       ExoMind uses ExoTMS — a form of transcranial magnetic stimulation — to deliver gentle magnetic pulses to the dorsolateral prefrontal cortex, a region of the brain involved in focus and mood. It's built on TMS, a non-invasive technology studied in medicine for decades.
 

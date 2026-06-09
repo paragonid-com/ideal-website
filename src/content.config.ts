@@ -296,6 +296,9 @@ const services = defineCollection({
             bullets: z.array(z.string()).optional(),
             tail: z.string().optional(),
           }),
+          // На десктопе зарезервировать равную высоту под заголовки обеих колонок,
+          // чтобы тела начинались на одной линии (exomind: левый 2 строки, правый 3).
+          alignBodies: z.boolean().optional(),
         })
         .optional(),
 

@@ -40,9 +40,15 @@ interface Props {
   intro?: string;
   /** Опц. абзац под колонками (HTML — emsella ссылка на Sexual Health). */
   footer?: string;
+  /** Десктоп: зарезервировать равную высоту под оба заголовка (lg:min-h-[3lh]),
+   *  чтобы тела колонок начинались на одной линии. Default false. */
+  alignBodies?: boolean;
 }
 
-const { left, right, heading, headingClass = 'text-h1 leading-tight', background = 'cream', intro, footer } = Astro.props;
+const { left, right, heading, headingClass = 'text-h1 leading-tight', background = 'cream', intro, footer, alignBodies = false } = Astro.props;
+
+// Десктоп-резерв высоты заголовка (выравнивание начала тел колонок).
+const titleAlign = alignBodies ? ' lg:min-h-[3lh]' : '';
 
 /** Для bulletStyle='plain': лейбл до первого «:» рендерим жирным. */
 function splitLabel(b: string): { label: string | null; rest: string } {
@@ -90,7 +96,7 @@ const rightTail = paras(right.tail);
           />
         </div>
       )}
-      <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
+      <h2 class={`font-heading text-h1 uppercase text-gold leading-tight${titleAlign}`}>
         {left.title.split('\n').map((line, i, arr) => (
           <>
             {line}
@@ -147,7 +153,7 @@ const rightTail = paras(right.tail);
           />
         </div>
       )}
-      <h2 class="font-heading text-h1 uppercase text-gold leading-tight">
+      <h2 class={`font-heading text-h1 uppercase text-gold leading-tight${titleAlign}`}>
         {right.title.split('\n').map((line, i, arr) => (
           <>
             {line}
