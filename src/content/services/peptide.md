@@ -15,6 +15,9 @@ heroMobileImagePosition: "object-[78%_center]"
 # В Figma (узел 1:3906) внутри hero есть кнопка BOOK NOW; mid-section straddle-CTA
 # у peptide подавлены (suppressDefaultCtas), поэтому это основной above-fold CTA.
 heroCtaLabel: "BOOK NOW"
+# Book Now в hero дублирует straddle "Book Appointment" сразу под hero →
+# скрываем кнопку hero на мобиле (max-lg:hidden), на десктопе остаётся.
+heroCtaHideOnMobile: true
 
 # === "What is Medical Peptide Therapy?" — узлы Figma 1:3833 + 1:3842 + 1:3870 (фото)
 # Заголовок реальный; body Lorem (data-todo="copy"), ждём от клиента.

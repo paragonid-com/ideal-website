@@ -14,6 +14,9 @@ heroMobileStacked: true
 heroMobileImagePosition: "object-[48%_center]"
 # Figma (узел внутри hero) содержит кнопку BOOK NOW; mid-CTA подавлены.
 heroCtaLabel: "BOOK NOW"
+# Book Now в hero дублирует straddle "Book Appointment" сразу под hero →
+# скрываем кнопку hero на мобиле (max-lg:hidden), на десктопе остаётся.
+heroCtaHideOnMobile: true
 
 # === "What is Blood Work Therapy?" — узлы Figma 1:2464 (заголовок) + 1:2473 (body) + 1:2505 (фото слева)
 # Заголовок (с опечаткой) реальный; body Lorem (data-todo="copy").

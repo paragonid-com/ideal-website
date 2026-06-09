@@ -12,6 +12,9 @@ heroImageAlt: "Regenerative medicine and PRP therapy at Ideal Medical & Wellness
 heroMobileStacked: true
 heroMobileImagePosition: "object-[60%_center]"
 heroCtaLabel: "BOOK NOW"
+# Book Now в hero дублирует straddle "Book Appointment" сразу под hero →
+# скрываем кнопку hero на мобиле (max-lg:hidden), на десктопе остаётся.
+heroCtaHideOnMobile: true
 heroTheme: "dark"
 
 # === "What is Regenerative Medicine?" — узлы Figma 1:2038 + 1:2048 + 1:2197 (фото слева, julia-koblitz Unsplash)
