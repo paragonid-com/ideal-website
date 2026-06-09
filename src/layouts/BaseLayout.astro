@@ -12,6 +12,8 @@ interface Props {
   header?: boolean;
   /** Включать ли Footer. По умолчанию true. */
   footer?: boolean;
+  /** Toggle GHL/LeadConnector chat widget. Default true. */
+  chatWidget?: boolean;
   /** OG/Twitter превью-картинка (путь от корня или абсолютный URL). */
   ogImage?: string;
   /** Тип страницы для og:type и structured data. */
@@ -37,6 +39,7 @@ const {
   description = SITE.description,
   header = true,
   footer = true,
+  chatWidget = true,
   ogImage = SITE.ogImage,
   pageType = 'website',
   faq,
@@ -110,5 +113,18 @@ const ogType = pageType === 'article' ? 'article' : 'website';
       <slot />
     </main>
     {footer && <Footer />}
+
+    {/* GoHighLevel / LeadConnector chat widget (sitewide). is:inline keeps
+        Astro from bundling the third-party loader and preserves data-* attrs.
+        Launcher color, avatar, header and welcome copy are set in the GHL
+        dashboard (widget appearance), not here. */}
+    {chatWidget && (
+      <script
+        is:inline
+        src="https://beta.leadconnectorhq.com/loader.js"
+        data-resources-url="https://beta.leadconnectorhq.com/chat-widget/loader.js"
+        data-widget-id="6a27d24f9372a70f7d54ef59"
+      ></script>
+    )}
   </body>
 </html>

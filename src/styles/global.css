@@ -80,3 +80,18 @@
     @apply opacity-90;
   }
 }
+
+
+/* ---------------------------------------------------------------------------
+   GoHighLevel / LeadConnector chat widget — launcher placement safety.
+   The widget renders its own launcher/panel (shadow DOM); colors, avatar,
+   header and copy are configured in the GHL dashboard. From our side we only
+   pin the stacking level: above page content (z-10), below the site header
+   (z-40) and the mobile menu (z-50) so an open menu covers it cleanly.
+   --------------------------------------------------------------------------- */
+chat-widget,
+#lc_text-widget,
+.lc_text-widget,
+[id^="lc_text-widget"] {
+  z-index: 30 !important;
+}
