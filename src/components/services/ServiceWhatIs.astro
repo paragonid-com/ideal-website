@@ -58,6 +58,10 @@ interface Props {
   /** На lg у фото скруглённые углы (emsella rounded-rectangle 1:5401).
    *  На мобайле фото остаётся full-bleed без скругления. Default false. */
   imageRounded?: boolean;
+  /** Отдельное изображение для мобайла (<lg). Десктоп показывает `image`
+   *  (со своим режимом, напр. contain-on-cream), мобайл — `imageMobile`
+   *  на всю ширину (object-cover). Default '' — рендер не меняется. */
+  imageMobile?: string;
 }
 
 const {
@@ -74,6 +78,7 @@ const {
   imageAspectClass = '',
   imagePadded = false,
   imageRounded = false,
+  imageMobile = '',
 } = Astro.props;
 // Порядок колонок. imageSide='right' → текст слева/сверху (order-1), фото справа/снизу
 // (order-2) на всех ширинах. imageSide='left' (default) → DOM-порядок (фото слева),
@@ -104,6 +109,12 @@ const imgLgSize = imagePadded
   ? `lg:h-auto ${imageAspectClass}`
   : 'lg:h-full';
 const imgRoundCls = imageRounded ? 'lg:rounded-[20px]' : '';
+// Когда задан imageMobile: мобайл = object-cover (фото на всю ширину),
+// десктоп — тот же режим, что у `image` (contain-on-cream для emface), но
+// только на lg, чтобы не конфликтовать с мобильным object-cover.
+const imgFitDesktopOnly = (imageContain || imageZoomOut)
+  ? 'lg:object-contain lg:p-[6%]'
+  : 'lg:object-cover';
 const lines = title.split('\n');
 // Разбиваем body на абзацы
 const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
@@ -116,12 +127,24 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
   <div class={`mx-auto max-w-design grid grid-cols-1 ${gridColsClass} ${align} ${sectionHeight}`}>
     {/* Левая колонка — фото на всю высоту секции */}
     <div class={`relative h-[320px] md:h-[480px] ${imgColLgClass} ${imgOrder} ${imgBg} ${imgPadCls}`}>
-      <img
-        src={image}
-        alt={imageAlt}
-        class={`block h-full w-full ${imgLgSize} ${imgFit} ${imgRoundCls}`}
-        loading="lazy"
-      />
+      {imageMobile ? (
+        <picture class="block h-full w-full">
+          <source media="(min-width: 1024px)" srcset={image} />
+          <img
+            src={imageMobile}
+            alt={imageAlt}
+            class={`block h-full w-full object-cover ${imgFitDesktopOnly} ${imgLgSize} ${imgRoundCls}`}
+            loading="lazy"
+          />
+        </picture>
+      ) : (
+        <img
+          src={image}
+          alt={imageAlt}
+          class={`block h-full w-full ${imgLgSize} ${imgFit} ${imgRoundCls}`}
+          loading="lazy"
+        />
+      )}
     </div>
 
     {/* Правая колонка — текст. При align=items-stretch (hormone) колонка

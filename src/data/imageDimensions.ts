@@ -64,6 +64,7 @@ export const IMG_DIMS: Record<string, { w: number; h: number }> = {
   "/assets/images/services/emface/video-1-poster.webp": { w: 1600, h: 840 },
   "/assets/images/services/emface/video-2-poster.webp": { w: 1600, h: 840 },
   "/assets/images/services/emface/what-is.webp": { w: 796, h: 1500 },
+  "/assets/images/services/emface/what-is-mobile.webp": { w: 1600, h: 920 },
   "/assets/images/services/emsculpt/applicator-edge.webp": { w: 1000, h: 528 },
   "/assets/images/services/emsculpt/applicator-large.webp": { w: 1000, h: 528 },
   "/assets/images/services/emsculpt/applicator-small.webp": { w: 1000, h: 528 },

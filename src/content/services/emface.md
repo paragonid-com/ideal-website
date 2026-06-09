@@ -27,6 +27,7 @@ whatIsTitle: "WHAT IS EMFACE™?"
 whatIsImage: "/assets/images/services/emface/what-is.webp"
 whatIsImageAlt: "EMFACE treatment device"
 whatIsImageContain: true
+whatIsImageMobile: "/assets/images/services/emface/what-is-mobile.webp"
 whatIsBody: |
   Emface is an advanced facial treatment that combines radiofrequency (RF) with high-intensity facial muscle stimulation (HIFES) to:
 

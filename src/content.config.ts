@@ -138,6 +138,12 @@ const services = defineCollection({
       /** На lg у фото скруглённые углы (emsella — rounded-rectangle 1:5401).
        *  На мобайле без эффекта. Default false. */
       whatIsImageRounded: z.boolean().optional(),
+      /** What-Is: фото целиком (object-contain) на ВСЕХ ширинах, на фоне cream
+       *  (продуктовый снимок устройства — emface). Default false. */
+      whatIsImageContain: z.boolean().optional(),
+      /** What-Is: отдельное фото для мобайла (<lg). Десктоп показывает whatIsImage,
+       *  мобайл — это фото на всю ширину (object-cover). */
+      whatIsImageMobile: z.string().optional(),
 
       // ===== "What is X?" короткий вариант БЕЗ фото (emsculpt) =====
       simpleWhatIs: z
