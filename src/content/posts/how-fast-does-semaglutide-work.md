@@ -29,7 +29,7 @@ To see results from Semaglutide as quickly as possible, consider incorporating t
 
 ## Managing Expectations: What to Expect in the First Few Weeks
 
-When starting Semaglutide for [weight loss](https://idealmedwell.com/medical-weight-loss/), it’s important to have realistic expectations. On average, you might lose one to five pounds in the first week or two. From there, as your medication dose gradually increases, weight loss typically becomes more significant over time.
+When starting Semaglutide for [weight loss](/services/weight-loss), it’s important to have realistic expectations. On average, you might lose one to five pounds in the first week or two. From there, as your medication dose gradually increases, weight loss typically becomes more significant over time.
 
 During the first few weeks, you may experience side effects like nausea, a reduced appetite, or diarrhea. These are common and often subside as your body adjusts to the medication. Starting on a low dose can help minimize side effects.
 
@@ -65,4 +65,4 @@ To optimize your results, consider:
 
 ## Ready to Start Your Weight Loss Journey with Semaglutide?
 
-If you’re ready to discover how fast does semaglutide work to support your weight-loss journey, our team at Ideal Medical and Wellness is here to guide you. We offer personalized treatment plans tailored to meet your unique goals. [Schedule a consultation](https://idealmedwell.com/contact-us/) today and take the first step toward achieving sustainable and lasting weight-loss success.
+If you’re ready to discover how fast does semaglutide work to support your weight-loss journey, our team at Ideal Medical and Wellness is here to guide you. We offer personalized treatment plans tailored to meet your unique goals. [Schedule a consultation](/contact) today and take the first step toward achieving sustainable and lasting weight-loss success.

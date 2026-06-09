@@ -11,7 +11,7 @@ Obesity is a prevalent health concern in the United States, and carrying extra w
 
 ## Components of a Medical Weight Loss Program
 
-A [medical weight loss program](https://idealmedwell.com/medical-weight-loss/) is a structured approach to managing weight under the guidance of a healthcare professional. It is designed to enhance success and produce sustainable results. The main components of a weight loss program include an in-depth consultation, behavior and lifestyle modifications, and appropriate weight loss medications.
+A [medical weight loss program](/services/weight-loss) is a structured approach to managing weight under the guidance of a healthcare professional. It is designed to enhance success and produce sustainable results. The main components of a weight loss program include an in-depth consultation, behavior and lifestyle modifications, and appropriate weight loss medications.
 
 During your consultation, your healthcare provider will review your weight, previous weight loss experiences, dietary and exercise habits, lifestyle choices, and weight loss goals. Using this information, they will create a personalized plan tailored to your needs.
 
@@ -42,7 +42,7 @@ While weight loss is the goal of a medical weight loss program, there are other 
 
 Several treatments and medications may be used in a medical weight loss program. One commonly prescribed class of medications is GLP-1 (glucagon-like peptide-1) agonists, which are used to treat obesity and type 2 diabetes. These medications mimic the GLP-1 hormone, which is naturally released by the intestines. They help regulate blood sugar, slow digestion, and signal feelings of fullness to the brain, aiding in appetite control.
 
-A [popular GLP-1 agonist is semaglutide](https://idealmedwell.com/top-3-tips-for-losing-weight-on-semaglutide/), marketed under the brand names Ozempic and Wegovy. These medications are FDA-approved for managing chronic weight issues and are prescribed under professional supervision to ensure safety and effectiveness.
+A [popular GLP-1 agonist is semaglutide](/blog/top-3-tips-for-losing-weight-on-semaglutide), marketed under the brand names Ozempic and Wegovy. These medications are FDA-approved for managing chronic weight issues and are prescribed under professional supervision to ensure safety and effectiveness.
 
 ## Frequently Asked Questions
 
@@ -66,4 +66,4 @@ Treatments often include GLP-1 agonists like semaglutide, combined with tailored
 
 If you are considering a weight loss program, schedule a consultation with our office today to determine whether it is right for you.
 
-If you are ready to take control of your health and weight, [schedule a consultation](https://idealmedwell.com/contact-us/) with our team to determine if a medical weight loss program is right for you.
+If you are ready to take control of your health and weight, [schedule a consultation](/contact) with our team to determine if a medical weight loss program is right for you.

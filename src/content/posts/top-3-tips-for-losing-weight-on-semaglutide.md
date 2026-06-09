@@ -13,11 +13,11 @@ Losing weight on semaglutide is a groundbreaking solution for those struggling w
 
 Semaglutide is a glucagon-like peptide-1 receptor agonist (GLP-1). This medication mimics the action of the GLP-1 hormone, which is naturally produced in the gut after eating. It signals the brain that the stomach is full, reducing appetite and curbing food cravings. By regulating appetite and slowing the rate at which the stomach empties, semaglutide helps you feel fuller for longer, ultimately reducing food intake.
 
-In addition to promoting [weight loss](https://idealmedwell.com/medical-weight-loss/), semaglutide can lower the risk of type 2 diabetes, cardiovascular disease, and certain cancers in individuals who are overweight or obese. This dual effect makes it a powerful tool in improving both weight and overall health.
+In addition to promoting [weight loss](/services/weight-loss), semaglutide can lower the risk of type 2 diabetes, cardiovascular disease, and certain cancers in individuals who are overweight or obese. This dual effect makes it a powerful tool in improving both weight and overall health.
 
 ### Expected Losing Weight On Semaglutide Results
 
-Weight loss results with semaglutide vary based on individual factors, including body composition, lifestyle, and consistency with treatment. While significant changes often become noticeable after several months, clinical studies like the STEP trials demonstrate that adults using semaglutide for weight loss achieve an average reduction of around 15% of their body weight, with some individuals losing even more. To learn more, [how fast does semaglutide work](https://idealmedwell.com/how-fast-does-semaglutide-work/) can depend on adherence to a healthy lifestyle and personalized guidance.
+Weight loss results with semaglutide vary based on individual factors, including body composition, lifestyle, and consistency with treatment. While significant changes often become noticeable after several months, clinical studies like the STEP trials demonstrate that adults using semaglutide for weight loss achieve an average reduction of around 15% of their body weight, with some individuals losing even more. To learn more, [how fast does semaglutide work](/blog/how-fast-does-semaglutide-work) can depend on adherence to a healthy lifestyle and personalized guidance.
 
 To minimize side effects and allow the body to adjust, treatment typically begins with a low dose, such as 0.25 mg per week, and gradually increases under a healthcare provider’s guidance. Consistency is key to achieving and maintaining results.
 
@@ -66,4 +66,4 @@ Yes, combining semaglutide with a healthy diet, regular exercise, proper hydrati
 
 ### Start Your Weight Loss Journey with Semaglutide Today!
 
-If you’re ready to experience the transformative effects of semaglutide and make lasting changes to your weight and overall health, our team at Ideal Medical and Wellness is here to support you every step of the way. With personalized treatment plans, expert guidance, and proven strategies, we can help you achieve your weight loss goals effectively and sustainably. [Schedule your consultation](https://idealmedwell.com/contact-us/) today to learn more about how losing weight on semaglutide can work for you!
+If you’re ready to experience the transformative effects of semaglutide and make lasting changes to your weight and overall health, our team at Ideal Medical and Wellness is here to support you every step of the way. With personalized treatment plans, expert guidance, and proven strategies, we can help you achieve your weight loss goals effectively and sustainably. [Schedule your consultation](/contact) today to learn more about how losing weight on semaglutide can work for you!

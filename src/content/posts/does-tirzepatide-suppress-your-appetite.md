@@ -7,7 +7,7 @@ sourceUrl: "https://idealmedwell.com/does-tirzepatide-suppress-your-appetite/"
 relativePath: "/does-tirzepatide-suppress-your-appetite/"
 draft: false
 ---
-Losing weight safely and effectively is challenging, regardless of age or starting weight. If you’ve struggled with unsuccessfully losing weight and feel like you’ve tried every diet and workout but still can’t shed the extra pounds, a [weight loss](https://idealmedwell.com/medical-weight-loss/) medication like tirzepatide may be able to help. One advantage of tirzepatide over other weight loss medications is that it can help suppress your appetite, leading to better results. So, if you are curious about how tirzepatide suppresses appetite to help you lose weight, keep reading.
+Losing weight safely and effectively is challenging, regardless of age or starting weight. If you’ve struggled with unsuccessfully losing weight and feel like you’ve tried every diet and workout but still can’t shed the extra pounds, a [weight loss](/services/weight-loss) medication like tirzepatide may be able to help. One advantage of tirzepatide over other weight loss medications is that it can help suppress your appetite, leading to better results. So, if you are curious about how tirzepatide suppresses appetite to help you lose weight, keep reading.
 
 ## How Tirzepatide Works
 
@@ -71,4 +71,4 @@ In clinical trials, tirzepatide has been shown to effectively suppress the appet
 
 The medication works well on its own and does not and should not need to be combined with other medical weight loss treatments.
 
-If you’re ready to start your weight loss journey and lose those stubborn pounds, treatment with tirzepatide might be right for you. [Schedule a consultation](https://idealmedwell.com/contact-us/) with our team today and get on the path to a healthier, happier you.
+If you’re ready to start your weight loss journey and lose those stubborn pounds, treatment with tirzepatide might be right for you. [Schedule a consultation](/contact) with our team today and get on the path to a healthier, happier you.

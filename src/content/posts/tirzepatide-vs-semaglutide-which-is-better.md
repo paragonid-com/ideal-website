@@ -25,7 +25,7 @@ Both semaglutide and tirzepatide are administered via weekly injections. No matt
 
 ## Cost and Availability
 
-[Medical weight loss](https://idealmedwell.com/medical-weight-loss/) medications don’t necessarily come cheap. If you are weighing your options between these receptors, it’s important to see if your insurance carrier will cover any of the costs. The costs of semaglutide and tirzepatide vary based on factors like insurance coverage and location. While some studies suggest tirzepatide may offer greater weight loss efficacy, individual pricing and accessibility depend on your specific circumstances.
+[Medical weight loss](/services/weight-loss) medications don’t necessarily come cheap. If you are weighing your options between these receptors, it’s important to see if your insurance carrier will cover any of the costs. The costs of semaglutide and tirzepatide vary based on factors like insurance coverage and location. While some studies suggest tirzepatide may offer greater weight loss efficacy, individual pricing and accessibility depend on your specific circumstances.
 
 ## Frequently Asked Questions
 
@@ -47,4 +47,4 @@ The choice between tirzepatide and semaglutide should be guided by your health n
 
 ## Take the Next Step Towards Effective Weight Loss Solutions!
 
-If you’re ready to explore effective weight loss solutions, our team at Ideal Medical and Wellness can guide you. Whether you’re considering tirzepatide, semaglutide, or other treatments, we’ll help craft a personalized plan for your unique health goals. [Contact us today](https://idealmedwell.com/contact-us/) to take the first step!
+If you’re ready to explore effective weight loss solutions, our team at Ideal Medical and Wellness can guide you. Whether you’re considering tirzepatide, semaglutide, or other treatments, we’ll help craft a personalized plan for your unique health goals. [Contact us today](/contact) to take the first step!
