@@ -117,19 +117,20 @@ resultsBody: |
 
   As the treatment area recovers and heals, the condition that was treated begins to improve. Some people experience mild swelling and discomfort for the first few days as the area starts to repair itself. Then, over time, the allograft allows for new cell growth and decreased inflammation while supporting tissue regeneration.
 
-# === FAQ — узлы Figma 1:2216, 1:2217, 1:2218, 1:2208, 1:2209 (вопросы реальные,
-# ответы ждём от клиента; data-todo="copy")
+# === FAQ — узлы Figma 1:2216-1:2209 (вопросы реальные). Ответы — compliant-черновик
+# (нет client-доку): autologous/own-blood, results-vary, not-FDA-approved framing.
+# ⚠️ High-risk страница (как sexualhealth) — перед публикацией юридическая вычитка.
 faq:
   - question: "How Much Does Regenerative Medicine Cost?"
-    answer: ""
+    answer: "Cost depends on the specific treatment, the area being addressed, and how many sessions your provider recommends. We'll review pricing transparently during your consultation, and flexible monthly financing is available through Cherry."
   - question: "Are there any risks or side effects to PRP?"
-    answer: ""
+    answer: "Because PRP is prepared from your own blood, the risk of an allergic reaction is low. As with any injection, you may have temporary soreness, swelling, or bruising at the site. Your provider will review the risks with you and confirm whether PRP is appropriate for your situation."
   - question: "What's the most significant difference between PRP injections and allograft injections?"
-    answer: ""
+    answer: "PRP is prepared from your own blood (autologous), while an allograft uses donor-derived tissue. Each has different considerations, and your provider will explain the options and recommend what's appropriate for your goals and health history."
   - question: "How long will it take to see the results from a regenerative medicine treatment?"
-    answer: ""
+    answer: "It varies from person to person, and results are not guaranteed. Some people notice gradual change over the weeks following treatment as the body responds, while others may need more than one session. Your provider will set realistic expectations and a plan suited to you."
   - question: "How safe are regenerative medicine treatments?"
-    answer: ""
+    answer: "Treatments are performed by licensed providers after an evaluation, and using your own blood for PRP helps keep allergy risk low. That said, many regenerative options are not FDA-approved for specific conditions and the evidence varies by use, so we are honest about what is established and screen you first to determine whether treatment is appropriate."
 
 # === Star-sign ornaments (Figma 1:2079 hero, 1:2080 whatIs, 1:2088 benefits,
 #     1:2155 howWorks-block, 1:2154 whoFor-block, 1:2198 results)
