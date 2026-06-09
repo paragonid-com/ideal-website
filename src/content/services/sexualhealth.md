@@ -130,6 +130,12 @@ stars:
 # CTA: Figma-фрейм не содержит mid-section CTA (только hero+footer) —
 # подавляем 3 дефолтных band'а шаблона (как peptide/ivtherapy/bloodwork/regenerative).
 suppressDefaultCtas: true
+# Per client request: add straddle Book Appointment CTAs that were absent in
+# Figma — between Hero and the first section (ctaAfterHero) and right before
+# the FAQ (ctaBeforeFaq). overlapCtas => mandatory straddle style (#dbba5f).
+overlapCtas: true
+ctaAfterHero: true
+ctaBeforeFaq: true
 
 draft: false
 category:
