@@ -28,6 +28,7 @@ whatIsImage: "/assets/images/services/emface/what-is.webp"
 whatIsImageAlt: "EMFACE treatment device"
 whatIsImageContain: true
 whatIsImageMobile: "/assets/images/services/emface/what-is-mobile.webp"
+whatIsHeight: "lg:min-h-0"   # desktop: image column matches right-side content height (not forced 940px)
 whatIsBody: |
   Emface is an advanced facial treatment that combines radiofrequency (RF) with high-intensity facial muscle stimulation (HIFES) to:
 
