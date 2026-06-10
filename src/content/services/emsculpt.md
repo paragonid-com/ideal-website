@@ -42,13 +42,15 @@ categoriesGrids:
       - title: "BODY SCULPTING"
         image: "/assets/images/services/emsculpt/category-body-sculpting.webp"
         imageAlt: "Body sculpting treatment area"
+        href: "/services/body-sculpting"
       - title: "FUNCTIONAL WELLNESS"
         image: "/assets/images/services/emsculpt/category-functional-wellness.webp"
         imageAlt: "Functional wellness treatment area"
+        href: "/services/functional-wellness"
       - title: "CORE TO FLOOR"
         image: "/assets/images/services/emsculpt/category-core-to-floor.webp"
         imageAlt: "Core to floor treatment area"
-        href: "/services/emsella"   # pelvic-floor pairing (Emsella)
+        href: "/services/core-to-floor"   # dedicated Core to Floor page (Emsculpt Neo + Emsella)
   - title: "CUSTOMIZE YOUR TREATMENT"
     background: "gold"
     items:
