@@ -54,7 +54,7 @@ twoColumnSections:
       bullets:
         - "Non-invasive: You remain fully clothed"
         - "Comfortable: Simply sit back and relax in the Emsella chair"
-        - "Quick: About 30 minutes per session"
+        - "Quick: About 28 minutes per session"
         - "No downtime: Resume your normal activities right away"
       tail: "Many people notice improvement after a few sessions, with continued progress over the following weeks. Individual results vary."
     right:
@@ -124,7 +124,7 @@ videoEmbed:
 # ---------- FAQ — 5 compliant Q&A (client-доку: FDA-cleared vs sexual wellness, противопоказания) ----------
 faq:
   - question: "What is Emsella, and is it FDA-cleared?"
-    answer: "Emsella is an FDA-cleared, non-invasive chair treatment that uses HIFEM energy to strengthen the pelvic floor and treat urinary incontinence in women and men. You sit fully clothed for about 30 minutes while it delivers Kegel-like contractions."
+    answer: "Emsella is an FDA-cleared, non-invasive chair treatment that uses HIFEM energy to strengthen the pelvic floor and treat urinary incontinence in women and men. You sit fully clothed for about 28 minutes while it delivers Kegel-like contractions."
   - question: "Does Emsella hurt, and is there downtime?"
     answer: "You'll feel a tingling sensation and pelvic-floor muscle contractions — most people compare Emsella to an intense pelvic workout and find it tolerable. There's no downtime."
   - question: "How many Emsella sessions will I need, and when will I notice results?"
