@@ -99,6 +99,7 @@ const services = defineCollection({
       /** Тема hero-фото: 'light' (default — светлое фото, тёмный текст, cream-скрим)
        *  или 'dark' (тёмное фото, напр. regenerative — светлый lead + тёмный скрим). */
       heroTheme: z.enum(['light', 'dark']).optional(),
+      heroStrongScrim: z.boolean().optional(),
 
       // ===== "What is X?" (Weight Loss формат) =====
       whatIsTitle: z.string().optional(),

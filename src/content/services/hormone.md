@@ -6,6 +6,7 @@ heroTitle: "AVENTURA\nBIOIDENTICAL HORMONE\nREPLACEMENT THERAPY"
 heroLead: "ANTI-AGING MEDICINE\nLab-tested, physician-supervised BHRT and pellet therapy in Aventura — built around your bloodwork, not a template. Book a consultation today."
 heroImage: "/assets/images/services/hormone/hero.webp"
 heroImageAlt: "Doctor reviewing patient hormone test results in Aventura clinic"
+heroStrongScrim: true   # busy/light hero photo — stronger desktop cream scrim for readable overlay text
 # Мобайл: фото баннером сверху (зум аут, доктор и планшет видны), текст снизу.
 heroMobileStacked: true
 heroMobileImagePosition: "object-[52%_center]"

@@ -6,6 +6,7 @@ heroTitle: "ExoMind™\nin Aventura"
 heroLead: "At Ideal Medical & Wellness, ExoMind is a non-invasive, medication-free neurostimulation session designed to support mental clarity and a calm, focused state of mind. It's a comfortable, in-office wellness experience with no downtime."
 heroImage: "/assets/images/services/exomind/hero.webp"
 heroImageAlt: "Client seated in the ExoMind treatment chair during a session"
+heroStrongScrim: true   # busy/light hero photo — stronger desktop cream scrim for readable overlay text
 heroMobileStacked: true
 # In-hero BOOK NOW (Figma 1:2867). На мобайле скрываем — сразу под hero идёт
 # straddle BOOK APPOINTMENT, и на стопке кнопки дублируются.
