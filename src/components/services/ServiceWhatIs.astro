@@ -62,6 +62,10 @@ interface Props {
    *  (со своим режимом, напр. contain-on-cream), мобайл — `imageMobile`
    *  на всю ширину (object-cover). Default '' — рендер не меняется. */
   imageMobile?: string;
+  /** Доп. отступ сверху у фото-колонки ТОЛЬКО на мобайле (напр. `max-lg:mt-8`) —
+   *  чтобы straddle-CTA не наезжал на изображение. Размер фото не меняется.
+   *  Default '' — другие страницы не затронуты. */
+  imageMobileTopGap?: string;
 }
 
 const {
@@ -79,6 +83,7 @@ const {
   imagePadded = false,
   imageRounded = false,
   imageMobile = '',
+  imageMobileTopGap = '',
 } = Astro.props;
 // Порядок колонок. imageSide='right' → текст слева/сверху (order-1), фото справа/снизу
 // (order-2) на всех ширинах. imageSide='left' (default) → DOM-порядок (фото слева),
@@ -126,7 +131,7 @@ const paragraphs = body.split(/\n{2,}/).map(p => p.trim()).filter(Boolean);
 >
   <div class={`mx-auto max-w-design grid grid-cols-1 ${gridColsClass} ${align} ${sectionHeight}`}>
     {/* Левая колонка — фото на всю высоту секции */}
-    <div class={`relative h-[320px] md:h-[480px] ${imgColLgClass} ${imgOrder} ${imgBg} ${imgPadCls}`}>
+    <div class={`relative h-[320px] md:h-[480px] ${imgColLgClass} ${imgOrder} ${imgBg} ${imgPadCls}${imageMobileTopGap ? ` ${imageMobileTopGap}` : ''}`}>
       {imageMobile ? (
         <picture class="block h-full w-full">
           <source media="(min-width: 1024px)" srcset={image} />

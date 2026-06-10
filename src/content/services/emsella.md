@@ -33,6 +33,7 @@ whatIsImageSide: "left"
 whatIsImageAspect: "lg:aspect-[776/780]"
 whatIsImagePadded: true
 whatIsImageContain: true   # knockout PNG on cream — contain on all sizes (no head crop on mobile)
+whatIsImageMobileTopGap: "max-lg:mt-8"   # mobile: drop image so straddle BOOK APPOINTMENT clears heads
 whatIsHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
 whatIsBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
 whatIsBody: |

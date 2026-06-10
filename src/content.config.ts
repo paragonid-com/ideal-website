@@ -142,6 +142,7 @@ const services = defineCollection({
       /** What-Is: фото целиком (object-contain) на ВСЕХ ширинах, на фоне cream
        *  (продуктовый снимок устройства — emface). Default false. */
       whatIsImageContain: z.boolean().optional(),
+      whatIsImageMobileTopGap: z.string().optional(),
       /** What-Is: отдельное фото для мобайла (<lg). Десктоп показывает whatIsImage,
        *  мобайл — это фото на всю ширину (object-cover). */
       whatIsImageMobile: z.string().optional(),
