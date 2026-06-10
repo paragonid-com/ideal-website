@@ -1,9 +1,9 @@
 ---
 seoTitle: "Body Sculpting with Emsculpt Neo in Aventura, FL | Ideal Medical & Wellness"
-seoDescription: "Body sculpting with Emsculpt Neo in Aventura — FDA-cleared, non-invasive fat reduction and muscle building for the abdomen, glutes, arms, and thighs in 30-minute sessions. Individual results vary."
+seoDescription: "Emsculpt Neo body sculpting in Aventura — non-invasive treatment that combines radiofrequency and HIFEM to burn fat and build muscle in 30-minute sessions. Individual results vary."
 
 heroTitle: "BODY SCULPTING\nWITH EMSCULPT NEO™"
-heroLead: "The aesthetic side of Emsculpt Neo — sculpt and define the abdomen, buttocks, arms, and thighs by reducing fat and building muscle in a single 30-minute session, with no needles, surgery, or downtime. Individual results vary."
+heroLead: "Emsculpt Neo is the first and only non-invasive body shaping treatment that combines radiofrequency and high-intensity focused electromagnetic (HIFEM) technology to simultaneously burn fat and build muscle in just 30 minutes."
 heroImage: "/assets/images/services/emsculpt/hero.webp"
 heroImageAlt: "Patient receiving an Emsculpt Neo body-sculpting treatment"
 heroStrongScrim: true
@@ -14,44 +14,55 @@ overlapCtas: true
 ctaBandLabel: "BOOK $49 DEMO"
 ctaBandHref: "https://dashboard.boulevard.io/booking/businesses/2cdd9475-83b5-44a4-b535-407e818a737c/widget?path=%2Fcart%2Fmenu%2FBTL-%2520Aesthetic%2520treatments%2Fs_5c459293-5182-40bf-af2d-d2c888ba04f0&locationId=40d66f34-7b55-4f2f-8f4f-f31438165fb8&visitType=SELF_VISIT"
 
-whatIsTitle: "BODY\nSCULPTING"
-whatIsImage: "/assets/images/services/emsculpt/what-is.webp"
-whatIsImageAlt: "Practitioner performing an Emsculpt Neo body-sculpting treatment with the large applicator"
-whatIsHeight: "lg:aspect-[1920/1099]"
-whatIsGridCols: "lg:grid-cols-[48fr_52fr]"
-whatIsAlign: "items-center"
-whatIsImageSide: "right"
-whatIsImageAspect: "lg:aspect-[923/766]"
-whatIsHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
-whatIsBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
-whatIsBody: "Emsculpt Neo pairs radiofrequency with high-intensity focused electromagnetic (HIFEM) energy to reduce fat and build muscle at the same time — non-invasively, in about 30 minutes, with no needles and no downtime. Whether the goal is to sculpt your abs, lift and tone your buttocks, define your arms, or strengthen your thighs, it works toward a stronger, leaner shape. In the manufacturer's clinical studies it produced an average of roughly 30% fat reduction and a 25% increase in muscle; individual results vary."
-
-categoriesGrids:
-  - title: "CUSTOMIZE YOUR TREATMENT"
-    background: "gold"
-    items:
-      - title: "LARGE APPLICATOR"
-        body: "Targets larger areas such as the abdomen, buttocks, thighs, and back."
-        image: "/assets/images/services/emsculpt/applicator-large.webp"
-        imageAlt: "Large Emsculpt Neo applicator"
-      - title: "EDGE APPLICATOR"
-        body: "Treats fat and the oblique muscles around the edges in about 30 minutes."
-        image: "/assets/images/services/emsculpt/applicator-edge.webp"
-        imageAlt: "Edge Emsculpt Neo applicator"
-      - title: "SMALL APPLICATOR"
-        body: "Designed for smaller, curved areas such as the arms and calves."
-        image: "/assets/images/services/emsculpt/applicator-small.webp"
-        imageAlt: "Small Emsculpt Neo applicator"
-
+# === Video #1 + "MORE FOR LESS" text (idealmedical: youtu.be/emRdWYIOuYc) ===
 videoEmbed:
   url: "https://youtu.be/emRdWYIOuYc"
   posterImage: "/assets/images/services/emsculpt/video-poster.webp"
   posterAlt: "Emsculpt Neo treatment video"
   flush: true
   fullBleed: true
+  heading: "EMSCULPT NEO: MORE FOR LESS IN BODY SHAPING"
+  body: |
+    Emsculpt Neo is the first and only non-invasive body shaping treatment that combines radiofrequency and high-intensity focused electromagnetic (HIFEM) technology to simultaneously burn fat and build muscle in a single session. In just 30 minutes, Emsculpt Neo delivers powerful energy that heats fat cells to encourage fat reduction while contracting muscles at a level impossible to achieve with exercise alone.
 
+    Whether you're looking to sculpt your abs, lift and tone your buttocks, define your arms, or strengthen your thighs, Emsculpt Neo provides noticeable results with no downtime, surgery, or needles. Clinical studies show an average of 30% fat reduction and 25% muscle growth; individual results vary.
+
+    Perfect for men and women of all fitness levels, Emsculpt Neo helps you achieve a stronger, leaner, and more confident body — quickly, safely, and effectively.
+
+# === Customize your treatment (applicators) — between video #1 and video #2 ===
+categoriesGridsLate: true
+categoriesGrids:
+  - title: "CUSTOMIZE YOUR TREATMENT"
+    background: "gold"
+    items:
+      - title: "LARGE APPLICATOR"
+        body: "Targets large body areas such as the abdomen, buttocks, thighs, and back."
+        image: "/assets/images/services/emsculpt/applicator-large.webp"
+        imageAlt: "Large Emsculpt Neo applicator"
+      - title: "EDGE APPLICATOR"
+        body: "Treats four fat spots and oblique muscles in 30 minutes."
+        image: "/assets/images/services/emsculpt/applicator-edge.webp"
+        imageAlt: "Edge Emsculpt Neo applicator"
+      - title: "SMALL APPLICATOR"
+        body: "Designed to treat smaller and curved areas such as the arms and legs."
+        image: "/assets/images/services/emsculpt/applicator-small.webp"
+        imageAlt: "Small Emsculpt Neo applicator"
+
+# === Video #2 + "How Emsculpt Neo Works" text (idealmedical: youtu.be/eVYoOvBE1bE) ===
+videoEmbed2:
+  url: "https://youtu.be/eVYoOvBE1bE"
+  posterImage: "/assets/images/services/emsculpt/video-poster.webp"
+  posterAlt: "How Emsculpt Neo works video"
+  position: "after-second-grid"
+  flush: true
+  fullBleed: true
+  heading: "HOW EMSCULPT NEO WORKS"
+  body: |
+    Emsculpt Neo uses two powerful technologies at the same time. First, gentle heat breaks down stubborn fat cells, which your body naturally eliminates. At the same time, it delivers thousands of strong muscle contractions — much more than you could ever do at the gym. This combination helps reduce fat and build muscle in the same treatment, leaving you looking leaner, stronger, and more toned without surgery or downtime.
+
+# === Real Patients Real Results (before/after) ===
 beforeAfter:
-  title: "Before & After"
+  title: "Emsculpt Neo Real Patients Real Results"
   caption: "Representative results, courtesy of the treating physicians noted. Individual results vary."
   carousel: true
   items:
@@ -61,18 +72,20 @@ beforeAfter:
       alt: "Male abdomen before and after Emsculpt Neo — courtesy of David Kent, M.D."
     - image: "/assets/images/services/emsculpt/ba-female-buttock.webp"
       alt: "Female buttock before and after Emsculpt Neo — courtesy of Bruce E. Katz, M.D."
+    - image: "/assets/images/services/emsculpt/ba-male-buttock.webp"
+      alt: "Male buttock before and after Emsculpt Neo — courtesy of JD McCoy, N.M.D."
     - image: "/assets/images/services/emsculpt/ba-female-arms.webp"
       alt: "Female arms before and after Emsculpt Neo — courtesy of Robert Weiss, M.D."
+    - image: "/assets/images/services/emsculpt/ba-female-thighs.webp"
+      alt: "Female outer thighs before and after Emsculpt Neo"
 
 faq:
-  - question: "What areas can Emsculpt Neo body sculpting treat?"
-    answer: "Emsculpt Neo is commonly used on the abdomen, buttocks, arms, thighs, and calves to reduce fat and build muscle. Your provider will confirm which areas suit your goals."
-  - question: "How many Emsculpt Neo sessions will I need?"
-    answer: "Most plans start with a short series of sessions spaced about a week apart, and some areas benefit from additional sessions. Many people notice changes in the weeks after finishing, with continued improvement over time. Individual results vary."
-  - question: "Does Emsculpt Neo body sculpting hurt, and is there downtime?"
-    answer: "You'll feel warmth and strong but tolerable muscle contractions — most people compare it to an intense workout. There's no downtime afterward."
-  - question: "Is Emsculpt Neo a weight-loss treatment?"
-    answer: 'No — it''s a body-shaping treatment best for people near their goal weight who want to tone and define specific areas. If weight loss is your primary goal, ask about our <a href="/services/weight-loss">medical weight loss</a> program; the two can complement each other.'
+  - question: "What areas can be treated with Emsculpt Neo?"
+    answer: "Emsculpt Neo can be used on almost any area of the body. Common areas include the abdomen, buttocks, back, shoulders, hands, feet, thighs, arms, and calves."
+  - question: "How many sessions will I need of Emsculpt Neo?"
+    answer: "The minimum is 4 sessions, spaced about 5–7 days apart, for optimal results. Some areas of the body may require 6–8 sessions."
+  - question: "Is Emsculpt Neo painful?"
+    answer: "No, but you will feel intense muscle contractions and a warming sensation. Most clients find it tolerable and even enjoyable."
 
 stars:
   hero: true
