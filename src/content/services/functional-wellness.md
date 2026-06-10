@@ -14,6 +14,13 @@ overlapCtas: true
 ctaBandLabel: "BOOK $49 DEMO"
 ctaBandHref: "https://dashboard.boulevard.io/booking/businesses/2cdd9475-83b5-44a4-b535-407e818a737c/widget?path=%2Fcart%2Fmenu%2FBTL-%2520Aesthetic%2520treatments%2Fs_5c459293-5182-40bf-af2d-d2c888ba04f0&locationId=40d66f34-7b55-4f2f-8f4f-f31438165fb8&visitType=SELF_VISIT"
 
+# === Intro banner — "What Emsculpt Neo Is For" (idealmedical FW infographic) ===
+introBanner:
+  image: "/assets/images/services/shared/functional-wellness-banner.webp"
+  imageAlt: "Emsculpt Neo for functional wellness — build muscle for form and function. Supports age-related challenges, sport-related injuries, mobility and range of motion, and post-surgery rehabilitation. Non-invasive, no downtime; individual results vary."
+  href: "https://dashboard.boulevard.io/booking/businesses/2cdd9475-83b5-44a4-b535-407e818a737c/widget?path=%2Fcart%2Fmenu%2FBTL-%2520Aesthetic%2520treatments%2Fs_5c459293-5182-40bf-af2d-d2c888ba04f0&locationId=40d66f34-7b55-4f2f-8f4f-f31438165fb8&visitType=SELF_VISIT"
+  maxWidth: "max-w-[640px]"
+
 # === "More Than Aesthetics: Functional Wellness" (idealmedical unique block) ===
 simpleWhatIs:
   title: "MORE THAN AESTHETICS:\nFUNCTIONAL WELLNESS"
@@ -63,12 +70,6 @@ videoPair:
     - url: "https://youtu.be/eVYoOvBE1bE"
       heading: "HOW EMSCULPT NEO WORKS"
       body: "Emsculpt Neo uses two technologies at once: gentle heat to reduce stubborn fat, and thousands of strong muscle contractions — far more than a workout — to build and define muscle in the same treatment."
-
-# === Banner (idealmedical BTL "HIIT Can't Touch This" promo) ===
-banner:
-  image: "/assets/images/services/shared/hiit-banner.webp"
-  imageAlt: "Emsculpt Neo — HIIT can't touch this. Up to 30% less fat and 25% more muscle on average; individual results vary."
-  href: "https://dashboard.boulevard.io/booking/businesses/2cdd9475-83b5-44a4-b535-407e818a737c/widget?path=%2Fcart%2Fmenu%2FBTL-%2520Aesthetic%2520treatments%2Fs_5c459293-5182-40bf-af2d-d2c888ba04f0&locationId=40d66f34-7b55-4f2f-8f4f-f31438165fb8&visitType=SELF_VISIT"
 
 # === Real Patients Real Results (before/after) ===
 beforeAfter:

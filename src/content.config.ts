@@ -594,6 +594,17 @@ const services = defineCollection({
         })
         .optional(),
 
+      // ===== Intro banner — ранний баннер сразу после hero (page-specific
+      //       BTL-инфографика "What Emsculpt Neo Is For" на сабстраницах) =====
+      introBanner: z
+        .object({
+          image: z.string(),
+          imageAlt: z.string().default(''),
+          href: z.string().optional(),
+          maxWidth: z.string().optional(),
+        })
+        .optional(),
+
       // ===== Roadmap (hormone): 2 колонки шагов =====
       roadmap: z
         .object({

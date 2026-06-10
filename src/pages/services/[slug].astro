@@ -196,6 +196,17 @@ const goldBanner = normalizeBanner(data.goldBanner);
      только нужные швы. Default false → другие страницы не затронуты. */}
   {data.ctaAfterHero && <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />}
 
+  {/* Intro banner — page-specific BTL infographic near the top (idealmedical
+      sub-pages: "What Emsculpt Neo Is For" / Functional Wellness "Form & Function"). */}
+  {data.introBanner && (
+    <ServiceBanner
+      image={data.introBanner.image}
+      imageAlt={data.introBanner.imageAlt}
+      href={data.introBanner.href}
+      maxWidth={data.introBanner.maxWidth}
+    />
+  )}
+
   {/* Long-form "What is X?" (Weight Loss формат: фото + многоабзацный текст) */}
   {data.whatIsTitle && data.whatIsImage && data.whatIsBody && (
     <>
