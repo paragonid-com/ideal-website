@@ -19,24 +19,42 @@
  *   }
  */
 
+import { imgDim } from '../../data/imageDimensions';
 interface Props {
   title: string;
   body: string;
   /** Опц. маркированный список под текстом (functional-wellness / core-to-floor
    *  «More Than Aesthetics»). Default none. */
   bullets?: string[];
+  /** Опц. фото СЛЕВА (device-картинка на FW/CtF) — секция становится
+   *  двухколоночной: фото слева, текст справа. Default none → рендер как было. */
+  image?: string;
+  imageAlt?: string;
 }
 
-const { title, body, bullets } = Astro.props;
+const { title, body, bullets, image, imageAlt = '' } = Astro.props;
 const titleLines = title.split('\n');
 const paragraphs = body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
+const dim = image ? imgDim(image) : null;
 ---
 
 <section
   class="w-full bg-cream py-24"
   data-section="service-simple-what-is"
 >
-  <div class="mx-auto max-w-design px-[7.55%] grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+  <div class={`mx-auto max-w-design px-[7.55%] grid grid-cols-1 lg:grid-cols-12 gap-8 ${image ? 'items-center' : 'items-start'}`}>
+    {image && (
+      <div class="lg:col-span-5 lg:col-start-1 flex justify-center max-lg:mb-10">
+        <img
+          src={image}
+          alt={imageAlt}
+          width={dim?.w}
+          height={dim?.h}
+          class="w-full max-w-[440px] h-auto"
+          loading="lazy"
+        />
+      </div>
+    )}
     {/* Заголовок занимает ~5 из 12 колонок (примерно как у Weight Loss whatIs) */}
     <div class="lg:col-span-5 lg:col-start-7">
       <h2 class="font-heading text-h1 uppercase text-gold leading-tight">

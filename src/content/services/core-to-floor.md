@@ -14,14 +14,10 @@ overlapCtas: true
 ctaBandLabel: "BOOK $49 DEMO"
 ctaBandHref: "https://dashboard.boulevard.io/booking/businesses/2cdd9475-83b5-44a4-b535-407e818a737c/widget?path=%2Fcart%2Fmenu%2FBTL-%2520Aesthetic%2520treatments%2Fs_5c459293-5182-40bf-af2d-d2c888ba04f0&locationId=40d66f34-7b55-4f2f-8f4f-f31438165fb8&visitType=SELF_VISIT"
 
-# === Device product shot (Emsculpt Neo unit) right after hero — same as FW ===
-introBanner:
+# === "More Than Aesthetics" + device image (combined 2-col: image left, text right) ===
+simpleWhatIs:
   image: "/assets/images/services/shared/emsculpt-neo-unit.webp"
   imageAlt: "Emsculpt Neo system by BTL — the device used for treatments at Ideal Medical & Wellness"
-  maxWidth: "max-w-[460px]"
-
-# === "More Than Aesthetics" (idealmedical core-to-floor unique block) ===
-simpleWhatIs:
   title: "MORE THAN AESTHETICS:\nFUNCTIONAL WELLNESS"
   body: "Emsculpt Neo & Emsella aren't just about looking good — it's about feeling stronger, moving better, and supporting long-term wellness. By improving core strength, muscle tone, and stability, clients often notice:"
   bullets:

@@ -156,6 +156,9 @@ const services = defineCollection({
           /** Опц. маркированный список под текстом (functional-wellness /
            *  core-to-floor «More Than Aesthetics»). */
           bullets: z.array(z.string()).optional(),
+          /** Опц. фото слева (device на FW/CtF) — секция становится 2-колоночной. */
+          image: z.string().optional(),
+          imageAlt: z.string().optional(),
         })
         .optional(),
 
