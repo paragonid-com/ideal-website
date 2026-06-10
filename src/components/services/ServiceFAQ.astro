@@ -25,6 +25,7 @@ interface Props {
   faq: FAQ[];
 }
 
+import { SITE } from '../../data/site';
 const { faq } = Astro.props;
 ---
 
@@ -33,11 +34,16 @@ const { faq } = Astro.props;
   data-section="service-faq"
 >
   <div class="mx-auto max-w-design px-[7.55%]">
-    <h2 class="font-heading text-h1 uppercase text-cream leading-tight">
-      Common FAQs
-    </h2>
+    <div class="text-center">
+      <h2 class="font-heading text-[clamp(28px,3vw,48px)] uppercase text-cream leading-tight">
+        Frequently Asked Questions
+      </h2>
+      <p class="mx-auto mt-5 max-w-[760px] font-sans text-body-lg text-cream/90 leading-relaxed">
+        Please reach out to <a href="/contact" class="underline underline-offset-2 hover:opacity-80">{SITE.name}</a> if you cannot find an answer to your question.
+      </p>
+    </div>
 
-    <ul class="mt-16">
+    <ul class="mx-auto mt-14 max-w-[900px]">
       {faq.map((item, i) => (
         <li
           class={`border-t border-cream/40 ${i === faq.length - 1 ? 'border-b' : ''}`}
