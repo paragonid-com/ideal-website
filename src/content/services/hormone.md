@@ -1,9 +1,9 @@
 ---
 seoTitle: "Bioidentical Hormone Replacement Therapy in Aventura | Ideal Medical & Wellness"
-seoDescription: "Restore vitality with Bioidentical Hormone Replacement Therapy in Aventura. Ideal Medical offers elite BHRT, pellet therapy, and hormone optimization. Book today!"
+seoDescription: "Restore vitality with Bioidentical Hormone Replacement Therapy in Aventura. Ideal Medical offers elite BHRT and hormone optimization, built around your bloodwork. Book today!"
 
 heroTitle: "AVENTURA\nBIOIDENTICAL HORMONE\nREPLACEMENT THERAPY"
-heroLead: "ANTI-AGING MEDICINE\nLab-tested, physician-supervised BHRT and pellet therapy in Aventura — built around your bloodwork, not a template. Book a consultation today."
+heroLead: "ANTI-AGING MEDICINE\nLab-tested, physician-supervised BHRT in Aventura — built around your bloodwork, not a template. Book a consultation today."
 heroImage: "/assets/images/services/hormone/hero.webp"
 heroImageAlt: "Doctor reviewing patient hormone test results in Aventura clinic"
 heroStrongScrim: true   # busy/light hero photo — stronger desktop cream scrim for readable overlay text
@@ -15,7 +15,7 @@ heroMobileImagePosition: "object-[52%_center]"
 # Заголовок длинный (5 строк), как в Figma узлы 1:3251-1:3256.
 whatIsTitle: "UNDERSTANDING\nBIOIDENTICAL HORMONE\nREPLACEMENT THERAPY:\nTHE FUTURE OF HEALTHY\nAGING IN AVENTURA, FL"
 whatIsImage: "/assets/images/services/hormone/what-is.webp"
-whatIsImageAlt: "Bioidentical hormone vials and pellets — Ideal Medical clinic"
+whatIsImageAlt: "Bioidentical hormone vials — Ideal Medical clinic"
 # Пропорция блока: фото слева квадратное (стороны = ширине фото, 44% от блока),
 # поэтому высота блока = 44% ширины → aspect 100/44. Фото уменьшается по высоте
 # и показывается целиком (зум аут). Текст не выходит за нижнюю границу фото.
@@ -91,8 +91,8 @@ roadmap:
       body: "When treatment is indicated, we use plant-derived hormones structurally identical to your own, so your body recognizes and uses them directly rather than processing a synthetic substitute."
     - title: "THE RESULT: PERFORMANCE OPTIMIZATION"
       body: "Hormone therapy is not set-and-forget. We refine your protocol over time based on follow-up labs and how you actually feel — whether the goal is mental sharpness or body recomposition."
-    - title: "THE DELIVERY: PRECISION PELLET IMPLANTATION"
-      body: "For patients who choose it, subcutaneous pellet therapy delivers a steady, physiologic release of hormones over several months — a convenient alternative to frequent dosing. Pellets are one delivery option among several; the right method is decided with your clinician."
+    - title: "THE DELIVERY: A METHOD MATCHED TO YOU"
+      body: "There is no one-size delivery. The method and dose are chosen with your clinician to fit your physiology, your labs, and your routine — aiming for a steady, physiologic release of hormones — and refined over time as your follow-up labs and response guide the plan."
 
 # === Why Trust — узлы Figma 1:3262, 1:3290.
 whyTrust:
@@ -110,7 +110,7 @@ goldBanner: "We don't just want to treat you;\nwe want to be your long-term\npar
 # === Experience block — узлы Figma 1:3389 (DNA), 1:3479-1:3492 (text), 1:3483 (phone).
 experience:
   title: "Experience\nthe Future\nof Wellness"
-  body: "Whether you are seeking male endocrine optimization, testosterone replacement therapy, or perimenopause and menopause support, our Aventura clinic offers integrative, data-driven BHRT — including pellet therapy — grounded in lab testing and ongoing monitoring. Call to start with the blood work that maps your path."
+  body: "Whether you are seeking male endocrine optimization, testosterone replacement therapy, or perimenopause and menopause support, our Aventura clinic offers integrative, data-driven BHRT, grounded in lab testing and ongoing monitoring. Call to start with the blood work that maps your path."
   image: "/assets/images/services/hormone/experience-dna.webp"
   imageAlt: "DNA strand — symbol of regenerative medicine"
   phone: "(305) 650-1884"
@@ -121,8 +121,6 @@ faq:
     answer: "BHRT uses plant-derived hormones with the same molecular structure as the ones your body produces, rather than synthetic alternatives. For patients with a documented hormonal imbalance, it can address symptoms such as fatigue, weight gain, low libido, and brain fog. Whether it is appropriate for you is determined by lab testing and a clinical review, not by symptoms alone."
   - question: "What are the signs I might need hormone optimization in my 40s or 50s?"
     answer: "Common signs include persistent fatigue, weight gain, brain fog, low libido, and — in men — the signs of low testosterone. Because these symptoms have many possible causes, we use comprehensive blood work to confirm whether hormones are the driver before recommending treatment."
-  - question: "What is pellet therapy, and is it right for me?"
-    answer: "Pellet therapy delivers bioidentical hormones through a small subcutaneous implant that releases a steady dose over several months, avoiding frequent dosing. It is one of several delivery options. Which method suits you depends on your labs, your goals, and your clinician's recommendation."
   - question: "Is BHRT safe for menopause and perimenopause symptoms?"
     answer: "BHRT can be an effective option for hot flashes, night sweats, and other perimenopause and menopause symptoms in appropriate candidates, but it is not suitable for everyone. We assess individual risk, require baseline labs, and monitor markers such as estradiol and progesterone throughout treatment so that your care stays medically sound."
   - question: "Where can I find male hormone optimization in South Florida?"
