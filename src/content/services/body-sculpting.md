@@ -14,14 +14,9 @@ overlapCtas: true
 ctaBandLabel: "BOOK $49 DEMO"
 ctaBandHref: "https://dashboard.boulevard.io/booking/businesses/2cdd9475-83b5-44a4-b535-407e818a737c/widget?path=%2Fcart%2Fmenu%2FBTL-%2520Aesthetic%2520treatments%2Fs_5c459293-5182-40bf-af2d-d2c888ba04f0&locationId=40d66f34-7b55-4f2f-8f4f-f31438165fb8&visitType=SELF_VISIT"
 
-# === Video #1 + "MORE FOR LESS" text (idealmedical: youtu.be/emRdWYIOuYc) ===
-videoEmbed:
-  url: "https://youtu.be/emRdWYIOuYc"
-  posterImage: "/assets/images/services/emsculpt/video-poster.webp"
-  posterAlt: "Emsculpt Neo treatment video"
-  flush: true
-  fullBleed: true
-  heading: "EMSCULPT NEO: MORE FOR LESS IN BODY SHAPING"
+# === "MORE FOR LESS" — centered intro text (idealmedical top section) ===
+extendedDescription:
+  title: "EMSCULPT NEO™: MORE FOR LESS\nIN BODY SHAPING"
   body: |
     Emsculpt Neo is the first and only non-invasive body shaping treatment that combines radiofrequency and high-intensity focused electromagnetic (HIFEM) technology to simultaneously burn fat and build muscle in a single session. In just 30 minutes, Emsculpt Neo delivers powerful energy that heats fat cells to encourage fat reduction while contracting muscles at a level impossible to achieve with exercise alone.
 
@@ -29,7 +24,7 @@ videoEmbed:
 
     Perfect for men and women of all fitness levels, Emsculpt Neo helps you achieve a stronger, leaner, and more confident body — quickly, safely, and effectively.
 
-# === Customize your treatment (applicators) — between video #1 and video #2 ===
+# === Customize your treatment (applicators) ===
 categoriesGridsLate: true
 categoriesGrids:
   - title: "CUSTOMIZE YOUR TREATMENT"
@@ -48,23 +43,29 @@ categoriesGrids:
         image: "/assets/images/services/emsculpt/applicator-small.webp"
         imageAlt: "Small Emsculpt Neo applicator"
 
-# === Video #2 + "How Emsculpt Neo Works" text (idealmedical: youtu.be/eVYoOvBE1bE) ===
-videoEmbed2:
-  url: "https://youtu.be/eVYoOvBE1bE"
-  posterImage: "/assets/images/services/emsculpt/video-poster.webp"
-  posterAlt: "How Emsculpt Neo works video"
-  position: "after-second-grid"
-  flush: true
-  fullBleed: true
-  heading: "HOW EMSCULPT NEO WORKS"
-  body: |
-    Emsculpt Neo uses two powerful technologies at the same time. First, gentle heat breaks down stubborn fat cells, which your body naturally eliminates. At the same time, it delivers thousands of strong muscle contractions — much more than you could ever do at the gym. This combination helps reduce fat and build muscle in the same treatment, leaving you looking leaner, stronger, and more toned without surgery or downtime.
+# === Two videos side by side, text under each (idealmedical "Emsculpt Neo in Aventura") ===
+videoPair:
+  background: "gold"
+  items:
+    - url: "https://youtu.be/emRdWYIOuYc"
+      heading: "EMSCULPT NEO IN AVENTURA"
+      body: "See how a single 30-minute session pairs radiofrequency heat with HIFEM muscle contractions — no needles, no surgery, no downtime."
+    - url: "https://youtu.be/eVYoOvBE1bE"
+      heading: "HOW EMSCULPT NEO WORKS"
+      body: "Emsculpt Neo uses two technologies at once: gentle heat to reduce stubborn fat, and thousands of strong muscle contractions — far more than a workout — to build and define muscle in the same treatment."
 
-# === Real Patients Real Results (before/after) ===
+# === Banner (idealmedical BTL "HIIT Can't Touch This" promo) ===
+banner:
+  image: "/assets/images/services/shared/hiit-banner.webp"
+  imageAlt: "Emsculpt Neo — HIIT can't touch this. Up to 30% less fat and 25% more muscle on average; individual results vary."
+  href: "https://dashboard.boulevard.io/booking/businesses/2cdd9475-83b5-44a4-b535-407e818a737c/widget?path=%2Fcart%2Fmenu%2FBTL-%2520Aesthetic%2520treatments%2Fs_5c459293-5182-40bf-af2d-d2c888ba04f0&locationId=40d66f34-7b55-4f2f-8f4f-f31438165fb8&visitType=SELF_VISIT"
+
+# === Real Patients Real Results (carousel + thumbnail strip) ===
 beforeAfter:
   title: "Emsculpt Neo Real Patients Real Results"
   caption: "Representative results, courtesy of the treating physicians noted. Individual results vary."
   carousel: true
+  thumbnails: true
   items:
     - image: "/assets/images/services/emsculpt/ba-female-abdomen.webp"
       alt: "Female abdomen before and after Emsculpt Neo — courtesy of Barry DiBernardo, M.D."
