@@ -1,0 +1,33 @@
+---
+/**
+ * ServiceBanner — центрированный баннер-картинка (BTL marketing graphic).
+ *
+ * Зеркалит баннер "HIIT Can't Touch This" + статистика с idealmedical.com
+ * (Emsculpt_Neo_NEWS_Patient-Facing-HIIT…, портретный composite-графика).
+ * Показываем по центру с ограничением ширины (не full-bleed — картинка
+ * портретная). Опционально оборачиваем в ссылку (booking $49 demo).
+ */
+import { imgDim } from '../../data/imageDimensions';
+interface Props {
+  image: string;
+  imageAlt: string;
+  href?: string;
+  maxWidth?: string; // напр. 'max-w-[600px]'
+}
+const { image, imageAlt, href, maxWidth = 'max-w-[600px]' } = Astro.props;
+const d = imgDim(image);
+---
+
+<section class="w-full bg-cream py-16" data-section="service-banner">
+  <div class={`mx-auto px-[7.55%] ${maxWidth}`}>
+    {href ? (
+      <a href={href} target="_blank" rel="noopener noreferrer" class="block">
+        <img src={image} alt={imageAlt} width={d?.w} height={d?.h}
+          class="block h-auto w-full rounded-md shadow-sm transition hover:brightness-[0.98]" loading="lazy" />
+      </a>
+    ) : (
+      <img src={image} alt={imageAlt} width={d?.w} height={d?.h}
+        class="block h-auto w-full rounded-md shadow-sm" loading="lazy" />
+    )}
+  </div>
+</section>

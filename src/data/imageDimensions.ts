@@ -73,6 +73,7 @@ export const IMG_DIMS: Record<string, { w: number; h: number }> = {
   "/assets/images/services/emsculpt/category-core-to-floor.webp": { w: 1000, h: 528 },
   "/assets/images/services/emsculpt/category-functional-wellness.webp": { w: 1000, h: 528 },
   "/assets/images/services/emsculpt/hero.webp": { w: 2400, h: 983 },
+  "/assets/images/services/shared/hiit-banner.webp": { w: 1160, h: 2150 },
   "/assets/images/services/functional-wellness/hero.webp": { w: 1080, h: 1350 },
   "/assets/images/services/core-to-floor/hero.webp": { w: 2121, h: 1414 },
   "/assets/images/services/emsculpt/video-poster.webp": { w: 1600, h: 900 },

@@ -1,0 +1,89 @@
+---
+/**
+ * ServiceVideoPair — два YouTube-видео в ряд, под каждым заголовок + текст.
+ *
+ * Зеркалит секцию "Emsculpt Neo in Aventura" с idealmedical.com/emsculpt-neo:
+ * после "Customize your treatment" идут два видео бок-о-бок (emRdWYIOuYc +
+ * eVYoOvBE1bE), под каждым — heading + body.
+ *
+ * На lg — 2 колонки; на мобайле — стопкой (видео, текст, видео, текст).
+ * background: 'gold' (как в источнике, текст cream) | 'cream' (текст gold/dark).
+ */
+interface Item {
+  url?: string;
+  posterImage?: string;
+  posterAlt?: string;
+  heading?: string;
+  body?: string;
+}
+interface Props {
+  items: Item[];
+  background?: 'gold' | 'cream';
+  title?: string;
+}
+const { items, background = 'cream', title } = Astro.props;
+
+function extractYouTubeId(input: string): string | null {
+  if (/^[\w-]{11}$/.test(input)) return input;
+  const patterns = [
+    /youtube\.com\/watch\?v=([\w-]{11})/,
+    /youtu\.be\/([\w-]{11})/,
+    /youtube\.com\/embed\/([\w-]{11})/,
+  ];
+  for (const p of patterns) { const m = input.match(p); if (m) return m[1]; }
+  return null;
+}
+
+const isGold = background === 'gold';
+// Solid brand gold (not the light-center radial used for card grids) — cream text
+// stays readable across the whole section, matching idealmedical's gold band.
+const bgStyle = isGold
+  ? 'background-color: #8d7431;'
+  : 'background-color: #eae4d2;';
+// На gold-фоне — cream-текст; на cream — тёмно-коричневый body + gold heading.
+const headingColor = isGold ? 'text-cream' : 'text-gold';
+const bodyColor = isGold ? 'text-cream/90' : 'text-[#5a4f33]';
+---
+
+<section class="w-full py-24" data-section="service-video-pair" style={bgStyle}>
+  <div class="mx-auto max-w-design px-[7.55%]">
+    {title && (
+      <h2 class={`font-heading text-h1 uppercase ${headingColor} leading-tight text-center mb-16`}>{title}</h2>
+    )}
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-10 gap-y-12 max-w-[1400px] mx-auto">
+      {items.map((item) => {
+        const id = item.url ? extractYouTubeId(item.url) : null;
+        const embed = id ? `https://www.youtube.com/embed/${id}?rel=0` : null;
+        const para = item.body ? item.body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean) : [];
+        return (
+          <div class="flex flex-col">
+            <div class="relative aspect-video w-full overflow-hidden rounded-md bg-black/10">
+              {embed ? (
+                <iframe
+                  src={embed}
+                  title={item.heading ?? item.posterAlt ?? 'Video'}
+                  class="absolute inset-0 h-full w-full"
+                  loading="lazy"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                  allowfullscreen
+                ></iframe>
+              ) : item.posterImage ? (
+                <img src={item.posterImage} alt={item.posterAlt ?? ''} class="absolute inset-0 h-full w-full object-cover" loading="lazy" />
+              ) : (
+                <div class="absolute inset-0 grid place-items-center"><p class={`font-sans ${bodyColor}`}>Video coming soon</p></div>
+              )}
+            </div>
+            {item.heading && (
+              <h3 class={`mt-7 font-heading text-[clamp(22px,1.8vw,32px)] uppercase ${headingColor} leading-tight`}>{item.heading}</h3>
+            )}
+            {para.length > 0 && (
+              <div class={`mt-4 space-y-4 font-sans text-body-lg ${bodyColor} leading-relaxed`}>
+                {para.map((p) => <p>{p}</p>)}
+              </div>
+            )}
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>

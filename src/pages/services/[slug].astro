@@ -68,6 +68,8 @@ import ServiceVideoEmbed from '../../components/services/ServiceVideoEmbed.astro
 import ServiceFullWidthImage from '../../components/services/ServiceFullWidthImage.astro';
 import ServiceConditionsList from '../../components/services/ServiceConditionsList.astro';
 import ServiceBeforeAfter from '../../components/services/ServiceBeforeAfter.astro';
+import ServiceVideoPair from '../../components/services/ServiceVideoPair.astro';
+import ServiceBanner from '../../components/services/ServiceBanner.astro';
 import ServiceWhoFor from '../../components/services/ServiceWhoFor.astro';
 import ServiceRoadmap from '../../components/services/ServiceRoadmap.astro';
 import ServiceWhyTrust from '../../components/services/ServiceWhyTrust.astro';
@@ -552,6 +554,28 @@ const goldBanner = normalizeBanner(data.goldBanner);
     />
   )}
 
+  {/* Два видео в ряд + текст под каждым (idealmedical — после Customize) */}
+  {data.videoPair && (
+    <>
+      <ServiceVideoPair
+        title={data.videoPair.title}
+        background={data.videoPair.background}
+        items={data.videoPair.items}
+      />
+      <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />
+    </>
+  )}
+
+  {/* Баннер (idealmedical: HIIT Can't Touch This / BTL promo) */}
+  {data.banner && (
+    <ServiceBanner
+      image={data.banner.image}
+      imageAlt={data.banner.imageAlt}
+      href={data.banner.href}
+      maxWidth={data.banner.maxWidth}
+    />
+  )}
+
   {/* Before / After — позиция 'late' (emsculpt, после secondGrid) */}
   {beforeAfterLate && (
     <ServiceBeforeAfter
@@ -559,6 +583,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       items={beforeAfterLate.items}
       carousel={beforeAfterLate.carousel}
       caption={beforeAfterLate.caption}
+      thumbnails={beforeAfterLate.thumbnails}
     />
   )}
 

@@ -47,10 +47,13 @@ interface Props {
   carousel?: boolean;
   /** Опц. подпись под всей галереей (мелкая, по центру — атрибуция/результаты). */
   caption?: string;
+  /** Показать ленту маленьких превью под каруселью (как на idealmedical) —
+   *  клик по превью листает карусель к нужной карточке. Default false. */
+  thumbnails?: boolean;
 }
 
 import { imgDim } from '../../data/imageDimensions';
-const { title, items, carousel = false, caption } = Astro.props;
+const { title, items, carousel = false, caption, thumbnails = false } = Astro.props;
 ---
 
 <section
@@ -70,8 +73,8 @@ const { title, items, carousel = false, caption } = Astro.props;
           class="ba-track flex snap-x snap-mandatory overflow-x-auto scroll-smooth gap-6 pb-2"
           data-ba-track
         >
-          {items.map((item) => (
-            <figure class="snap-center shrink-0 w-full">
+          {items.map((item, i) => (
+            <figure class="snap-center shrink-0 w-full" data-ba-slide={i}>
               <img
                 src={item.image ?? item.beforeImage}
                 alt={item.alt}
@@ -102,6 +105,21 @@ const { title, items, carousel = false, caption } = Astro.props;
               class="absolute right-2 top-1/2 -translate-y-1/2 z-10 hidden lg:grid h-11 w-11 place-items-center rounded-full bg-gold text-cream text-2xl leading-none shadow-md transition-colors hover:bg-[#6f5b26]"
             >›</button>
           </>
+        )}
+
+        {thumbnails && items.length > 1 && (
+          <div class="ba-thumbs mt-6 flex justify-start lg:justify-center gap-2 overflow-x-auto px-[7.55%] lg:px-0" data-ba-thumbs>
+            {items.map((item, i) => (
+              <button
+                type="button"
+                data-ba-thumb={i}
+                aria-label={`Show result ${i + 1}`}
+                class="ba-thumb relative shrink-0 h-[42px] w-[104px] overflow-hidden rounded ring-2 ring-transparent opacity-60 transition hover:opacity-100"
+              >
+                <img src={item.image ?? item.beforeImage} alt="" class="h-full w-full object-cover" loading="lazy" />
+              </button>
+            ))}
+          </div>
         )}
       </div>
     ) : (
@@ -169,6 +187,30 @@ const { title, items, carousel = false, caption } = Astro.props;
           function step(dir) { track.scrollBy({ left: dir * track.clientWidth, behavior: 'smooth' }); }
           if (prev) prev.addEventListener('click', function () { step(-1); });
           if (next) next.addEventListener('click', function () { step(1); });
+
+          // Thumbnail strip: click to jump, highlight the active card on scroll.
+          var thumbs = Array.prototype.slice.call(root.querySelectorAll('[data-ba-thumb]'));
+          var slides = Array.prototype.slice.call(track.querySelectorAll('[data-ba-slide]'));
+          function setActive(idx) {
+            thumbs.forEach(function (t) {
+              var on = (+t.getAttribute('data-ba-thumb') === idx);
+              t.style.opacity = on ? '1' : '';
+              t.style.boxShadow = on ? '0 0 0 2px #8d7431' : '';
+            });
+          }
+          thumbs.forEach(function (t) {
+            t.addEventListener('click', function () {
+              var i = +t.getAttribute('data-ba-thumb');
+              var s = slides[i];
+              if (s) track.scrollTo({ left: s.offsetLeft, behavior: 'smooth' });
+              setActive(i);
+            });
+          });
+          if (thumbs.length) {
+            var sw = function () { return track.scrollWidth / Math.max(1, slides.length); };
+            track.addEventListener('scroll', function () { setActive(Math.round(track.scrollLeft / sw())); }, { passive: true });
+            setActive(0);
+          }
 
           // Mobile-only auto-rotation. Native touch-swipe (overflow-x scroll-snap)
           // stays enabled; auto-rotation pauses on interaction and resumes when idle.

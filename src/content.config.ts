@@ -541,6 +541,8 @@ const services = defineCollection({
           /** Горизонтальная карусель (scroll-snap + стрелки) вместо вертикального
            *  стека. emsculpt: набор live BTL BEFORE|AFTER композит-карточек. */
           carousel: z.boolean().optional(),
+          /** Лента маленьких превью под каруселью (idealmedical) — клик листает. */
+          thumbnails: z.boolean().optional(),
           items: z
             .array(
               z.object({
@@ -559,6 +561,36 @@ const services = defineCollection({
             )
             .min(1)
             .max(8),
+        })
+        .optional(),
+
+      // ===== Video Pair (idealmedical: два видео в ряд + текст под каждым) =====
+      videoPair: z
+        .object({
+          title: z.string().optional(),
+          background: z.enum(['gold', 'cream']).default('cream'),
+          items: z
+            .array(
+              z.object({
+                url: z.string().optional(),
+                posterImage: z.string().optional(),
+                posterAlt: z.string().optional(),
+                heading: z.string().optional(),
+                body: z.string().optional(),
+              })
+            )
+            .min(1)
+            .max(2),
+        })
+        .optional(),
+
+      // ===== Banner (idealmedical: центрированный BTL promo-баннер) =====
+      banner: z
+        .object({
+          image: z.string(),
+          imageAlt: z.string().default(''),
+          href: z.string().optional(),
+          maxWidth: z.string().optional(),
         })
         .optional(),
 
