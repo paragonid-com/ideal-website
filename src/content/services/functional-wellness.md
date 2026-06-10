@@ -17,7 +17,7 @@ ctaBandHref: "https://dashboard.boulevard.io/booking/businesses/2cdd9475-83b5-44
 
 # === Device product shot (Emsculpt Neo unit) right after hero ===
 introBanner:
-  image: "/assets/images/services/functional-wellness/emsculpt-neo-unit.webp"
+  image: "/assets/images/services/shared/emsculpt-neo-unit.webp"
   imageAlt: "Emsculpt Neo system by BTL — the device used for treatments at Ideal Medical & Wellness"
   maxWidth: "max-w-[460px]"
 
