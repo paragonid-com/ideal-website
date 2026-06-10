@@ -166,9 +166,9 @@ videoEmbed2:
 faq:
   - question: "What is Emface, and is it FDA-cleared?"
     answer: "Emface is an FDA-cleared, non-invasive facial treatment that combines radiofrequency and HIFES muscle stimulation to lift and tone the face — with no needles and no downtime."
-  - question: "Does it hurt, and is there any downtime?"
+  - question: "Does Emface hurt, and is there any downtime?"
     answer: "Most people find Emface comfortable, describing a warming sensation along with light muscle contractions. There's no downtime, so you can return to your day right away."
-  - question: "How many sessions will I need, and when will I see results?"
+  - question: "How many Emface sessions will I need, and when will I see results?"
     answer: "Emface is typically done as a short series of sessions. Many people notice gradual improvement in the weeks following their treatments, with continued change over time. Individual results vary, and your provider will recommend a plan suited to you."
   - question: "Who is a good candidate for Emface?"
     answer: "Emface suits adults looking for a non-invasive way to lift, tone, and refresh the face without surgery or injectables. During a consultation, your provider will confirm whether it's right for your goals and skin."

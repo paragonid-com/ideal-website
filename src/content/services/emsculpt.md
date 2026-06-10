@@ -111,13 +111,13 @@ beforeAfter:
 faq:
   - question: "What is Emsculpt Neo, and is it FDA-cleared?"
     answer: "Emsculpt Neo is an FDA-cleared, non-invasive body-shaping treatment that pairs radiofrequency with HIFEM muscle stimulation to reduce fat and build muscle in about 30 minutes — no needles, no downtime."
-  - question: "Does it hurt, and is there downtime?"
-    answer: "You'll feel warmth along with strong (but tolerable) muscle contractions. Most people compare it to an intense workout, and there's no downtime afterward."
-  - question: "How many sessions will I need, and when will I see results?"
+  - question: "Does Emsculpt Neo hurt, and is there downtime?"
+    answer: "You'll feel warmth along with strong (but tolerable) muscle contractions. Most people compare Emsculpt Neo to an intense workout, and there's no downtime afterward."
+  - question: "How many Emsculpt Neo sessions will I need, and when will I see results?"
     answer: "Emsculpt Neo is typically done as a short series of sessions. Many people notice changes in the weeks after completing their treatments, with continued improvement over time. Individual results vary, and your provider will recommend a plan suited to you."
   - question: "Is Emsculpt Neo a weight-loss treatment?"
     answer: 'No — it''s a body-shaping (fat-reduction and muscle-building) treatment, best for people near their goal who want to tone and define specific areas. If weight loss is your primary goal, ask about our <a href="/services/weight-loss">medical weight loss</a> program; the two can complement each other.'
-  - question: "Is it safe, and who isn't a candidate?"
+  - question: "Is Emsculpt Neo safe, and who isn't a candidate?"
     answer: "Emsculpt Neo is generally well tolerated, but it isn't for everyone — for example, metal or electronic implants in the treatment area, pregnancy, or certain conditions may be contraindications. Your provider will screen you before treatment."
 
 stars:

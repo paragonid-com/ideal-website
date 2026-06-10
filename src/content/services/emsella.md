@@ -125,9 +125,9 @@ videoEmbed:
 faq:
   - question: "What is Emsella, and is it FDA-cleared?"
     answer: "Emsella is an FDA-cleared, non-invasive chair treatment that uses HIFEM energy to strengthen the pelvic floor and treat urinary incontinence in women and men. You sit fully clothed for about 30 minutes while it delivers Kegel-like contractions."
-  - question: "Does it hurt, and is there downtime?"
-    answer: "You'll feel a tingling sensation and pelvic-floor muscle contractions — most people compare it to an intense pelvic workout and find it tolerable. There's no downtime."
-  - question: "How many sessions will I need, and when will I notice results?"
+  - question: "Does Emsella hurt, and is there downtime?"
+    answer: "You'll feel a tingling sensation and pelvic-floor muscle contractions — most people compare Emsella to an intense pelvic workout and find it tolerable. There's no downtime."
+  - question: "How many Emsella sessions will I need, and when will I notice results?"
     answer: "Emsella is typically done as a short series of sessions over a few weeks. Many people notice improvement after a few sessions, with continued progress afterward. Individual results vary, and your provider will recommend a plan."
   - question: "Can Emsella help with sexual wellness?"
     answer: "Emsella strengthens the pelvic floor, and some people associate that with intimate-wellness benefits. However, these uses are not FDA-cleared, the evidence is still emerging, and Emsella is not a treatment for erectile dysfunction or sexual dysfunction. We're glad to discuss your goals during a consultation."

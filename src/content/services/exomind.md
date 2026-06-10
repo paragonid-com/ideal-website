@@ -120,11 +120,11 @@ faq:
     answer: "ExoMind uses ExoTMS — a form of transcranial magnetic stimulation — to deliver gentle magnetic pulses to a brain region involved in focus and mood. It's non-invasive, medication-free, and done in-office while you sit comfortably."
   - question: "Is ExoMind FDA-cleared?"
     answer: "Yes, ExoMind is an FDA-cleared TMS device. We offer it as a wellness service; it is not a substitute for the medical treatment of depression, anxiety, or any condition. If you're seeking care for a diagnosed condition, we'll help direct you to appropriate medical care."
-  - question: "Does it hurt, and is there downtime?"
+  - question: "Does ExoMind hurt, and is there downtime?"
     answer: "ExoMind is non-invasive and generally well tolerated — most people describe a light tapping sensation. Sessions take about 20–30 minutes with no downtime."
   - question: "Is ExoMind safe, and who isn't a candidate?"
-    answer: "Your provider screens you first. TMS isn't right for everyone — certain implanted metallic or electronic devices, or a history of seizures, may be contraindications. We'll review your history before you begin."
-  - question: "How many sessions will I need?"
+    answer: "Your provider screens you first. ExoMind uses TMS, which isn't right for everyone — certain implanted metallic or electronic devices, or a history of seizures, may be contraindications. We'll review your history before you begin."
+  - question: "How many ExoMind sessions will I need?"
     answer: "ExoMind is typically a series of short sessions. Experiences vary, so your provider will recommend a plan and set realistic expectations rather than promise a specific result. Individual results vary."
 
 # ---------- Standalone CTA-баннеры из Figma 1:3218 ----------
