@@ -180,12 +180,12 @@ const goldBanner = normalizeBanner(data.goldBanner);
     strongScrim={data.heroStrongScrim}
   />
 
-  {!data.suppressDefaultCtas && <ServiceCTABand overlap={data.overlapCtas} />}
+  {!data.suppressDefaultCtas && <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />}
 
   {/* Opt-in straddle CTA сразу после Hero (hormone шов Hero/WhatIs y≈814).
      Независим от suppressDefaultCtas: hormone глушит дефолты и возвращает
      только нужные швы. Default false → другие страницы не затронуты. */}
-  {data.ctaAfterHero && <ServiceCTABand overlap={data.overlapCtas} />}
+  {data.ctaAfterHero && <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />}
 
   {/* Long-form "What is X?" (Weight Loss формат: фото + многоабзацный текст) */}
   {data.whatIsTitle && data.whatIsImage && data.whatIsBody && (
@@ -212,7 +212,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       />
       {/* CTA после what-is — кроме emsella, где следом идёт two-col
          'after-whatis' со своим завершающим CTA (иначе двойной баннер). */}
-      {twoColAfterWhatIs.length === 0 && !data.suppressDefaultCtas && <ServiceCTABand overlap={data.overlapCtas} />}
+      {twoColAfterWhatIs.length === 0 && !data.suppressDefaultCtas && <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />}
     </>
   )}
 
@@ -223,7 +223,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
         title={data.simpleWhatIs.title}
         body={data.simpleWhatIs.body}
       />
-      <ServiceCTABand overlap={data.overlapCtas} />
+      <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />
     </>
   )}
 
@@ -234,7 +234,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       right={data.twoColumnText.right}
       alignBodies={data.twoColumnText.alignBodies}
     />
-  )}{data.ctaAfterTwoColumnText && <ServiceCTABand overlap={data.overlapCtas} />}
+  )}{data.ctaAfterTwoColumnText && <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />}
 
   {/* Two-column секции 'after-whatis' (emsella: What to Expect / Book Your Treatment) */}
   {twoColAfterWhatIs.map((s) => (
@@ -248,7 +248,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
         intro={s.intro}
         footer={s.footer}
       />
-      <ServiceCTABand overlap={data.overlapCtas} />
+      <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />
     </>
   ))}
 
@@ -274,7 +274,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
   ))}
 
   {/* Opt-in straddle CTA между Reclaiming и Common Signs (hormone шов y≈2799). */}
-  {data.ctaBeforeCommonSigns && <ServiceCTABand overlap={data.overlapCtas} />}
+  {data.ctaBeforeCommonSigns && <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />}
 
   {/* Сетка преимуществ (Weight Loss: icon+title+desc; Peptide: icon+title 3x3) */}
   {data.benefitsTitle && data.benefits && (
@@ -287,7 +287,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
         topRowCount={data.benefitsTopRowCount}
         showStar={data.stars?.benefits}
       />
-      {!data.suppressDefaultCtas && <ServiceCTABand overlap={data.overlapCtas} />}
+      {!data.suppressDefaultCtas && <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />}
     </>
   )}
 
@@ -304,7 +304,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       {fullWidthAfterCommonSigns.map((b) => (
         <ServiceFullWidthImage image={b.image} imageAlt={b.imageAlt} todo={b.todo} />
       ))}
-      <ServiceCTABand overlap={data.overlapCtas} />
+      <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />
     </>
   )}
 
@@ -333,7 +333,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
 
   {/* CTA после первой grid — только когда дальше идёт after-categories-grid
      two-col (паттерн emsella, Figma 1:5169). emface/emsculpt не затрагиваются. */}
-  {firstCategoriesGrid && twoColAfterGrid.length > 0 && <ServiceCTABand overlap={data.overlapCtas} />}
+  {firstCategoriesGrid && twoColAfterGrid.length > 0 && <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />}
 
   {/* Two-column секции 'after-categories-grid' (emsella: Sexual Wellness — heading + фото) */}
   {twoColAfterGrid.map((s) => (
@@ -347,7 +347,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
         intro={s.intro}
         footer={s.footer}
       />
-      <ServiceCTABand overlap={data.overlapCtas} />
+      <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />
     </>
   ))}
 
@@ -383,7 +383,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
   )}
 
   {/* Straddle CTA на шве gold-banner-1 / device image (exomind, Figma 1:3161) */}
-  {midGoldBanner1 && <ServiceCTABand overlap={data.overlapCtas} />}
+  {midGoldBanner1 && <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />}
 
   {/* Full-width image после первого gold banner (exomind: фото устройства) */}
   {fullWidthAfterGoldBanner1.map((b) => (
@@ -413,7 +413,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
   ))}
 
   {/* CTA перед conditions list (exomind, Figma 1:2907) — opt-in флагом */}
-  {data.ctaBeforeConditionsList && <ServiceCTABand overlap={data.overlapCtas} />}
+  {data.ctaBeforeConditionsList && <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />}
 
   {/* Conditions list (exomind: WHAT CAN EXOMIND IMPROVE?) */}
   {data.conditionsList && (
@@ -437,7 +437,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
   )}
 
   {/* CTA после видео #2, перед gold banner #2 (exomind, Figma 1:2913) — opt-in */}
-  {data.ctaAfterVideo2 && <ServiceCTABand overlap={data.overlapCtas} />}
+  {data.ctaAfterVideo2 && <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />}
 
   {/* Gold banner #2 в центре (exomind — повторный с CTA) */}
   {midGoldBanner2 && (
@@ -450,7 +450,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
   )}
 
   {/* Straddle CTA на шве gold-banner-2 / FAQ (exomind, Figma 1:2910) */}
-  {midGoldBanner2 && <ServiceCTABand overlap={data.overlapCtas} />}
+  {midGoldBanner2 && <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />}
 
   {/* Extended description (emsculpt "MORE FOR LESS IN BODY SHAPING") */}
   {data.extendedDescription && (
@@ -459,7 +459,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
         title={data.extendedDescription.title}
         body={data.extendedDescription.body}
       />
-      <ServiceCTABand overlap={data.overlapCtas} />
+      <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />
     </>
   )}
 
@@ -576,7 +576,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
   )}
 
   {/* CTA между gold pull-quote и Experience (hormone, Figma band y6891) — opt-in */}
-  {data.ctaAfterGoldBanner && <ServiceCTABand overlap={data.overlapCtas} />}
+  {data.ctaAfterGoldBanner && <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />}
 
   {/* Experience (hormone — DNA фото + текст + телефон + CTA) */}
   {data.experience && (
@@ -592,7 +592,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
 
   {/* CTA прямо перед FAQ (emsculpt Figma 1:5573, emface 1:6327) — opt-in.
      overlap управляется overlapCtas (emsculpt=straddle; emface без флага=обычный band). */}
-  {data.ctaBeforeFaq && <ServiceCTABand overlap={data.overlapCtas} />}
+  {data.ctaBeforeFaq && <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />}
 
   {/* FAQ */}
   {data.faq && data.faq.length > 0 && <ServiceFAQ faq={data.faq} />}

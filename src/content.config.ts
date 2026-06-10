@@ -398,6 +398,11 @@ const services = defineCollection({
        *  Benefits). Для страниц, чьи Figma-фреймы не содержат mid-CTA
        *  (peptide/ivtherapy/bloodwork/regenerative/sexualhealth). Default false. */
       suppressDefaultCtas: z.boolean().default(false),
+      /** Опц. переопределить текст/ссылку всех CTA-band на странице
+       *  (напр. промо «BOOK $49 DEMO» с Boulevard demo-URL на под-страницах
+       *  Emsculpt Neo). Default undefined → стандартный BOOK APPOINTMENT. */
+      ctaBandLabel: z.string().optional(),
+      ctaBandHref: z.string().optional(),
       /** Если true — скрывает блок Patient Notice & Disclaimer на этой странице
        *  услуги. Default false → блок рендерится на ВСЕХ страницах услуг
        *  (LegitScript-комплаенс). Аналогично suppressDefaultCtas. */
