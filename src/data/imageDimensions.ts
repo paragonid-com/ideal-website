@@ -82,7 +82,7 @@ export const IMG_DIMS: Record<string, { w: number; h: number }> = {
   "/assets/images/services/emsella/incontinence-urge.webp": { w: 520, h: 520 },
   "/assets/images/services/emsella/sexual-wellness-man.webp": { w: 840, h: 560 },
   "/assets/images/services/emsella/sexual-wellness-woman.webp": { w: 840, h: 560 },
-  "/assets/images/services/emsella/what-is.webp": { w: 776, h: 1034 },
+  "/assets/images/services/emsella/what-is.webp": { w: 776, h: 780 },
   "/assets/images/services/exomind/device-showcase.webp": { w: 2000, h: 999 },
   "/assets/images/services/exomind/hero.webp": { w: 2400, h: 982 },
   "/assets/images/services/exomind/how-works.webp": { w: 1400, h: 1289 },

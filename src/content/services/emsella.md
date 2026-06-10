@@ -1,8 +1,8 @@
 ---
-seoTitle: "EMSELLA™ in Aventura | Ideal Medical & Wellness"
-seoDescription: "EMSELLA™ in Aventura, FL — an FDA-cleared, non-invasive chair treatment using HIFEM energy to strengthen the pelvic floor and improve bladder control. Individual results vary."
+seoTitle: "EMSELLA in Aventura | Ideal Medical & Wellness"
+seoDescription: "EMSELLA in Aventura, FL — an FDA-cleared, non-invasive chair treatment using HIFEM energy to strengthen the pelvic floor and improve bladder control. Individual results vary."
 
-heroTitle: "EMSELLA™\nin Aventura"
+heroTitle: "EMSELLA\nin Aventura"
 heroLead: "Emsella is a non-invasive treatment that uses high-intensity focused electromagnetic (HIFEM) energy to strengthen the pelvic floor and improve bladder control — like doing thousands of Kegels while you sit, fully clothed. It's FDA-cleared for the treatment of urinary incontinence in women and men; individual results vary."
 heroImage: "/assets/images/services/emsella/hero.webp"
 heroImageAlt: "Two clients seated on Emsella treatment chairs"
@@ -23,19 +23,20 @@ overlapCtas: true
 # Геометрия Figma (узлы 1:5401 фото 776×1034 портрет @ x=147; заголовок 1:5091
 # одной строкой + gold-звезда 1:5065 справа; body 1:5035). Фото — скруглённая
 # карточка с отступом слева (как у текста), вверху секции; текст справа vw-адаптивный.
-whatIsTitle: "WHAT IS EMSELLA™?"
+whatIsTitle: "WHAT IS EMSELLA?"
 whatIsImage: "/assets/images/services/emsella/what-is.webp"
 whatIsImageAlt: "Clients seated on Emsella chairs"
 whatIsGridCols: "lg:grid-cols-[48fr_52fr]"
 whatIsAlign: "items-start"
 whatIsHeight: "lg:min-h-0"
 whatIsImageSide: "left"
-whatIsImageAspect: "lg:aspect-[776/1034]"
+whatIsImageAspect: "lg:aspect-[776/780]"
 whatIsImagePadded: true
+whatIsImageContain: true   # knockout PNG on cream — contain on all sizes (no head crop on mobile)
 whatIsHeadingClass: "text-[clamp(28px,3.23vw,62px)] leading-[1.05]"
 whatIsBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
 whatIsBody: |
-  Emsella is an FDA-cleared, non-invasive chair treatment that uses HIFEM energy to stimulate and strengthen the pelvic floor. The manufacturer compares a single 30-minute session to roughly 11,000 Kegels — with no effort on your part.
+  Emsella is an FDA-cleared, non-invasive chair treatment that uses HIFEM energy to stimulate and strengthen the pelvic floor. The manufacturer compares a single 28-minute session to roughly 11,000 Kegels — with no effort on your part.
 
   Emsella may be a good fit for:
 
@@ -49,7 +50,7 @@ twoColumnSections:
   - position: "after-whatis"
     background: "cream"
     left:
-      title: "WHAT TO EXPECT\nFROM YOUR\nEMSELLA™ SESSION"
+      title: "WHAT TO EXPECT\nFROM YOUR\nEMSELLA SESSION"
       bulletStyle: "plain"
       bullets:
         - "Non-invasive: You remain fully clothed"
@@ -58,12 +59,12 @@ twoColumnSections:
         - "No downtime: Resume your normal activities right away"
       tail: "Many people notice improvement after a few sessions, with continued progress over the following weeks. Individual results vary."
     right:
-      title: "BOOK YOUR\nEMSELLA™\nTREATMENT TODAY"
+      title: "BOOK YOUR\nEMSELLA\nTREATMENT TODAY"
       body: "Take a step toward better pelvic-floor health and confidence with Emsella in Aventura. Whether you're dealing with urinary incontinence or simply want to improve your quality of life, our team is here to help."
   # ---------- Two-column: Emsella for Sexual Wellness (after the incontinence grid) ----------
   - position: "after-categories-grid"
     background: "cream"
-    heading: "EMSELLA™ FOR INTIMATE WELLNESS"
+    heading: "EMSELLA FOR INTIMATE WELLNESS"
     headingClass: "text-[clamp(24px,1.88vw,36px)] leading-[1.1]"
     # Compliance: над колонками — оговорка (не FDA-cleared, не лечение ED).
     intro: "Beyond bladder control, some people choose Emsella to support intimate wellness by strengthening the pelvic floor. <strong>These uses are not FDA-cleared indications, the evidence is still emerging, and individual results vary. Emsella is not a treatment for erectile dysfunction, sexual dysfunction, or any medical condition.</strong>"
@@ -90,7 +91,7 @@ twoColumnSections:
 
 # ---------- What EMSELLA Is for? — incontinence types grid (gold, 3 items) ----------
 categoriesGrids:
-  - title: "WHAT EMSELLA™ IS FOR?"
+  - title: "WHAT EMSELLA IS FOR?"
     titleClass: "text-[clamp(24px,1.88vw,36px)] leading-tight text-left"
     background: "gold"
     imageAspectClass: "aspect-square"
