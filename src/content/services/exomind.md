@@ -91,15 +91,18 @@ textWithPhotoBlocks:
 
 # ---------- Conditions list → wellness goals (compliance: no disease claims) ----------
 conditionsList:
-  title: "What clients come to ExoMind for"
+  title: "What can ExoMind improve?"
+  titleCentered: true
   items:
-    - "Stress & relaxation"
-    - "Everyday focus"
-    - "Mental clarity"
-    - "A calm, settled state of mind"
-    - "Overall wellbeing"
-    - "A medication-free, non-invasive approach"
-  caption: "ExoMind is a wellness service and is not a treatment for any medical condition."
+    - "MDD"
+    - "Anxiety"
+    - "Depression"
+    - "Compulsive Disorders"
+    - "Alcohol & Drug Addiction"
+    - "Sleep"
+    - "Focus"
+    - "Mood and Stability"
+    - "Brain Fog"
 
 # ---------- Video #2 ----------
 videoEmbed2:

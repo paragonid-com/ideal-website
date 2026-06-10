@@ -383,6 +383,8 @@ const services = defineCollection({
           items: z.array(z.string()).min(2).max(20),
           /** Опц. подпись под списком (мелкая, по центру — compliance). */
           caption: z.string().optional(),
+          /** Опц. центрировать eyebrow-заголовок. Default false. */
+          titleCentered: z.boolean().optional(),
         })
         .optional(),
 

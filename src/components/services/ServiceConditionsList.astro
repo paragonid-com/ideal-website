@@ -14,9 +14,11 @@ interface Props {
   items: string[];
   /** Опц. подпись под списком (мелкая, по центру). */
   caption?: string;
+  /** Опц. центрировать eyebrow-заголовок (по умолчанию слева). Default false. */
+  titleCentered?: boolean;
 }
 
-const { title, items, caption } = Astro.props;
+const { title, items, caption, titleCentered = false } = Astro.props;
 ---
 
 <section
@@ -24,7 +26,7 @@ const { title, items, caption } = Astro.props;
   data-section="service-conditions-list"
 >
   <div class="mx-auto max-w-design px-[7.55%]">
-    <p class="font-sans text-[clamp(18px,1.25vw,24px)] tracking-wider text-gold uppercase">
+    <p class={`font-sans text-[clamp(18px,1.25vw,24px)] tracking-wider text-gold uppercase${titleCentered ? ' text-center' : ''}`}>
       {title}
     </p>
 
