@@ -606,6 +606,35 @@ const services = defineCollection({
         })
         .optional(),
 
+      // ===== Image-card grid — фото-карточки с подписью-оверлеем =====
+      imageCardGrid: z
+        .object({
+          title: z.string().optional(),
+          columns: z.union([z.literal(2), z.literal(3)]).optional(),
+          cardAspect: z.string().optional(),
+          cards: z
+            .array(
+              z.object({
+                image: z.string(),
+                imageAlt: z.string().optional(),
+                label: z.string(),
+              })
+            )
+            .min(1)
+            .max(8),
+        })
+        .optional(),
+
+      // ===== Icon row — ряд «иконка + подпись» (фичи) =====
+      iconRow: z
+        .object({
+          items: z
+            .array(z.object({ icon: z.string(), label: z.string() }))
+            .min(1)
+            .max(4),
+        })
+        .optional(),
+
       // ===== Roadmap (hormone): 2 колонки шагов =====
       roadmap: z
         .object({

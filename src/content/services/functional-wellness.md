@@ -2,10 +2,10 @@
 seoTitle: "Emsculpt Neo for Functional Wellness in Aventura, FL | Ideal Medical & Wellness"
 seoDescription: "Emsculpt Neo for functional wellness in Aventura — build core strength, improve posture, and support everyday movement with non-invasive HIFEM + RF technology. Individual results vary."
 
-heroTitle: "EMSCULPT NEO™ FOR\nFUNCTIONAL WELLNESS"
-heroLead: "Emsculpt Neo is the first and only non-invasive body shaping treatment that combines radiofrequency and high-intensity focused electromagnetic (HIFEM) technology to simultaneously burn fat and build muscle in just 30 minutes."
+heroTitle: "BUILD MUSCLE\nFOR FORM\n& FUNCTION"
+heroLead: "Emsculpt Neo builds real, functional strength — supporting better movement, posture, and everyday performance with non-invasive HIFEM and radiofrequency technology. Individual results vary."
 heroImage: "/assets/images/services/functional-wellness/hero.webp"
-heroImageAlt: "Emsculpt Neo — build muscle for form and function"
+heroImageAlt: "Active mature couple jogging outdoors — Emsculpt Neo for functional wellness"
 heroStrongScrim: true
 heroCtaLabel: "BOOK $49 DEMO"
 heroCtaHref: "https://dashboard.boulevard.io/booking/businesses/2cdd9475-83b5-44a4-b535-407e818a737c/widget?path=%2Fcart%2Fmenu%2FBTL-%2520Aesthetic%2520treatments%2Fs_5c459293-5182-40bf-af2d-d2c888ba04f0&locationId=40d66f34-7b55-4f2f-8f4f-f31438165fb8&visitType=SELF_VISIT"
@@ -13,13 +13,6 @@ heroCtaHref: "https://dashboard.boulevard.io/booking/businesses/2cdd9475-83b5-44
 overlapCtas: true
 ctaBandLabel: "BOOK $49 DEMO"
 ctaBandHref: "https://dashboard.boulevard.io/booking/businesses/2cdd9475-83b5-44a4-b535-407e818a737c/widget?path=%2Fcart%2Fmenu%2FBTL-%2520Aesthetic%2520treatments%2Fs_5c459293-5182-40bf-af2d-d2c888ba04f0&locationId=40d66f34-7b55-4f2f-8f4f-f31438165fb8&visitType=SELF_VISIT"
-
-# === Intro banner — "What Emsculpt Neo Is For" (idealmedical FW infographic) ===
-introBanner:
-  image: "/assets/images/services/shared/functional-wellness-banner.webp"
-  imageAlt: "Emsculpt Neo for functional wellness — build muscle for form and function. Supports age-related challenges, sport-related injuries, mobility and range of motion, and post-surgery rehabilitation. Non-invasive, no downtime; individual results vary."
-  href: "https://dashboard.boulevard.io/booking/businesses/2cdd9475-83b5-44a4-b535-407e818a737c/widget?path=%2Fcart%2Fmenu%2FBTL-%2520Aesthetic%2520treatments%2Fs_5c459293-5182-40bf-af2d-d2c888ba04f0&locationId=40d66f34-7b55-4f2f-8f4f-f31438165fb8&visitType=SELF_VISIT"
-  maxWidth: "max-w-[640px]"
 
 # === "More Than Aesthetics: Functional Wellness" (idealmedical unique block) ===
 simpleWhatIs:
@@ -30,6 +23,34 @@ simpleWhatIs:
     - "Better posture and alignment"
     - "Enhanced athletic performance"
     - "Greater endurance in daily activities"
+
+# === "Learn How…" photo cards (native rebuild of BTL banner) ===
+imageCardGrid:
+  title: "Learn How Emsculpt Neo Can Improve Your Functional Wellness"
+  columns: 2
+  cards:
+    - image: "/assets/images/services/functional-wellness/fw-card-age.webp"
+      label: "Age-Related Challenges"
+      imageAlt: "Person easing lower-back discomfort"
+    - image: "/assets/images/services/functional-wellness/fw-card-sport.webp"
+      label: "Sport-Related Injuries"
+      imageAlt: "Athlete tending to a sport-related injury on a tennis court"
+    - image: "/assets/images/services/functional-wellness/fw-card-mobility.webp"
+      label: "Mobility and Range of Motion"
+      imageAlt: "Active older adult stretching outdoors"
+    - image: "/assets/images/services/functional-wellness/fw-card-rehab.webp"
+      label: "Post-Surgery Rehabilitation"
+      imageAlt: "Patient doing guided rehabilitation exercises with a therapist"
+
+# === Icon features (native rebuild of BTL banner footer) ===
+iconRow:
+  items:
+    - icon: "/assets/images/services/functional-wellness/fw-icon-noninvasive.webp"
+      label: "Non-Invasive,\nNo Downtime"
+    - icon: "/assets/images/services/functional-wellness/fw-icon-proactive.webp"
+      label: "Proactive & Corrective\nProcedure"
+    - icon: "/assets/images/services/functional-wellness/fw-icon-quick.webp"
+      label: "Quick\nProcedure"
 
 # === "MORE FOR LESS" — centered intro text (idealmedical top section) ===
 extendedDescription:

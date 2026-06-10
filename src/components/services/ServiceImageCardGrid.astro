@@ -1,0 +1,50 @@
+---
+/**
+ * ServiceImageCardGrid — сетка фото-карточек с подписью-оверлеем.
+ *
+ * Нативная пересборка блока «Learn How Emsculpt NEO Can Improve Your Functional
+ * Wellness» из BTL-баннера: фото + белая подпись по низу на тёмном градиенте.
+ * Чистые фото (без впечатанного текста) + нативная подпись — резкий текст,
+ * адаптивно, доступно для SEO.
+ */
+import { imgDim } from '../../data/imageDimensions';
+interface Card {
+  image: string;
+  imageAlt?: string;
+  label: string;
+}
+interface Props {
+  title?: string;
+  cards: Card[];
+  columns?: 2 | 3;
+  cardAspect?: string; // напр. 'aspect-[580/150]'
+}
+const { title, cards, columns = 2, cardAspect = 'aspect-[580/150]' } = Astro.props;
+const colsClass = columns === 3 ? 'lg:grid-cols-3' : 'lg:grid-cols-2';
+---
+
+<section class="w-full bg-cream py-20" data-section="service-image-card-grid">
+  <div class="mx-auto max-w-design px-[7.55%]">
+    {title && (
+      <h2 class="font-heading text-[clamp(24px,2.4vw,40px)] uppercase text-gold leading-tight text-center mb-12">{title}</h2>
+    )}
+    <div class={`grid grid-cols-1 ${colsClass} gap-5 max-w-[1180px] mx-auto`}>
+      {cards.map((c) => (
+        <figure class={`relative overflow-hidden rounded-lg ${cardAspect}`}>
+          <img
+            src={c.image}
+            alt={c.imageAlt ?? c.label}
+            width={imgDim(c.image)?.w}
+            height={imgDim(c.image)?.h}
+            class="absolute inset-0 h-full w-full object-cover"
+            loading="lazy"
+          />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/25 to-transparent"></div>
+          <figcaption class="absolute inset-x-0 bottom-0 px-5 pb-4 text-center font-sans text-[clamp(15px,1.4vw,20px)] uppercase tracking-wide text-white">
+            {c.label}
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>

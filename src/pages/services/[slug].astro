@@ -70,6 +70,8 @@ import ServiceConditionsList from '../../components/services/ServiceConditionsLi
 import ServiceBeforeAfter from '../../components/services/ServiceBeforeAfter.astro';
 import ServiceVideoPair from '../../components/services/ServiceVideoPair.astro';
 import ServiceBanner from '../../components/services/ServiceBanner.astro';
+import ServiceImageCardGrid from '../../components/services/ServiceImageCardGrid.astro';
+import ServiceIconRow from '../../components/services/ServiceIconRow.astro';
 import ServiceWhoFor from '../../components/services/ServiceWhoFor.astro';
 import ServiceRoadmap from '../../components/services/ServiceRoadmap.astro';
 import ServiceWhyTrust from '../../components/services/ServiceWhyTrust.astro';
@@ -248,6 +250,17 @@ const goldBanner = normalizeBanner(data.goldBanner);
       <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />
     </>
   )}
+
+  {/* Фото-карточки с подписью + ряд иконок (FW: пересборка BTL-баннера) */}
+  {data.imageCardGrid && (
+    <ServiceImageCardGrid
+      title={data.imageCardGrid.title}
+      cards={data.imageCardGrid.cards}
+      columns={data.imageCardGrid.columns}
+      cardAspect={data.imageCardGrid.cardAspect}
+    />
+  )}
+  {data.iconRow && <ServiceIconRow items={data.iconRow.items} />}
 
   {/* Двухколоночный текст (exomind: WHAT IS + WHO IS A GOOD CANDIDATE) */}
   {data.twoColumnText && (
