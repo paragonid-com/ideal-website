@@ -91,15 +91,30 @@ const colsClass =
     >
       {items.map((item) => (
         <li class="flex flex-col">
-          {/* Пропорция фото — opt-in (default 409/216 landscape, emsella aspect-square) */}
-          <div class={`${imageAspectClass} w-full overflow-hidden rounded-md`}>
-            <img
-              src={item.image}
-              alt={item.imageAlt}
-              class="block h-full w-full object-cover"
-              loading="lazy"
-            />
-          </div>
+          {/* Фото-плашка: если есть href — кликабельна (оборачиваем в <a>),
+              иначе обычный <div>. Пропорция opt-in (default 409/216). */}
+          {item.href ? (
+            <a
+              href={item.href}
+              class={`${imageAspectClass} group block w-full overflow-hidden rounded-md`}
+            >
+              <img
+                src={item.image}
+                alt={item.imageAlt}
+                class="block h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                loading="lazy"
+              />
+            </a>
+          ) : (
+            <div class={`${imageAspectClass} w-full overflow-hidden rounded-md`}>
+              <img
+                src={item.image}
+                alt={item.imageAlt}
+                class="block h-full w-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          )}
           <h3 class="mt-6 font-heading text-[32px] uppercase text-gold leading-tight">
             {item.href ? <a href={item.href} class="underline-offset-4 hover:underline">{item.title}</a> : item.title}
           </h3>

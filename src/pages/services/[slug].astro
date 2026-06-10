@@ -90,8 +90,15 @@ const { service } = Astro.props;
 const { data } = service;
 
 // Удобные локальные ссылки на массив categoriesGrids (если есть)
-const firstCategoriesGrid = data.categoriesGrids?.[0];
-const secondCategoriesGrid = data.categoriesGrids?.[1];
+// categoriesGridsLate: если true и есть только одна grid — рендерим её в ПОЗДНЕЙ
+// позиции (как secondGrid, после видео #1), а не перед видео. Нужно для
+// emsculpt-под-страниц, где «Customize your treatment» идёт между видео #1 и #2.
+// Default (undefined) → прежнее поведение (emsculpt/emsella/emface не затронуты).
+const gridsLate = data.categoriesGridsLate === true;
+const firstCategoriesGrid = gridsLate ? undefined : data.categoriesGrids?.[0];
+const secondCategoriesGrid = gridsLate
+  ? data.categoriesGrids?.[0]
+  : data.categoriesGrids?.[1];
 
 // twoColumnSections (emsella) — массив, фильтруем по позиции
 const twoColAfterWhatIs = (data.twoColumnSections ?? []).filter(
@@ -222,6 +229,7 @@ const goldBanner = normalizeBanner(data.goldBanner);
       <ServiceSimpleWhatIs
         title={data.simpleWhatIs.title}
         body={data.simpleWhatIs.body}
+        bullets={data.simpleWhatIs.bullets}
       />
       <ServiceCTABand overlap={data.overlapCtas} label={data.ctaBandLabel} href={data.ctaBandHref} />
     </>
@@ -328,6 +336,8 @@ const goldBanner = normalizeBanner(data.goldBanner);
       posterAlt={data.videoEmbed.posterAlt}
       flush={data.videoEmbed.flush}
       fullBleed={data.videoEmbed.fullBleed}
+      heading={data.videoEmbed.heading}
+      body={data.videoEmbed.body}
     />
   )}
 
@@ -359,6 +369,8 @@ const goldBanner = normalizeBanner(data.goldBanner);
       posterAlt={data.videoEmbed.posterAlt}
       flush={data.videoEmbed.flush}
       fullBleed={data.videoEmbed.fullBleed}
+      heading={data.videoEmbed.heading}
+      body={data.videoEmbed.body}
     />
   )}
 
@@ -433,6 +445,8 @@ const goldBanner = normalizeBanner(data.goldBanner);
       posterAlt={videoEmbed2BeforeGrid.posterAlt}
       flush={videoEmbed2BeforeGrid.flush}
       fullBleed={videoEmbed2BeforeGrid.fullBleed}
+      heading={videoEmbed2BeforeGrid.heading}
+      body={videoEmbed2BeforeGrid.body}
     />
   )}
 
@@ -533,6 +547,8 @@ const goldBanner = normalizeBanner(data.goldBanner);
       posterAlt={videoEmbed2AfterGrid.posterAlt}
       flush={videoEmbed2AfterGrid.flush}
       fullBleed={videoEmbed2AfterGrid.fullBleed}
+      heading={videoEmbed2AfterGrid.heading}
+      body={videoEmbed2AfterGrid.body}
     />
   )}
 

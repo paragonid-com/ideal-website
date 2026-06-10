@@ -151,6 +151,9 @@ const services = defineCollection({
         .object({
           title: z.string(),
           body: z.string(),
+          /** Опц. маркированный список под текстом (functional-wellness /
+           *  core-to-floor «More Than Aesthetics»). */
+          bullets: z.array(z.string()).optional(),
         })
         .optional(),
 
@@ -398,6 +401,10 @@ const services = defineCollection({
        *  Benefits). Для страниц, чьи Figma-фреймы не содержат mid-CTA
        *  (peptide/ivtherapy/bloodwork/regenerative/sexualhealth). Default false. */
       suppressDefaultCtas: z.boolean().default(false),
+      /** Если есть единственная categories-grid — рендерить её в поздней позиции
+       *  (после видео #1), а не перед видео. Для emsculpt-под-страниц
+       *  (Customize between videos). Default undefined → прежнее поведение. */
+      categoriesGridsLate: z.boolean().optional(),
       /** Опц. переопределить текст/ссылку всех CTA-band на странице
        *  (напр. промо «BOOK $49 DEMO» с Boulevard demo-URL на под-страницах
        *  Emsculpt Neo). Default undefined → стандартный BOOK APPOINTMENT. */
@@ -493,6 +500,9 @@ const services = defineCollection({
            *  1:5400 (x=0, w=1921). Default false → прежнее поведение (контент-
            *  ширина с полями на десктопе). */
           fullBleed: z.boolean().default(false),
+          /** Опц. заголовок + текст под видео (idealmedical: «MORE FOR LESS»). */
+          heading: z.string().optional(),
+          body: z.string().optional(),
         })
         .optional(),
 
@@ -512,6 +522,9 @@ const services = defineCollection({
           /** Те же опции, что у videoEmbed (exomind video #2 — full-bleed). */
           flush: z.boolean().default(false),
           fullBleed: z.boolean().default(false),
+          /** Опц. заголовок + текст под видео (idealmedical: «HOW … WORKS»). */
+          heading: z.string().optional(),
+          body: z.string().optional(),
         })
         .optional(),
 

@@ -22,9 +22,12 @@
 interface Props {
   title: string;
   body: string;
+  /** Опц. маркированный список под текстом (functional-wellness / core-to-floor
+   *  «More Than Aesthetics»). Default none. */
+  bullets?: string[];
 }
 
-const { title, body } = Astro.props;
+const { title, body, bullets } = Astro.props;
 const titleLines = title.split('\n');
 const paragraphs = body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
 ---
@@ -48,6 +51,12 @@ const paragraphs = body.split(/\n{2,}/).map((p) => p.trim()).filter(Boolean);
       <div class="mt-10 space-y-6 font-sans text-body-lg text-gold leading-relaxed">
         {paragraphs.map((p) => <p>{p}</p>)}
       </div>
+
+      {bullets && bullets.length > 0 && (
+        <ul class="mt-8 space-y-3 font-sans text-body-lg text-gold leading-relaxed list-disc pl-5 marker:text-gold">
+          {bullets.map((b) => <li>{b}</li>)}
+        </ul>
+      )}
     </div>
   </div>
 </section>
