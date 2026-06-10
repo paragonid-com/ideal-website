@@ -87,6 +87,7 @@ const services = defineCollection({
       heroMobileStacked: z.boolean().optional(),
       /** object-position фото в мобильном hero-баннере (напр. `object-[52%_center]`). */
       heroMobileImagePosition: z.string().optional(),
+      heroDesktopImagePosition: z.string().optional(),
       /** Opt-in CTA-кнопка внутри Hero (Figma peptide узел 1:3906 «BOOK NOW»).
        *  Задаётся текстом; если не задано — кнопка не рендерится (страницы со
        *  straddle-CTA не затронуты). */

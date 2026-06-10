@@ -32,6 +32,10 @@ interface Props {
    *  straddle BOOK APPOINTMENT и на стопке две кнопки дублируются (emsella).
    *  Default false — десктоп всегда показывает кнопку. */
   ctaHideOnMobile?: boolean;
+  /** object-position фото на ДЕСКТОПЕ (lg, не-stacked hero). Default 'object-right'
+   *  (как было). Напр. 'object-[right_top]' — показать верх кадра, чтобы не
+   *  срезать голову субъекта. Другие страницы не затронуты. */
+  desktopImagePosition?: string;
   /** Тема фото-фона: 'light' (светлое фото, тёмный текст + cream-скрим — default,
    *  как peptide/iv/bloodwork) или 'dark' (тёмное фото, напр. regenerative pipette:
    *  светлый lead + тёмный скрим на десктоп-оверлее; gold-заголовок работает на обоих).
@@ -48,6 +52,7 @@ const {
   title, lead, image, imageAlt, showStar = false,
   mobileStacked = false,
   mobileImagePosition = 'object-center',
+  desktopImagePosition = 'object-right',
   ctaLabel,
   ctaHref = bookingCta.href,
   ctaHideOnMobile = false,
@@ -62,8 +67,8 @@ const sectionClass = mobileStacked
   : 'relative h-[600px] sm:h-[640px] lg:h-[814px] w-full overflow-hidden bg-white';
 
 const imgClass = mobileStacked
-  ? `block w-full h-[300px] sm:h-[380px] object-cover ${mobileImagePosition} lg:absolute lg:inset-0 lg:h-full lg:object-right`
-  : 'absolute inset-0 h-full w-full object-cover object-right';
+  ? `block w-full h-[300px] sm:h-[380px] object-cover ${mobileImagePosition} lg:absolute lg:inset-0 lg:h-full lg:${desktopImagePosition}`
+  : `absolute inset-0 h-full w-full object-cover ${desktopImagePosition}`;
 
 const scrimClass = mobileStacked
   ? (isDark

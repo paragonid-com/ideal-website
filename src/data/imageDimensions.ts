@@ -75,6 +75,7 @@ export const IMG_DIMS: Record<string, { w: number; h: number }> = {
   "/assets/images/services/emsculpt/hero.webp": { w: 2400, h: 983 },
   "/assets/images/services/shared/hiit-banner.webp": { w: 1160, h: 2150 },
   "/assets/images/services/functional-wellness/hero.webp": { w: 700, h: 528 },
+  "/assets/images/services/functional-wellness/emsculpt-neo-unit.webp": { w: 780, h: 1170 },
   "/assets/images/services/functional-wellness/fw-card-age.webp": { w: 580, h: 130 },
   "/assets/images/services/functional-wellness/fw-card-sport.webp": { w: 580, h: 130 },
   "/assets/images/services/functional-wellness/fw-card-mobility.webp": { w: 580, h: 130 },
