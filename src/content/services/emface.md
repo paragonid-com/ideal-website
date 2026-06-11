@@ -1,8 +1,8 @@
 ---
-seoTitle: "EMFACE™ in Aventura | Ideal Medical & Wellness"
-seoDescription: "EMFACE™ in Aventura, FL — an FDA-cleared, non-invasive treatment to lift, tone, and smooth your face without needles, fillers, or downtime. Individual results vary."
+seoTitle: "EMFACE in Aventura | Ideal Medical & Wellness"
+seoDescription: "EMFACE in Aventura, FL — an FDA-cleared, non-invasive treatment to lift, tone, and smooth your face without needles, fillers, or downtime. Individual results vary."
 
-heroTitle: "EMFACE™\nin Aventura"
+heroTitle: "EMFACE\nin Aventura"
 heroLead: "At Ideal Medical & Wellness, we offer Emface — an FDA-cleared, non-invasive facial treatment designed to lift, tone, and smooth your face, without needles, fillers, or downtime.\n\nIf you want a refreshed, natural-looking appearance without invasive procedures, Emface is a modern approach to facial aesthetics. Individual results vary."
 heroImage: "/assets/images/services/emface/hero.webp"
 heroImageAlt: "Client receiving an EMFACE treatment with facial applicators"
@@ -23,7 +23,7 @@ ctaAfterHero: true
 ctaAfterTwoColumnText: true
 
 # ---------- What is EMFACE? (photo left + body) ----------
-whatIsTitle: "WHAT IS EMFACE™?"
+whatIsTitle: "WHAT IS EMFACE?"
 whatIsImage: "/assets/images/services/emface/what-is.webp"
 whatIsImageAlt: "EMFACE treatment device"
 whatIsImageContain: true
@@ -42,7 +42,7 @@ whatIsBody: |
 # ---------- How EMFACE works? / Benefit of EMFACE (two columns) ----------
 twoColumnText:
   left:
-    title: "HOW EMFACE™ WORKS?"
+    title: "HOW EMFACE WORKS?"
     body: |
       Emface uses synchronized technology to deliver two effects at once:
 
@@ -51,7 +51,7 @@ twoColumnText:
       2. HIFES Muscle Stimulation — activates and tones facial muscles, helping to lift the cheeks, jawline, and brow area and support the face's natural structure.
     tail: "The result is a lifted, firmer, more refreshed look — completely needle-free. Individual results vary."
   right:
-    title: "BENEFIT OF EMFACE™"
+    title: "BENEFIT OF EMFACE"
     body: "At Ideal Medical & Wellness, our clients love Emface because it delivers:"
     bullets:
       - "Non-invasive facial lifting"
@@ -63,7 +63,7 @@ twoColumnText:
 
 # ---------- Categories grids: [0]=areas (gold), [1]=treatments (cream) ----------
 categoriesGrids:
-  - title: "WHAT AREAS CAN YOU TREAT WITH EMFACE™?"
+  - title: "WHAT AREAS CAN YOU TREAT WITH EMFACE?"
     background: "gold"
     # Исходники area-*.webp — 409×500 (портрет); дефолтный landscape-aspect
     # обрезал их. Ставим родной портретный aspect (≈Figma near-square).

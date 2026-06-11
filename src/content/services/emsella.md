@@ -111,11 +111,11 @@ categoriesGrids:
         imageAlt: "Mixed incontinence"
 
 # ---------- Video после сетки "What Emsella is for?" (Figma 1:5400 —
-# "BTL EMSELLA® - Mechanism of action", YouTube). URL даёт клиент
+# "BTL EMSELLA - Mechanism of action", YouTube). URL даёт клиент
 # (data-todo='video-from-client' проставит компонент при пустом url). ----------
 videoEmbed:
   position: "after-first-grid"
-  # Подтверждено web-проверкой: официальный ролик BTL «BTL EMSELLA® — Mechanism
+  # Подтверждено web-проверкой: официальный ролик BTL «BTL EMSELLA — Mechanism
   # of action» (канал BTL Aesthetics), узел Figma 1:5400.
   url: "https://www.youtube.com/watch?v=2HLEVkT1LUU"
   posterAlt: "BTL Emsella — Mechanism of action"

@@ -2,7 +2,7 @@
 seoTitle: "ExoMind in Aventura — Non-Invasive Neurostimulation | Ideal Medical & Wellness"
 seoDescription: "ExoMind at Ideal Medical & Wellness in Aventura — a non-invasive, medication-free neurostimulation wellness session, provider-supervised. Book a consultation."
 
-heroTitle: "ExoMind™\nin Aventura"
+heroTitle: "ExoMind\nin Aventura"
 heroLead: "At Ideal Medical & Wellness, ExoMind is a non-invasive, medication-free neurostimulation session designed to support mental clarity and a calm, focused state of mind. It's a comfortable, in-office wellness experience with no downtime."
 heroImage: "/assets/images/services/exomind/hero.webp"
 heroImageAlt: "Client seated in the ExoMind treatment chair during a session"
@@ -21,13 +21,13 @@ overlapCtas: true
 twoColumnText:
   alignBodies: true
   left:
-    title: "What is\nExoMind™?"
+    title: "What is\nExoMind?"
     body: |
       ExoMind uses ExoTMS — a form of transcranial magnetic stimulation — to deliver gentle magnetic pulses to the dorsolateral prefrontal cortex, a region of the brain involved in focus and mood. It's built on TMS, a non-invasive technology studied in medicine for decades.
 
       We offer ExoMind as a wellness service to support everyday mental clarity and stress resilience — without medication or downtime. It is not a treatment for any diagnosed condition; individual results vary.
   right:
-    title: "Who is a Good\nCandidate for\nExoMind™?"
+    title: "Who is a Good\nCandidate for\nExoMind?"
     body: "ExoMind may be a good fit if you:"
     bullets:
       - 'Feel persistently stressed or "switched on" and want to support a calmer state of mind'
@@ -60,7 +60,7 @@ fullWidthImages:
 
 # ---------- HOW EXOMIND WORKS + WHY CHOOSE IDEAL (text+photo) ----------
 textWithPhotoBlocks:
-  - title: "How ExoMind™\nWorks?"
+  - title: "How ExoMind\nWorks?"
     body: "ExoMind sessions are comfortable and quick, typically about 20–30 minutes. During a session:"
     bullets:
       - "A specialized device delivers gentle magnetic pulses to targeted brain regions."
@@ -75,7 +75,7 @@ textWithPhotoBlocks:
     position: "before-conditions"
     star: true
 
-  - title: "Why Choose Ideal\nMedical & Wellness\nfor ExoMind™?"
+  - title: "Why Choose Ideal\nMedical & Wellness\nfor ExoMind?"
     body: "At Ideal Medical & Wellness, we combine advanced technology with personalized, honest care:"
     bullets:
       - "Customized plans tailored to your goals"

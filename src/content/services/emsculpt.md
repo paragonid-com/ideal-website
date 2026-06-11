@@ -1,8 +1,8 @@
 ---
-seoTitle: "EMSCULPT NEO® in Aventura, FL | Ideal Medical & Wellness"
-seoDescription: "EMSCULPT NEO® in Aventura — FDA-cleared, non-invasive body shaping that helps reduce fat and build muscle in 30-minute sessions. Individual results vary."
+seoTitle: "EMSCULPT NEO in Aventura, FL | Ideal Medical & Wellness"
+seoDescription: "EMSCULPT NEO in Aventura — FDA-cleared, non-invasive body shaping that helps reduce fat and build muscle in 30-minute sessions. Individual results vary."
 
-heroTitle: "GET THE BODY\nYOU WANT\nEMSCULPT NEO™"
+heroTitle: "GET THE BODY\nYOU WANT\nEMSCULPT NEO"
 heroLead: "An FDA-cleared, non-invasive body-shaping treatment that combines radiofrequency and high-intensity focused electromagnetic energy to reduce fat and build muscle at the same time. Individual results vary."
 heroImage: "/assets/images/services/emsculpt/hero.webp"
 heroImageAlt: "Patient wearing Emsculpt Neo applicator — body shaping treatment"
@@ -18,7 +18,7 @@ overlapCtas: true
 #     Секция «EMSCULPT NEO» y 814→1913 = 1099px при ширине 1920 → aspect-[1920/1099].
 #     Фото-колонка ~48% (923/1920) держит near-square пропорцию 923/766 и центрируется
 #     по высоте (items-center) → cream-поля сверху/снизу как в Figma. vw-clamp шрифты.
-whatIsTitle: "EMSCULPT\nNEO™"
+whatIsTitle: "EMSCULPT\nNEO"
 whatIsImage: "/assets/images/services/emsculpt/what-is.webp"
 whatIsImageAlt: "Practitioner performing an Emsculpt Neo body shaping treatment with the large applicator"
 whatIsHeight: "lg:aspect-[1920/1099]"
@@ -36,7 +36,7 @@ whatIsBody: "Emsculpt Neo combines radiofrequency and high-intensity focused ele
 #   2) "CUSTOMIZE YOUR TREATMENT" (1:5543) — gold backdrop (1:5489), 3 категории,
 #      фото + заголовок + body-описание.
 categoriesGrids:
-  - title: "WHAT EMSCULPT NEO™ IS FOR"
+  - title: "WHAT EMSCULPT NEO IS FOR"
     background: "gold"
     items:
       - title: "BODY SCULPTING"
@@ -79,7 +79,7 @@ videoEmbed:
 
 # === Extended Description — узлы Figma 1:5451, 1:5454.
 extendedDescription:
-  title: "EMSCULPT NEO™\nMORE FOR LESS IN BODY SHAPING"
+  title: "EMSCULPT NEO\nMORE FOR LESS IN BODY SHAPING"
   body: |
     Emsculpt Neo delivers energy that heats fat cells to reduce stubborn fat, while prompting powerful muscle contractions beyond what typical voluntary exercise produces.
 

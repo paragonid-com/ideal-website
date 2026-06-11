@@ -57,7 +57,7 @@ iconRow:
 
 # === "MORE FOR LESS" — centered intro text (idealmedical top section) ===
 extendedDescription:
-  title: "EMSCULPT NEO™: MORE FOR LESS\nIN BODY SHAPING"
+  title: "EMSCULPT NEO: MORE FOR LESS\nIN BODY SHAPING"
   body: |
     Emsculpt Neo is the first and only non-invasive body shaping treatment that combines radiofrequency and high-intensity focused electromagnetic (HIFEM) technology to simultaneously burn fat and build muscle in a single session. In just 30 minutes, Emsculpt Neo delivers powerful energy that heats fat cells to encourage fat reduction while contracting muscles at a level impossible to achieve with exercise alone.
 
