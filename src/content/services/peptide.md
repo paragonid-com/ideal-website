@@ -85,7 +85,7 @@ benefits:
 # (минимум схемы = 2), data-todo="copy".
 whoForTitle: "Who is PEPTIDE\nTHERAPY For?"
 whoForImage: "/assets/images/services/peptide/who-for.webp"
-whoForImageAlt: "Patient considering peptide therapy — Ideal Medical, Aventura"
+whoForImageAlt: "Man self-administering a peptide therapy injection at home — Ideal Medical, Aventura"
 # Геометрия Figma: секция y 3404→4397 = 993. Фото справа (узел 1:3901 = 996×993,
 # near-square, right-bleed, на всю высоту секции). Высоту задаёт ФОТО через
 # whoForImageAspect; текст слева центрируется. vw-clamp шрифты.
