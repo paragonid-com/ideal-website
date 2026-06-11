@@ -59,6 +59,7 @@ banner:
   image: "/assets/images/services/shared/hiit-banner.webp"
   imageAlt: "Emsculpt Neo — HIIT can't touch this. Up to 30% less fat and 25% more muscle on average; individual results vary."
   href: "https://dashboard.boulevard.io/booking/businesses/2cdd9475-83b5-44a4-b535-407e818a737c/widget?path=%2Fcart%2Fmenu%2FBTL-%2520Aesthetic%2520treatments%2Fs_5c459293-5182-40bf-af2d-d2c888ba04f0&locationId=40d66f34-7b55-4f2f-8f4f-f31438165fb8&visitType=SELF_VISIT"
+  maxWidth: "max-w-[1100px]"
 
 # === Real Patients Real Results (carousel + thumbnail strip) ===
 beforeAfter:
