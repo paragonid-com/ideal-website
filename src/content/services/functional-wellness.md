@@ -7,9 +7,9 @@ heroLead: "Emsculpt Neo builds real, functional strength — supporting better m
 heroImage: "/assets/images/services/functional-wellness/hero.webp"
 heroImageAlt: "Active mature couple jogging outdoors — Emsculpt Neo for functional wellness"
 heroStrongScrim: true
+heroMobileStacked: true
+heroMobileImagePosition: "object-[center_top]"
 heroDesktopImagePosition: "object-[right_top]"
-heroCtaLabel: "BOOK $49 DEMO"
-heroCtaHref: "https://dashboard.boulevard.io/booking/businesses/2cdd9475-83b5-44a4-b535-407e818a737c/widget?path=%2Fcart%2Fmenu%2FBTL-%2520Aesthetic%2520treatments%2Fs_5c459293-5182-40bf-af2d-d2c888ba04f0&locationId=40d66f34-7b55-4f2f-8f4f-f31438165fb8&visitType=SELF_VISIT"
 
 overlapCtas: true
 ctaBandLabel: "BOOK $49 DEMO"
