@@ -11,7 +11,7 @@ Peptide therapy is gaining attention as a transformative treatment that influenc
 
 ## How Peptide Therapy Works
 
-Peptide therapy uses specific peptides or combinations to positively influence normal physiological processes. These peptides regulate bodily functions and amplify them for better results. By targeting hormones, neurotransmitters, and immune responses, peptide therapy can enhance overall health and well-being.
+[Peptide therapy](/services/peptide) uses specific peptides or combinations to positively influence normal physiological processes. These peptides regulate bodily functions and amplify them for better results. By targeting hormones, neurotransmitters, and immune responses, peptide therapy can enhance overall health and well-being.
 
 Synthetic peptides and their analogs can be administered orally, intravenously, or topically, depending on the treatment goals. Reported benefits include:
 
