@@ -7,6 +7,8 @@ heroLead: "An FDA-cleared, non-invasive body-shaping treatment that combines rad
 heroImage: "/assets/images/services/emsculpt/hero.webp"
 heroImageAlt: "Patient wearing Emsculpt Neo applicator — body shaping treatment"
 heroStrongScrim: true   # busy/light hero photo — stronger desktop cream scrim for readable overlay text
+heroMobileStacked: true
+heroMobileImagePosition: "object-center"
 
 # 4 кнопки BOOK APPOINTMENT в Figma стоят straddle-пилюлями ровно на швах секций
 # (узлы 1:5564 Hero/WhatIs y≈814; 1:5567 WhatIs/Grid1 y≈1815; 1:5570 ExtendedDesc/
@@ -95,6 +97,7 @@ beforeAfter:
   title: "Before & After"
   caption: "Representative results, courtesy of the treating physicians noted. Individual results vary."
   carousel: true
+  thumbnails: true
   items:
     - image: "/assets/images/services/emsculpt/ba-female-abdomen.webp"
       alt: "Female abdomen before and after Emsculpt Neo — courtesy of Barry DiBernardo, M.D."
