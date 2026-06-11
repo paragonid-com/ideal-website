@@ -62,9 +62,14 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
         </h2>
       </div>
 
+      {/* Заявки уходят в GoHighLevel через inbound-webhook воркфлоу, который
+         создаёт контакт. Эндпоинт держим в data-endpoint (не хардкодим в
+         скрипте) — так его видно в разметке и легко поменять. data-ghl-form —
+         хук для обработчика отправки (см. обработчик внизу файла). */}
       <form
         class="grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2"
-        data-todo="form-submission-endpoint"
+        data-ghl-form
+        data-endpoint="https://services.leadconnectorhq.com/hooks/1D5P9FDoSL5iBPLkkWRV/webhook-trigger/1386a7ee-1dbe-48f4-b116-8eb99bb6d83c"
       >
         <label class="block">
           <span class="font-sans text-[18px] text-[#5a4f33]">First Name (Required)</span>
@@ -116,11 +121,11 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
           <legend class="font-sans text-[18px] text-[#5a4f33]">Contact Preferences</legend>
           <div class="mt-3 flex gap-6">
             <label class="flex items-center gap-2 font-sans text-[18px] text-[#5a4f33]">
-              <input type="checkbox" name="contactPref" value="sms" />
+              <input type="checkbox" name="contactPref" value="SMS" />
               SMS
             </label>
             <label class="flex items-center gap-2 font-sans text-[18px] text-[#5a4f33]">
-              <input type="checkbox" name="contactPref" value="email" />
+              <input type="checkbox" name="contactPref" value="Email" />
               Email
             </label>
           </div>
@@ -129,6 +134,16 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
         <div class="md:col-span-2">
           <button type="submit" class="btn-gold w-[195px]">SUBMIT</button>
         </div>
+
+        {/* Статус отправки (sending / ошибка). Скрыт по умолчанию; aria-live —
+           чтобы скринридеры озвучивали изменения. Цвет ошибки задаётся inline
+           из скрипта, чтобы не зависеть от purge Tailwind. */}
+        <p
+          data-form-status
+          role="status"
+          aria-live="polite"
+          class="md:col-span-2 hidden font-sans text-[14px] text-[#5a4f33]"
+        ></p>
 
         {/* Согласие на обработку/связь, включая автоматизированные и
            AI-инструменты. Единый источник — применяется на всех страницах
@@ -150,6 +165,18 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
           our Privacy Policy, and will never sell your information to third
           parties.
         </p>
+
+        {/* Экран благодарности после успешной отправки. Скрипт прячет все
+           остальные дочерние элементы формы и снимает hidden с этого блока. */}
+        <div data-form-success role="status" tabindex="-1" class="md:col-span-2 outline-none" hidden>
+          <h3 class="font-heading text-[28px] uppercase leading-tight text-gold">
+            Thank you!
+          </h3>
+          <p class="mt-2 font-sans text-[18px] text-[#5a4f33]">
+            We&rsquo;ve received your details and a member of our team will be in
+            touch with you shortly.
+          </p>
+        </div>
       </form>
     </div>
   </Container>
@@ -283,3 +310,85 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
   </div>
 </section>
 )}
+
+{/* Обработчик отправки формы → GoHighLevel inbound webhook.
+   Astro собирает этот script-тег как модуль (один раз на страницу, defer).
+   Нативная HTML5-валидация (required) отрабатывает до submit-события,
+   поэтому сюда долетают только заполненные формы. */}
+<script>
+  document.querySelectorAll('form[data-ghl-form]').forEach((form) => {
+    // instanceof-сужения вместо as-кастов: и рантайм-защита, и TS видит
+    // HTMLElement-свойства (.dataset/.disabled/.hidden/.focus).
+    if (!(form instanceof HTMLFormElement)) return;
+
+    const endpoint = form.dataset.endpoint;
+    if (!endpoint) return;
+
+    const btn = form.querySelector('button[type="submit"]');
+    const status = form.querySelector('[data-form-status]');
+    const success = form.querySelector('[data-form-success]');
+    const btnLabel = btn ? btn.textContent : '';
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (btn instanceof HTMLButtonElement) {
+        btn.disabled = true;
+        btn.textContent = 'Sending…';
+      }
+      if (status instanceof HTMLElement) {
+        status.textContent = '';
+        status.style.color = '';
+        status.classList.add('hidden');
+      }
+
+      const fd = new FormData(form);
+      // GHL custom field "Contact Preferences" (тип Checkbox, ключ
+      // contact.contact_preferences) ожидает массив строк. ВАЖНО: GHL матчит
+      // опции по caption/label ('SMS'/'Email'), а НЕ по Value-колонке
+      // ('sms'/'email') — проверено: строчные значения прилетают как
+      // несматченные чипы. Поэтому value чекбоксов = label опции в GHL.
+      const contactPreferences = fd.getAll('contactPref').map((v) => v.toString());
+      const payload = {
+        firstName: (fd.get('firstName') || '').toString().trim(),
+        lastName: (fd.get('lastName') || '').toString().trim(),
+        email: (fd.get('email') || '').toString().trim(),
+        phone: (fd.get('phone') || '').toString().trim(),
+        dateOfBirth: (fd.get('dob') || '').toString(),
+        contactPreferences,
+        source: 'idealmedical.com — Main Form',
+        pageUrl: window.location.href,
+      };
+
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        if (!res.ok) throw new Error('HTTP ' + res.status);
+
+        // Успех: прячем все поля формы и показываем экран благодарности.
+        form.reset();
+        if (success instanceof HTMLElement) {
+          Array.from(form.children).forEach((child) => {
+            if (child !== success) child.classList.add('hidden');
+          });
+          success.hidden = false;
+          success.focus();
+        }
+      } catch (err) {
+        if (btn instanceof HTMLButtonElement) {
+          btn.disabled = false;
+          btn.textContent = btnLabel;
+        }
+        if (status instanceof HTMLElement) {
+          status.textContent =
+            'Sorry, something went wrong sending your details. Please try again, or call us directly.';
+          status.style.color = '#b91c1c';
+          status.classList.remove('hidden');
+        }
+      }
+    });
+  });
+</script>
