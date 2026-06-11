@@ -13,8 +13,8 @@
 export const SITE = {
   name: 'Ideal Medical & Wellness',
   legalName: 'Ideal Medical and Wellness',
-  // Каноничный production-домен. ОБНОВИТЬ при переезде с pages.dev на свой домен.
-  url: 'https://ideal-website.pages.dev',
+  // Каноничный production-домен (подтверждён клиентом 06/2026).
+  url: 'https://idealmedical.com',
   description:
     'Physician-supervised medical and wellness clinic in Aventura, Florida — hormone optimization (BHRT), medical weight loss, peptide therapy, IV therapy, and advanced aesthetic treatments.',
   // Дефолтная OG-картинка для шеринга (1200×630). Заменить на брендовую.

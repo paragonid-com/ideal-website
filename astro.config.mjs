@@ -15,6 +15,6 @@ import sitemap from '@astrojs/sitemap';
  */
 export default defineConfig({
   output: 'static',
-  site: 'https://ideal-website.pages.dev',
+  site: 'https://idealmedical.com',
   integrations: [tailwind(), sitemap()],
 });

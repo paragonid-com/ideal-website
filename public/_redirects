@@ -1,0 +1,12 @@
+# Cloudflare Pages redirects.
+# 301 со старых URL GoDaddy-сайта (idealmedical.com) на новую структуру —
+# сохраняет ссылочный вес существующих бэклинков (Eventbrite, соцсети,
+# Yelp/DexKnows-листинги) и не даёт 404 после переезда домена.
+/home              /                      301
+/emsculpt-neo      /services/emsculpt/    301
+/exomind           /services/exomind/     301
+/emsella           /services/emsella/     301
+/emface            /services/emface/      301
+/promotions        /                      301
+/privacy-policy    /privacy/              301
+/terms-of-service  /terms/                301

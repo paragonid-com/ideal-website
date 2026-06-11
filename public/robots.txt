@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://ideal-website.pages.dev/sitemap-index.xml
+Sitemap: https://idealmedical.com/sitemap-index.xml
