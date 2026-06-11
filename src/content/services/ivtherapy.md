@@ -23,7 +23,7 @@ heroCtaHideOnMobile: true
 whatIsTitle: "WHAT IS MEDICAL\nIV THERAPY?"
 # ⚠️ Stock: istockphoto-2206913658 — лицензия требует проверки (блокер)
 whatIsImage: "/assets/images/services/ivtherapy/what-is.webp"
-whatIsImageAlt: "Patient receiving an IV therapy infusion — Ideal Medical clinic"
+whatIsImageAlt: "Clinician preparing an IV therapy drip — Ideal Medical & Wellness, Aventura"
 # Геометрия Figma: секция y 814→1913 = 1099. Фото слева (узел 1:5856 = 923×939,
 # left-bleed, cream-поля ~80px). object-cover кропит landscape-исходник в near-square.
 whatIsHeight: "lg:aspect-[1920/1099]"
@@ -85,7 +85,7 @@ benefits:
 whoForTitle: "Who is IV\nTHERAPY For?"
 # ⚠️ Stock: istockphoto-1270488580 — лицензия требует проверки (блокер)
 whoForImage: "/assets/images/services/ivtherapy/who-for.webp"
-whoForImageAlt: "Patient considering IV therapy — Ideal Medical, Aventura"
+whoForImageAlt: "Patient receiving IV therapy as a clinician administers the infusion — Ideal Medical, Aventura"
 # Геометрия Figma: секция y 3404→4397 = 993. Фото справа (узел 1:5887 = 996×993,
 # near-square, right-bleed, на всю высоту). object-cover кропит portrait-исходник.
 # Высоту задаёт ФОТО; текст слева центрируется. В Figma (1:5873) буллетов нет.
