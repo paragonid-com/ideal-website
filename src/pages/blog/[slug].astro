@@ -11,7 +11,7 @@
  *   Article       — узкая читаемая колонка (~720px), увеличенный lead-абзац,
  *                   стилизованные H2/H3 с gold-акцентом, аккуратные списки,
  *                   ссылка "Back to all articles"
- *   ContinueReading — 2 случайные другие статьи (карточки)
+ *   ContinueReading — 2 тематически близкие статьи (детерминированная карта)
  *   StartYourTransformation — общий CTA с других страниц
  */
 import { getCollection, render } from 'astro:content';
@@ -21,17 +21,54 @@ import BlogPostCard from '../../components/blog/BlogPostCard.astro';
 import StartYourTransformation from '../../components/sections/StartYourTransformation.astro';
 
 export async function getStaticPaths() {
+  // Детерминированная карта "Continue Reading" — 2 тематически близкие статьи.
+  // Раньше выбор был через Math.random(): внутренние ссылки менялись на каждом
+  // билде, краулер видел нестабильный граф. Фиксированная карта = стабильная
+  // перелинковка + тематическая близость (SEO P1).
+  const RELATED_POSTS: Record<string, string[]> = {
+    'does-tirzepatide-suppress-your-appetite': [
+      'tirzepatide-vs-semaglutide-which-is-better',
+      'top-3-tips-for-losing-weight-on-semaglutide',
+    ],
+    'how-fast-does-semaglutide-work': [
+      'top-3-tips-for-losing-weight-on-semaglutide',
+      'tirzepatide-vs-semaglutide-which-is-better',
+    ],
+    'is-peptide-therapy-safe-your-complete-guide': [
+      'what-are-the-benefits-of-tesamorelin',
+      'what-is-a-medical-weight-loss-program',
+    ],
+    'tirzepatide-vs-semaglutide-which-is-better': [
+      'does-tirzepatide-suppress-your-appetite',
+      'how-fast-does-semaglutide-work',
+    ],
+    'top-3-tips-for-losing-weight-on-semaglutide': [
+      'how-fast-does-semaglutide-work',
+      'what-is-a-medical-weight-loss-program',
+    ],
+    'what-are-the-benefits-of-tesamorelin': [
+      'is-peptide-therapy-safe-your-complete-guide',
+      'how-fast-does-semaglutide-work',
+    ],
+    'what-is-a-medical-weight-loss-program': [
+      'top-3-tips-for-losing-weight-on-semaglutide',
+      'tirzepatide-vs-semaglutide-which-is-better',
+    ],
+  };
+
   const posts = await getCollection('posts', ({ data }) => !data.draft);
 
   return posts.map((post) => {
-    // 2 случайные ДРУГИЕ статьи для блока "Continue Reading".
-    // Рандом детерминирован на этапе сборки (порядок фиксируется в билде).
-    const others = posts.filter((p) => p.id !== post.id);
-    for (let i = others.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [others[i], others[j]] = [others[j], others[i]];
-    }
-    const related = others.slice(0, 2);
+    // 2 тематически близкие статьи из фиксированной карты; fallback —
+    // первые другие статьи по алфавиту (на случай новых постов вне карты).
+    const bySlug = new Map(posts.map((p) => [p.id, p]));
+    const mapped = (RELATED_POSTS[post.id] ?? [])
+      .map((slug) => bySlug.get(slug))
+      .filter((p) => p !== undefined);
+    const fallback = posts
+      .filter((p) => p.id !== post.id && !mapped.includes(p))
+      .sort((a, b) => a.id.localeCompare(b.id));
+    const related = [...mapped, ...fallback].slice(0, 2);
 
     return {
       params: { slug: post.id },
