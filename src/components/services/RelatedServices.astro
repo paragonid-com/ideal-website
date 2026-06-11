@@ -1,0 +1,56 @@
+---
+/**
+ * RelatedServices — компактный блок «Explore Related Services» внизу
+ * страницы услуги (SEO P1: контекстная перелинковка сервисных страниц).
+ *
+ * Дизайн: сдержанная cream-полоса в стилистике ServicePatientNotice —
+ * мелкий капс-заголовок (gold) + три текстовые ссылки с тонкой золотой
+ * стрелкой. Намеренно не «секция-карточки», чтобы не спорить с
+ * утверждённым Figma-макетом; легко рестайлится при появлении макета.
+ *
+ * Данные — src/data/relatedServices.ts (карта slug → 3 related-slug).
+ */
+import { RELATED_SERVICES, SERVICE_LABELS } from '../../data/relatedServices';
+
+interface Props {
+  /** Slug текущей услуги (имя .md без расширения). */
+  slug: string;
+}
+
+const { slug } = Astro.props;
+
+const items = (RELATED_SERVICES[slug] ?? [])
+  .filter((s) => SERVICE_LABELS[s])
+  .map((s) => ({ href: `/services/${s}`, label: SERVICE_LABELS[s] }));
+---
+
+{
+  items.length > 0 && (
+    <section class="w-full bg-cream pb-2 pt-12 md:pt-14" data-section="related-services">
+      <div class="mx-auto max-w-design px-[7.55%]">
+        <div class="mx-auto max-w-[820px]">
+          <h2 class="font-heading text-[15px] uppercase tracking-[0.12em] text-gold">
+            Explore Related Services
+          </h2>
+          <ul class="mt-4 flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:gap-x-10">
+            {items.map((item) => (
+              <li>
+                <a
+                  href={item.href}
+                  class="group inline-flex items-center gap-2 font-sans text-[15px] leading-snug text-[#4a4636] hover:text-gold"
+                >
+                  <span aria-hidden="true" class="text-gold transition-transform group-hover:translate-x-0.5">
+                    →
+                  </span>
+                  <span class="underline decoration-gold/40 underline-offset-4 group-hover:decoration-gold">
+                    {item.label}
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  )
+}

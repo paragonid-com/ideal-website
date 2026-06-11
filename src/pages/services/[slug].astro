@@ -40,6 +40,7 @@
  *   ServiceGoldBanner        (goldBanner — после WhyTrust) — hormone
  *   ServiceExperience        (если experience)             — hormone
  *   ServiceFAQ               (если faq)
+ *   RelatedServices          (всегда — перелинковка услуг)
  *   NewIn2026                (всегда)
  *   StartYourTransformation  (всегда)
  *
@@ -81,6 +82,7 @@ import ServiceResults from '../../components/services/ServiceResults.astro';
 import ServiceFAQ from '../../components/services/ServiceFAQ.astro';
 import ServicePatientNotice from '../../components/services/ServicePatientNotice.astro';
 import StartYourTransformation from '../../components/sections/StartYourTransformation.astro';
+import RelatedServices from '../../components/services/RelatedServices.astro';
 
 export async function getStaticPaths() {
   const services = await getCollection('services', ({ data }) => !data.draft);
@@ -665,6 +667,10 @@ const goldBanner = normalizeBanner(data.goldBanner);
 
   {/* FAQ */}
   {data.faq && data.faq.length > 0 && <ServiceFAQ faq={data.faq} />}
+
+  {/* Explore Related Services — контекстная перелинковка услуг (SEO P1).
+      Карта — src/data/relatedServices.ts. */}
+  <RelatedServices slug={service.id} />
 
   {/* Patient Notice & Disclaimer — LegitScript/FTC/FDA. Рендерится по умолчанию
       на всех страницах услуг; opt-out через suppressPatientNotice. */}
