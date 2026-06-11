@@ -53,6 +53,21 @@ const {
 const canonical = new URL(Astro.url.pathname, SITE.url).href.replace(/\/$/, '') || SITE.url;
 const ogImageAbs = ogImage.startsWith('http') ? ogImage : `${SITE.url}${ogImage}`;
 const ogType = pageType === 'article' ? 'article' : 'website';
+
+// --- BreadcrumbList (SEO P2) ---
+// Авто-сборка из pathname: Home > [Blog >] <Текущая страница>.
+// /services/ не имеет индексной страницы, поэтому промежуточный уровень
+// для услуг не выводится. На главной крошки не эмитятся (length < 2).
+// Имя текущей страницы — из <title> до первого разделителя (' | ', ' — ').
+const crumbName = title.split(/ \| | — /)[0].trim();
+const pathParts = Astro.url.pathname.split('/').filter(Boolean);
+const breadcrumb = [
+  { name: 'Home', item: SITE.url },
+  ...(pathParts[0] === 'blog' && pathParts.length > 1
+    ? [{ name: 'Blog', item: `${SITE.url}/blog` }]
+    : []),
+  ...(pathParts.length > 0 ? [{ name: crumbName }] : []),
+];
 ---
 
 <!doctype html>
@@ -101,6 +116,7 @@ const ogType = pageType === 'article' ? 'article' : 'website';
     <SchemaOrg
       type={pageType}
       canonical={canonical}
+      breadcrumb={breadcrumb}
       faq={faq}
       serviceName={serviceName}
       serviceDescription={serviceDescription}

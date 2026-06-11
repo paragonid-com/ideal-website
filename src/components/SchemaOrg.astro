@@ -26,9 +26,16 @@ interface ArticleMeta {
   dateModified?: string;
   author?: string;
 }
+interface BreadcrumbItem {
+  name: string;
+  /** Абсолютный URL; у последнего элемента может отсутствовать. */
+  item?: string;
+}
 interface Props {
   /** Тип страницы для дополнительной схемы поверх организации. */
   type?: 'website' | 'service' | 'article';
+  /** Хлебные крошки (BreadcrumbList). Не передавать на главной. */
+  breadcrumb?: BreadcrumbItem[];
   /** Канон. URL текущей страницы (обычно Astro.url.href). */
   canonical?: string;
   /** Заголовок/описание услуги (для type="service"). */
@@ -40,7 +47,7 @@ interface Props {
   article?: ArticleMeta;
 }
 
-const { type = 'website', canonical, serviceName, serviceDescription, faq, article } = Astro.props;
+const { type = 'website', canonical, serviceName, serviceDescription, faq, article, breadcrumb } = Astro.props;
 
 const abs = (path?: string) =>
   !path ? undefined : path.startsWith('http') ? path : `${SITE.url}${path}`;
@@ -122,6 +129,19 @@ if (type === 'article' && article) {
     author: { '@type': article.author ? 'Person' : 'Organization', name: article.author ?? SITE.name },
     publisher: { '@id': `${SITE.url}/#clinic` },
     mainEntityOfPage: canonical,
+  });
+}
+// --- BreadcrumbList (хлебные крошки) ---
+if (breadcrumb && breadcrumb.length > 1) {
+  graph.push({
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: breadcrumb.map((b, i) => ({
+      '@type': 'ListItem',
+      position: i + 1,
+      name: b.name,
+      ...(b.item ? { item: b.item } : {}),
+    })),
   });
 }
 ---
