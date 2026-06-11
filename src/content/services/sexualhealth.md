@@ -17,11 +17,12 @@ heroCtaLabel: "BOOK NOW"
 # скрываем кнопку hero на мобиле (max-lg:hidden), на десктопе остаётся.
 heroCtaHideOnMobile: true
 
-# === "What is Sexual Health Therapy?" — узлы Figma 1:7097 (заголовок) + 1:7106 (body) + 1:7138 (фото слева, istockphoto-2206913658)
+# === "What is Sexual Health Therapy?" — узлы Figma 1:7097 (заголовок) + 1:7106 (body) + 1:7138 (фото слева).
+# Фото заменено на лицензированный iStock-2154853911 (пара, объятие), кроп 1000×1208.
 # Заголовок реальный; body Lorem (data-todo="copy"), ждём текст от клиента.
 whatIsTitle: "WHAT IS SEXUAL\nHEALTH THERAPY?"
 whatIsImage: "/assets/images/services/sexualhealth/what-is.webp"
-whatIsImageAlt: "Consultation about sexual health therapy — Ideal Medical & Wellness"
+whatIsImageAlt: "Happy couple embracing — sexual health therapy at Ideal Medical & Wellness"
 # Геометрия Figma: секция y 814→1913 = 1099. Фото слева (узел 1:7134 = слот 923×939,
 # left-bleed, cream-поля). object-cover кропит исходник. vw-clamp.
 whatIsHeight: "lg:aspect-[1920/1099]"
@@ -77,12 +78,13 @@ benefits:
     icon: "../../assets/services/sexualhealth/icon-scalp-hair.png"
     iconAlt: "Ongoing support icon"
 
-# === Who is Sexual Health Therapy For? — узлы Figma 1:7148 + 1:7151 + 1:7169 (фото справа, istockphoto-2203782670).
+# === Who is Sexual Health Therapy For? — узлы Figma 1:7148 + 1:7151 + 1:7169 (фото справа).
+# Фото заменено на лицензированный iStock-1158333669 (пара), кроп 1000×1208.
 # Заголовок реальный; lead Lorem (data-todo="copy"). Буллетов в Figma нет — текст сплошными
 # абзацами, поэтому 2 Lorem-буллета-плейсхолдера (минимум схемы = 2), как на peptide/regenerative.
 whoForTitle: "WHO IS SEXUAL\nHEALTH THERAPY FOR?"
 whoForImage: "/assets/images/services/sexualhealth/who-for.webp"
-whoForImageAlt: "Patient considering sexual health therapy — Ideal Medical, Aventura"
+whoForImageAlt: "Affectionate couple — sexual health therapy at Ideal Medical & Wellness, Aventura"
 # Геометрия Figma: секция y 3404→4397 = 993. Фото справа (узел 1:7165 = слот 996×993,
 # near-square, right-bleed). object-cover кропит portrait-исходник. В Figma буллетов нет. vw-clamp.
 whoForHeight: ""
