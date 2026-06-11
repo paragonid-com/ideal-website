@@ -157,16 +157,17 @@ const year = new Date().getFullYear();
       <p class="mt-5 font-sans text-[14px] leading-relaxed text-[#2e2a20]">
         Join our newsletter for updates and offers.
       </p>
-      <form class="mt-4 flex flex-col gap-3" data-todo="newsletter-integration">
-        <input
-          type="email"
-          name="email"
-          required
-          placeholder="your@email.com"
-          class="border-b border-[#6f5a24] bg-transparent py-2 font-sans text-[#2e2a20] placeholder:text-[#2e2a20]/50 focus:outline-none"
-        />
-        <button type="submit" class="btn-gold w-fit">JOIN NOW</button>
-      </form>
+      {/* Подписка на рассылку: кнопка открывает попап с GHL-формой
+         (другой сабаккаунт — link.aesthetixcrm.com). Отдельного email-инпута
+         нет — почту собирает сама форма внутри iframe. */}
+      <button
+        type="button"
+        data-newsletter-open
+        aria-haspopup="dialog"
+        class="btn-gold mt-4 w-fit"
+      >
+        JOIN NOW
+      </button>
       <a
         href={bookingCta.href}
         target="_blank"
@@ -200,3 +201,73 @@ const year = new Date().getFullYear();
     </span>
   </div>
 </div>
+
+{/* Попап подписки на рассылку — нативный dialog (фокус-трап, Esc и закрытие по
+   бэкдропу бесплатно). iframe грузится лениво (src ставится при первом
+   открытии), чтобы сторонняя GHL-форма не тянулась на каждой странице —
+   футер глобальный. */}
+<dialog
+  data-newsletter-dialog
+  aria-label="Newsletter subscription"
+  class="w-[min(92vw,460px)] rounded-xl border-0 p-0"
+>
+  <div class="relative bg-white">
+    <button
+      type="button"
+      data-newsletter-close
+      aria-label="Close"
+      class="absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full bg-black/5 text-[22px] leading-none text-[#2e2a20] transition-colors hover:bg-black/10"
+    >
+      &times;
+    </button>
+    <iframe
+      data-src="https://link.aesthetixcrm.com/widget/form/c5LQ6RuLgE16eF0MP4mn"
+      id="inline-c5LQ6RuLgE16eF0MP4mn"
+      title="Newsletter subscription form"
+      class="block w-full rounded-xl"
+      style="height:600px;border:none"
+      data-layout="{'id':'INLINE'}"
+      data-form-id="c5LQ6RuLgE16eF0MP4mn"
+      data-form-name="IdealWebsite - Newsletter"
+    ></iframe>
+  </div>
+</dialog>
+
+{/* Затемнение бэкдропа — глобально, не зависит от поддержки backdrop-варианта Tailwind. */}
+<style is:global>
+  dialog[data-newsletter-dialog]::backdrop {
+    background: rgba(0, 0, 0, 0.6);
+  }
+</style>
+
+{/* GHL-лоадер авто-ресайза формы. is:inline — чтобы Astro не бандлил сторонний скрипт. */}
+<script is:inline src="https://link.aesthetixcrm.com/js/form_embed.js"></script>
+
+{/* Открытие/закрытие попапа + ленивая загрузка iframe при первом показе. */}
+<script>
+  const dialog = document.querySelector('[data-newsletter-dialog]');
+  if (dialog instanceof HTMLDialogElement) {
+    const iframe = dialog.querySelector('iframe[data-src]');
+
+    const openDialog = () => {
+      // Ставим src один раз — при первом открытии (ленивая загрузка).
+      if (iframe instanceof HTMLIFrameElement && !iframe.src && iframe.dataset.src) {
+        iframe.src = iframe.dataset.src;
+      }
+      dialog.showModal();
+    };
+
+    document.querySelectorAll('[data-newsletter-open]').forEach((btn) => {
+      btn.addEventListener('click', openDialog);
+    });
+
+    dialog
+      .querySelector('[data-newsletter-close]')
+      ?.addEventListener('click', () => dialog.close());
+
+    // Клик по затемнённому фону (вне контента попапа) закрывает его.
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+  }
+</script>
