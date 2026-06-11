@@ -157,9 +157,6 @@ const year = new Date().getFullYear();
       <p class="mt-5 font-sans text-[14px] leading-relaxed text-[#2e2a20]">
         Join our newsletter for updates and offers.
       </p>
-      {/* Подписка на рассылку: кнопка открывает попап с GHL-формой
-         (другой сабаккаунт — link.aesthetixcrm.com). Отдельного email-инпута
-         нет — почту собирает сама форма внутри iframe. */}
       <button
         type="button"
         data-newsletter-open
@@ -202,10 +199,7 @@ const year = new Date().getFullYear();
   </div>
 </div>
 
-{/* Попап подписки на рассылку — нативный dialog (фокус-трап, Esc и закрытие по
-   бэкдропу бесплатно). iframe грузится лениво (src ставится при первом
-   открытии), чтобы сторонняя GHL-форма не тянулась на каждой странице —
-   футер глобальный. */}
+{/* iframe грузится лениво — src ставится при первом открытии. */}
 <dialog
   data-newsletter-dialog
   aria-label="Newsletter subscription"
@@ -233,24 +227,20 @@ const year = new Date().getFullYear();
   </div>
 </dialog>
 
-{/* Затемнение бэкдропа — глобально, не зависит от поддержки backdrop-варианта Tailwind. */}
 <style is:global>
   dialog[data-newsletter-dialog]::backdrop {
     background: rgba(0, 0, 0, 0.6);
   }
 </style>
 
-{/* GHL-лоадер авто-ресайза формы. is:inline — чтобы Astro не бандлил сторонний скрипт. */}
 <script is:inline src="https://link.aesthetixcrm.com/js/form_embed.js"></script>
 
-{/* Открытие/закрытие попапа + ленивая загрузка iframe при первом показе. */}
 <script>
   const dialog = document.querySelector('[data-newsletter-dialog]');
   if (dialog instanceof HTMLDialogElement) {
     const iframe = dialog.querySelector('iframe[data-src]');
 
     const openDialog = () => {
-      // Ставим src один раз — при первом открытии (ленивая загрузка).
       if (iframe instanceof HTMLIFrameElement && !iframe.src && iframe.dataset.src) {
         iframe.src = iframe.dataset.src;
       }
@@ -265,7 +255,6 @@ const year = new Date().getFullYear();
       .querySelector('[data-newsletter-close]')
       ?.addEventListener('click', () => dialog.close());
 
-    // Клик по затемнённому фону (вне контента попапа) закрывает его.
     dialog.addEventListener('click', (e) => {
       if (e.target === dialog) dialog.close();
     });

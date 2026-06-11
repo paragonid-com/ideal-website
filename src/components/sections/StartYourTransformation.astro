@@ -62,10 +62,6 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
         </h2>
       </div>
 
-      {/* Заявки уходят в GoHighLevel через inbound-webhook воркфлоу, который
-         создаёт контакт. Эндпоинт держим в data-endpoint (не хардкодим в
-         скрипте) — так его видно в разметке и легко поменять. data-ghl-form —
-         хук для обработчика отправки (см. обработчик внизу файла). */}
       <form
         class="grid grid-cols-1 gap-x-8 gap-y-4 md:grid-cols-2"
         data-ghl-form
@@ -135,9 +131,6 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
           <button type="submit" class="btn-gold w-[195px]">SUBMIT</button>
         </div>
 
-        {/* Статус отправки (sending / ошибка). Скрыт по умолчанию; aria-live —
-           чтобы скринридеры озвучивали изменения. Цвет ошибки задаётся inline
-           из скрипта, чтобы не зависеть от purge Tailwind. */}
         <p
           data-form-status
           role="status"
@@ -166,8 +159,6 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
           parties.
         </p>
 
-        {/* Экран благодарности после успешной отправки. Скрипт прячет все
-           остальные дочерние элементы формы и снимает hidden с этого блока. */}
         <div data-form-success role="status" tabindex="-1" class="md:col-span-2 outline-none" hidden>
           <h3 class="font-heading text-[28px] uppercase leading-tight text-gold">
             Thank you!
@@ -311,14 +302,8 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
 </section>
 )}
 
-{/* Обработчик отправки формы → GoHighLevel inbound webhook.
-   Astro собирает этот script-тег как модуль (один раз на страницу, defer).
-   Нативная HTML5-валидация (required) отрабатывает до submit-события,
-   поэтому сюда долетают только заполненные формы. */}
 <script>
   document.querySelectorAll('form[data-ghl-form]').forEach((form) => {
-    // instanceof-сужения вместо as-кастов: и рантайм-защита, и TS видит
-    // HTMLElement-свойства (.dataset/.disabled/.hidden/.focus).
     if (!(form instanceof HTMLFormElement)) return;
 
     const endpoint = form.dataset.endpoint;
@@ -343,11 +328,7 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
       }
 
       const fd = new FormData(form);
-      // GHL custom field "Contact Preferences" (тип Checkbox, ключ
-      // contact.contact_preferences) ожидает массив строк. ВАЖНО: GHL матчит
-      // опции по caption/label ('SMS'/'Email'), а НЕ по Value-колонке
-      // ('sms'/'email') — проверено: строчные значения прилетают как
-      // несматченные чипы. Поэтому value чекбоксов = label опции в GHL.
+      // ВАЖНО: GHL матчит опции чекбокса по label ('SMS'/'Email'), не по Value.
       const contactPreferences = fd.getAll('contactPref').map((v) => v.toString());
       const payload = {
         firstName: (fd.get('firstName') || '').toString().trim(),
@@ -368,7 +349,6 @@ const appleMapsUrl = `https://maps.apple.com/?q=${mapQuery}`;
         });
         if (!res.ok) throw new Error('HTTP ' + res.status);
 
-        // Успех: прячем все поля формы и показываем экран благодарности.
         form.reset();
         if (success instanceof HTMLElement) {
           Array.from(form.children).forEach((child) => {
