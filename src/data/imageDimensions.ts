@@ -120,7 +120,7 @@ export const IMG_DIMS: Record<string, { w: number; h: number }> = {
   "/assets/images/services/sexualhealth/who-for.webp": { w: 1000, h: 1208 },
   "/assets/images/services/weight-loss/hero.webp": { w: 4055, h: 1366 },
   "/assets/images/services/weight-loss/what-is.webp": { w: 2048, h: 1366 },
-  "/assets/images/services/weight-loss/who-is-for.webp": { w: 543, h: 656 },
+  "/assets/images/services/weight-loss/who-is-for.webp": { w: 1000, h: 1208 },
   "/assets/images/team-kenneth.png": { w: 274, h: 411 },
   "/assets/images/team-kenneth.webp": { w: 1000, h: 1500 },
   "/assets/images/team-ksenia.png": { w: 1064, h: 1636 },

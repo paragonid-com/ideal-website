@@ -94,7 +94,8 @@ whoForTitle: |
   Who is Medical
   Weight Loss For?
 whoForImage: "/assets/images/services/weight-loss/who-is-for.webp"
-whoForImageAlt: "Person consulting with medical professional about weight loss program"
+# Фото заменено на лицензированный iStock-2205627262 (консультация), кроп 1000×1208.
+whoForImageAlt: "Patient consulting with a medical provider about a weight loss program"
 # Пропорция блока = Figma-секция (y 3404→4397 = 993 при ширине 1920, aspect ≈1.93).
 # Высоту задаёт ФОТО: whoForImageAspect lg:aspect-[996/993] (узел 1:1647 = 996×993,
 # near-square) — object-cover кропит портрет в квадрат, и это надёжно держит
