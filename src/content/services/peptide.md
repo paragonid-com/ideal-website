@@ -36,7 +36,7 @@ whatIsBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
 whatIsBody: |
   Peptides are naturally occurring signaling molecules. In a medical setting, specific peptides may be used within a supervised wellness protocol to support goals such as recovery, energy, or body composition — always individualized to the person.
 
-  Our approach starts with an evaluation and appropriate lab work, then a plan tailored to you, using the lowest effective, individualized dosing and ongoing clinical monitoring. Importantly, many peptides are not FDA-approved; we use them only under the supervision of a licensed provider, and only when appropriate for you.
+  Our approach starts with an evaluation and appropriate lab work, then a plan tailored to you, using the lowest effective, individualized dosing and ongoing clinical monitoring. Some peptides are FDA-approved for specific medical uses, while others are prescribed as part of individualized, provider-supervised protocols. Every plan is built and monitored by a licensed provider.
 
   We don't sell prescriptions directly — we provide medically supervised programs. Your provider will discuss what peptide therapy can and can't do, so your expectations are realistic from the start.
 
@@ -99,7 +99,7 @@ whoForImageAspect: "lg:aspect-[996/993]"
 # В Figma (узлы 1:3887) текст идёт сплошными абзацами БЕЗ буллет-списка —
 # whoForBullets не задаём (буллеты опциональны).
 whoForLead: |
-  Peptide therapy may suit adults pursuing wellness, recovery, or body-composition goals as part of a medically supervised plan. It isn't right for everyone, and it isn't a substitute for treating a diagnosed medical condition.
+  Peptide therapy may suit adults pursuing wellness, recovery, or body-composition goals as part of a medically supervised plan. Your provider determines whether peptide therapy fits your goals and health profile during your evaluation.
 
   Candidacy is determined by a provider after an evaluation. Some people — for example, those who are pregnant or have certain medical conditions — aren't candidates. We'll be straightforward about whether peptide therapy fits your goals and your health history.
 
@@ -110,12 +110,12 @@ resultsBody: |
 
   We monitor your response over time and adjust as needed, with peptide therapy used as one part of a broader wellness program — not a stand-alone fix.
 
-  Individual results vary and are not guaranteed. These statements have not been evaluated by the FDA.
+  Individual results vary.
 
 # === FAQ — узлы Figma 1:3927-3932 (5 Lorem-вопросов). data-todo="copy" — ждём от клиента.
 faq:
   - question: "What is peptide therapy, and are peptides FDA-approved?"
-    answer: "Peptide therapy uses specific peptides within a supervised wellness protocol. Some peptides are FDA-approved for particular medical uses; many others are not. We use peptides only under the supervision of a licensed provider and only when appropriate for you."
+    answer: "Peptide therapy uses specific peptides within a supervised wellness protocol. Some peptides are FDA-approved for particular medical uses; others are prescribed off-label or as compounded preparations under licensed-provider supervision — a common practice in personalized medicine."
   - question: "Is peptide therapy safe? What about side effects?"
     answer: "Your provider screens you first and monitors you throughout. As with any medical treatment, side effects are possible, which your provider will review with you. Treatment is individualized to help manage risk."
   - question: "How are peptides administered?"

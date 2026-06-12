@@ -55,7 +55,7 @@ Peptide therapy uses synthetic peptides to improve normal bodily functions and p
 
 **Are peptides used in therapy FDA-approved?**
 
-Most of the peptides used in peptide therapy are FDA-approved, but some are not. To ensure that your treatment uses only FDA-approved peptides, ask your practitioner for a complete list of all the peptides they plan to include and do some online research to confirm that they are safe and well-studied.
+Many peptides are FDA-approved for specific uses; others are prescribed by licensed providers as part of supervised protocols. Ask your practitioner for a complete list of all the peptides they plan to include and do some online research to confirm that they are safe and well-studied.
 
 **What are the common side effects of peptide therapy?**
 

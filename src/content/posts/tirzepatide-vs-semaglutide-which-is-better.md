@@ -15,7 +15,7 @@ Semaglutide is a GLP-1 receptor agonist used for weight loss. It mimics a hormon
 
 ## What Is Tirzepatide?
 
-Tirzepatide is a dual GLP-1 and GIP receptor agonist, making it effective for managing blood sugar and promoting weight loss. It is FDA-approved for Type 2 diabetes under the brand name Mounjaro, but its use for weight loss is currently off-label, pending further regulatory approval. This dual approach enhances fullness and insulin production, making tirzepatide potentially more effective for weight management.
+Tirzepatide is a dual GLP-1 and GIP receptor agonist, making it effective for managing blood sugar and promoting weight loss. It is FDA-approved for Type 2 diabetes under the brand name Mounjaro and for chronic weight management under the brand name Zepbound. This dual approach enhances fullness and insulin production, making tirzepatide potentially more effective for weight management.
 
 ## The Dosage and Administration
 

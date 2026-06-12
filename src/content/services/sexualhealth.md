@@ -35,7 +35,7 @@ whatIsBodyClass: "text-[clamp(16px,1.09vw,21px)] leading-[1.5]"
 whatIsBody: |
   Our sexual health care is a confidential, provider-led approach to intimate wellness for both men and women. Depending on your needs, options may include PRP-based treatments, pelvic-floor strengthening with Emsella, and hormone or wellness optimization where appropriate.
 
-  Changes in sexual wellness can have many underlying causes — hormonal, vascular, medication-related, or stress — so we begin with an evaluation rather than a one-size-fits-all treatment. Some causes call for a medical work-up. Many of the options in this area are not FDA-approved for sexual dysfunction, and we'll explain what is and isn't established.
+  Changes in sexual wellness can have many underlying causes — hormonal, vascular, medication-related, or stress — so we begin with an evaluation rather than a one-size-fits-all treatment. Some causes call for a medical work-up. Treatment options range from FDA-approved medications to provider-supervised wellness protocols, and we'll walk you through the research behind each so you can make an informed choice.
 
   Care is discreet, individualized, and provider-supervised. It isn't a guaranteed fix, and it isn't a substitute for medical evaluation; together we'll decide what's appropriate for you.
 
@@ -102,9 +102,9 @@ whoForLead: |
 # === The Results — узлы Figma 1:7178 + 1:7179. Body Lorem (data-todo="copy").
 resultsTitle: "THE RESULTS"
 resultsBody: |
-  Results vary from person to person. Some patients report improvements in confidence and intimate wellbeing, but outcomes are individual and not guaranteed.
+  Results vary from person to person. Some patients report improvements in confidence and intimate wellbeing, but outcomes are individual.
 
-  Many of these options are not FDA-approved for sexual dysfunction, and the evidence varies by approach, so we focus on setting realistic expectations from the start.
+  Research into these approaches is ongoing, and we set clear, realistic expectations from the start.
 
   Your provider monitors your response and tailors the plan to you. Individual results vary, and these statements have not been evaluated by the FDA.
 
@@ -115,7 +115,7 @@ faq:
   - question: "What does sexual health care at Ideal Medical involve?"
     answer: "It starts with a confidential consultation. From there, options may include PRP-based treatments, pelvic-floor strengthening with Emsella, and hormone or wellness optimization where appropriate — chosen with a provider based on your goals and health history."
   - question: "Is this FDA-approved? Will it cure erectile dysfunction or sexual dysfunction?"
-    answer: "Many sexual-wellness options are not FDA-approved for sexual dysfunction, and they aren't a guaranteed cure. Because sexual changes can have underlying medical causes, we begin with an evaluation and will be honest about what's realistic."
+    answer: "Some options are FDA-approved, while others are offered as provider-supervised wellness protocols. Because sexual changes can have underlying medical causes, we begin with an evaluation and will be honest about what's realistic for you."
   - question: "Is the experience discreet and confidential?"
     answer: "Yes. Consultations are private, and your information is handled in accordance with our Privacy Policy. Discretion is central to how we provide this care."
   - question: "Does treatment hurt, and is there downtime?"

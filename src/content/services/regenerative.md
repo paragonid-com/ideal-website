@@ -131,9 +131,9 @@ faq:
   - question: "What's the most significant difference between PRP injections and allograft injections?"
     answer: "PRP is prepared from your own blood (autologous), while an allograft uses donor-derived tissue. Each has different considerations, and your provider will explain the options and recommend what's appropriate for your goals and health history."
   - question: "How long will it take to see the results from a regenerative medicine treatment?"
-    answer: "It varies from person to person, and results are not guaranteed. Some people notice gradual change over the weeks following treatment as the body responds, while others may need more than one session. Your provider will set realistic expectations and a plan suited to you."
+    answer: "It varies from person to person. Some people notice gradual change over the weeks following treatment as the body responds, while others may need more than one session. Your provider will set realistic expectations and a plan suited to you."
   - question: "How safe are regenerative medicine treatments?"
-    answer: "Treatments are performed by licensed providers after an evaluation, and using your own blood for PRP helps keep allergy risk low. That said, many regenerative options are not FDA-approved for specific conditions and the evidence varies by use, so we are honest about what is established and screen you first to determine whether treatment is appropriate."
+    answer: "Treatments are performed by licensed providers after an evaluation, and using your own blood for PRP helps keep allergy risk low. Regenerative medicine is an actively developing field, and research is ongoing for many applications. We review the current evidence with you and screen you first to determine whether treatment is appropriate."
 
 # === Star-sign ornaments (Figma 1:2079 hero, 1:2080 whatIs, 1:2088 benefits,
 #     1:2155 howWorks-block, 1:2154 whoFor-block, 1:2198 results)
